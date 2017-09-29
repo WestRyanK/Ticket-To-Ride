@@ -1,11 +1,11 @@
 package byu.codemonkeys.tickettoride.shared.commands;
 
-public class RegisterCommandData extends CommandData {
+public class LoginCommandData extends CommandData {
 	private String userName;
 	private String password;
 	
-	public RegisterCommandData(String userName, String password) {
-		super("Register");
+	public LoginCommandData(String userName, String password) {
+		super("Login");
 		this.userName = userName;
 		this.password = password;
 	}
