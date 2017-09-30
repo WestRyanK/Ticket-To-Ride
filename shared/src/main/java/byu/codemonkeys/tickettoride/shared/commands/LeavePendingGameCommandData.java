@@ -4,7 +4,7 @@ public class LeavePendingGameCommandData extends CommandData {
 	private String gameID;
 	
 	public LeavePendingGameCommandData(String gameID) {
-		super("LeavePendingGame");
+		super(CommandType.LEAVE_PENDING_GAME);
 		this.gameID = gameID;
 	}
 	

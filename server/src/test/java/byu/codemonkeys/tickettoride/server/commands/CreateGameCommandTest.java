@@ -37,7 +37,7 @@ public class CreateGameCommandTest {
 	public void ConstructorTest() {
 		assertEquals("Command doesn't have correct commandName",
 					 "CreateGame",
-					 command.getCommandName());
+					 command.getCommandType());
 		
 		assertEquals("Should have held onto the gameName from construction.",
 					 gameName,

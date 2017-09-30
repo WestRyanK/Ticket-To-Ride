@@ -5,7 +5,7 @@ public class RegisterCommandData extends CommandData {
 	private String password;
 	
 	public RegisterCommandData(String userName, String password) {
-		super("Register");
+		super(CommandType.REGISTER);
 		this.userName = userName;
 		this.password = password;
 	}

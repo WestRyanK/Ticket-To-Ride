@@ -21,7 +21,7 @@ public class GetPendingGamesCommandDataTest {
 	public void ConstructorTest() {
 		assertEquals("CommandData doesn't have correct commandName",
 					 "GetPendingGames",
-					 commandData.getCommandName());
+					 commandData.getCommandType());
 	}
 	
 }

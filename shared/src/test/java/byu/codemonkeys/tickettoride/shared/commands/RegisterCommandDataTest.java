@@ -23,7 +23,7 @@ public class RegisterCommandDataTest {
 	public void ConstructorTest() {
 		assertEquals("CommandData doesn't have correct commandName",
 					 "Register",
-					 commandData.getCommandName());
+					 commandData.getCommandType());
 		
 		assertEquals("Should have held onto the username from construction.",
 					 username,

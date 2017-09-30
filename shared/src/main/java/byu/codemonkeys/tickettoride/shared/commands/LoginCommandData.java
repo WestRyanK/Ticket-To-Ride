@@ -5,7 +5,7 @@ public class LoginCommandData extends CommandData {
 	private String password;
 	
 	public LoginCommandData(String userName, String password) {
-		super("Login");
+		super(CommandType.LOGIN);
 		this.userName = userName;
 		this.password = password;
 	}

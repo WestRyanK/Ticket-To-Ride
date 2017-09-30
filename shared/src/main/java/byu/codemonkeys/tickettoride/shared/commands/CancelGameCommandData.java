@@ -4,7 +4,7 @@ public class CancelGameCommandData extends CommandData {
 	private String gameID;
 	
 	public CancelGameCommandData(String gameID) {
-		super("CancelGame");
+		super(CommandType.CANCEL_GAME);
 		this.gameID = gameID;
 	}
 	

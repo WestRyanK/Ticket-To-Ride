@@ -23,7 +23,7 @@ public class LeavePendingGameCommandDataTest {
 	public void ConstructorTest() {
 		assertEquals("CommandData doesn't have correct commandName",
 					 "LeavePendingGame",
-					 commandData.getCommandName());
+					 commandData.getCommandType());
 		
 		assertEquals("Should have held onto the gameID from construction.",
 					 gameID,

@@ -22,7 +22,7 @@ public class CancelGameCommandDataTest {
 	public void ConstructorTest() {
 		assertEquals("CommandData doesn't have correct commandName",
 					 "CancelGame",
-					 commandData.getCommandName());
+					 commandData.getCommandType());
 		
 		assertEquals("Should have held onto the gameID from construction.",
 					 gameID,

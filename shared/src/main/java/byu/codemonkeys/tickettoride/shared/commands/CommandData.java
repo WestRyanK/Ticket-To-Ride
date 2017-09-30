@@ -1,13 +1,13 @@
 package byu.codemonkeys.tickettoride.shared.commands;
 
 public abstract class CommandData {
-	private String commandName;
+	private String commandType;
 	
-	protected CommandData(String commandName) {
-		this.commandName = commandName;
+	protected CommandData(String commandType) {
+		this.commandType = commandType;
 	}
 	
-	public String getCommandName() {
-		return commandName;
+	public String getCommandType() {
+		return commandType;
 	}
 }

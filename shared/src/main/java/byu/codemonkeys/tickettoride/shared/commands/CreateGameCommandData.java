@@ -6,7 +6,7 @@ public class CreateGameCommandData extends CommandData {
 	private int maxPlayers;
 	
 	public CreateGameCommandData(String gameName, int minPlayers, int maxPlayers) {
-		super("CreateGame");
+		super(CommandType.CREATE_GAME);
 		this.gameName = gameName;
 		this.minPlayers = minPlayers;
 		this.maxPlayers = maxPlayers;
