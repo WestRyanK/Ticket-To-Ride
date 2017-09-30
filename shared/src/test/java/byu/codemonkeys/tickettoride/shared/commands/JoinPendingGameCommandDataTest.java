@@ -22,7 +22,7 @@ public class JoinPendingGameCommandDataTest {
 	@Test
 	public void ConstructorTest() {
 		assertEquals("CommandData doesn't have correct commandName",
-					 "JoinPendingGame",
+					 CommandType.JOIN_PENDING_GAME,
 					 commandData.getCommandType());
 		
 		assertEquals("Should have held onto the gameID from construction.",

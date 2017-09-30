@@ -21,7 +21,7 @@ public class LogoutCommandDataTest {
 	@Test
 	public void ConstructorTest() {
 		assertEquals("CommandData doesn't have correct commandName",
-					 "Logout",
+					 CommandType.LOGOUT,
 					 commandData.getCommandType());
 	}
 }
