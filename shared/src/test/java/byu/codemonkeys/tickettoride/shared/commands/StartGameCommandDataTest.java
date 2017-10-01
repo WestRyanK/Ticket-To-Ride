@@ -21,8 +21,8 @@ public class StartGameCommandDataTest {
 	@Test
 	public void ConstructorTest() {
 		assertEquals("CommandData doesn't have correct commandName",
-					 "StartGame",
-					 commandData.getCommandName());
+					 CommandType.START_GAME,
+					 commandData.getCommandType());
 		
 		assertEquals("Should have held onto the gameID from construction.",
 					 gameID,

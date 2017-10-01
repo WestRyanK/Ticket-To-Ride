@@ -3,6 +3,7 @@ package byu.codemonkeys.tickettoride.server.commands;
 import org.junit.Before;
 import org.junit.Test;
 
+import byu.codemonkeys.tickettoride.shared.commands.CommandType;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 
@@ -36,8 +37,8 @@ public class CreateGameCommandTest {
 	@Test
 	public void ConstructorTest() {
 		assertEquals("Command doesn't have correct commandName",
-					 "CreateGame",
-					 command.getCommandName());
+				CommandType.CREATE_GAME,
+					 command.getCommandType());
 		
 		assertEquals("Should have held onto the gameName from construction.",
 					 gameName,

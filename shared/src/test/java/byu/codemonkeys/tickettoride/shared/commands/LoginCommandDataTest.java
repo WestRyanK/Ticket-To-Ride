@@ -22,8 +22,8 @@ public class LoginCommandDataTest {
 	@Test
 	public void ConstructorTest() {
 		assertEquals("CommandData doesn't have correct commandName",
-					 "Login",
-					 commandData.getCommandName());
+					 CommandType.LOGIN,
+					 commandData.getCommandType());
 		
 		assertEquals("Should have held onto the username from construction.",
 					 username,

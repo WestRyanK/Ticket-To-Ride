@@ -1,6 +1,5 @@
 package byu.codemonkeys.tickettoride.server.commands;
 
-import byu.codemonkeys.tickettoride.shared.commands.CancelGameCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.CreateGameCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.ICommand;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
