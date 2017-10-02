@@ -1,6 +1,8 @@
 package byu.codemonkeys.tickettoride.server.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import byu.codemonkeys.tickettoride.server.exceptions.AlreadyExistsException;
@@ -18,6 +20,8 @@ public class RootModel {
      */
     private Map<String, ServerSession> currentSessions;
 
+    private Map<String, PendingGame> pendingGames;
+
     public static RootModel getInstance() {
         return ourInstance;
     }
@@ -25,6 +29,7 @@ public class RootModel {
     private RootModel() {
         users = new HashMap<>();
         currentSessions = new HashMap<>();
+        pendingGames = new HashMap<>();
     }
 
     /**
@@ -42,6 +47,17 @@ public class RootModel {
         return false;
     }
 
+    public boolean authorize(String authToken) {
+        if (currentSessions.containsKey(authToken)) {
+            return true;
+        }
+        return false;
+    }
+
+    public void removeSession(String authToken) {
+        currentSessions.remove(authToken);
+    }
+
     public User getUser(String username) {
         return users.get(username);
     }
@@ -55,10 +71,18 @@ public class RootModel {
     }
 
     public String generateAuthToken() {
-        return TokenGenerator.generateToken();
+        return IDGenerator.generateUniqueID();
+    }
+
+    public String generateGameID() {
+        return IDGenerator.generateUniqueID();
     }
 
     public void addSession(ServerSession session) {
         currentSessions.put(session.getAuthToken(), session);
+    }
+
+    public List<PendingGame> getPendingGames() {
+        return new ArrayList<>(pendingGames.values());
     }
 }

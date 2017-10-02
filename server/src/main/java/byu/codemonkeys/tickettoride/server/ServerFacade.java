@@ -51,37 +51,41 @@ public class ServerFacade implements IServer {
     }
 
     @Override
-    public Result logout() {
+    public Result logout(String authToken) {
+        rootModel.removeSession(authToken);
+        return new Result();
+    }
+
+    @Override
+    public PendingGamesResult createGame(String authToken, String gameName, Integer minPlayers, Integer maxPlayers) {
         return null;
     }
 
     @Override
-    public PendingGamesResult createGame(String gameName, Integer minPlayers, Integer maxPlayers) {
+    public PendingGamesResult joinPendingGame(String authToken, String gameID) {
         return null;
     }
 
     @Override
-    public PendingGamesResult joinPendingGame(String gameID) {
+    public PendingGamesResult leavePendingGame(String authToken, String gameID) {
         return null;
     }
 
     @Override
-    public PendingGamesResult leavePendingGame(String gameID) {
+    public PendingGamesResult cancelGame(String authToken, String gameID) {
         return null;
     }
 
     @Override
-    public PendingGamesResult cancelGame(String gameID) {
+    public PendingGamesResult getPendingGames(String authToken) {
+        if (rootModel.authorize(authToken)) {
+            return new PendingGamesResult();
+        }
         return null;
     }
 
     @Override
-    public PendingGamesResult getPendingGames() {
-        return null;
-    }
-
-    @Override
-    public StartGameResult startGame(String gameID) {
+    public StartGameResult startGame(String authToken, String gameID) {
         return null;
     }
 }
