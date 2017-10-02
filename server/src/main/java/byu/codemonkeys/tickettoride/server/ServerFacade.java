@@ -1,5 +1,6 @@
 package byu.codemonkeys.tickettoride.server;
 
+import byu.codemonkeys.tickettoride.server.exceptions.AlreadyExistsException;
 import byu.codemonkeys.tickettoride.server.model.RootModel;
 import byu.codemonkeys.tickettoride.server.model.ServerSession;
 import byu.codemonkeys.tickettoride.server.model.User;
@@ -31,17 +32,22 @@ public class ServerFacade implements IServer {
         return new LoginResult("invalid login credentials");
     }
 
+    @Override
+    public LoginResult register(String username, String password) {
+        try {
+            rootModel.registerNewUser(username, password);
+        } catch (AlreadyExistsException e) {
+            return new LoginResult("username already exists");
+        }
+        return executeLogin(username);
+    }
+
     private LoginResult executeLogin(String username) {
         User user = rootModel.getUser(username);
         String authToken = rootModel.generateAuthToken();
         ServerSession session = new ServerSession(user, authToken);
         rootModel.addSession(session);
         return new LoginResult(session);
-    }
-
-    @Override
-    public LoginResult register(String username, String password) {
-        return null;
     }
 
     @Override

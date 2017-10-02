@@ -3,6 +3,8 @@ package byu.codemonkeys.tickettoride.server.commands;
 import org.junit.Before;
 import org.junit.Test;
 
+import byu.codemonkeys.tickettoride.server.ServerFacade;
+import byu.codemonkeys.tickettoride.server.model.RootModel;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 
@@ -24,6 +26,8 @@ public class LoginCommandTest {
 	
 	@Test
 	public void execute() throws Exception {
+		RootModel.getInstance().registerNewUser(username, password);
+
 		Result result = command.execute();
 		assertEquals("Should return a result of type LoginResult.",
 					 LoginResult.class,
