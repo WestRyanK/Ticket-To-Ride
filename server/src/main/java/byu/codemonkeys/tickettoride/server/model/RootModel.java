@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import byu.codemonkeys.tickettoride.server.exceptions.AlreadyExistsException;
 
@@ -20,6 +21,9 @@ public class RootModel {
      */
     private Map<String, ServerSession> currentSessions;
 
+    /**
+     * pendingGames maps gameIDs to pendingGame objects.
+     */
     private Map<String, PendingGame> pendingGames;
 
     public static RootModel getInstance() {
@@ -47,6 +51,11 @@ public class RootModel {
         return false;
     }
 
+    /**
+     * Validates that an authToken belongs to a currently logged in user
+     * @param authToken Unique ID used to authenticate with the server
+     * @return boolean indicating if the authToken is an authorized token
+     */
     public boolean authorize(String authToken) {
         if (currentSessions.containsKey(authToken)) {
             return true;
@@ -54,14 +63,29 @@ public class RootModel {
         return false;
     }
 
+    /**
+     * Removes a Session from the current sessions, effectively logging a user out.
+     * Does not check if the session actually exists.
+     * @param authToken Unique ID that indicates which session to delete
+     */
     public void removeSession(String authToken) {
         currentSessions.remove(authToken);
     }
 
+    /**
+     * Retrieves the user associated with the given username.
+     * @param username unique username to retrieve the User object
+     * @return The User Object if it exists
+     */
     public User getUser(String username) {
         return users.get(username);
     }
 
+    /**
+     * Registers a new user with the server. If one already exists an AlreadyExists exception is thrown.
+     * @param username unique name to identify the user.
+     * @param password secret used to authenticate the user upon login.
+     */
     public void registerNewUser(String username, String password) {
         if (users.containsKey(username)) {
             throw new AlreadyExistsException();
@@ -70,18 +94,26 @@ public class RootModel {
         users.put(username, user);
     }
 
-    public String generateAuthToken() {
-        return IDGenerator.generateUniqueID();
+    /**
+     * Generates a UUID
+     * @return a UUID
+     */
+    public String generateUniqueID() {
+        return UUID.randomUUID().toString();
     }
 
-    public String generateGameID() {
-        return IDGenerator.generateUniqueID();
-    }
-
+    /**
+     * Adds a session to the servers currentSessions, effectively logging a user in.
+     * @param session User session to be added, must be constructed before hand.
+     */
     public void addSession(ServerSession session) {
         currentSessions.put(session.getAuthToken(), session);
     }
 
+    /**
+     * Retrieves the List of currently pending games.
+     * @return List of PendingGame objects
+     */
     public List<PendingGame> getPendingGames() {
         return new ArrayList<>(pendingGames.values());
     }

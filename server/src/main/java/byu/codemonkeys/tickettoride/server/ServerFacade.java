@@ -44,7 +44,7 @@ public class ServerFacade implements IServer {
 
     private LoginResult executeLogin(String username) {
         User user = rootModel.getUser(username);
-        String authToken = rootModel.generateAuthToken();
+        String authToken = rootModel.generateUniqueID();
         ServerSession session = new ServerSession(user, authToken);
         rootModel.addSession(session);
         return new LoginResult(session);

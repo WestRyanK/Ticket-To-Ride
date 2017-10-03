@@ -7,9 +7,29 @@ import byu.codemonkeys.tickettoride.shared.results.Result;
 import byu.codemonkeys.tickettoride.shared.results.StartGameResult;
 
 public interface IServer {
+    /**
+     * Authenticates a user using the provided username and password
+     * @param username Unique name identifying the user
+     * @param password Secret to validate the users credentials
+     * @return A LoginResult that contains a user session with an AuthToken if successful, otherwise returns an error message.
+     */
     LoginResult login(String username, String password);
+
+    /**
+     * Registers a new user
+     * @param username Unique name to identify the user
+     * @param password Secret to validate the users credentials
+     * @return A LoginResult that contains a user session with an AuthToken if successful, otherwise returns an error message.
+     */
     LoginResult register(String username, String password);
+
+    /**
+     * Logs a user out, clearing their session data.
+     * @param authToken Unique token used to authenticate with the server.
+     * @return Result indicating success or failure.
+     */
     Result logout(String authToken);
+
     PendingGamesResult createGame(String authToken, String gameName, Integer minPlayers, Integer maxPlayers);
     PendingGamesResult joinPendingGame(String authToken, String gameID);
     PendingGamesResult leavePendingGame(String authToken, String gameID);
