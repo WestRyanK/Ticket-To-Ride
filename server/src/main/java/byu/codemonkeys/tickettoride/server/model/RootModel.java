@@ -111,6 +111,15 @@ public class RootModel {
     }
 
     /**
+     * Retrieves a user session if one exists
+     * @param authToken Unique token to indicate which session to retrieve
+     * @return A ServerSession or null if none is found.
+     */
+    public ServerSession getSession(String authToken) {
+        return currentSessions.get(authToken);
+    }
+
+    /**
      * Retrieves the List of currently pending games.
      * @return List of PendingGame objects
      */
