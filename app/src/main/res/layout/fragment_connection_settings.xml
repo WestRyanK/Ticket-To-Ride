@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:orientation="vertical"
+              android:padding="10dp"
+              tools:context="byu.codemonkeys.tickettoride.views.ConnectionSettingsFragment">
+
+<EditText
+    android:id="@+id/connection_editTextHost"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:hint="@string/host"/>
+
+<EditText
+    android:id="@+id/connection_editTextPort"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:hint="@string/port" />
+
+<Button
+    android:id="@+id/connection_buttonSave"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:text="@string/save"/>
+
+<TextView
+    android:id="@+id/connection_textViewCancel"
+    android:layout_marginTop="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:clickable="true"
+    android:onClick="onClickCancel"
+    android:text="@string/cancel"/>
+</LinearLayout>

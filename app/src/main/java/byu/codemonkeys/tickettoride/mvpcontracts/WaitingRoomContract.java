@@ -9,6 +9,8 @@ import byu.codemonkeys.tickettoride.models.PendingGame;
 public interface WaitingRoomContract {
 	interface View {
 		void setPendingGameInfo(PendingGame pendingGame);
+		
+		void setIsStartGameVisible(boolean isStartGameVisible);
 	}
 	
 	interface Presenter {

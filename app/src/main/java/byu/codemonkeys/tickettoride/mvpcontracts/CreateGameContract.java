@@ -11,6 +11,8 @@ public interface CreateGameContract {
 		void setMinPlayers(int minPlayers);
 		
 		void setMaxPlayers(int maxPlayers);
+		
+		void setCanCreateGame(boolean canCreateGame);
 	}
 	
 	interface Presenter {
