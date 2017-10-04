@@ -23,7 +23,7 @@ public class CreateGameCommandTest {
 	
 	@Before
 	public void Init() {
-		command = new CreateGameCommand(gameName, minPlayers, maxPlayers);
+		command = new CreateGameCommand(gameName);
 	}
 	
 	@Test
@@ -44,12 +44,6 @@ public class CreateGameCommandTest {
 		assertEquals("Should have held onto the gameName from construction.",
 					 gameName,
 					 command.getGameName());
-		assertEquals("Should have kept minPlayers from construction.",
-					 minPlayers,
-					 command.getMinPlayers());
-		assertEquals("Should have kept maxPlayers from construction.",
-					 maxPlayers,
-					 command.getMaxPlayers());
 	}
 	
 }
