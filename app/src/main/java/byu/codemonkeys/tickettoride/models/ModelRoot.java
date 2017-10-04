@@ -14,18 +14,18 @@ import java.util.ArrayList;
  }
 
  @Override
- public boolean loginUser(String username, String password) {
-  return false;
+ public void loginUser(String username, String password) {
+
  }
 
  @Override
- public boolean logoutUser() {
-  return false;
+ public void logoutUser() {
+
  }
 
  @Override
- public boolean registerUser(String username, String password) {
-  return false;
+ public void registerUser(String username, String password) {
+
  }
 
  @Override
@@ -49,14 +49,12 @@ import java.util.ArrayList;
  }
 
  @Override
- public boolean joinPendingGame(PendingGame game) {
-  return false;
+ public PendingGame joinPendingGame(PendingGame game) {
+  return null;
  }
 
  @Override
- public boolean leavePendingGame() {
-  return false;
- }
+ public void leavePendingGame() { }
 
  @Override
  public Game startPendingGame(PendingGame game) {
