@@ -3,10 +3,10 @@ package byu.codemonkeys.tickettoride.models;
 import java.util.ArrayList;
 
 /**
- * Created by Ryan on 9/29/2017.
+ * Created by Megan on 10/3/2017.
  */
 
-public class PendingGame {
+ public class Game {
     private String gameID;
     private String gameName;
     private ArrayList<User> users;
@@ -31,4 +31,4 @@ public class PendingGame {
     public User getGameOwner(){
         return gameOwner;
     }
-}
+ }
