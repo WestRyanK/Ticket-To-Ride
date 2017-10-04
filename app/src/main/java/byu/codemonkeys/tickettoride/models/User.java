@@ -5,5 +5,15 @@ package byu.codemonkeys.tickettoride.models;
  */
 
  public class User {
+    private String userName;
+    private String userID;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
 
  }

@@ -5,5 +5,8 @@ package byu.codemonkeys.tickettoride.models;
  */
 
  public class ClientSession {
-
+    private String authToken;
+    public String getAuthToken(){
+        return authToken;
+    }
  }

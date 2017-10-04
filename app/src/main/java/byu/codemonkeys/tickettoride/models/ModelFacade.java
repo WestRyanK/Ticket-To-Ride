@@ -7,22 +7,23 @@ import java.util.ArrayList;
  */
 
 interface ModelFacade {
-  // Retrieves the current user
-  public User getUser();
-  // Login a user, returns success status
-  public boolean loginUser(String username, String password);
-  // Register a user, returns success status
-  public boolean registerUser(String username, String password);
+    // Retrieves the current user
+    User getUser();
+    // Login a user, returns success status
+    boolean loginUser(String username, String password);
+    // Register a user, returns success status
+    boolean registerUser(String username, String password);
+    boolean logoutUser();
 
-  public ClientSession getSession();
-  public void setSession(ClientSession session);
+    ClientSession getSession();
+    void setSession(ClientSession session);
 
-  public ArrayList<PendingGame> getPendingGames();
-  public PendingGame createPendingGame(PendingGame game);
+    ArrayList<PendingGame> getPendingGames();
+    PendingGame createPendingGame(PendingGame game);
 
-  public boolean joinPendingGame(PendingGame game);
-  // No game parameter required since a user can only be in one game at a time
-  public boolean leavePendingGame();
-  public Game startPendingGame(PendingGame game);
+    boolean joinPendingGame(PendingGame game);
+    // No game parameter required since a user can only be in one game at a time
+    boolean leavePendingGame();
+    Game startPendingGame(PendingGame game);
 
 }
