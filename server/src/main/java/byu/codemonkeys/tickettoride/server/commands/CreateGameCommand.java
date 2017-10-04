@@ -7,13 +7,12 @@ import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 
 public class CreateGameCommand extends CreateGameCommandData implements ICommand {
-	public CreateGameCommand(String gameName, int minPlayers, int maxPlayers) {
-		super(gameName, minPlayers, maxPlayers);
+	public CreateGameCommand(String gameName) {
+		super(gameName);
 	}
 	
 	@Override
 	public Result execute() {
-		return ServerFacade.getInstance().createGame(this.getAuthToken(), this.getGameName(),
-				this.getMinPlayers(), this.getMaxPlayers());
+		return ServerFacade.getInstance().createGame(this.getAuthToken(), this.getGameName());
 	}
 }

@@ -31,7 +31,7 @@ public interface IServer {
      */
     Result logout(String authToken);
 
-    PendingGameResult createGame(String authToken, String gameName, Integer minPlayers, Integer maxPlayers);
+    PendingGameResult createGame(String authToken, String gameName);
     PendingGameResult joinPendingGame(String authToken, String gameID);
     PendingGamesResult leavePendingGame(String authToken, String gameID);
     PendingGamesResult cancelGame(String authToken, String gameID);

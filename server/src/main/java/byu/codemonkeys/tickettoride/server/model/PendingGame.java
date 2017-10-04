@@ -10,13 +10,12 @@ import byu.codemonkeys.tickettoride.shared.model.UserBase;
 
 
 public class PendingGame extends GameBase {
-    private int minPlayers, maxPlayers;
+    private static int MIN_PLAYERS = 2;
+    private static int MAX_PLAYERS = 5;
     
-    public PendingGame(String gameID, String gameName, User owner, int minPlayers, int maxPlayers) {
+    public PendingGame(String gameID, String gameName, User owner) {
         this.gameName = gameName;
         this.gameOwner = owner;
-        this.minPlayers = minPlayers;
-        this.maxPlayers = maxPlayers;
         this.gameID = gameID;
         this.gameUsers = new ArrayList<>();
 
@@ -29,7 +28,7 @@ public class PendingGame extends GameBase {
      * @throws FullGameException if the game is full (the player limit has been reached).
      */
     public void addUser(User user) throws FullGameException {
-        if (gameUsers.size() >= maxPlayers) {
+        if (gameUsers.size() >= MAX_PLAYERS) {
             throw new FullGameException();
         }
 
@@ -46,6 +45,10 @@ public class PendingGame extends GameBase {
         if (user.equals(gameOwner)) {
             replaceOwner();
         }
+    }
+
+    public boolean isStartable() {
+        return gameUsers.size() >= MIN_PLAYERS;
     }
 
     /**

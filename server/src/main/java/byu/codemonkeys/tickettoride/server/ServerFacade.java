@@ -68,7 +68,7 @@ public class ServerFacade implements IServer {
     }
 
     @Override
-    public PendingGameResult createGame(String authToken, String gameName, Integer minPlayers, Integer maxPlayers) {
+    public PendingGameResult createGame(String authToken, String gameName) {
         ServerSession session = rootModel.getSession(authToken);
 
         if (session == null) {
@@ -77,7 +77,9 @@ public class ServerFacade implements IServer {
 
         User user = session.getUser();
 
-        PendingGame game = new PendingGame(rootModel.generateUniqueID(), gameName, user, minPlayers, maxPlayers);
+        PendingGame game = new PendingGame(rootModel.generateUniqueID(), gameName, user);
+
+        rootModel.addPendingGame(game);
 
         return new PendingGameResult(game);
     }
@@ -201,6 +203,10 @@ public class ServerFacade implements IServer {
 
         if (!user.equals(game.getOwner())) {
             return new StartGameResult("Only the game owner may start the game");
+        }
+
+        if (!game.isStartable()) {
+            return new StartGameResult("Too Few Players");
         }
 
         ActiveGame activeGame = rootModel.activateGame(gameID);
