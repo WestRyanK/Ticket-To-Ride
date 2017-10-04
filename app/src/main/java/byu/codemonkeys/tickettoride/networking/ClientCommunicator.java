@@ -52,7 +52,7 @@ public class ClientCommunicator {
             return serializer.deserialize(getString(getURL(path), request), LoginResult.class);
         } catch (IOException e) {
             e.printStackTrace();
-            return new LoginResult();
+            return new Result();
         }
     }
 
