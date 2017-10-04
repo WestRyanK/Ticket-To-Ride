@@ -1,11 +1,22 @@
 package byu.codemonkeys.tickettoride.server;
 
+import com.sun.corba.se.spi.activation.Server;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import byu.codemonkeys.tickettoride.server.exceptions.AlreadyExistsException;
+import byu.codemonkeys.tickettoride.server.exceptions.EmptyGameException;
+import byu.codemonkeys.tickettoride.server.exceptions.FullGameException;
+import byu.codemonkeys.tickettoride.server.model.ActiveGame;
+import byu.codemonkeys.tickettoride.server.model.PendingGame;
 import byu.codemonkeys.tickettoride.server.model.RootModel;
 import byu.codemonkeys.tickettoride.server.model.ServerSession;
 import byu.codemonkeys.tickettoride.server.model.User;
 import byu.codemonkeys.tickettoride.shared.IServer;
+import byu.codemonkeys.tickettoride.shared.model.GameBase;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
+import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 import byu.codemonkeys.tickettoride.shared.results.StartGameResult;
@@ -57,35 +68,143 @@ public class ServerFacade implements IServer {
     }
 
     @Override
-    public PendingGamesResult createGame(String authToken, String gameName, Integer minPlayers, Integer maxPlayers) {
-        return null;
+    public PendingGameResult createGame(String authToken, String gameName, Integer minPlayers, Integer maxPlayers) {
+        ServerSession session = rootModel.getSession(authToken);
+
+        if (session == null) {
+            return new PendingGameResult("Authentication Error");
+        }
+
+        User user = session.getUser();
+
+        PendingGame game = new PendingGame(rootModel.generateUniqueID(), gameName, user, minPlayers, maxPlayers);
+
+        return new PendingGameResult(game);
     }
 
     @Override
-    public PendingGamesResult joinPendingGame(String authToken, String gameID) {
-        return null;
+    public PendingGameResult joinPendingGame(String authToken, String gameID) {
+        if (!rootModel.authorize(authToken)) {
+            return new PendingGameResult("Authentication Error");
+        }
+
+        PendingGame game = rootModel.getPendingGame(gameID);
+
+        if (game == null) {
+            return new PendingGameResult("Invalid Game ID");
+        }
+
+        User user = rootModel.getSession(authToken).getUser();
+
+        if (game.hasUser(user)) {
+            return new PendingGameResult("You already joined the game");
+        }
+
+        try {
+            game.addUser(user);
+        } catch (FullGameException e) {
+            return new PendingGameResult("The game is full");
+        }
+
+        return new PendingGameResult(game);
     }
 
     @Override
     public PendingGamesResult leavePendingGame(String authToken, String gameID) {
-        return null;
+        ServerSession session = rootModel.getSession(authToken);
+
+        if (session == null) {
+            return new PendingGamesResult("Authentication Error");
+        }
+
+        PendingGame game = rootModel.getPendingGame(gameID);
+
+        if (game == null) {
+            return new PendingGamesResult("Invalid Game ID");
+        }
+
+        User user = session.getUser();
+
+        try {
+            game.removeUser(user);
+        } catch (EmptyGameException e) {
+            rootModel.removePendingGame(gameID);
+        }
+
+        return new PendingGamesResult(toGameBaseList(rootModel.getPendingGames()));
     }
 
     @Override
     public PendingGamesResult cancelGame(String authToken, String gameID) {
-        return null;
+        ServerSession session = rootModel.getSession(authToken);
+
+        if (session == null) {
+            return new PendingGamesResult("Authentication Error");
+        }
+
+        PendingGame game = rootModel.getPendingGame(gameID);
+
+        if (game == null) {
+            return new PendingGamesResult("Invalid Game ID");
+        }
+
+        User user = session.getUser();
+
+        if (!game.getOwner().equals(user)) {
+            return new PendingGamesResult("Only the game owner may cancel the game");
+        }
+
+        rootModel.removePendingGame(gameID);
+
+        return new PendingGamesResult(toGameBaseList(rootModel.getPendingGames()));
     }
 
     @Override
     public PendingGamesResult getPendingGames(String authToken) {
         if (rootModel.authorize(authToken)) {
-            return new PendingGamesResult();
+            return new PendingGamesResult(toGameBaseList(rootModel.getPendingGames()));
         }
-        return null;
+
+        return new PendingGamesResult("Not Authorized");
+    }
+
+    /**
+     * Converts a List<PendingGame> to a List<GameBase>.
+     * @param pendingGames a List<PendingGame>.
+     * @return the converted List.
+     */
+    private List<GameBase> toGameBaseList(List<PendingGame> pendingGames) {
+        List<GameBase> games = new ArrayList<>();
+
+        for (PendingGame pendingGame : pendingGames) {
+            games.add(pendingGame);
+        }
+
+        return games;
     }
 
     @Override
     public StartGameResult startGame(String authToken, String gameID) {
-        return null;
+        ServerSession session = rootModel.getSession(authToken);
+
+        if (session == null) {
+            return new StartGameResult("Authentication Error");
+        }
+
+        PendingGame game = rootModel.getPendingGame(gameID);
+
+        if (game == null) {
+            return new StartGameResult("Invalid Game ID");
+        }
+
+        User user = session.getUser();
+
+        if (!user.equals(game.getOwner())) {
+            return new StartGameResult("Only the game owner may start the game");
+        }
+
+        ActiveGame activeGame = rootModel.activateGame(gameID);
+
+        return new StartGameResult(activeGame);
     }
 }

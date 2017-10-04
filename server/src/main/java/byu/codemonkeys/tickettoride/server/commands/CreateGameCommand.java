@@ -1,5 +1,6 @@
 package byu.codemonkeys.tickettoride.server.commands;
 
+import byu.codemonkeys.tickettoride.server.ServerFacade;
 import byu.codemonkeys.tickettoride.shared.commands.CreateGameCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.ICommand;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
@@ -12,6 +13,7 @@ public class CreateGameCommand extends CreateGameCommandData implements ICommand
 	
 	@Override
 	public Result execute() {
-		return new PendingGamesResult();
+		return ServerFacade.getInstance().createGame(this.getAuthToken(), this.getGameName(),
+				this.getMinPlayers(), this.getMaxPlayers());
 	}
 }

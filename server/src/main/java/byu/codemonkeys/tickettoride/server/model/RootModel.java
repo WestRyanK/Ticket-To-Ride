@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 import byu.codemonkeys.tickettoride.server.exceptions.AlreadyExistsException;
@@ -26,6 +27,11 @@ public class RootModel {
      */
     private Map<String, PendingGame> pendingGames;
 
+    /**
+     * activeGames maps gameIDs to ActiveGame objects.
+     */
+    private Map<String, ActiveGame> activeGames;
+
     public static RootModel getInstance() {
         return ourInstance;
     }
@@ -34,6 +40,7 @@ public class RootModel {
         users = new HashMap<>();
         currentSessions = new HashMap<>();
         pendingGames = new HashMap<>();
+        activeGames = new HashMap<>();
     }
 
     /**
@@ -125,5 +132,50 @@ public class RootModel {
      */
     public List<PendingGame> getPendingGames() {
         return new ArrayList<>(pendingGames.values());
+    }
+
+    /**
+     * Retrieves the game with the specified ID.
+     * @param gameID the ID of the game to retrieve.
+     * @return the found PendingGame or null if none was found.
+     */
+    public PendingGame getPendingGame(String gameID) {
+        return pendingGames.get(gameID);
+    }
+
+    /**
+     * Add the specified PendingGame to the Model.
+     * @param game a PendingGame.
+     */
+    public void addPendingGame(PendingGame game) {
+        pendingGames.put(game.getID(), game);
+    }
+
+    /**
+     * Deletes the pending game with the specified ID.
+     * @param gameID a game ID.
+     */
+    public void removePendingGame(String gameID) {
+        pendingGames.remove(gameID);
+    }
+
+    /**
+     * Changes the pending game with the specified ID to an active game.
+     * @param gameID a game ID.
+     */
+    public ActiveGame activateGame(String gameID) throws NoSuchElementException {
+        PendingGame pendingGame = getPendingGame(gameID);
+
+        if (pendingGame == null) {
+            throw new NoSuchElementException();
+        }
+
+        ActiveGame activeGame = new ActiveGame(pendingGame);
+
+        activeGames.put(activeGame.getID(), activeGame);
+
+        removePendingGame(gameID);
+
+        return activeGame;
     }
 }
