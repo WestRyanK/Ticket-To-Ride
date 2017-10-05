@@ -49,6 +49,11 @@ import java.util.ArrayList;
  }
 
  @Override
+ public PendingGame getPendingGame() {
+        return null;
+    }
+
+ @Override
  public PendingGame joinPendingGame(PendingGame game) {
   return null;
  }

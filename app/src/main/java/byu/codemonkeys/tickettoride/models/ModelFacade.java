@@ -23,6 +23,8 @@ interface ModelFacade {
 
     // will throw error in the case of failure
     PendingGame joinPendingGame(PendingGame game);
+    // gets pending game that the logged in user is apart of
+    PendingGame getPendingGame();
     /*
     will throw error in the case of failure
     No game parameter required since a user can only be in one game at a time
