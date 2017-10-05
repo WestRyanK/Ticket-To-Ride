@@ -138,6 +138,8 @@ public class LoginFragment extends Fragment implements LoginContract.View {
 				presenter.navigateConnectionSettings();
 			}
 		});
+		
+		presenter.setDefaults();
 		return view;
 	}
 	

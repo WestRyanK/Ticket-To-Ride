@@ -1,6 +1,8 @@
 package byu.codemonkeys.tickettoride.presenters;
 
+import byu.codemonkeys.tickettoride.models.ModelRoot;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
+import byu.codemonkeys.tickettoride.mvpcontracts.IReportsErrors;
 import byu.codemonkeys.tickettoride.mvpcontracts.RegisterContract;
 
 /**
@@ -10,9 +12,13 @@ import byu.codemonkeys.tickettoride.mvpcontracts.RegisterContract;
 public class RegisterPresenter extends PresenterBase implements RegisterContract.Presenter {
 	
 	private RegisterContract.View view;
+	private String currentUserName;
+	private String currentPassword;
 	
-	public RegisterPresenter(RegisterContract.View view, INavigator navigator) {
-		super(navigator);
+	public RegisterPresenter(RegisterContract.View view,
+							 INavigator navigator,
+							 IReportsErrors errorReporter) {
+		super(navigator, errorReporter);
 		this.view = view;
 	}
 	
@@ -20,7 +26,10 @@ public class RegisterPresenter extends PresenterBase implements RegisterContract
 	@Override
 	public void register() {
 		if (canRegister()) {
-			this.navigator.Navigate(PresenterEnum.Lobby, false);
+			if (ModelRoot.getInstance().registerUser(this.currentUserName, this.currentPassword))
+				this.navigator.Navigate(PresenterEnum.Lobby, false);
+			else
+				errorReporter.displayError("Could not register user");
 		}
 	}
 	
@@ -31,19 +40,31 @@ public class RegisterPresenter extends PresenterBase implements RegisterContract
 	
 	@Override
 	public void setUsername(String username) {
-		if (true) {
+		if (username != this.currentUserName) {
+			this.currentUserName = username;
 			this.view.setCanRegister(canRegister());
 		}
 	}
 	
 	@Override
 	public void setPassword(String password) {
-		if (true) {
+		if (password != this.currentPassword) {
+			this.currentPassword = password;
 			this.view.setCanRegister(canRegister());
 		}
 	}
 	
 	private boolean canRegister() {
-		return true;
+		return (this.currentUserName != null &&
+				!this.currentUserName.isEmpty() &&
+				this.currentPassword != null &&
+				!this.currentPassword.isEmpty());
+	}
+	
+	@Override
+	public void setDefaults() {
+		this.view.setUsername("");
+		this.view.setPassword("");
+		
 	}
 }

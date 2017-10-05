@@ -126,6 +126,8 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 				presenter.cancel();
 			}
 		});
+		
+		presenter.setDefaults();
 		return view;
 	}
 	

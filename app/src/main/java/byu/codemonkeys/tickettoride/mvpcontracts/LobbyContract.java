@@ -19,5 +19,7 @@ public interface LobbyContract {
 		void joinGame();
 		
 		void logout();
+		
+		void setDefaults();
 	}
 }

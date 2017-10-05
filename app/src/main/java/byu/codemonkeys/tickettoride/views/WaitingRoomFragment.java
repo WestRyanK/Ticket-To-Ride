@@ -9,9 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
+import java.util.List;
 
 import byu.codemonkeys.tickettoride.R;
 import byu.codemonkeys.tickettoride.models.PendingGame;
+import byu.codemonkeys.tickettoride.models.User;
 import byu.codemonkeys.tickettoride.mvpcontracts.WaitingRoomContract;
 
 /**
@@ -28,10 +32,11 @@ public class WaitingRoomFragment extends Fragment implements WaitingRoomContract
 	// TODO: Rename and change types of parameters
 	//	private String mParam1;
 	//	private String mParam2;
+	private TextView textViewGameName;
 	private WaitingRoomContract.Presenter presenter;
-	private RecyclerView recyclerPlayers;
-	private LinearLayoutManager layoutManagerPlayers;
-	private PlayersRecyclerAdapter playerAdapter;
+	private RecyclerView recyclerUsers;
+	private LinearLayoutManager layoutManagerUsers;
+	private UserRecyclerAdapter userAdapter;
 	private Button buttonStartGame;
 	private Button buttonLeaveGame;
 	
@@ -75,12 +80,13 @@ public class WaitingRoomFragment extends Fragment implements WaitingRoomContract
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.fragment_waiting_room, container, false);
 		
-		recyclerPlayers = (RecyclerView) view.findViewById(R.id.waitingRoom_recyclerPlayers);
+		recyclerUsers = (RecyclerView) view.findViewById(R.id.waitingRoom_recyclerUsers);
 		buttonStartGame = (Button) view.findViewById(R.id.waitingRoom_buttonStartGame);
 		buttonLeaveGame = (Button) view.findViewById(R.id.waitingRoom_buttonLeaveGame);
-	
-		layoutManagerPlayers = new LinearLayoutManager(getActivity());
-		recyclerPlayers.setLayoutManager(layoutManagerPlayers);
+		textViewGameName = (TextView) view.findViewById(R.id.waitingRoom_textViewGameName);
+		
+		layoutManagerUsers = new LinearLayoutManager(getActivity());
+		recyclerUsers.setLayoutManager(layoutManagerUsers);
 		
 		buttonStartGame.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -96,6 +102,7 @@ public class WaitingRoomFragment extends Fragment implements WaitingRoomContract
 			}
 		});
 		
+		presenter.setDefaults();
 		return view;
 	}
 	
@@ -105,13 +112,19 @@ public class WaitingRoomFragment extends Fragment implements WaitingRoomContract
 	
 	// region WaitingRoomContract.View Implementation
 	@Override
-	public void setPendingGameInfo(PendingGame pendingGame) {
-		if (playerAdapter == null) {
-			playerAdapter = new PlayersRecyclerAdapter(pendingGame.getPlayers());
-			recyclerPlayers.setAdapter(playerAdapter);
+	public void setPendingGameName(String gameName) {
+		this.textViewGameName.setText(gameName);
+	}
+	
+	@Override
+	public void setWaitingUsers(List<User> users) {
+		if (userAdapter == null) {
+			userAdapter = new UserRecyclerAdapter(users);
+			recyclerUsers.setAdapter(userAdapter);
 		} else {
-			playerAdapter.updateData(pendingGame.getPlayers());
+			userAdapter.updateData(users);
 		}
+		
 	}
 	
 	@Override

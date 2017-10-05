@@ -110,6 +110,7 @@ public class CreateGameFragment extends Fragment implements CreateGameContract.V
 			}
 		});
 		
+		presenter.setDefaults();
 		return view;
 	}
 	
@@ -119,16 +120,16 @@ public class CreateGameFragment extends Fragment implements CreateGameContract.V
 		this.editTextGameName.setText(gameName);
 	}
 	
-	@Override
-	public void setMinPlayers(int minPlayers) {
-		
-	}
-	
-	@Override
-	public void setMaxPlayers(int maxPlayers) {
-		
-	}
-	
+	//	@Override
+	//	public void setMinPlayers(int minPlayers) {
+	//
+	//	}
+	//
+	//	@Override
+	//	public void setMaxPlayers(int maxPlayers) {
+	//
+	//	}
+	//
 	@Override
 	public void setCanCreateGame(boolean canCreateGame) {
 		this.buttonCreateGame.setEnabled(canCreateGame);

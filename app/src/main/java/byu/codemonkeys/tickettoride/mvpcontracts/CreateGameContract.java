@@ -8,9 +8,9 @@ public interface CreateGameContract {
 	interface View {
 		void setGameName(String gameName);
 		
-		void setMinPlayers(int minPlayers);
-		
-		void setMaxPlayers(int maxPlayers);
+		//		void setMinPlayers(int minPlayers);
+		//
+		//		void setMaxPlayers(int maxPlayers);
 		
 		void setCanCreateGame(boolean canCreateGame);
 	}
@@ -22,8 +22,9 @@ public interface CreateGameContract {
 		
 		void setGameName(String gameName);
 		
-		void setMinPlayers(int minPlayers);
-		
-		void setMaxPlayers(int maxPlayers);
+		//		void setMinPlayers(int minPlayers);
+		//
+		//		void setMaxPlayers(int maxPlayers);
+		void setDefaults();
 	}
 }

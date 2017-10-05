@@ -7,6 +7,9 @@ public class GameBase {
     protected String gameID, gameName;
     protected UserBase gameOwner;
     protected List<UserBase> gameUsers;
+	
+    public static int MIN_PLAYERS = 2;
+    public static int MAX_PLAYERS = 5;
 
     public String getID() {
         return gameID;

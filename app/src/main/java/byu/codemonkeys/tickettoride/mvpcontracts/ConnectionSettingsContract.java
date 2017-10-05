@@ -21,5 +21,7 @@ public interface ConnectionSettingsContract {
 		void setHost(String host);
 		
 		void setPort(String port);
+		
+		void setDefaults();
 	}
 }

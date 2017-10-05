@@ -23,5 +23,7 @@ public interface LoginContract {
 		void setUsername(String username);
 		
 		void setPassword(String password);
+		
+		void setDefaults();
 	}
 }

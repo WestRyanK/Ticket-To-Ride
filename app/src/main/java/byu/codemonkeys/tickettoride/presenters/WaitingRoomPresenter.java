@@ -1,6 +1,12 @@
 package byu.codemonkeys.tickettoride.presenters;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import byu.codemonkeys.tickettoride.models.PendingGame;
+import byu.codemonkeys.tickettoride.models.User;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
+import byu.codemonkeys.tickettoride.mvpcontracts.IReportsErrors;
 import byu.codemonkeys.tickettoride.mvpcontracts.WaitingRoomContract;
 
 /**
@@ -11,8 +17,10 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 	
 	private WaitingRoomContract.View view;
 	
-	public WaitingRoomPresenter(WaitingRoomContract.View view, INavigator navigator) {
-		super(navigator);
+	public WaitingRoomPresenter(WaitingRoomContract.View view,
+								INavigator navigator,
+								IReportsErrors errorReporter) {
+		super(navigator, errorReporter);
 		this.view = view;
 	}
 	
@@ -31,5 +39,12 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 	
 	private boolean canStartGame() {
 		return true;
+	}
+	
+	@Override
+	public void setDefaults() {
+		this.view.setWaitingUsers(new ArrayList<User>());
+		this.view.setPendingGameName("");
+		
 	}
 }

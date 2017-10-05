@@ -21,5 +21,7 @@ public interface RegisterContract {
 		void setUsername(String username);
 		
 		void setPassword(String password);
+		
+		void setDefaults();
 	}
 }

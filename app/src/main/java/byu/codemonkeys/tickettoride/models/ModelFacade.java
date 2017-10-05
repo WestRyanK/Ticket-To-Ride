@@ -1,6 +1,7 @@
 package byu.codemonkeys.tickettoride.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Megan on 10/3/2017.
@@ -18,7 +19,7 @@ interface ModelFacade {
     ClientSession getSession();
     void setSession(ClientSession session);
 
-    ArrayList<PendingGame> getPendingGames();
+    List<PendingGame> getPendingGames();
     PendingGame createPendingGame(PendingGame game);
 
     boolean joinPendingGame(PendingGame game);

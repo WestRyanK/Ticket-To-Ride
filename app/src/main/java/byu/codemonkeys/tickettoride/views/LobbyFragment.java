@@ -89,6 +89,7 @@ public class LobbyFragment extends Fragment implements LobbyContract.View {
 			}
 		});
 		
+		presenter.setDefaults();
 		return view;
 	}
 	

@@ -1,6 +1,8 @@
 package byu.codemonkeys.tickettoride.presenters;
 
+import byu.codemonkeys.tickettoride.models.ModelRoot;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
+import byu.codemonkeys.tickettoride.mvpcontracts.IReportsErrors;
 import byu.codemonkeys.tickettoride.mvpcontracts.LoginContract;
 
 /**
@@ -10,16 +12,23 @@ import byu.codemonkeys.tickettoride.mvpcontracts.LoginContract;
 public class LoginPresenter extends PresenterBase implements LoginContract.Presenter {
 	
 	private LoginContract.View view;
+	private String currentUserName;
+	private String currentPassword;
 	
-	public LoginPresenter(LoginContract.View view, INavigator navigator) {
-		super(navigator);
+	public LoginPresenter(LoginContract.View view,
+						  INavigator navigator,
+						  IReportsErrors errorReporter) {
+		super(navigator, errorReporter);
 		this.view = view;
 	}
 	
 	@Override
 	public void login() {
 		if (canLogin()) {
-			this.navigator.Navigate(PresenterEnum.Lobby, false);
+			if (ModelRoot.getInstance().loginUser(this.currentUserName, this.currentPassword))
+				this.navigator.Navigate(PresenterEnum.Lobby, false);
+			else
+				this.errorReporter.displayError("Unable to login");
 		}
 	}
 	
@@ -35,19 +44,31 @@ public class LoginPresenter extends PresenterBase implements LoginContract.Prese
 	
 	@Override
 	public void setUsername(String username) {
-		if (true) {
+		if (username != this.currentUserName) {
+			this.currentUserName = username;
 			this.view.setCanLogin(canLogin());
 		}
 	}
 	
 	@Override
 	public void setPassword(String password) {
-		if (true) {
+		if (password != this.currentPassword) {
+			this.currentPassword = password;
 			this.view.setCanLogin(canLogin());
 		}
 	}
 	
 	private boolean canLogin() {
-		return true;
+		return (this.currentUserName != null &&
+				!this.currentUserName.isEmpty() &&
+				this.currentPassword != null &&
+				!this.currentPassword.isEmpty());
+	}
+	
+	@Override
+	public void setDefaults() {
+		this.view.setUsername("");
+		this.view.setPassword("");
+		
 	}
 }

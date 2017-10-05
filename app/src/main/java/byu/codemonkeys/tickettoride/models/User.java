@@ -15,5 +15,9 @@ package byu.codemonkeys.tickettoride.models;
     public String getUserID() {
         return userID;
     }
-
- }
+    
+    public void setUserName(String userName) {
+        
+        this.userName = userName;
+    }
+}

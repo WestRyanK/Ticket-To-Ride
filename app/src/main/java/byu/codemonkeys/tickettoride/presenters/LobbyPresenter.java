@@ -5,6 +5,7 @@ import java.util.List;
 
 import byu.codemonkeys.tickettoride.models.PendingGame;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
+import byu.codemonkeys.tickettoride.mvpcontracts.IReportsErrors;
 import byu.codemonkeys.tickettoride.mvpcontracts.LobbyContract;
 
 /**
@@ -15,8 +16,8 @@ public class LobbyPresenter extends PresenterBase implements LobbyContract.Prese
 	
 	LobbyContract.View view;
 	
-	public LobbyPresenter(LobbyContract.View view, INavigator navigator) {
-		super(navigator);
+	public LobbyPresenter(LobbyContract.View view, INavigator navigator, IReportsErrors errorReporter) {
+		super(navigator, errorReporter);
 		this.view = view;
 		
 //		List<PendingGame> pendingGames = new ArrayList<>();
@@ -39,5 +40,11 @@ public class LobbyPresenter extends PresenterBase implements LobbyContract.Prese
 	@Override
 	public void logout() {
 		this.navigator.Navigate(PresenterEnum.Login, false);
+	}
+	
+	@Override
+	public void setDefaults() {
+		this.view.setPendingGames(new ArrayList<PendingGame>());
+		
 	}
 }

@@ -5,8 +5,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
+import byu.codemonkeys.tickettoride.mvpcontracts.IReportsErrors;
 import byu.codemonkeys.tickettoride.presenters.ConnectionSettingsPresenter;
 import byu.codemonkeys.tickettoride.presenters.CreateGamePresenter;
 import byu.codemonkeys.tickettoride.presenters.LobbyPresenter;
@@ -21,7 +23,7 @@ import byu.codemonkeys.tickettoride.views.LoginFragment;
 import byu.codemonkeys.tickettoride.views.RegisterFragment;
 import byu.codemonkeys.tickettoride.views.WaitingRoomFragment;
 
-public class MainActivity extends AppCompatActivity implements INavigator {
+public class MainActivity extends AppCompatActivity implements INavigator, IReportsErrors {
 	
 	private FrameLayout fragmentContainer;
 	
@@ -35,40 +37,45 @@ public class MainActivity extends AppCompatActivity implements INavigator {
 		Navigate(PresenterEnum.Login, false);
 	}
 	
+	// region INavigator Implementation
 	@Override
 	public void Navigate(PresenterEnum presenter, boolean allowBack) {
 		Fragment fragment;
 		switch (presenter) {
 			case Login:
 				LoginFragment loginFragment = LoginFragment.newInstance();
-				loginFragment.setPresenter(new LoginPresenter(loginFragment, this));
+				loginFragment.setPresenter(new LoginPresenter(loginFragment, this, this));
 				fragment = loginFragment;
 				break;
 			case Register:
 				RegisterFragment registerFragment = RegisterFragment.newInstance();
-				registerFragment.setPresenter(new RegisterPresenter(registerFragment, this));
+				registerFragment.setPresenter(new RegisterPresenter(registerFragment, this, this));
 				fragment = registerFragment;
 				break;
 			case ConnectionSettings:
 				ConnectionSettingsFragment connectionSettingsFragment = ConnectionSettingsFragment.newInstance();
 				connectionSettingsFragment.setPresenter(new ConnectionSettingsPresenter(
 						connectionSettingsFragment,
+						this,
 						this));
 				fragment = connectionSettingsFragment;
 				break;
 			case CreateGame:
 				CreateGameFragment createGameFragment = CreateGameFragment.newInstance();
-				createGameFragment.setPresenter(new CreateGamePresenter(createGameFragment, this));
+				createGameFragment.setPresenter(new CreateGamePresenter(createGameFragment,
+																		this,
+																		this));
 				fragment = createGameFragment;
 				break;
 			case Lobby:
 				LobbyFragment lobbyFragment = LobbyFragment.newInstance();
-				lobbyFragment.setPresenter(new LobbyPresenter(lobbyFragment, this));
+				lobbyFragment.setPresenter(new LobbyPresenter(lobbyFragment, this, this));
 				fragment = lobbyFragment;
 				break;
 			case WaitingRoom:
 				WaitingRoomFragment waitingRoomFragment = WaitingRoomFragment.newInstance();
 				waitingRoomFragment.setPresenter(new WaitingRoomPresenter(waitingRoomFragment,
+																		  this,
 																		  this));
 				fragment = waitingRoomFragment;
 				break;
@@ -88,4 +95,12 @@ public class MainActivity extends AppCompatActivity implements INavigator {
 	public void NavigateBack() {
 		getSupportFragmentManager().popBackStack();
 	}
+	// endregion
+	
+	// region IReportsErrors Implementation
+	@Override
+	public void displayError(String error) {
+		Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+	}
+	// endregion
 }

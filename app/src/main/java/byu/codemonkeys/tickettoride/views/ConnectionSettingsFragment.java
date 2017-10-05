@@ -129,6 +129,7 @@ public class ConnectionSettingsFragment extends Fragment implements ConnectionSe
 			}
 		});
 		
+		presenter.setDefaults();
 		return view;
 	}
 	

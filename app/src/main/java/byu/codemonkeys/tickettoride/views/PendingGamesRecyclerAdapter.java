@@ -55,13 +55,15 @@ public class PendingGamesRecyclerAdapter extends RecyclerView.Adapter<PendingGam
 	public static class PendingGameHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 		
 		private TextView textViewGameName;
-		private TextView textViewPlayers;
+		private TextView textViewOwnerName;
+		private TextView textViewPlayersCount;
 		
 		public PendingGameHolder(View itemView) {
 			super(itemView);
 			
 			textViewGameName = (TextView) itemView.findViewById(R.id.recyclerView_lobby_pendingGame_gameName);
-			textViewPlayers = (TextView) itemView.findViewById(R.id.recyclerView_lobby_pendingGame_players);
+			textViewOwnerName = (TextView) itemView.findViewById(R.id.recyclerView_lobby_pendingGame_ownerName);
+			textViewPlayersCount = (TextView) itemView.findViewById(R.id.recyclerView_lobby_pendingGame_players);
 			
 			itemView.setOnClickListener(this);
 		}
@@ -73,9 +75,8 @@ public class PendingGamesRecyclerAdapter extends RecyclerView.Adapter<PendingGam
 		
 		public void bindPendingGame(PendingGame pendingGame) {
 			textViewGameName.setText(pendingGame.getGameName());
-			textViewPlayers.setText(String.format("%1$d to %2$d",
-												  pendingGame.getMinPlayers(),
-												  pendingGame.getMaxPlayers()));
+			textViewOwnerName.setText(String.format("(%1$s)", pendingGame.getGameOwner().getUserName()));
+			textViewPlayersCount.setText(pendingGame.getUsers().size());
 		}
 	}
 }
