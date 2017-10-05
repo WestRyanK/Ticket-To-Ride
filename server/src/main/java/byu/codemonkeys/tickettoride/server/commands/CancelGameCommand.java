@@ -1,5 +1,6 @@
 package byu.codemonkeys.tickettoride.server.commands;
 
+import byu.codemonkeys.tickettoride.server.ServerFacade;
 import byu.codemonkeys.tickettoride.shared.commands.CancelGameCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.ICommand;
 import byu.codemonkeys.tickettoride.shared.commands.RegisterCommandData;
@@ -13,6 +14,6 @@ public class CancelGameCommand extends CancelGameCommandData implements ICommand
 	
 	@Override
 	public Result execute() {
-		return new Result();
+		return ServerFacade.getInstance().cancelGame(this.getAuthToken(), this.getGameID());
 	}
 }

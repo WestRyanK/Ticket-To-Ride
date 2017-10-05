@@ -1,5 +1,6 @@
 package byu.codemonkeys.tickettoride.server.commands;
 
+import byu.codemonkeys.tickettoride.server.ServerFacade;
 import byu.codemonkeys.tickettoride.shared.commands.ICommand;
 import byu.codemonkeys.tickettoride.shared.commands.RegisterCommandData;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
@@ -12,6 +13,6 @@ public class RegisterCommand extends RegisterCommandData implements ICommand {
 	
 	@Override
 	public Result execute() {
-		return new LoginResult();
+		return ServerFacade.getInstance().register(getUserName(), getPassword());
 	}
 }
