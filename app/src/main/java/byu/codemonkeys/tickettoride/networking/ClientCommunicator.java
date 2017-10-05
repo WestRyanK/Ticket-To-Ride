@@ -8,8 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import byu.codemonkeys.tickettoride.shared.Serializer;
-import byu.codemonkeys.tickettoride.shared.results.LoginResult;
-import byu.codemonkeys.tickettoride.shared.results.Result;
+import byu.codemonkeys.tickettoride.shared.results.*;
 
 public class ClientCommunicator {
     private static ClientCommunicator instance;
@@ -49,10 +48,32 @@ public class ClientCommunicator {
      */
     public Result send(String path, Object request) {
         try {
-            return serializer.deserialize(getString(getURL(path), request), LoginResult.class);
+            switch(path){
+                case Routes.LOGIN:
+                    return serializer.deserialize(getString(getURL(path), request), LoginResult.class);
+                case Routes.LOGOUT:
+                    return serializer.deserialize(getString(getURL(path), request), Result.class);
+                case Routes.REGISTER:
+                    return serializer.deserialize(getString(getURL(path), request), LoginResult.class);
+                case Routes.CREATE_GAME:
+                    return serializer.deserialize(getString(getURL(path), request), PendingGamesResult.class);
+                case Routes.JOIN_PENDING_GAME:
+                    return serializer.deserialize(getString(getURL(path), request), PendingGamesResult.class);
+                case Routes.LEAVE_PENDING_GAME:
+                    return serializer.deserialize(getString(getURL(path), request), PendingGamesResult.class);
+                case Routes.START_GAME:
+                    return serializer.deserialize(getString(getURL(path), request), StartGameResult.class);
+                case Routes.CANCEL_GAME:
+                    return serializer.deserialize(getString(getURL(path), request), PendingGamesResult.class);
+                case Routes.GET_PENDING_GAMES:
+                    return serializer.deserialize(getString(getURL(path), request), PendingGamesResult.class);
+                default:
+                    // TODO(compy-386): Throw an error here?
+                    return null;
+            }
         } catch (IOException e) {
             e.printStackTrace();
-            return new LoginResult();
+            return new Result();
         }
     }
 
