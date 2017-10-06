@@ -26,7 +26,7 @@ public class ClientFacade implements IClient {
         Session session = modelRoot.getSession();
         PendingGamesResult result = ServerProxy.getInstance().getPendingGames(session);
         if(result.getErrorMessage() == null) {
-            modelRoot.setPendingGames(result.getPendingGames());
+            modelRoot.setPendingGames(result.getGames());
         } else throw new Exception(result.getErrorMessage());
     }
 }

@@ -20,7 +20,7 @@ public class PendingGamesResult extends Result {
         super(errorMessage);
     }
 
-    public List<GameBase> getPendingGames() {
-        return this.games;
+    public List<GameBase> getGames() {
+        return games;
     }
 }

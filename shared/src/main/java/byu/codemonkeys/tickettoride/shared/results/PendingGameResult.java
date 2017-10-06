@@ -15,6 +15,6 @@ public class PendingGameResult extends Result {
     }
 
     public GameBase getGame() {
-        return this.game;
+        return game;
     }
 }
