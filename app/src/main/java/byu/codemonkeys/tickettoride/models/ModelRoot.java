@@ -1,93 +1,75 @@
 package byu.codemonkeys.tickettoride.models;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
 
-import byu.codemonkeys.tickettoride.networking.ServerProxy;
-import byu.codemonkeys.tickettoride.shared.IServer;
-import byu.codemonkeys.tickettoride.shared.results.*;
+import byu.codemonkeys.tickettoride.shared.model.Session;
+import byu.codemonkeys.tickettoride.shared.model.GameBase;
+import byu.codemonkeys.tickettoride.shared.model.UserBase;
 
 /**
  * Created by Megan on 10/3/2017.
  */
-//TODO(compy-386): throw proper errors for invalid input
- public class ModelRoot implements ModelFacade{
-    private ModelRoot instance;
-    private IServer serverProxy = ServerProxy.getInstance();
-    private User user;
-    private PendingGame pendingGame;
-    private ArrayList<PendingGame> pendingGames;
-    private ClientSession session;
-    private Game game;
+//TODO(compy-386): clear models on logout via client and logout from server
+//TODO(compy-386): throw proper errors for invalid input on login and register, also invalid authorization
+ public class ModelRoot extends Observable {
+    private static ModelRoot instance;
+    private UserBase user;
+    private GameBase pendingGame;
+    private List<GameBase> pendingGames;
+    private Session session;
+    private GameBase game;
 
     private ModelRoot(){}
 
-    public ModelRoot getInstance() {
+    public static ModelRoot getInstance() {
         if(instance == null) {
             instance = new ModelRoot();
         }
         return instance;
     }
 
-     @Override
-     public User getUser() {
-      return user;
+     public UserBase getUser() {
+         return this.user;
      }
 
-     @Override
-     public void loginUser(String username, String password) {
-        Result result = serverProxy.login(username, password);
-
-         serverProxy.getPendingGames();
+     public void setUser(UserBase user) {
+         this.user = user;
      }
 
-     @Override
-     public void logoutUser() {
-        serverProxy.logout();
+     public List<GameBase> getPendingGames() {
+         return this.pendingGames;
+         //TODO(compy-386): fix to work with poller
      }
 
-     @Override
-     public void registerUser(String username, String password) {
-         serverProxy.register(username, password);
-
+     public GameBase getPendingGame() {
+         return this.pendingGame;
      }
 
-     @Override
-     public ClientSession getSession() {
-         return session;
+    public void setPendingGame(GameBase game){
+        this.pendingGame = game;
+    }
+
+     public void setPendingGames(List<GameBase> games){
+         this.pendingGames = games;
+         setChanged();
+         notifyObservers();
      }
 
-     @Override
-     public void setSession(ClientSession session) {
-         this.session = session;
+     public Session getSession(){
+         return this.session;
      }
 
-     @Override
-     public ArrayList<PendingGame> getPendingGames() {
-         return pendingGames;
-     }
+    public void setSession(Session session) {
+        this.session = session;
+    }
 
-     @Override
-     public PendingGame createPendingGame(PendingGame game) {
+    public void setGame(GameBase game) {
+        this.game = game;
+    }
 
-         return null;
-     }
+    public GameBase getGame() {
+        return this.game;
+    }
 
-     @Override
-     public PendingGame getPendingGame() {
-
-         return pendingGame;
-     }
-
-     @Override
-     public PendingGame joinPendingGame(PendingGame game) {
-      return null;
-     }
-
-     @Override
-     public void leavePendingGame() { }
-
-     @Override
-     public Game startPendingGame(PendingGame game) {
-      return null;
-     }
 }

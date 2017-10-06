@@ -9,8 +9,8 @@ import java.util.Timer;
  */
 
 public abstract class Poller {
-    protected static final int pollingInterval = 1000;
-    protected ClientFacade client;
+    protected int pollingInterval = 1000;
+    protected int pollingDelay = 0;
     protected Timer timer = new Timer();
 
 

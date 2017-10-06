@@ -3,6 +3,7 @@ package byu.codemonkeys.tickettoride.networking;
 import byu.codemonkeys.tickettoride.shared.IServer;
 import byu.codemonkeys.tickettoride.shared.results.*;
 import byu.codemonkeys.tickettoride.shared.commands.*;
+import byu.codemonkeys.tickettoride.shared.model.Session;
 
 
 
@@ -23,56 +24,63 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public Result login(String username, String password) {
+    public LoginResult login(String username, String password) {
         LoginCommandData data = new LoginCommandData(username, password);
-        return communicator.send(Routes.LOGIN, data);
+        return communicator.sendLogin(data);
     }
 
     @Override
-    public Result logout() {
+    public Result logout(Session session) {
         LogoutCommandData data = new LogoutCommandData();
-        return communicator.send(Routes.LOGOUT, data);
+        data.setUserSession(session);
+        return communicator.sendLogout(data);
     }
 
     @Override
-    public Result register(String username, String password) {
+    public LoginResult register(String username, String password) {
         RegisterCommandData data = new RegisterCommandData(username, password);
-        return communicator.send(Routes.REGISTER, data);
+        return communicator.sendRegister(data);
     }
 
     @Override
-    public Result createGame(String gameName) {
-        CreateGameCommandData data = new CreateGameCommandData(gameName, 2, 5);
-        return communicator.send(Routes.CREATE_GAME, data);
+    public PendingGameResult createGame(Session session, String gameName) {
+        CreateGameCommandData data = new CreateGameCommandData(gameName);
+        data.setUserSession(session);
+        return communicator.sendCreateGame(data);
     }
 
     @Override
-    public Result joinPendingGame(String gameID) {
+    public PendingGameResult joinPendingGame(Session session, String gameID) {
         JoinPendingGameCommandData data = new JoinPendingGameCommandData(gameID);
-        return communicator.send(Routes.JOIN_PENDING_GAME, data);
+        data.setUserSession(session);
+        return communicator.sendJoinPendingGame(data);
     }
 
     @Override
-    public Result leavePendingGame(String gameID) {
+    public PendingGamesResult leavePendingGame(Session session, String gameID) {
         LeavePendingGameCommandData data = new LeavePendingGameCommandData(gameID);
-        return communicator.send(Routes.LEAVE_PENDING_GAME, data);
+        data.setUserSession(session);
+        return communicator.sendLeavePendingGame(data);
     }
 
     @Override
-    public Result startGame(String gameID) {
+    public StartGameResult startGame(Session session, String gameID) {
         StartGameCommandData data = new StartGameCommandData(gameID);
-        return communicator.send(Routes.START_GAME, data);
+        data.setUserSession(session);
+        return communicator.sendStartGame(data);
     }
 
     @Override
-    public Result cancelGame(String gameID) {
+    public PendingGamesResult cancelGame(Session session, String gameID) {
         CancelGameCommandData data = new CancelGameCommandData(gameID);
-        return communicator.send(Routes.CANCEL_GAME, data);
+        data.setUserSession(session);
+        return communicator.sendCancelGame(data);
     }
 
     @Override
-    public Result getPendingGames() {
+    public PendingGamesResult getPendingGames(Session session) {
         GetPendingGamesCommandData data = new GetPendingGamesCommandData();
-        return communicator.send(Routes.GET_PENDING_GAMES, data);
+        data.setUserSession(session);
+        return communicator.sendGetPendingGames(data);
     }
 }

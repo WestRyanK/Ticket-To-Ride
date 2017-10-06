@@ -1,8 +1,10 @@
 package byu.codemonkeys.tickettoride.shared.commands;
 
+import byu.codemonkeys.tickettoride.shared.model.Session;
+
 public abstract class CommandData {
 	private String commandType;
-	private String authToken;
+	private Session userSession;
 	
 	protected CommandData(String commandType) {
 		this.commandType = commandType;
@@ -12,11 +14,11 @@ public abstract class CommandData {
 		return commandType;
 	}
 
-	public void setAuthToken(String authToken) {
-		this.authToken = authToken;
+	public void setUserSession(Session userSession) {
+		this.userSession = userSession;
 	}
 
-	public String getAuthToken() {
-		return authToken;
+	public Session getUserSession() {
+		return userSession;
 	}
 }

@@ -13,4 +13,8 @@ public class StartGameResult extends Result {
 	public StartGameResult(String errorMessage) {
 		super(errorMessage);
 	}
+
+	public GameBase getGame() {
+		return this.game;
+	}
 }

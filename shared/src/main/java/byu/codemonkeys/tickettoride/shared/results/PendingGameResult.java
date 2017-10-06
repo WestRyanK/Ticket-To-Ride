@@ -13,4 +13,8 @@ public class PendingGameResult extends Result {
     public PendingGameResult(String errorMessage) {
         super(errorMessage);
     }
+
+    public GameBase getGame() {
+        return this.game;
+    }
 }

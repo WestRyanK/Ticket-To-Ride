@@ -19,4 +19,8 @@ public class PendingGamesResult extends Result {
 	public PendingGamesResult(String errorMessage) {
         super(errorMessage);
     }
+
+    public List<GameBase> getPendingGames() {
+        return this.games;
+    }
 }
