@@ -1,5 +1,6 @@
 package byu.codemonkeys.tickettoride.server.commands;
 
+import byu.codemonkeys.tickettoride.server.ServerFacade;
 import byu.codemonkeys.tickettoride.shared.commands.CreateGameCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.GetPendingGamesCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.ICommand;
@@ -13,6 +14,6 @@ public class GetPendingGamesCommand extends GetPendingGamesCommandData implement
 	
 	@Override
 	public Result execute() {
-		return new PendingGamesResult();
+		return ServerFacade.getInstance().getPendingGames(this.getAuthToken());
 	}
 }

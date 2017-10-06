@@ -8,8 +8,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import byu.codemonkeys.tickettoride.shared.Serializer;
-import byu.codemonkeys.tickettoride.shared.results.LoginResult;
-import byu.codemonkeys.tickettoride.shared.results.Result;
+import byu.codemonkeys.tickettoride.shared.commands.*;
+import byu.codemonkeys.tickettoride.shared.results.*;
 
 public class ClientCommunicator {
     private static ClientCommunicator instance;
@@ -18,10 +18,6 @@ public class ClientCommunicator {
 
     private String host;
     private int port;
-
-    public static void main(String[] args) {
-        System.out.println(new Serializer().serialize(ClientCommunicator.getInstance().send("", new Object())));
-    }
 
     private ClientCommunicator() {
         host = "localhost";
@@ -41,20 +37,92 @@ public class ClientCommunicator {
         return instance;
     }
 
-    /**
-     * Sends the specified request to the specified path and returns the response as a Result.
-     * @param path a valid HTTP path.
-     * @param request the Object to be sent as the request body.
-     * @return the Result of processing the request.
-     */
-    public Result send(String path, Object request) {
+    public void changeConfiguration(String host, int port) {
+        this.host = host;
+        this.port = port;
+    }
+
+    public LoginResult sendLogin(LoginCommandData request) {
         try {
-            return serializer.deserialize(getString(getURL(path), request), LoginResult.class);
+            return serializer.deserialize(getString(getURL(CommandType.LOGIN), request), LoginResult.class);
         } catch (IOException e) {
             e.printStackTrace();
-            return new LoginResult();
+            return null;
         }
     }
+
+    public Result sendLogout(LogoutCommandData request) {
+        try {
+            return serializer.deserialize(getString(getURL(CommandType.LOGOUT), request), Result.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public LoginResult sendRegister(RegisterCommandData request) {
+        try {
+            return serializer.deserialize(getString(getURL(CommandType.REGISTER), request), LoginResult.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public PendingGameResult sendCreateGame(CreateGameCommandData request) {
+        try {
+            return serializer.deserialize(getString(getURL(CommandType.CREATE_GAME), request), PendingGameResult.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public PendingGameResult sendJoinPendingGame(JoinPendingGameCommandData request) {
+        try {
+            return serializer.deserialize(getString(getURL(CommandType.JOIN_PENDING_GAME), request), PendingGameResult.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public PendingGamesResult sendLeavePendingGame(LeavePendingGameCommandData request) {
+        try {
+            return serializer.deserialize(getString(getURL(CommandType.LEAVE_PENDING_GAME), request), PendingGamesResult.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public PendingGamesResult sendCancelGame(CancelGameCommandData request) {
+        try {
+            return serializer.deserialize(getString(getURL(CommandType.CANCEL_GAME), request), PendingGamesResult.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public PendingGamesResult sendGetPendingGames(GetPendingGamesCommandData request) {
+        try {
+            return serializer.deserialize(getString(getURL(CommandType.GET_PENDING_GAMES), request), PendingGamesResult.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public StartGameResult sendStartGame(StartGameCommandData request) {
+        try {
+            return serializer.deserialize(getString(getURL(CommandType.START_GAME), request), StartGameResult.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     /**
      * Constructs a full HTTP URL String to the specified path.
@@ -88,7 +156,7 @@ public class ClientCommunicator {
 
         // TODO: Dynamically set these values.
         connection.setDoOutput(true);
-        connection.setRequestMethod("POST");
+        connection.setRequestMethod("GET");
 
         try {
             OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());

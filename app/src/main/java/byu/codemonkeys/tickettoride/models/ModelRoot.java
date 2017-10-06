@@ -1,68 +1,76 @@
 package byu.codemonkeys.tickettoride.models;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
+
+import byu.codemonkeys.tickettoride.shared.model.Session;
+import byu.codemonkeys.tickettoride.shared.model.GameBase;
+import byu.codemonkeys.tickettoride.shared.model.UserBase;
 
 /**
  * Created by Megan on 10/3/2017.
  */
+ public class ModelRoot extends Observable {
+    private static ModelRoot instance;
+    private UserBase user;
+    private GameBase pendingGame;
+    private List<GameBase> pendingGames;
+    private Session session;
+    private GameBase game;
 
- public class ModelRoot implements ModelFacade{
+    private ModelRoot(){}
 
- @Override
- public User getUser() {
-  return null;
- }
-
- @Override
- public void loginUser(String username, String password) {
-
- }
-
- @Override
- public void logoutUser() {
-
- }
-
- @Override
- public void registerUser(String username, String password) {
-
- }
-
- @Override
- public ClientSession getSession() {
-  return null;
- }
-
- @Override
- public void setSession(ClientSession session) {
-
- }
-
- @Override
- public ArrayList<PendingGame> getPendingGames() {
-  return null;
- }
-
- @Override
- public PendingGame createPendingGame(PendingGame game) {
-  return null;
- }
-
- @Override
- public PendingGame getPendingGame() {
-        return null;
+    public static ModelRoot getInstance() {
+        if(instance == null) {
+            instance = new ModelRoot();
+        }
+        return instance;
     }
 
- @Override
- public PendingGame joinPendingGame(PendingGame game) {
-  return null;
- }
+    public void clear() {
+        instance = null;
+    }
 
- @Override
- public void leavePendingGame() { }
+     public UserBase getUser() {
+         return this.user;
+     }
 
- @Override
- public Game startPendingGame(PendingGame game) {
-  return null;
- }
+     public void setUser(UserBase user) {
+         this.user = user;
+     }
+
+     public List<GameBase> getPendingGames() {
+         return pendingGames;
+     }
+
+     public GameBase getPendingGame() {
+         return pendingGame;
+     }
+
+    public void setPendingGame(GameBase game){
+        pendingGame = game;
+    }
+
+     public void setPendingGames(List<GameBase> games){
+         this.pendingGames = games;
+         setChanged();
+         notifyObservers();
+     }
+
+     public Session getSession(){
+         return this.session;
+     }
+
+    public void setSession(Session session) {
+        this.session = session;
+    }
+
+    public void setGame(GameBase game) {
+        this.game = game;
+    }
+
+    public GameBase getGame() {
+        return this.game;
+    }
+
 }

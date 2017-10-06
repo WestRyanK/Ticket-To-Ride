@@ -15,7 +15,7 @@ public class RegisterCommandTest {
 	
 	
 	private RegisterCommand command;
-	private static final String username = "westryank";
+	private static final String username = "westryank2";
 	private static final String password = "Youthoughtidputmyrealpasswordheredidntyou";
 	
 	@Before
@@ -25,6 +25,7 @@ public class RegisterCommandTest {
 	
 	@Test
 	public void execute() throws Exception {
+		// TODO: Make unit tests run independently (flush previous data between tests or make a mock server model)
 		Result result = command.execute();
 		assertEquals("Should return a result of type LoginResult.",
 					 LoginResult.class,
