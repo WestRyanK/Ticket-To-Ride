@@ -40,15 +40,15 @@ import byu.codemonkeys.tickettoride.shared.model.UserBase;
      }
 
      public List<GameBase> getPendingGames() {
-         return this.pendingGames;
+         return pendingGames;
      }
 
      public GameBase getPendingGame() {
-         return this.pendingGame;
+         return pendingGame;
      }
 
     public void setPendingGame(GameBase game){
-        this.pendingGame = game;
+        pendingGame = game;
     }
 
      public void setPendingGames(List<GameBase> games){

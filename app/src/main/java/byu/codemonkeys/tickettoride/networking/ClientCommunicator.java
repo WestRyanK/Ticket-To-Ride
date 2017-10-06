@@ -44,7 +44,7 @@ public class ClientCommunicator {
 
     public LoginResult sendLogin(LoginCommandData request) {
         try {
-            return serializer.deserialize(getString(getURL(Routes.LOGIN), request), LoginResult.class);
+            return serializer.deserialize(getString(getURL(CommandType.LOGIN), request), LoginResult.class);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -53,7 +53,7 @@ public class ClientCommunicator {
 
     public Result sendLogout(LogoutCommandData request) {
         try {
-            return serializer.deserialize(getString(getURL(Routes.LOGOUT), request), Result.class);
+            return serializer.deserialize(getString(getURL(CommandType.LOGOUT), request), Result.class);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -62,7 +62,7 @@ public class ClientCommunicator {
 
     public LoginResult sendRegister(RegisterCommandData request) {
         try {
-            return serializer.deserialize(getString(getURL(Routes.REGISTER), request), LoginResult.class);
+            return serializer.deserialize(getString(getURL(CommandType.REGISTER), request), LoginResult.class);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -71,7 +71,7 @@ public class ClientCommunicator {
 
     public PendingGameResult sendCreateGame(CreateGameCommandData request) {
         try {
-            return serializer.deserialize(getString(getURL(Routes.CREATE_GAME), request), PendingGameResult.class);
+            return serializer.deserialize(getString(getURL(CommandType.CREATE_GAME), request), PendingGameResult.class);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -80,7 +80,7 @@ public class ClientCommunicator {
 
     public PendingGameResult sendJoinPendingGame(JoinPendingGameCommandData request) {
         try {
-            return serializer.deserialize(getString(getURL(Routes.JOIN_PENDING_GAME), request), PendingGameResult.class);
+            return serializer.deserialize(getString(getURL(CommandType.JOIN_PENDING_GAME), request), PendingGameResult.class);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -89,7 +89,7 @@ public class ClientCommunicator {
 
     public PendingGamesResult sendLeavePendingGame(LeavePendingGameCommandData request) {
         try {
-            return serializer.deserialize(getString(getURL(Routes.LEAVE_PENDING_GAME), request), PendingGamesResult.class);
+            return serializer.deserialize(getString(getURL(CommandType.LEAVE_PENDING_GAME), request), PendingGamesResult.class);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -98,7 +98,7 @@ public class ClientCommunicator {
 
     public PendingGamesResult sendCancelGame(CancelGameCommandData request) {
         try {
-            return serializer.deserialize(getString(getURL(Routes.CANCEL_GAME), request), PendingGamesResult.class);
+            return serializer.deserialize(getString(getURL(CommandType.CANCEL_GAME), request), PendingGamesResult.class);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -107,7 +107,7 @@ public class ClientCommunicator {
 
     public PendingGamesResult sendGetPendingGames(GetPendingGamesCommandData request) {
         try {
-            return serializer.deserialize(getString(getURL(Routes.GET_PENDING_GAMES), request), PendingGamesResult.class);
+            return serializer.deserialize(getString(getURL(CommandType.GET_PENDING_GAMES), request), PendingGamesResult.class);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -116,7 +116,7 @@ public class ClientCommunicator {
 
     public StartGameResult sendStartGame(StartGameCommandData request) {
         try {
-            return serializer.deserialize(getString(getURL(Routes.START_GAME), request), StartGameResult.class);
+            return serializer.deserialize(getString(getURL(CommandType.START_GAME), request), StartGameResult.class);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
