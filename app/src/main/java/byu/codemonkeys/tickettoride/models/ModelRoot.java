@@ -1,19 +1,30 @@
 package byu.codemonkeys.tickettoride.models;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+
+import byu.codemonkeys.tickettoride.shared.model.Session;
+import byu.codemonkeys.tickettoride.shared.model.GameBase;
+import byu.codemonkeys.tickettoride.shared.model.UserBase;
 
 /**
  * Created by Megan on 10/3/2017.
  */
+ public class ModelRoot extends Observable {
+    private static ModelRoot instance;
+    private UserBase user;
+    private GameBase pendingGame;
+    private List<GameBase> pendingGames;
+    private Session session;
+    private GameBase game;
 
-public class ModelRoot implements ModelFacade {
+    private ModelRoot(){}
 	
-	private static ModelRoot instance;
-	
-	public static ModelRoot getInstance() {
-		if (instance == null)
-			instance = new ModelRoot();
+    public static ModelRoot getInstance() {
+        if(instance == null) {
+            instance = new ModelRoot();
+        }
+        return instance;
 		return instance;
 	}
 	
@@ -28,58 +39,52 @@ public class ModelRoot implements ModelFacade {
 	private List<PendingGame> pendingGames;
 	
 	
-	@Override
-	public User getUser() {
-		return null;
-	}
+    }
 	
-	@Override
-	public boolean loginUser(String username, String password) {
-		return false;
-	}
+    public void clear() {
+        instance = null;
+    }
 	
-	@Override
-	public boolean logoutUser() {
-		return false;
-	}
+     public UserBase getUser() {
+         return this.user;
+     }
 	
-	@Override
-	public boolean registerUser(String username, String password) {
-		return false;
-	}
+     public void setUser(UserBase user) {
+         this.user = user;
+     }
 	
-	@Override
-	public ClientSession getSession() {
-		return null;
-	}
+     public List<GameBase> getPendingGames() {
+         return pendingGames;
+     }
 	
-	@Override
-	public void setSession(ClientSession session) {
+     public GameBase getPendingGame() {
+         return pendingGame;
+     }
 		
-	}
+    public void setPendingGame(GameBase game){
+        pendingGame = game;
+    }
 	
-	@Override
-	public List<PendingGame> getPendingGames() {
-		return null;
-	}
+     public void setPendingGames(List<GameBase> games){
+         this.pendingGames = games;
+         setChanged();
+         notifyObservers();
+     }
 	
-	@Override
-	public PendingGame createPendingGame(PendingGame game) {
-		return null;
-	}
+     public Session getSession(){
+         return this.session;
+     }
 	
-	@Override
-	public boolean joinPendingGame(PendingGame game) {
-		return false;
-	}
+    public void setSession(Session session) {
+        this.session = session;
+    }
 	
-	@Override
-	public boolean leavePendingGame() {
-		return false;
-	}
+    public void setGame(GameBase game) {
+        this.game = game;
+    }
 	
-	@Override
-	public Game startPendingGame(PendingGame game) {
-		return null;
-	}
+    public GameBase getGame() {
+        return this.game;
+    }
+
 }

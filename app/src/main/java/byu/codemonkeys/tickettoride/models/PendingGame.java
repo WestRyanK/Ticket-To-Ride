@@ -3,7 +3,6 @@ package byu.codemonkeys.tickettoride.models;
 import java.util.List;
 
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
-
 /**
  * Created by Ryan on 9/29/2017.
  */

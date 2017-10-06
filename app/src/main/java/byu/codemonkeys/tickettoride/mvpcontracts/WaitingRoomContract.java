@@ -4,7 +4,6 @@ import java.util.List;
 
 import byu.codemonkeys.tickettoride.models.PendingGame;
 import byu.codemonkeys.tickettoride.models.User;
-
 /**
  * Created by Ryan on 9/29/2017.
  */
