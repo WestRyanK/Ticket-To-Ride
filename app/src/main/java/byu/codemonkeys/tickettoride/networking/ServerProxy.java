@@ -3,7 +3,6 @@ package byu.codemonkeys.tickettoride.networking;
 import byu.codemonkeys.tickettoride.shared.IServer;
 import byu.codemonkeys.tickettoride.shared.results.*;
 import byu.codemonkeys.tickettoride.shared.commands.*;
-import byu.codemonkeys.tickettoride.shared.model.Session;
 
 
 
@@ -30,9 +29,9 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public Result logout(Session session) {
+    public Result logout(String authToken) {
         LogoutCommandData data = new LogoutCommandData();
-        data.setUserSession(session);
+        data.setAuthToken(authToken);
         return communicator.sendLogout(data);
     }
 
@@ -43,44 +42,45 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public PendingGameResult createGame(Session session, String gameName) {
+    public PendingGameResult createGame(String authToken, String gameName) {
         CreateGameCommandData data = new CreateGameCommandData(gameName);
-        data.setUserSession(session);
+        data.setAuthToken(authToken);
         return communicator.sendCreateGame(data);
     }
 
     @Override
-    public PendingGameResult joinPendingGame(Session session, String gameID) {
+    public PendingGameResult joinPendingGame(String authToken, String gameID) {
         JoinPendingGameCommandData data = new JoinPendingGameCommandData(gameID);
-        data.setUserSession(session);
+        data.setAuthToken(authToken);
         return communicator.sendJoinPendingGame(data);
     }
 
+    //TODO(compy-386): fix this to gameID everywhere else
     @Override
-    public PendingGamesResult leavePendingGame(Session session, String gameID) {
+    public PendingGamesResult leavePendingGame(String authToken, String gameID) {
         LeavePendingGameCommandData data = new LeavePendingGameCommandData(gameID);
-        data.setUserSession(session);
+        data.setAuthToken(authToken);
         return communicator.sendLeavePendingGame(data);
     }
 
     @Override
-    public StartGameResult startGame(Session session, String gameID) {
+    public StartGameResult startGame(String authToken, String gameID) {
         StartGameCommandData data = new StartGameCommandData(gameID);
-        data.setUserSession(session);
+        data.setAuthToken(authToken);
         return communicator.sendStartGame(data);
     }
 
     @Override
-    public PendingGamesResult cancelGame(Session session, String gameID) {
+    public PendingGamesResult cancelGame(String authToken, String gameID) {
         CancelGameCommandData data = new CancelGameCommandData(gameID);
-        data.setUserSession(session);
+        data.setAuthToken(authToken);
         return communicator.sendCancelGame(data);
     }
 
     @Override
-    public PendingGamesResult getPendingGames(Session session) {
+    public PendingGamesResult getPendingGames(String authToken) {
         GetPendingGamesCommandData data = new GetPendingGamesCommandData();
-        data.setUserSession(session);
+        data.setAuthToken(authToken);
         return communicator.sendGetPendingGames(data);
     }
 }

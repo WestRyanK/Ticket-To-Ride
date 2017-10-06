@@ -6,6 +6,8 @@ import java.util.Observer;
 import byu.codemonkeys.tickettoride.exceptions.SingleGameException;
 import byu.codemonkeys.tickettoride.exceptions.UnauthorizedException;
 import byu.codemonkeys.tickettoride.networking.ClientCommunicator;
+import byu.codemonkeys.tickettoride.networking.PendingGamesPoller;
+import byu.codemonkeys.tickettoride.networking.Poller;
 import byu.codemonkeys.tickettoride.networking.ServerProxy;
 import byu.codemonkeys.tickettoride.shared.IServer;
 import byu.codemonkeys.tickettoride.shared.results.*;
@@ -20,12 +22,13 @@ import byu.codemonkeys.tickettoride.exceptions.NoPendingGameException;
 /**
  * Created by Megan on 10/3/2017.
  */
-//TODO(compy-386): clear models on logout via client and logout from server
-//TODO(compy-386): throw proper errors for invalid input on login and register, also invalid authorization
+//TODO(compy-386): implement poller for game starting, get API endpoint for it
 public class ModelFacade implements IModelFacade {
     private static IModelFacade instance;
     private IServer serverProxy = ServerProxy.getInstance();
+    private ClientCommunicator communicator = ClientCommunicator.getInstance();
     private ModelRoot models = ModelRoot.getInstance();
+    private PendingGamesPoller pendingGamesPoller = PendingGamesPoller.getInstance();
 
     private ModelFacade(){}
 
@@ -47,31 +50,32 @@ public class ModelFacade implements IModelFacade {
     }
 
     @Override
-    public void loginUser(String username, String password) throws LoginException {
+    public void login(String username, String password) throws LoginException {
         LoginResult result = serverProxy.login(username, password);
         if(result.getErrorMessage() == null) {
             models.setSession(result.getUserSession());
             models.setUser(new UserBase(username));
-            //TODO(compy-386):start poller here since they are logged in
+            start(pendingGamesPoller);
         } else throw new LoginException(result.getErrorMessage());
     }
 
     @Override
-    public void logoutUser() throws UnauthorizedException {
-        Result result = serverProxy.logout(models.getSession());
+    public void logout() throws UnauthorizedException {
+        Result result = serverProxy.logout(models.getSession().getAuthToken());
         if(result.getErrorMessage() == null) {
-            //this.instance = new ModelRoot();
-            //TODO(compy-386): clear the existing data
+            //clear the models since they are logging out
+            stop(pendingGamesPoller);
+            models.getInstance().clear();
         } else throw new UnauthorizedException(result.getErrorMessage());
     }
 
     @Override
-    public void registerUser(String username, String password) throws RegisterException {
+    public void register(String username, String password) throws RegisterException {
         LoginResult result = serverProxy.register(username, password);
         if(result.getErrorMessage() == null){
             models.setSession(result.getUserSession());
             models.setUser(new UserBase(username));
-            //TODO(compy-386): start poller here
+            start(pendingGamesPoller);
         } else throw new RegisterException(result.getErrorMessage());
     }
 
@@ -82,14 +86,15 @@ public class ModelFacade implements IModelFacade {
         } else {
             return models.getPendingGames();
         }
-        //TODO(compy-386): fix to work with poller
     }
 
     @Override
-    public GameBase createPendingGame(String gameName) throws UnauthorizedException {
-        PendingGameResult result = serverProxy.createGame(models.getSession(), gameName);
+    public GameBase createGame(String gameName) throws UnauthorizedException {
+        PendingGameResult result = serverProxy.createGame(models.getSession().getAuthToken(), gameName);
         if(result.getErrorMessage() == null) {
             models.setPendingGame(result.getGame());
+            stop(pendingGamesPoller);
+            //TODO(compy-386): Poll for game started, waiting so no longer have to get all pending games
             return models.getPendingGame();
         } else throw new UnauthorizedException(result.getErrorMessage());
     }
@@ -104,9 +109,11 @@ public class ModelFacade implements IModelFacade {
     @Override
     public GameBase joinPendingGame(GameBase game) throws UnauthorizedException, SingleGameException{
         if(models.getPendingGame() == null) {
-            PendingGameResult result = serverProxy.joinPendingGame(models.getSession(), game.getName());
+            PendingGameResult result = serverProxy.joinPendingGame(models.getSession().getAuthToken(), game.getID());
             if (result.getErrorMessage() == null) {
                  models.setPendingGame(result.getGame());
+                start(pendingGamesPoller);
+                //TODO(compy-386): Poll for game started
                 return models.getPendingGame();
             } else throw new UnauthorizedException(result.getErrorMessage());
         } else throw new SingleGameException();
@@ -117,18 +124,21 @@ public class ModelFacade implements IModelFacade {
         if(models.getPendingGame() == null) {
             throw new NoPendingGameException();
         } else {
-            PendingGamesResult result = serverProxy.leavePendingGame(models.getSession(), models.getPendingGame().getName());
-            if(result.getErrorMessage() == null) models.setPendingGame(null);
+            PendingGamesResult result = serverProxy.leavePendingGame(models.getSession().getAuthToken(), models.getPendingGame().getID());
+            if(result.getErrorMessage() == null) {
+                models.setPendingGame(null);
+                start(pendingGamesPoller);
+            }
             else throw new UnauthorizedException(result.getErrorMessage());
         }
     }
 
     @Override
-    public GameBase startPendingGame() throws UnauthorizedException, NoPendingGameException{
+    public GameBase startGame() throws UnauthorizedException, NoPendingGameException{
         if(models.getPendingGame() == null){
             throw new NoPendingGameException();
         } else {
-            StartGameResult result = serverProxy.startGame(models.getSession(), models.getPendingGame().getName());
+            StartGameResult result = serverProxy.startGame(models.getSession().getAuthToken(), models.getPendingGame().getID());
             if(result.getErrorMessage()==null) {
                 models.setGame(result.getGame());
                 return models.getGame();
@@ -137,21 +147,17 @@ public class ModelFacade implements IModelFacade {
     }
 
     @Override
-    public void cancelPendingGame() throws UnauthorizedException, NoPendingGameException{
+    public void cancelGame() throws UnauthorizedException, NoPendingGameException{
         if(models.getPendingGame() == null) {
             throw new NoPendingGameException();
         } else{
-            PendingGamesResult result = serverProxy.cancelGame(models.getSession(), models.getPendingGame().getName());
+            PendingGamesResult result = serverProxy.cancelGame(models.getSession().getAuthToken(), models.getPendingGame().getID());
             if(result.getErrorMessage() == null) {
                 models.setPendingGame(null);
-                models.setPendingGames(result.getPendingGames());
+                models.setPendingGames(result.getGames());
+                start(pendingGamesPoller);
             }
         }
-    }
-
-    @Override
-    public void setPendingGames(List<GameBase> games){
-        models.setPendingGames(games);
     }
 
     @Override
@@ -163,6 +169,14 @@ public class ModelFacade implements IModelFacade {
     //TODO(compy-386): Add error checking for invalid host and port inputs?
     @Override
     public void changeConnectionConfiguration(String host, int port){
-        ClientCommunicator.getInstance().changeConfiguration(host, port);
+        communicator.changeConfiguration(host, port);
+    }
+
+    private void start(Poller poller) {
+        poller.startPolling();
+    }
+
+    private void stop(Poller poller) {
+        poller.stopPolling();
     }
 }

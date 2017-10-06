@@ -23,8 +23,8 @@ public class ClientFacade implements IClient {
     @Override
     public void updatePendingGames() throws Exception{
         ModelRoot modelRoot = ModelRoot.getInstance();
-        Session session = modelRoot.getSession();
-        PendingGamesResult result = ServerProxy.getInstance().getPendingGames(session);
+        String authToken = modelRoot.getSession().getAuthToken();
+        PendingGamesResult result = ServerProxy.getInstance().getPendingGames(authToken);
         if(result.getErrorMessage() == null) {
             modelRoot.setPendingGames(result.getGames());
         } else throw new Exception(result.getErrorMessage());

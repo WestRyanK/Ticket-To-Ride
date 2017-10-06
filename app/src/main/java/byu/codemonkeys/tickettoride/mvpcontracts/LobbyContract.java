@@ -1,5 +1,7 @@
 package byu.codemonkeys.tickettoride.mvpcontracts;
 
+import byu.codemonkeys.tickettoride.models.PendingGame;
+
 import java.util.List;
 
 /**

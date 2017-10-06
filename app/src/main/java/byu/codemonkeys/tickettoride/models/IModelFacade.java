@@ -20,15 +20,15 @@ interface IModelFacade {
 
     UserBase getUser() throws UnauthorizedException;
 
-    void loginUser(String username, String password) throws LoginException;
+    void login(String username, String password) throws LoginException;
 
-    void registerUser(String username, String password) throws RegisterException;
+    void register(String username, String password) throws RegisterException;
 
-    void logoutUser() throws UnauthorizedException;
+    void logout() throws UnauthorizedException;
 
     List<GameBase> getPendingGames() throws UnauthorizedException;
 
-    GameBase createPendingGame(String gameName) throws UnauthorizedException;
+    GameBase createGame(String gameName) throws UnauthorizedException;
 
     GameBase joinPendingGame(GameBase game) throws UnauthorizedException, SingleGameException;
 
@@ -36,11 +36,9 @@ interface IModelFacade {
 
     void leavePendingGame() throws UnauthorizedException, NoPendingGameException;
 
-    GameBase startPendingGame() throws UnauthorizedException, NoPendingGameException;
+    GameBase startGame() throws UnauthorizedException, NoPendingGameException;
 
-    void cancelPendingGame() throws UnauthorizedException, NoPendingGameException;
-
-    void setPendingGames(List<GameBase> games) throws UnauthorizedException;
+    void cancelGame() throws UnauthorizedException, NoPendingGameException;
 
     Session getSession();
 

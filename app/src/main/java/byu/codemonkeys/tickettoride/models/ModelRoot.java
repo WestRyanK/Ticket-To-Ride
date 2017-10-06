@@ -10,8 +10,6 @@ import byu.codemonkeys.tickettoride.shared.model.UserBase;
 /**
  * Created by Megan on 10/3/2017.
  */
-//TODO(compy-386): clear models on logout via client and logout from server
-//TODO(compy-386): throw proper errors for invalid input on login and register, also invalid authorization
  public class ModelRoot extends Observable {
     private static ModelRoot instance;
     private UserBase user;
@@ -29,6 +27,10 @@ import byu.codemonkeys.tickettoride.shared.model.UserBase;
         return instance;
     }
 
+    public void clear() {
+        instance = null;
+    }
+
      public UserBase getUser() {
          return this.user;
      }
@@ -39,7 +41,6 @@ import byu.codemonkeys.tickettoride.shared.model.UserBase;
 
      public List<GameBase> getPendingGames() {
          return this.pendingGames;
-         //TODO(compy-386): fix to work with poller
      }
 
      public GameBase getPendingGame() {

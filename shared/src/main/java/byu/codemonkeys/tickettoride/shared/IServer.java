@@ -1,6 +1,6 @@
 package byu.codemonkeys.tickettoride.shared;
 
-import byu.codemonkeys.tickettoride.shared.model.Session;
+
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
@@ -26,15 +26,15 @@ public interface IServer {
 
     /**
      * Logs a user out, clearing their session data.
-     * @param session Unique token used to authenticate with the server.
+     * @param authToken Unique token used to authenticate with the server.
      * @return Result indicating success or failure.
      */
-    Result logout(Session session);
+    Result logout(String authToken);
 
-    PendingGameResult createGame(Session session, String gameName);
-    PendingGameResult joinPendingGame(Session session, String gameID);
-    PendingGamesResult leavePendingGame(Session session, String gameID);
-    PendingGamesResult cancelGame(Session sesion, String gameID);
-    PendingGamesResult getPendingGames(Session session);
-    StartGameResult startGame(Session session, String gameID);
+    PendingGameResult createGame(String authToken, String gameName);
+    PendingGameResult joinPendingGame(String authToken, String gameID);
+    PendingGamesResult leavePendingGame(String authToken, String gameID);
+    PendingGamesResult cancelGame(String authToken, String gameID);
+    PendingGamesResult getPendingGames(String authToken);
+    StartGameResult startGame(String authToken, String gameID);
 }
