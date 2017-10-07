@@ -9,7 +9,7 @@ import java.util.UUID;
 
 import byu.codemonkeys.tickettoride.server.exceptions.AlreadyExistsException;
 
-public class RootModel {
+public class RootModel implements IRootModel {
     private static final RootModel ourInstance = new RootModel();
 
     /**

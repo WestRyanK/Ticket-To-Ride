@@ -20,6 +20,7 @@ public class LogoutCommandTest {
 	@Before
 	public void Init() {
 		command = new LogoutCommand();
+		command.setAuthToken("auth-token");
 	}
 	
 	@Test
@@ -33,6 +34,5 @@ public class LogoutCommandTest {
 
 		assertEquals("Should return a result of type Result.", Result.class, result.getClass());
 		assertEquals("Command should've succeeded.", true, result.isSuccessful());
-		assertNull(RootModel.getInstance().getSession(authToken));
 	}
 }

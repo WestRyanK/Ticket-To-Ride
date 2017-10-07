@@ -21,6 +21,7 @@ public class RegisterCommandTest {
 	@Before
 	public void Init() {
 		command = new RegisterCommand(username, password);
+		command.setAuthToken("auth-token");
 	}
 	
 	@Test

@@ -9,6 +9,7 @@ import byu.codemonkeys.tickettoride.server.exceptions.AlreadyExistsException;
 import byu.codemonkeys.tickettoride.server.exceptions.EmptyGameException;
 import byu.codemonkeys.tickettoride.server.exceptions.FullGameException;
 import byu.codemonkeys.tickettoride.server.model.ActiveGame;
+import byu.codemonkeys.tickettoride.server.model.IRootModel;
 import byu.codemonkeys.tickettoride.server.model.PendingGame;
 import byu.codemonkeys.tickettoride.server.model.RootModel;
 import byu.codemonkeys.tickettoride.server.model.ServerSession;
@@ -23,14 +24,26 @@ import byu.codemonkeys.tickettoride.shared.results.StartGameResult;
 
 
 public class ServerFacade implements IServer {
-    private static final ServerFacade ourInstance = new ServerFacade();
-    private RootModel rootModel;
+    private static ServerFacade ourInstance;
+    private IRootModel rootModel;
 
     private ServerFacade() {
         rootModel = RootModel.getInstance();
     }
 
+    private ServerFacade(IRootModel model) {
+        rootModel = model;
+    }
+
+    public static void initialize(IRootModel model) {
+        ourInstance = new ServerFacade(model);
+    }
+
     public static ServerFacade getInstance() {
+        if (ourInstance == null) {
+            ourInstance = new ServerFacade();
+        }
+
         return ourInstance;
     }
 
