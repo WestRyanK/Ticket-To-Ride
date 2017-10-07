@@ -26,8 +26,6 @@ public class LoginCommandTest {
 	
 	@Test
 	public void execute() throws Exception {
-		RootModel.getInstance().registerNewUser(username, password);
-
 		Result result = command.execute();
 		assertEquals("Should return a result of type LoginResult.",
 					 LoginResult.class,
