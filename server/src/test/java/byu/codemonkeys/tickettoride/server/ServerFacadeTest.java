@@ -1,17 +1,24 @@
 package byu.codemonkeys.tickettoride.server;
 
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import byu.codemonkeys.tickettoride.server.model.MockRootModel;
+import byu.codemonkeys.tickettoride.server.model.RootModel;
 
 import static org.junit.Assert.*;
 
 public class ServerFacadeTest {
-    @Before
-    public void setUp() {
+    @BeforeClass
+    public static void setUp() {
         ServerFacade.initialize(new MockRootModel());
     }
+
+//    @AfterClass
+//    public static void tearDown() {
+//        ServerFacade.initialize(RootModel.getInstance());
+//    }
 
     @Test
     public void testGetInstance() {

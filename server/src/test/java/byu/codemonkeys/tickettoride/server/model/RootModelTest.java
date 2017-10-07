@@ -58,9 +58,11 @@ public class RootModelTest {
 
     @Test
     public void testGetUser() {
-        assertNull(rootModel.getUser("username"));
+        try {
+            rootModel.registerNewUser("username", "password");
+        } catch (AlreadyExistsException e) {
 
-        rootModel.registerNewUser("username", "password");
+        }
 
         assertNotNull(rootModel.getUser("username"));
         assertNull(rootModel.getUser("user"));

@@ -20,13 +20,13 @@ public class CancelGameCommandTest {
 	@Before
 	public void Init() {
 		command = new CancelGameCommand(gameID);
+		command.setAuthToken("auth-token");
 	}
 	
 	@Test
 	public void executeTest() throws Exception {
 		Result result = command.execute();
 		assertEquals("Should return a result of type PendingGamesResult.", PendingGamesResult.class, result.getClass());
-//		assertEquals("Command should've succeeded.", true, result.isSuccessful());
 	}
 	
 }
