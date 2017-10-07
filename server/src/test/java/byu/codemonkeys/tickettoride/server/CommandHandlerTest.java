@@ -5,6 +5,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URI;
 
 import byu.codemonkeys.tickettoride.server.commands.*;
@@ -31,7 +34,7 @@ public class CommandHandlerTest {
     @Test
     public void testGetRegisterCommand() {
         String requestBody = String.format("{\"commandType\": \"%s\"}", CommandType.REGISTER);
-        URI uri = URI.create(String.format("http://localhost:8080/%s", CommandType.REGISTER));
+        URI uri = URI.create(String.format("http://localhost:8080/%s/", CommandType.REGISTER));
 
         exchange = new MockExchange();
         exchange.setRequestBody(new ByteArrayInputStream(requestBody.getBytes()));
@@ -139,7 +142,7 @@ public class CommandHandlerTest {
         assertTrue(command instanceof LogoutCommand);
     }
 
-    @Test(expected = InvalidCommandException.class)
+    @Test
     public void testInvalidCommand() {
         String commandType = "NO_SUCH_COMMAND";
         String requestBody = String.format("{\"commandType\": \"%s\"}", commandType);
@@ -147,8 +150,55 @@ public class CommandHandlerTest {
 
         exchange = new MockExchange();
         exchange.setRequestBody(new ByteArrayInputStream(requestBody.getBytes()));
+        exchange.setResponseBody(new ByteArrayOutputStream());
         exchange.setRequestURI(uri);
 
-        new CommandHandler().getCommand(exchange);
+        try {
+            new CommandHandler().handle(exchange);
+        } catch (IOException e) {
+            assertTrue(false);
+        }
+
+        assertEquals(HttpURLConnection.HTTP_NOT_FOUND, exchange.getResponseCode());
+    }
+
+    @Test
+    public void testBadJson() {
+        String commandType = CommandType.REGISTER;
+        String requestBody = String.format("{\"userName\":\"username\",\"password\":\"password\"");
+        URI uri = URI.create(String.format("http://localhost:8080/%s", commandType));
+
+        exchange = new MockExchange();
+        exchange.setRequestBody(new ByteArrayInputStream(requestBody.getBytes()));
+        exchange.setResponseBody(new ByteArrayOutputStream());
+        exchange.setRequestURI(uri);
+
+        try {
+            new CommandHandler().handle(exchange);
+        } catch (IOException e) {
+            assertTrue(false);
+        }
+
+        assertEquals(HttpURLConnection.HTTP_BAD_REQUEST, exchange.getResponseCode());
+    }
+
+    @Test
+    public void testHandle() {
+        String commandType = CommandType.LOGOUT;
+        String requestBody = String.format("{\"authToken\":\"auth-token\"}");
+        URI uri = URI.create(String.format("http://localhost:8080/%s", commandType));
+
+        exchange = new MockExchange();
+        exchange.setRequestBody(new ByteArrayInputStream(requestBody.getBytes()));
+        exchange.setResponseBody(new ByteArrayOutputStream());
+        exchange.setRequestURI(uri);
+
+        try {
+            new CommandHandler().handle(exchange);
+        } catch (IOException e) {
+            assertTrue(false);
+        }
+
+        assertEquals(HttpURLConnection.HTTP_OK, exchange.getResponseCode());
     }
 }
