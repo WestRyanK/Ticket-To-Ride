@@ -1,7 +1,8 @@
 package byu.codemonkeys.tickettoride.presenters;
 
+import byu.codemonkeys.tickettoride.models.IModelFacade;
+import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
-import byu.codemonkeys.tickettoride.mvpcontracts.IReportsErrors;
 
 /**
  * Created by Ryan on 10/3/2017.
@@ -9,9 +10,12 @@ import byu.codemonkeys.tickettoride.mvpcontracts.IReportsErrors;
 
 public class PresenterBase {
 	
-	public PresenterBase(INavigator navigator, IReportsErrors errorReporter) {
+	public PresenterBase(INavigator navigator,
+						 IDisplaysMessages messageDisplayer,
+						 IModelFacade modelFacade) {
 		this.navigator = navigator;
-		this.errorReporter = errorReporter;
+		this.messageDisplayer = messageDisplayer;
+		this.modelFacade = modelFacade;
 	}
 	
 	public void setNavigator(INavigator navigator) {
@@ -19,5 +23,6 @@ public class PresenterBase {
 	}
 	
 	protected INavigator navigator;
-	protected IReportsErrors errorReporter;
+	protected IDisplaysMessages messageDisplayer;
+	protected IModelFacade modelFacade;
 }

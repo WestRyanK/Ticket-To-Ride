@@ -1,13 +1,15 @@
 package byu.codemonkeys.tickettoride.presenters;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import byu.codemonkeys.tickettoride.models.PendingGame;
-import byu.codemonkeys.tickettoride.models.User;
+import byu.codemonkeys.tickettoride.exceptions.NoPendingGameException;
+import byu.codemonkeys.tickettoride.exceptions.UnauthorizedException;
+import byu.codemonkeys.tickettoride.models.IModelFacade;
+import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
-import byu.codemonkeys.tickettoride.mvpcontracts.IReportsErrors;
 import byu.codemonkeys.tickettoride.mvpcontracts.WaitingRoomContract;
+import byu.codemonkeys.tickettoride.shared.model.GameBase;
+import byu.codemonkeys.tickettoride.shared.model.UserBase;
 
 /**
  * Created by Ryan on 10/3/2017.
@@ -19,17 +21,21 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 	
 	public WaitingRoomPresenter(WaitingRoomContract.View view,
 								INavigator navigator,
-								IReportsErrors errorReporter) {
-		super(navigator, errorReporter);
+								IDisplaysMessages messageDisplayer,
+								IModelFacade modelFacade) {
+		super(navigator, messageDisplayer, modelFacade);
 		this.view = view;
 	}
 	
 	@Override
 	public void startGame() {
 		if (canStartGame()) {
-			
+			try {
+				modelFacade.startGame();
+			} catch (Exception e) {
+				messageDisplayer.displayMessage(e.getMessage());
+			}
 		}
-		
 	}
 	
 	@Override
@@ -38,13 +44,29 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 	}
 	
 	private boolean canStartGame() {
-		return true;
+		GameBase game = null;
+		try {
+			game = modelFacade.getPendingGame();
+		} catch (UnauthorizedException e) {
+			e.printStackTrace();
+		} catch (NoPendingGameException e) {
+			e.printStackTrace();
+		}
+		
+		return GameBase.canStartGame(game);
 	}
 	
 	@Override
 	public void setDefaults() {
-		this.view.setWaitingUsers(new ArrayList<User>());
-		this.view.setPendingGameName("");
-		
+		try {
+			this.view.setWaitingUsers(modelFacade.getPendingGame().getUsers());
+			this.view.setPendingGameName(modelFacade.getPendingGame().getName());
+		} catch (UnauthorizedException e) {
+			e.printStackTrace();
+			messageDisplayer.displayMessage(e.getMessage());
+		} catch (NoPendingGameException e) {
+			e.printStackTrace();
+			messageDisplayer.displayMessage(e.getMessage());
+		}
 	}
 }

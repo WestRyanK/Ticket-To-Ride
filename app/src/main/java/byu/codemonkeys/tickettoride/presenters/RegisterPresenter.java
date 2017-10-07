@@ -1,9 +1,12 @@
 package byu.codemonkeys.tickettoride.presenters;
 
-import byu.codemonkeys.tickettoride.models.ModelRoot;
+import byu.codemonkeys.tickettoride.async.ICallback;
+import byu.codemonkeys.tickettoride.models.IModelFacade;
+import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
-import byu.codemonkeys.tickettoride.mvpcontracts.IReportsErrors;
 import byu.codemonkeys.tickettoride.mvpcontracts.RegisterContract;
+import byu.codemonkeys.tickettoride.shared.model.UserBase;
+import byu.codemonkeys.tickettoride.shared.results.Result;
 
 /**
  * Created by Ryan on 10/2/2017.
@@ -12,24 +15,34 @@ import byu.codemonkeys.tickettoride.mvpcontracts.RegisterContract;
 public class RegisterPresenter extends PresenterBase implements RegisterContract.Presenter {
 	
 	private RegisterContract.View view;
-	private String currentUserName;
-	private String currentPassword;
 	
 	public RegisterPresenter(RegisterContract.View view,
 							 INavigator navigator,
-							 IReportsErrors errorReporter) {
-		super(navigator, errorReporter);
+							 IDisplaysMessages messageDisplayer,
+							 IModelFacade modelFacade) {
+		super(navigator, messageDisplayer, modelFacade);
 		this.view = view;
 	}
 	
 	
 	@Override
 	public void register() {
-		if (canRegister()) {
-			if (ModelRoot.getInstance().registerUser(this.currentUserName, this.currentPassword))
-				this.navigator.Navigate(PresenterEnum.Lobby, false);
-			else
-				errorReporter.displayError("Could not register user");
+		ICallback registerCallback = new ICallback() {
+			@Override
+			public void callback(Result result) {
+				if (result.isSuccessful()) {
+					navigator.Navigate(PresenterEnum.Lobby, false);
+				} else {
+					messageDisplayer.displayMessage(result.getErrorMessage());
+				}
+			}
+		};
+		
+		if (canRegister())
+		{
+			modelFacade.registerAsync(this.view.getUsername(),
+									  this.view.getPassword(),
+									  registerCallback);
 		}
 	}
 	
@@ -39,26 +52,9 @@ public class RegisterPresenter extends PresenterBase implements RegisterContract
 	}
 	
 	@Override
-	public void setUsername(String username) {
-		if (username != this.currentUserName) {
-			this.currentUserName = username;
-			this.view.setCanRegister(canRegister());
-		}
-	}
-	
-	@Override
-	public void setPassword(String password) {
-		if (password != this.currentPassword) {
-			this.currentPassword = password;
-			this.view.setCanRegister(canRegister());
-		}
-	}
-	
-	private boolean canRegister() {
-		return (this.currentUserName != null &&
-				!this.currentUserName.isEmpty() &&
-				this.currentPassword != null &&
-				!this.currentPassword.isEmpty());
+	public boolean canRegister() {
+		return (UserBase.isValidUsername(this.view.getUsername()) &&
+				UserBase.isValidPassword(this.view.getPassword()));
 	}
 	
 	@Override

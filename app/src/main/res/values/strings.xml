@@ -19,4 +19,6 @@
     <string name="leave">Leave Game</string>
     <string name="startGame">Start Game</string>
     <string name="players">Players</string>
+    <string name="owner">Owner</string>
+    <string name="game">Game</string>
 </resources>

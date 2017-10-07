@@ -12,7 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:hint="@string/username"/>
+        android:hint="@string/username"
+        android:inputType="textNoSuggestions"
+        android:maxLines="1"/>
 
     <EditText
         android:id="@+id/register_editTextPassword"
@@ -20,6 +22,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:hint="@string/password"
+        android:maxLines="1"
         android:inputType="textPassword"/>
 
     <Button
@@ -31,11 +34,11 @@
 
     <TextView
         android:id="@+id/register_textViewCancel"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_marginTop="10dp"
         android:clickable="true"
+        android:gravity="center"
         android:onClick="onClickCancel"
         android:text="@string/cancel"/>
 </LinearLayout>

@@ -19,7 +19,6 @@ public class ClientCommunicator {
 	private String host;
 	private int port;
 	
-																		.send("", new Object())));
 	private ClientCommunicator() {
 		host = "localhost";
 		port = 8080;
@@ -39,93 +38,101 @@ public class ClientCommunicator {
 		return instance;
 	}
 	
-    public void changeConfiguration(String host, int port) {
-        this.host = host;
-        this.port = port;
-    }
-
-    public LoginResult sendLogin(LoginCommandData request) {
+	public void changeConfiguration(String host, int port) {
+		this.host = host;
+		this.port = port;
+	}
+	
+	public LoginResult sendLogin(LoginCommandData request) {
 		try {
-            return serializer.deserialize(getString(getURL(CommandType.LOGIN), request), LoginResult.class);
+			return serializer.deserialize(getString(getURL(CommandType.LOGIN), request),
+										  LoginResult.class);
 		} catch (IOException e) {
 			e.printStackTrace();
-            return null;
-        }
-    }
-
-    public Result sendLogout(LogoutCommandData request) {
-        try {
-            return serializer.deserialize(getString(getURL(CommandType.LOGOUT), request), Result.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public LoginResult sendRegister(RegisterCommandData request) {
-        try {
-            return serializer.deserialize(getString(getURL(CommandType.REGISTER), request), LoginResult.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public PendingGameResult sendCreateGame(CreateGameCommandData request) {
-        try {
-            return serializer.deserialize(getString(getURL(CommandType.CREATE_GAME), request), PendingGameResult.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public PendingGameResult sendJoinPendingGame(JoinPendingGameCommandData request) {
-        try {
-            return serializer.deserialize(getString(getURL(CommandType.JOIN_PENDING_GAME), request), PendingGameResult.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public PendingGamesResult sendLeavePendingGame(LeavePendingGameCommandData request) {
-        try {
-            return serializer.deserialize(getString(getURL(CommandType.LEAVE_PENDING_GAME), request), PendingGamesResult.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public PendingGamesResult sendCancelGame(CancelGameCommandData request) {
-        try {
-            return serializer.deserialize(getString(getURL(CommandType.CANCEL_GAME), request), PendingGamesResult.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public PendingGamesResult sendGetPendingGames(GetPendingGamesCommandData request) {
-        try {
-            return serializer.deserialize(getString(getURL(CommandType.GET_PENDING_GAMES), request), PendingGamesResult.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+			return new LoginResult(e.getMessage());
 		}
 	}
 	
-    public StartGameResult sendStartGame(StartGameCommandData request) {
-        try {
-            return serializer.deserialize(getString(getURL(CommandType.START_GAME), request), StartGameResult.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-
+	public Result sendLogout(LogoutCommandData request) {
+		try {
+			return serializer.deserialize(getString(getURL(CommandType.LOGOUT), request),
+										  Result.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new Result(e.getMessage());
+		}
+	}
+	
+	public LoginResult sendRegister(RegisterCommandData request) {
+		try {
+			return serializer.deserialize(getString(getURL(CommandType.REGISTER), request),
+										  LoginResult.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new LoginResult(e.getMessage());
+		}
+	}
+	
+	public PendingGameResult sendCreateGame(CreateGameCommandData request) {
+		try {
+			return serializer.deserialize(getString(getURL(CommandType.CREATE_GAME), request),
+										  PendingGameResult.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new PendingGameResult(e.getMessage());
+		}
+	}
+	
+	public PendingGameResult sendJoinPendingGame(JoinPendingGameCommandData request) {
+		try {
+			return serializer.deserialize(getString(getURL(CommandType.JOIN_PENDING_GAME), request),
+										  PendingGameResult.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new PendingGameResult(e.getMessage());
+		}
+	}
+	
+	public PendingGamesResult sendLeavePendingGame(LeavePendingGameCommandData request) {
+		try {
+			return serializer.deserialize(getString(getURL(CommandType.LEAVE_PENDING_GAME),
+													request), PendingGamesResult.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new PendingGamesResult(e.getMessage());
+		}
+	}
+	
+	public PendingGamesResult sendCancelGame(CancelGameCommandData request) {
+		try {
+			return serializer.deserialize(getString(getURL(CommandType.CANCEL_GAME), request),
+										  PendingGamesResult.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new PendingGamesResult(e.getMessage());
+		}
+	}
+	
+	public PendingGamesResult sendGetPendingGames(GetPendingGamesCommandData request) {
+		try {
+			return serializer.deserialize(getString(getURL(CommandType.GET_PENDING_GAMES), request),
+										  PendingGamesResult.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new PendingGamesResult(e.getMessage());
+		}
+	}
+	
+	public StartGameResult sendStartGame(StartGameCommandData request) {
+		try {
+			return serializer.deserialize(getString(getURL(CommandType.START_GAME), request),
+										  StartGameResult.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new StartGameResult(e.getMessage());
+		}
+	}
+	
 	/**
 	 * Constructs a full HTTP URL String to the specified path.
 	 *
@@ -161,7 +168,7 @@ public class ClientCommunicator {
 		
 		// TODO: Dynamically set these values.
 		connection.setDoOutput(true);
-        connection.setRequestMethod("GET");
+		connection.setRequestMethod("GET");
 		
 		try {
 			OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
@@ -192,16 +199,27 @@ public class ClientCommunicator {
 		return host;
 	}
 	
-	public void setHost(String host) {
-		this.host = host;
-	}
-	
 	public int getPort() {
 		return port;
 	}
 	
-	public void setPort(int port) {
-		this.port = port;
+	public static boolean isValidHost(String hostString) {
+		return (hostString != null && !hostString.isEmpty());
 	}
 	
+	public static final int MIN_PORT_NUMBER = 0;
+	public static final int MAX_PORT_NUMBER = 65535;
+	
+	public static boolean isValidPort(int portNumber) {
+		return (portNumber >= MIN_PORT_NUMBER && portNumber <= MAX_PORT_NUMBER);
+	}
+	
+	public static boolean isValidPort(String portString) {
+		try {
+			int portNumber = Integer.parseInt(portString);
+			return isValidPort(portNumber);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
 }

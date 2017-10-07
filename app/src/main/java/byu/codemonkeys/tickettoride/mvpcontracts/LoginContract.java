@@ -8,7 +8,11 @@ public interface LoginContract {
 	interface View {
 		void setUsername(String username);
 		
+		String getUsername();
+		
 		void setPassword(String password);
+		
+		String getPassword();
 		
 		void setCanLogin(Boolean canLogin);
 	}
@@ -20,10 +24,8 @@ public interface LoginContract {
 		
 		void navigateConnectionSettings();
 		
-		void setUsername(String username);
-		
-		void setPassword(String password);
-		
 		void setDefaults();
+		
+		boolean canLogin();
 	}
 }

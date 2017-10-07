@@ -1,10 +1,9 @@
 package byu.codemonkeys.tickettoride.presenters;
 
-import byu.codemonkeys.tickettoride.models.ClientSession;
-import byu.codemonkeys.tickettoride.models.ModelRoot;
+import byu.codemonkeys.tickettoride.models.IModelFacade;
 import byu.codemonkeys.tickettoride.mvpcontracts.ConnectionSettingsContract;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
-import byu.codemonkeys.tickettoride.mvpcontracts.IReportsErrors;
+import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.networking.ClientCommunicator;
 
 /**
@@ -14,21 +13,19 @@ import byu.codemonkeys.tickettoride.networking.ClientCommunicator;
 public class ConnectionSettingsPresenter extends PresenterBase implements ConnectionSettingsContract.Presenter {
 	
 	private ConnectionSettingsContract.View view;
-	private String currentHost;
-	private String currentPort;
 	
 	public ConnectionSettingsPresenter(ConnectionSettingsContract.View view,
 									   INavigator navigator,
-									   IReportsErrors errorReporter) {
-		super(navigator, errorReporter);
+									   IDisplaysMessages messageDisplayer,
+									   IModelFacade modelFacade) {
+		super(navigator, messageDisplayer, modelFacade);
 		this.view = view;
 	}
 	
 	public void saveConnectionSettings() {
 		if (canSaveConnectionSettings()) {
-			ClientCommunicator.getInstance().setHost(this.currentHost);
-			int portNumber = Integer.parseInt(this.currentPort);
-			ClientCommunicator.getInstance().setPort(portNumber);
+			int portNumber = Integer.parseInt(this.view.getPort());
+			modelFacade.changeConnectionConfiguration(this.view.getHostName(), portNumber);
 			this.navigator.NavigateBack();
 		}
 	}
@@ -39,43 +36,14 @@ public class ConnectionSettingsPresenter extends PresenterBase implements Connec
 	}
 	
 	@Override
-	public void setHost(String host) {
-		
-		if (this.currentHost != host) {
-			this.currentHost = host;
-			this.view.setCanSave(canSaveConnectionSettings());
-		}
-	}
-	
-	@Override
-	public void setPort(String port) {
-		if (this.currentPort != port) {
-			this.currentPort = port;
-			this.view.setCanSave(canSaveConnectionSettings());
-		}
-	}
-	
-	private boolean canSaveConnectionSettings() {
-		return (this.currentHost != null &&
-				!this.currentHost.isEmpty() &&
-				isStringPositiveInteger(this.currentPort));
-	}
-	
-	private boolean isStringPositiveInteger(String string) {
-		try {
-			int a = Integer.parseInt(string);
-			if (a > 0)
-				return true;
-			else
-				return false;
-		} catch (NumberFormatException e) {
-			return false;
-		}
+	public boolean canSaveConnectionSettings() {
+		return ClientCommunicator.isValidHost(this.view.getHostName()) &&
+				ClientCommunicator.isValidPort(this.view.getPort());
 	}
 	
 	@Override
 	public void setDefaults() {
-		this.view.setHost(ClientCommunicator.getInstance().getHost());
+		this.view.setHostName(ClientCommunicator.getInstance().getHost());
 		this.view.setPort(String.valueOf(ClientCommunicator.getInstance().getPort()));
 	}
 }

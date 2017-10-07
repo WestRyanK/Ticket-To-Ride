@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import byu.codemonkeys.tickettoride.async.AndroidTask;
+import byu.codemonkeys.tickettoride.models.ModelFacade;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
-import byu.codemonkeys.tickettoride.mvpcontracts.IReportsErrors;
+import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.presenters.ConnectionSettingsPresenter;
 import byu.codemonkeys.tickettoride.presenters.CreateGamePresenter;
 import byu.codemonkeys.tickettoride.presenters.LobbyPresenter;
@@ -23,7 +25,7 @@ import byu.codemonkeys.tickettoride.views.LoginFragment;
 import byu.codemonkeys.tickettoride.views.RegisterFragment;
 import byu.codemonkeys.tickettoride.views.WaitingRoomFragment;
 
-public class MainActivity extends AppCompatActivity implements INavigator, IReportsErrors {
+public class MainActivity extends AppCompatActivity implements INavigator, IDisplaysMessages {
 	
 	private FrameLayout fragmentContainer;
 	
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements INavigator, IRepo
 		
 		this.fragmentContainer = (FrameLayout) this.findViewById(R.id.main_fragmentContainer);
 		
+		((ModelFacade) ModelFacade.getInstance()).setAsyncTask(new AndroidTask());
 		Navigate(PresenterEnum.Login, false);
 	}
 	
@@ -44,12 +47,18 @@ public class MainActivity extends AppCompatActivity implements INavigator, IRepo
 		switch (presenter) {
 			case Login:
 				LoginFragment loginFragment = LoginFragment.newInstance();
-				loginFragment.setPresenter(new LoginPresenter(loginFragment, this, this));
+				loginFragment.setPresenter(new LoginPresenter(loginFragment,
+															  this,
+															  this,
+															  ModelFacade.getInstance()));
 				fragment = loginFragment;
 				break;
 			case Register:
 				RegisterFragment registerFragment = RegisterFragment.newInstance();
-				registerFragment.setPresenter(new RegisterPresenter(registerFragment, this, this));
+				registerFragment.setPresenter(new RegisterPresenter(registerFragment,
+																	this,
+																	this,
+																	ModelFacade.getInstance()));
 				fragment = registerFragment;
 				break;
 			case ConnectionSettings:
@@ -57,26 +66,32 @@ public class MainActivity extends AppCompatActivity implements INavigator, IRepo
 				connectionSettingsFragment.setPresenter(new ConnectionSettingsPresenter(
 						connectionSettingsFragment,
 						this,
-						this));
+						this,
+						ModelFacade.getInstance()));
 				fragment = connectionSettingsFragment;
 				break;
 			case CreateGame:
 				CreateGameFragment createGameFragment = CreateGameFragment.newInstance();
 				createGameFragment.setPresenter(new CreateGamePresenter(createGameFragment,
 																		this,
-																		this));
+																		this,
+																		ModelFacade.getInstance()));
 				fragment = createGameFragment;
 				break;
 			case Lobby:
 				LobbyFragment lobbyFragment = LobbyFragment.newInstance();
-				lobbyFragment.setPresenter(new LobbyPresenter(lobbyFragment, this, this));
+				lobbyFragment.setPresenter(new LobbyPresenter(lobbyFragment,
+															  this,
+															  this,
+															  ModelFacade.getInstance()));
 				fragment = lobbyFragment;
 				break;
 			case WaitingRoom:
 				WaitingRoomFragment waitingRoomFragment = WaitingRoomFragment.newInstance();
 				waitingRoomFragment.setPresenter(new WaitingRoomPresenter(waitingRoomFragment,
 																		  this,
-																		  this));
+																		  this,
+																		  ModelFacade.getInstance()));
 				fragment = waitingRoomFragment;
 				break;
 			default:
@@ -97,9 +112,9 @@ public class MainActivity extends AppCompatActivity implements INavigator, IRepo
 	}
 	// endregion
 	
-	// region IReportsErrors Implementation
+	// region IDisplaysMessages Implementation
 	@Override
-	public void displayError(String error) {
+	public void displayMessage(String error) {
 		Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
 	}
 	// endregion

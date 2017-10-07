@@ -12,12 +12,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
+    android:maxLines="1"
+    android:inputType="textNoSuggestions"
     android:hint="@string/host"/>
 
 <EditText
     android:id="@+id/connection_editTextPort"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:maxLines="1"
+    android:inputType="number"
     android:gravity="center"
     android:hint="@string/port" />
 

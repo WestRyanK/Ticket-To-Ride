@@ -92,7 +92,7 @@ public class CreateGameFragment extends Fragment implements CreateGameContract.V
 			
 			@Override
 			public void afterTextChanged(Editable editable) {
-				presenter.setGameName(editable.toString());
+				setCanCreateGame(presenter.canCreateGame());
 			}
 		});
 		
@@ -120,16 +120,11 @@ public class CreateGameFragment extends Fragment implements CreateGameContract.V
 		this.editTextGameName.setText(gameName);
 	}
 	
-	//	@Override
-	//	public void setMinPlayers(int minPlayers) {
-	//
-	//	}
-	//
-	//	@Override
-	//	public void setMaxPlayers(int maxPlayers) {
-	//
-	//	}
-	//
+	@Override
+	public String getGameName() {
+		return this.editTextGameName.getText().toString();
+	}
+	
 	@Override
 	public void setCanCreateGame(boolean canCreateGame) {
 		this.buttonCreateGame.setEnabled(canCreateGame);

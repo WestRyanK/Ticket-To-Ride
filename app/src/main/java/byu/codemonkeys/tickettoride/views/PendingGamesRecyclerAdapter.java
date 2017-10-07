@@ -9,7 +9,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import byu.codemonkeys.tickettoride.R;
-import byu.codemonkeys.tickettoride.models.PendingGame;
+import byu.codemonkeys.tickettoride.shared.model.GameBase;
 
 /**
  * Created by Ryan on 10/3/2017.
@@ -17,10 +17,13 @@ import byu.codemonkeys.tickettoride.models.PendingGame;
 
 public class PendingGamesRecyclerAdapter extends RecyclerView.Adapter<PendingGamesRecyclerAdapter.PendingGameHolder> {
 	
-	private List<PendingGame> pendingGames;
+	private List<GameBase> pendingGames;
+	private OnRecyclerItemClickListener<GameBase> clickListener;
 	
-	public PendingGamesRecyclerAdapter(List<PendingGame> pendingGames) {
+	public PendingGamesRecyclerAdapter(List<GameBase> pendingGames,
+									   OnRecyclerItemClickListener<GameBase> clickListener) {
 		this.pendingGames = pendingGames;
+		this.clickListener = clickListener;
 	}
 	
 	@Override
@@ -31,13 +34,13 @@ public class PendingGamesRecyclerAdapter extends RecyclerView.Adapter<PendingGam
 										   parent,
 										   false);
 		
-		return new PendingGameHolder(view);
+		return new PendingGameHolder(view, this.clickListener);
 	}
 	
 	@Override
 	public void onBindViewHolder(PendingGamesRecyclerAdapter.PendingGameHolder holder,
 								 int position) {
-		PendingGame pendingGame = pendingGames.get(position);
+		GameBase pendingGame = pendingGames.get(position);
 		holder.bindPendingGame(pendingGame);
 	}
 	
@@ -46,7 +49,7 @@ public class PendingGamesRecyclerAdapter extends RecyclerView.Adapter<PendingGam
 		return this.pendingGames.size();
 	}
 	
-	public void updateData(List<PendingGame> pendingGames) {
+	public void updateData(List<GameBase> pendingGames) {
 		this.pendingGames.clear();
 		this.pendingGames.addAll(pendingGames);
 		this.notifyDataSetChanged();
@@ -57,26 +60,33 @@ public class PendingGamesRecyclerAdapter extends RecyclerView.Adapter<PendingGam
 		private TextView textViewGameName;
 		private TextView textViewOwnerName;
 		private TextView textViewPlayersCount;
+		private OnRecyclerItemClickListener<GameBase> clickListener;
+		private GameBase game;
 		
-		public PendingGameHolder(View itemView) {
+		public PendingGameHolder(View itemView,
+								 OnRecyclerItemClickListener<GameBase> clickListener) {
 			super(itemView);
 			
 			textViewGameName = (TextView) itemView.findViewById(R.id.recyclerView_lobby_pendingGame_gameName);
 			textViewOwnerName = (TextView) itemView.findViewById(R.id.recyclerView_lobby_pendingGame_ownerName);
 			textViewPlayersCount = (TextView) itemView.findViewById(R.id.recyclerView_lobby_pendingGame_players);
 			
+			this.clickListener = clickListener;
 			itemView.setOnClickListener(this);
 		}
 		
 		@Override
 		public void onClick(View view) {
-			
+			clickListener.onItemClick(game);
 		}
 		
-		public void bindPendingGame(PendingGame pendingGame) {
-			textViewGameName.setText(pendingGame.getGameName());
-			textViewOwnerName.setText(String.format("(%1$s)", pendingGame.getGameOwner().getUserName()));
-			textViewPlayersCount.setText(pendingGame.getUsers().size());
+		public void bindPendingGame(GameBase pendingGame) {
+			textViewGameName.setText(pendingGame.getName());
+			textViewOwnerName.setText(pendingGame.getOwner().getUsername());
+			//			textViewOwnerName.setText(String.format("(%1$s)",
+			//													pendingGame.getOwner().getUsername()));
+			textViewPlayersCount.setText(String.valueOf(pendingGame.getUsers().size()));
+			this.game = pendingGame;
 		}
 	}
 }

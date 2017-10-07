@@ -3,7 +3,12 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="@dimen/default_margin"
+                android:paddingStart="@dimen/default_margin"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true">
 
     <TextView
         android:id="@+id/recyclerView_lobby_pendingGame_gameName"
@@ -16,14 +21,17 @@
         android:id="@+id/recyclerView_lobby_pendingGame_ownerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/recyclerView_lobby_pendingGame_gameName"
-        tools:text=" (MyOwnerName)"/>
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:paddingStart="@dimen/lobbyOwnerOffset"
+        tools:text="MyOwnerName"/>
 
 
     <TextView
         android:id="@+id/recyclerView_lobby_pendingGame_players"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:paddingStart="@dimen/lobbyPlayersOffset"
         tools:text="3"/>
 </RelativeLayout>

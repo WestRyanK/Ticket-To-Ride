@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import byu.codemonkeys.tickettoride.R;
-import byu.codemonkeys.tickettoride.models.PendingGame;
 import byu.codemonkeys.tickettoride.mvpcontracts.LobbyContract;
+import byu.codemonkeys.tickettoride.shared.model.GameBase;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -95,14 +95,20 @@ public class LobbyFragment extends Fragment implements LobbyContract.View {
 	
 	// region LobbyContract.View implementation
 	@Override
-	public void setPendingGames(List<PendingGame> pendingGames) {
+	public void setPendingGames(List<GameBase> pendingGames) {
 		if (pendingGamesAdapter == null) {
-			pendingGamesAdapter = new PendingGamesRecyclerAdapter(pendingGames);
+			pendingGamesAdapter = new PendingGamesRecyclerAdapter(pendingGames,
+																  new OnRecyclerItemClickListener<GameBase>() {
+																	  @Override
+																	  public void onItemClick(
+																			  GameBase game) {
+																		  presenter.joinGame(game);
+																	  }
+																  });
 			recyclerPendingGames.setAdapter(pendingGamesAdapter);
 		} else {
 			pendingGamesAdapter.updateData(pendingGames);
 		}
-		
 	}
 	
 	public void setPresenter(LobbyContract.Presenter presenter) {

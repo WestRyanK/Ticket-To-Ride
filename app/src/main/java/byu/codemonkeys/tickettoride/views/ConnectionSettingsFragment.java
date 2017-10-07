@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import byu.codemonkeys.tickettoride.R;
 import byu.codemonkeys.tickettoride.mvpcontracts.ConnectionSettingsContract;
@@ -94,7 +93,7 @@ public class ConnectionSettingsFragment extends Fragment implements ConnectionSe
 			
 			@Override
 			public void afterTextChanged(Editable editable) {
-				presenter.setHost(editable.toString());
+				setCanSave(presenter.canSaveConnectionSettings());
 			}
 		});
 		
@@ -111,7 +110,7 @@ public class ConnectionSettingsFragment extends Fragment implements ConnectionSe
 			
 			@Override
 			public void afterTextChanged(Editable editable) {
-				presenter.setPort(editable.toString());
+				setCanSave(presenter.canSaveConnectionSettings());
 			}
 		});
 		
@@ -135,13 +134,23 @@ public class ConnectionSettingsFragment extends Fragment implements ConnectionSe
 	
 	// region ConnectionSettingsContract.View
 	@Override
-	public void setHost(String host) {
+	public void setHostName(String host) {
 		this.editTextHost.setText(host);
+	}
+	
+	@Override
+	public String getHostName() {
+		return this.editTextHost.getText().toString();
 	}
 	
 	@Override
 	public void setPort(String port) {
 		this.editTextPort.setText(port);
+	}
+	
+	@Override
+	public String getPort() {
+		return this.editTextPort.getText().toString();
 	}
 	
 	@Override

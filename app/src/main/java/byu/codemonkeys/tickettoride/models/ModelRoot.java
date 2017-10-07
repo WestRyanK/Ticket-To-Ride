@@ -25,21 +25,7 @@ import byu.codemonkeys.tickettoride.shared.model.UserBase;
             instance = new ModelRoot();
         }
         return instance;
-		return instance;
 	}
-	
-	private ModelRoot() {
-		this.currentUser = new User();
-		this.pendingGames = new ArrayList<>();
-		this.currentSession = new ClientSession();
-	}
-	
-	private User currentUser;
-	private ClientSession currentSession;
-	private List<PendingGame> pendingGames;
-	
-	
-    }
 	
     public void clear() {
         instance = null;

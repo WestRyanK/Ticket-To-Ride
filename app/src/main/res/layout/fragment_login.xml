@@ -12,7 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:hint="@string/username"/>
+        android:hint="@string/username"
+        android:inputType="textNoSuggestions"
+        android:maxLines="1"/>
 
     <EditText
         android:id="@+id/login_editTextPassword"
@@ -20,7 +22,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:hint="@string/password"
-        android:inputType="textPassword"/>
+        android:inputType="textPassword"
+        android:maxLines="1"/>
 
     <Button
         android:id="@+id/login_buttonLogin"
@@ -37,6 +40,7 @@
         android:clickable="true"
         android:gravity="center"
         android:text="@string/register_new_user"/>
+
     <TextView
         android:id="@+id/login_textViewConnectionSettings"
         android:layout_width="match_parent"

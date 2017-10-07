@@ -3,10 +3,14 @@ package byu.codemonkeys.tickettoride.presenters;
 import java.util.ArrayList;
 import java.util.List;
 
-import byu.codemonkeys.tickettoride.models.PendingGame;
+import byu.codemonkeys.tickettoride.async.ICallback;
+import byu.codemonkeys.tickettoride.exceptions.UnauthorizedException;
+import byu.codemonkeys.tickettoride.models.IModelFacade;
+import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
-import byu.codemonkeys.tickettoride.mvpcontracts.IReportsErrors;
 import byu.codemonkeys.tickettoride.mvpcontracts.LobbyContract;
+import byu.codemonkeys.tickettoride.shared.model.GameBase;
+import byu.codemonkeys.tickettoride.shared.results.Result;
 
 /**
  * Created by Ryan on 10/3/2017.
@@ -16,15 +20,12 @@ public class LobbyPresenter extends PresenterBase implements LobbyContract.Prese
 	
 	LobbyContract.View view;
 	
-	public LobbyPresenter(LobbyContract.View view, INavigator navigator, IReportsErrors errorReporter) {
-		super(navigator, errorReporter);
+	public LobbyPresenter(LobbyContract.View view,
+						  INavigator navigator,
+						  IDisplaysMessages messageDisplayer,
+						  IModelFacade modelFacade) {
+		super(navigator, messageDisplayer, modelFacade);
 		this.view = view;
-		
-//		List<PendingGame> pendingGames = new ArrayList<>();
-//		pendingGames.add(new PendingGame("MyGame", 4,5));
-//		pendingGames.add(new PendingGame("YourGame", 2,3));
-//
-//		this.view.setPendingGames(pendingGames);
 	}
 	
 	@Override
@@ -33,8 +34,19 @@ public class LobbyPresenter extends PresenterBase implements LobbyContract.Prese
 	}
 	
 	@Override
-	public void joinGame() {
-		this.navigator.Navigate(PresenterEnum.WaitingRoom, true);
+	public void joinGame(GameBase game) {
+		
+		ICallback joinPendingGameCallback = new ICallback() {
+			@Override
+			public void callback(Result result) {
+				if (result.isSuccessful()) {
+					navigator.Navigate(PresenterEnum.WaitingRoom, true);
+				} else {
+					messageDisplayer.displayMessage(result.getErrorMessage());
+				}
+			}
+		};
+		modelFacade.joinPendingGameAsync(game, joinPendingGameCallback);
 	}
 	
 	@Override
@@ -44,7 +56,14 @@ public class LobbyPresenter extends PresenterBase implements LobbyContract.Prese
 	
 	@Override
 	public void setDefaults() {
-		this.view.setPendingGames(new ArrayList<PendingGame>());
-		
+		try {
+			List<GameBase> games = modelFacade.getPendingGames();
+			if (games == null)
+				games = new ArrayList<>();
+			this.view.setPendingGames(games);
+		} catch (UnauthorizedException e) {
+			e.printStackTrace();
+			messageDisplayer.displayMessage(e.getMessage());
+		}
 	}
 }

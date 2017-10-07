@@ -9,7 +9,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import byu.codemonkeys.tickettoride.R;
-import byu.codemonkeys.tickettoride.models.User;
+import byu.codemonkeys.tickettoride.shared.model.UserBase;
 
 /**
  * Created by Ryan on 10/3/2017.
@@ -17,9 +17,9 @@ import byu.codemonkeys.tickettoride.models.User;
 
 public class UserRecyclerAdapter extends RecyclerView.Adapter<UserRecyclerAdapter.UserHolder> {
 	
-	private List<User> users;
+	private List<UserBase> users;
 	
-	public UserRecyclerAdapter(List<User> users) {
+	public UserRecyclerAdapter(List<UserBase> users) {
 		this.users = users;
 	}
 	
@@ -35,7 +35,7 @@ public class UserRecyclerAdapter extends RecyclerView.Adapter<UserRecyclerAdapte
 	@Override
 	public void onBindViewHolder(UserRecyclerAdapter.UserHolder holder, int position) {
 		
-		User user = users.get(position);
+		UserBase user = users.get(position);
 		holder.bindUser(user);
 	}
 	
@@ -44,7 +44,7 @@ public class UserRecyclerAdapter extends RecyclerView.Adapter<UserRecyclerAdapte
 		return users.size();
 	}
 	
-	public void updateData(List<User> users) {
+	public void updateData(List<UserBase> users) {
 		this.users.clear();
 		this.users.addAll(users);
 		this.notifyDataSetChanged();
@@ -66,8 +66,8 @@ public class UserRecyclerAdapter extends RecyclerView.Adapter<UserRecyclerAdapte
 			
 		}
 		
-		public void bindUser(User user) {
-			textViewUserName.setText(user.getUserName());
+		public void bindUser(UserBase user) {
+			textViewUserName.setText(user.getUsername());
 		}
 	}
 }

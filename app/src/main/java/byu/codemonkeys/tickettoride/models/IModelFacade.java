@@ -4,44 +4,54 @@ import java.util.List;
 import java.util.Observer;
 
 import byu.codemonkeys.tickettoride.exceptions.NoPendingGameException;
-import byu.codemonkeys.tickettoride.exceptions.LoginException;
 import byu.codemonkeys.tickettoride.exceptions.RegisterException;
 import byu.codemonkeys.tickettoride.exceptions.SingleGameException;
 import byu.codemonkeys.tickettoride.exceptions.UnauthorizedException;
+import byu.codemonkeys.tickettoride.async.ICallback;
 import byu.codemonkeys.tickettoride.shared.model.*;
+import byu.codemonkeys.tickettoride.shared.results.LoginResult;
+import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 
 /**
  * Created by Megan on 10/3/2017.
  */
 
-interface IModelFacade {
-
-    void addObserver(Observer observer);
-
-    UserBase getUser() throws UnauthorizedException;
-
-    void login(String username, String password) throws LoginException;
-
-    void register(String username, String password) throws RegisterException;
-
-    void logout() throws UnauthorizedException;
-
-    List<GameBase> getPendingGames() throws UnauthorizedException;
-
-    GameBase createGame(String gameName) throws UnauthorizedException;
-
-    GameBase joinPendingGame(GameBase game) throws UnauthorizedException, SingleGameException;
-
-    GameBase getPendingGame() throws UnauthorizedException, NoPendingGameException;
-
-    void leavePendingGame() throws UnauthorizedException, NoPendingGameException;
-
-    GameBase startGame() throws UnauthorizedException, NoPendingGameException;
-
-    void cancelGame() throws UnauthorizedException, NoPendingGameException;
-
-    Session getSession();
-
-    void changeConnectionConfiguration(String host, int port);
-
+public interface IModelFacade {
+	
+	void addObserver(Observer observer);
+	
+	UserBase getUser() throws UnauthorizedException;
+	
+	LoginResult login(String username, String password);
+	
+	void loginAsync(String username, String password, ICallback callback);
+	
+	LoginResult register(String username, String password);
+	
+	void registerAsync(String username, String password, ICallback registerCallback);
+	
+	void logout() throws UnauthorizedException;
+	
+	List<GameBase> getPendingGames() throws UnauthorizedException;
+	
+	PendingGameResult createGame(String gameName);
+	
+	void createGameAsync(String gameName, ICallback createGameCallback);
+	
+	PendingGameResult joinPendingGame(GameBase game);
+	
+	void joinPendingGameAsync(GameBase game, ICallback joinPendingGameCallback);
+	
+	GameBase getPendingGame() throws UnauthorizedException, NoPendingGameException;
+	
+	void leavePendingGame() throws UnauthorizedException, NoPendingGameException;
+	
+	GameBase startGame() throws UnauthorizedException, NoPendingGameException;
+	
+	void cancelGame() throws UnauthorizedException, NoPendingGameException;
+	
+	Session getSession();
+	
+	void changeConnectionConfiguration(String host, int port);
+	
 }

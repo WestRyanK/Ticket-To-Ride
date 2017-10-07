@@ -92,7 +92,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 			
 			@Override
 			public void afterTextChanged(Editable editable) {
-				presenter.setUsername(editable.toString());
+				setCanRegister(presenter.canRegister());
 			}
 		});
 		
@@ -109,7 +109,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 			
 			@Override
 			public void afterTextChanged(Editable editable) {
-				presenter.setPassword(editable.toString());
+				setCanRegister(presenter.canRegister());
 			}
 		});
 		
@@ -138,8 +138,18 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 	}
 	
 	@Override
+	public String getUsername() {
+		return this.editTextUsername.getText().toString();
+	}
+	
+	@Override
 	public void setPassword(String password) {
 		this.editTextPassword.setText(password);
+	}
+	
+	@Override
+	public String getPassword() {
+		return this.editTextPassword.getText().toString();
 	}
 	
 	@Override

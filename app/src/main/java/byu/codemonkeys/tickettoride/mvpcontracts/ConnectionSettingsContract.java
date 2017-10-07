@@ -6,9 +6,13 @@ package byu.codemonkeys.tickettoride.mvpcontracts;
 
 public interface ConnectionSettingsContract {
 	interface View {
-		void setHost(String host);
+		void setHostName(String host);
+		
+		String getHostName();
 		
 		void setPort(String port);
+		
+		String getPort();
 		
 		void setCanSave(Boolean canSave);
 	}
@@ -18,10 +22,8 @@ public interface ConnectionSettingsContract {
 		
 		void cancel();
 		
-		void setHost(String host);
-		
-		void setPort(String port);
-		
 		void setDefaults();
+		
+		boolean canSaveConnectionSettings();
 	}
 }
