@@ -140,6 +140,10 @@ public class ServerFacade implements IServer {
 
         User user = session.getUser();
 
+        if (game.getOwner().equals(user)) {
+            rootModel.removePendingGame(gameID);
+        }
+
         try {
             game.removeUser(user);
         } catch (EmptyGameException e) {
