@@ -18,6 +18,7 @@ public class PendingGame extends GameBase {
         this.gameOwner = owner;
         this.gameID = gameID;
         this.gameUsers = new ArrayList<>();
+        this.started = false;
 
         this.gameUsers.add(owner);
     }
