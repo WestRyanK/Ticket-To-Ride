@@ -2,13 +2,17 @@ package byu.codemonkeys.tickettoride.presenters;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import byu.codemonkeys.tickettoride.async.ICallback;
 import byu.codemonkeys.tickettoride.exceptions.UnauthorizedException;
 import byu.codemonkeys.tickettoride.models.IModelFacade;
+import byu.codemonkeys.tickettoride.models.ModelRoot;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.mvpcontracts.LobbyContract;
+import byu.codemonkeys.tickettoride.networking.PendingGamesPoller;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 
@@ -16,7 +20,7 @@ import byu.codemonkeys.tickettoride.shared.results.Result;
  * Created by Ryan on 10/3/2017.
  */
 
-public class LobbyPresenter extends PresenterBase implements LobbyContract.Presenter {
+public class LobbyPresenter extends PresenterBase implements LobbyContract.Presenter, Observer {
 	
 	LobbyContract.View view;
 	
@@ -26,6 +30,7 @@ public class LobbyPresenter extends PresenterBase implements LobbyContract.Prese
 						  IModelFacade modelFacade) {
 		super(navigator, messageDisplayer, modelFacade);
 		this.view = view;
+		modelFacade.addObserver(this);
 	}
 	
 	@Override
@@ -56,6 +61,20 @@ public class LobbyPresenter extends PresenterBase implements LobbyContract.Prese
 	
 	@Override
 	public void setDefaults() {
+		this.loadPendingGames();
+	}
+	
+	@Override
+	public void startPolling() {
+		PendingGamesPoller.getInstance().startPolling();
+	}
+	
+	@Override
+	public void stopPolling() {
+		PendingGamesPoller.getInstance().stopPolling();
+	}
+	
+	private void loadPendingGames() {
 		try {
 			List<GameBase> games = modelFacade.getPendingGames();
 			if (games == null)
@@ -65,5 +84,10 @@ public class LobbyPresenter extends PresenterBase implements LobbyContract.Prese
 			e.printStackTrace();
 			messageDisplayer.displayMessage(e.getMessage());
 		}
+	}
+	
+	@Override
+	public void update(Observable observable, Object o) {
+		this.loadPendingGames();
 	}
 }

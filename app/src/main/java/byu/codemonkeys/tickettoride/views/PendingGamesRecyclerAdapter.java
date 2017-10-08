@@ -83,8 +83,6 @@ public class PendingGamesRecyclerAdapter extends RecyclerView.Adapter<PendingGam
 		public void bindPendingGame(GameBase pendingGame) {
 			textViewGameName.setText(pendingGame.getName());
 			textViewOwnerName.setText(pendingGame.getOwner().getUsername());
-			//			textViewOwnerName.setText(String.format("(%1$s)",
-			//													pendingGame.getOwner().getUsername()));
 			textViewPlayersCount.setText(String.valueOf(pendingGame.getUsers().size()));
 			this.game = pendingGame;
 		}

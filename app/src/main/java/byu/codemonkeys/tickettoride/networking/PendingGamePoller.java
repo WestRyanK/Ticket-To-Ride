@@ -1,6 +1,5 @@
 package byu.codemonkeys.tickettoride.networking;
 
-import android.os.Handler;
 import android.util.Log;
 
 import java.util.TimerTask;
@@ -11,15 +10,15 @@ import byu.codemonkeys.tickettoride.models.ClientFacade;
  * Created by meganrich on 10/5/17.
  */
 
-public class PendingGamesPoller extends Poller {
-	private static PendingGamesPoller instance;
+public class PendingGamePoller extends Poller {
+	private static PendingGamePoller instance;
 	
-	private PendingGamesPoller() {
+	private PendingGamePoller() {
 	}
 	
-	public static PendingGamesPoller getInstance() {
+	public static PendingGamePoller getInstance() {
 		if (instance == null) {
-			instance = new PendingGamesPoller();
+			instance = new PendingGamePoller();
 		}
 		return instance;
 	}
@@ -32,7 +31,7 @@ public class PendingGamesPoller extends Poller {
 			public void run() {
 				Log.d("POLLER!", "Polled!");
 				try {
-					c.updatePendingGames();
+					c.updatePendingGame();
 				} catch (Exception e) {
 					//TODO(compy-386): handle this error?
 					System.out.println(e.getMessage());

@@ -1,27 +1,25 @@
 package byu.codemonkeys.tickettoride.models;
 
-import android.os.AsyncTask;
-
 import java.util.List;
 import java.util.Observer;
 
-import byu.codemonkeys.tickettoride.async.ITask;
-import byu.codemonkeys.tickettoride.exceptions.SingleGameException;
-import byu.codemonkeys.tickettoride.exceptions.UnauthorizedException;
 import byu.codemonkeys.tickettoride.async.ICallback;
+import byu.codemonkeys.tickettoride.async.ITask;
+import byu.codemonkeys.tickettoride.exceptions.NoPendingGameException;
+import byu.codemonkeys.tickettoride.exceptions.UnauthorizedException;
 import byu.codemonkeys.tickettoride.networking.ClientCommunicator;
 import byu.codemonkeys.tickettoride.networking.PendingGamesPoller;
-import byu.codemonkeys.tickettoride.networking.Poller;
 import byu.codemonkeys.tickettoride.networking.ServerProxy;
 import byu.codemonkeys.tickettoride.shared.IServer;
 import byu.codemonkeys.tickettoride.shared.commands.ICommand;
-import byu.codemonkeys.tickettoride.shared.results.*;
-import byu.codemonkeys.tickettoride.shared.model.Session;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
+import byu.codemonkeys.tickettoride.shared.model.Session;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
-
-import byu.codemonkeys.tickettoride.exceptions.RegisterException;
-import byu.codemonkeys.tickettoride.exceptions.NoPendingGameException;
+import byu.codemonkeys.tickettoride.shared.results.LoginResult;
+import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
+import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
+import byu.codemonkeys.tickettoride.shared.results.Result;
+import byu.codemonkeys.tickettoride.shared.results.StartGameResult;
 
 /**
  * Created by Megan on 10/3/2017.
@@ -61,7 +59,7 @@ public class ModelFacade implements IModelFacade {
 		if (result.getErrorMessage() == null) {
 			models.setSession(result.getUserSession());
 			models.setUser(new UserBase(username));
-			start(pendingGamesPoller);
+//			start(pendingGamesPoller);
 		}
 		return result;
 	}
@@ -85,7 +83,7 @@ public class ModelFacade implements IModelFacade {
 		Result result = serverProxy.logout(models.getSession().getAuthToken());
 		if (result.getErrorMessage() == null) {
 			//clear the models since they are logging out
-			stop(pendingGamesPoller);
+//			stop(pendingGamesPoller);
 			models.getInstance().clear();
 		} else
 			throw new UnauthorizedException(result.getErrorMessage());
@@ -97,7 +95,7 @@ public class ModelFacade implements IModelFacade {
 		if (result.getErrorMessage() == null) {
 			models.setSession(result.getUserSession());
 			models.setUser(new UserBase(username));
-			start(pendingGamesPoller);
+//			start(pendingGamesPoller);
 		}
 		return result;
 	}
@@ -131,7 +129,7 @@ public class ModelFacade implements IModelFacade {
 														  gameName);
 		if (result.getErrorMessage() == null) {
 			models.setPendingGame(result.getGame());
-			stop(pendingGamesPoller);
+//			stop(pendingGamesPoller);
 			//TODO(compy-386): Poll for game started, waiting so no longer have to get all pending games
 		}
 		return result;
@@ -167,7 +165,7 @@ public class ModelFacade implements IModelFacade {
 															   game.getID());
 		if (result.getErrorMessage() == null) {
 			models.setPendingGame(result.getGame());
-			start(pendingGamesPoller);
+//			start(pendingGamesPoller);
 		}
 		//		}
 		return result;
@@ -196,7 +194,7 @@ public class ModelFacade implements IModelFacade {
 																		   .getID());
 			if (result.getErrorMessage() == null) {
 				models.setPendingGame(null);
-				start(pendingGamesPoller);
+//				start(pendingGamesPoller);
 			} else
 				throw new UnauthorizedException(result.getErrorMessage());
 		}
@@ -227,7 +225,7 @@ public class ModelFacade implements IModelFacade {
 			if (result.getErrorMessage() == null) {
 				models.setPendingGame(null);
 				models.setPendingGames(result.getGames());
-				start(pendingGamesPoller);
+//				start(pendingGamesPoller);
 			}
 		}
 	}
@@ -244,14 +242,14 @@ public class ModelFacade implements IModelFacade {
 		communicator.changeConfiguration(host, port);
 	}
 	
-	private void start(Poller poller) {
-		poller.startPolling();
-	}
-	
-	private void stop(Poller poller) {
-		poller.stopPolling();
-	}
-	
+//	private void start(Poller poller) {
+//		poller.startPolling();
+//	}
+//
+//	private void stop(Poller poller) {
+//		poller.stopPolling();
+//	}
+//
 	public void setAsyncTask(ITask asyncTask) {
 		this.asyncTask = asyncTask;
 	}

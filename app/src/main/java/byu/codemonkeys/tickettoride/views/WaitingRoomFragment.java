@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -105,6 +106,21 @@ public class WaitingRoomFragment extends Fragment implements WaitingRoomContract
 		return view;
 	}
 	
+	@Override
+	public void onResume() {
+		super.onResume();
+		
+		presenter.startPolling();
+		Log.d("WR", "Resuming WaitingRoom...");
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		presenter.stopPolling();
+		Log.d("WR", "Pausing WaitingRoom...");
+	}
+	
 	public void setPresenter(WaitingRoomContract.Presenter presenter) {
 		this.presenter = presenter;
 	}
@@ -116,14 +132,20 @@ public class WaitingRoomFragment extends Fragment implements WaitingRoomContract
 	}
 	
 	@Override
-	public void setWaitingUsers(List<UserBase> users) {
-		if (userAdapter == null) {
-			userAdapter = new UserRecyclerAdapter(users);
-			recyclerUsers.setAdapter(userAdapter);
-		} else {
-			userAdapter.updateData(users);
-		}
-		
+	public void setWaitingUsers(final List<UserBase> users) {
+		Log.d("WR", "Update waiting users");
+		getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				if (userAdapter == null) {
+					userAdapter = new UserRecyclerAdapter(users);
+					recyclerUsers.setAdapter(userAdapter);
+				} else {
+					recyclerUsers.setAdapter(userAdapter);
+					userAdapter.updateData(users);
+				}
+			}
+		});
 	}
 	
 	@Override

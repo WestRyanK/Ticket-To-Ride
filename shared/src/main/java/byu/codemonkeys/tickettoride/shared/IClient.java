@@ -8,5 +8,7 @@ import byu.codemonkeys.tickettoride.shared.model.Session;
 
 //TODO(compy-386): move this?
 public interface IClient {
-    void updatePendingGames() throws Exception;
+	void updatePendingGames() throws Exception;
+	
+	void updatePendingGame() throws Exception;
 }

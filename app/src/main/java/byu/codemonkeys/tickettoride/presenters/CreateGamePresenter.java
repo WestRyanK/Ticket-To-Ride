@@ -30,15 +30,15 @@ public class CreateGamePresenter extends PresenterBase implements CreateGameCont
 			@Override
 			public void callback(Result result) {
 				if (result.isSuccessful()) {
-					navigator.Navigate(PresenterEnum.WaitingRoom, false);
+					navigator.NavigateBack();
+					navigator.Navigate(PresenterEnum.WaitingRoom, true);
 				} else {
 					messageDisplayer.displayMessage(result.getErrorMessage());
 				}
 			}
 		};
 		
-		if (canCreateGame())
-		{
+		if (canCreateGame()) {
 			modelFacade.createGameAsync(this.view.getGameName(), createGameCallback);
 		}
 	}

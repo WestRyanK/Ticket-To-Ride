@@ -23,5 +23,9 @@ public interface WaitingRoomContract {
 		void leaveGame();
 		
 		void setDefaults();
+		
+		void startPolling();
+		
+		void stopPolling();
 	}
 }

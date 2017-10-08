@@ -20,7 +20,7 @@ public class ClientCommunicator {
 	private int port;
 	
 	private ClientCommunicator() {
-		host = "localhost";
+		host = "192.168.1.9";
 		port = 8080;
 		serializer = new Serializer();
 	}
@@ -120,6 +120,16 @@ public class ClientCommunicator {
 		} catch (IOException e) {
 			e.printStackTrace();
 			return new PendingGamesResult(e.getMessage());
+		}
+	}
+	
+	public PendingGameResult sendGetPendingGame(GetPendingGameCommandData request) {
+		try {
+			return serializer.deserialize(getString(getURL(CommandType.GET_PENDING_GAME), request),
+										  PendingGameResult.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new PendingGameResult(e.getMessage());
 		}
 	}
 	

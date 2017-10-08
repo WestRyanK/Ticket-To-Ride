@@ -21,5 +21,9 @@ public interface LobbyContract {
 		void logout();
 		
 		void setDefaults();
+		
+		void startPolling();
+		
+		void stopPolling();
 	}
 }

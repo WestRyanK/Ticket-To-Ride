@@ -1,5 +1,8 @@
 package byu.codemonkeys.tickettoride.presenters;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import byu.codemonkeys.tickettoride.async.ICallback;
 import byu.codemonkeys.tickettoride.models.IModelFacade;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
@@ -31,6 +34,7 @@ public class RegisterPresenter extends PresenterBase implements RegisterContract
 			@Override
 			public void callback(Result result) {
 				if (result.isSuccessful()) {
+					navigator.NavigateBack();
 					navigator.Navigate(PresenterEnum.Lobby, false);
 				} else {
 					messageDisplayer.displayMessage(result.getErrorMessage());
@@ -38,8 +42,7 @@ public class RegisterPresenter extends PresenterBase implements RegisterContract
 			}
 		};
 		
-		if (canRegister())
-		{
+		if (canRegister()) {
 			modelFacade.registerAsync(this.view.getUsername(),
 									  this.view.getPassword(),
 									  registerCallback);

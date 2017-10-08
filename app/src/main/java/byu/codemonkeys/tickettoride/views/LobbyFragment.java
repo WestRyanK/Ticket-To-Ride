@@ -2,14 +2,18 @@ package byu.codemonkeys.tickettoride.views;
 
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.Console;
 import java.util.List;
 
 import byu.codemonkeys.tickettoride.R;
@@ -90,25 +94,51 @@ public class LobbyFragment extends Fragment implements LobbyContract.View {
 		});
 		
 		presenter.setDefaults();
+		Log.d("LOBBY", "Creating lobby...");
 		return view;
 	}
 	
+	@Override
+	public void onResume() {
+		super.onResume();
+		
+		presenter.startPolling();
+		Log.d("LOBBY", "Resuming lobby...");
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		presenter.stopPolling();
+		Log.d("LOBBY", "Pausing lobby...");
+	}
+	
+	
 	// region LobbyContract.View implementation
 	@Override
-	public void setPendingGames(List<GameBase> pendingGames) {
-		if (pendingGamesAdapter == null) {
-			pendingGamesAdapter = new PendingGamesRecyclerAdapter(pendingGames,
-																  new OnRecyclerItemClickListener<GameBase>() {
-																	  @Override
-																	  public void onItemClick(
-																			  GameBase game) {
-																		  presenter.joinGame(game);
-																	  }
-																  });
-			recyclerPendingGames.setAdapter(pendingGamesAdapter);
-		} else {
-			pendingGamesAdapter.updateData(pendingGames);
-		}
+	public void setPendingGames(final List<GameBase> pendingGames) {
+		
+		getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				if (pendingGamesAdapter == null) {
+					pendingGamesAdapter = new PendingGamesRecyclerAdapter(pendingGames,
+																		  new OnRecyclerItemClickListener<GameBase>() {
+																			  @Override
+																			  public void onItemClick(
+																					  GameBase game) {
+																				  presenter.joinGame(
+																						  game);
+																			  }
+																		  });
+					recyclerPendingGames.setAdapter(pendingGamesAdapter);
+				} else
+				{
+					recyclerPendingGames.setAdapter(pendingGamesAdapter);
+					pendingGamesAdapter.updateData(pendingGames);
+				}
+			}
+		});
 	}
 	
 	public void setPresenter(LobbyContract.Presenter presenter) {

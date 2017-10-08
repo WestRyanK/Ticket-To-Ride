@@ -1,6 +1,8 @@
 package byu.codemonkeys.tickettoride.presenters;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import byu.codemonkeys.tickettoride.exceptions.NoPendingGameException;
 import byu.codemonkeys.tickettoride.exceptions.UnauthorizedException;
@@ -8,6 +10,8 @@ import byu.codemonkeys.tickettoride.models.IModelFacade;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.mvpcontracts.WaitingRoomContract;
+import byu.codemonkeys.tickettoride.networking.PendingGamePoller;
+import byu.codemonkeys.tickettoride.networking.PendingGamesPoller;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
 
@@ -15,7 +19,7 @@ import byu.codemonkeys.tickettoride.shared.model.UserBase;
  * Created by Ryan on 10/3/2017.
  */
 
-public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomContract.Presenter {
+public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomContract.Presenter, Observer {
 	
 	private WaitingRoomContract.View view;
 	
@@ -25,6 +29,7 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 								IModelFacade modelFacade) {
 		super(navigator, messageDisplayer, modelFacade);
 		this.view = view;
+		modelFacade.addObserver(this);
 	}
 	
 	@Override
@@ -58,6 +63,20 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 	
 	@Override
 	public void setDefaults() {
+		loadWaitingPlayers();
+	}
+	
+	@Override
+	public void startPolling() {
+		PendingGamePoller.getInstance().startPolling();
+	}
+	
+	@Override
+	public void stopPolling() {
+		PendingGamePoller.getInstance().stopPolling();
+	}
+	
+	private void loadWaitingPlayers() {
 		try {
 			this.view.setWaitingUsers(modelFacade.getPendingGame().getUsers());
 			this.view.setPendingGameName(modelFacade.getPendingGame().getName());
@@ -68,5 +87,10 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 			e.printStackTrace();
 			messageDisplayer.displayMessage(e.getMessage());
 		}
+	}
+	
+	@Override
+	public void update(Observable observable, Object o) {
+		this.loadWaitingPlayers();
 	}
 }
