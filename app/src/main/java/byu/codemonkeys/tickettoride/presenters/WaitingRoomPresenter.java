@@ -48,6 +48,7 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 	
 	@Override
 	public void leaveGame() {
+		
 		PendingGamePoller.getInstance().stopPolling();
 		this.navigator.NavigateBack();
 	}

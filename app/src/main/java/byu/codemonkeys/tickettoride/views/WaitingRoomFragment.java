@@ -127,8 +127,13 @@ public class WaitingRoomFragment extends Fragment implements WaitingRoomContract
 	
 	// region WaitingRoomContract.View Implementation
 	@Override
-	public void setPendingGameName(String gameName) {
-		this.textViewGameName.setText(gameName);
+	public void setPendingGameName(final String gameName) {
+		getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				textViewGameName.setText(gameName);
+			}
+		});
 	}
 	
 	@Override
