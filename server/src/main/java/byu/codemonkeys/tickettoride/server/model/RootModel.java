@@ -8,8 +8,9 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 
 import byu.codemonkeys.tickettoride.server.exceptions.AlreadyExistsException;
+import byu.codemonkeys.tickettoride.shared.model.GameBase;
 
-public class RootModel {
+public class RootModel implements IRootModel {
     private static final RootModel ourInstance = new RootModel();
 
     /**
@@ -131,7 +132,17 @@ public class RootModel {
      * @return List of PendingGame objects
      */
     public List<PendingGame> getPendingGames() {
-        return new ArrayList<>(pendingGames.values());
+        List<PendingGame> games = new ArrayList<>();
+
+        for (Map.Entry<String, PendingGame> entry : pendingGames.entrySet()) {
+            PendingGame game = entry.getValue();
+
+            if (!game.isStarted()) {
+                games.add(game);
+            }
+        }
+
+        return games;
     }
 
     /**
@@ -174,7 +185,7 @@ public class RootModel {
 
         activeGames.put(activeGame.getID(), activeGame);
 
-        removePendingGame(gameID);
+        pendingGame.setStarted(true);
 
         return activeGame;
     }

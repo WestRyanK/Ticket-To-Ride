@@ -8,5 +8,6 @@ public class ActiveGame extends GameBase {
         this.gameName = pendingGame.getName();
         this.gameOwner = pendingGame.getOwner();
         this.gameUsers = pendingGame.getUsers();
+        this.started = true;
     }
 }

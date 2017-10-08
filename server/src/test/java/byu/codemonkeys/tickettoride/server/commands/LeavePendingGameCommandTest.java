@@ -19,6 +19,7 @@ public class LeavePendingGameCommandTest {
 	@Before
 	public void Init() {
 		command = new LeavePendingGameCommand(gameID);
+		command.setAuthToken("auth-token");
 	}
 	
 	@Test
@@ -27,6 +28,5 @@ public class LeavePendingGameCommandTest {
 		assertEquals("Should return a result of type PendingGamesResult.",
 					 PendingGamesResult.class,
 					 result.getClass());
-//		assertEquals("Command should've succeeded.", true, result.isSuccessful());
 	}
 }

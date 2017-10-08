@@ -3,6 +3,7 @@ package byu.codemonkeys.tickettoride.server.model;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 import byu.codemonkeys.tickettoride.server.exceptions.AlreadyExistsException;
@@ -58,9 +59,11 @@ public class RootModelTest {
 
     @Test
     public void testGetUser() {
-        assertNull(rootModel.getUser("username"));
+        try {
+            rootModel.registerNewUser("username", "password");
+        } catch (AlreadyExistsException e) {
 
-        rootModel.registerNewUser("username", "password");
+        }
 
         assertNotNull(rootModel.getUser("username"));
         assertNull(rootModel.getUser("user"));
@@ -136,5 +139,10 @@ public class RootModelTest {
         assertEquals(pendingGame.getID(), activeGame.getID());
         assertEquals(pendingGame.getName(), activeGame.getName());
         assertEquals(pendingGame.getOwner(), activeGame.getOwner());
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testActivateInvalidGame() {
+        rootModel.activateGame(UUID.randomUUID().toString());
     }
 }

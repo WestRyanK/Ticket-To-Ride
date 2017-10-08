@@ -16,8 +16,8 @@ import static org.junit.Assert.*;
 public class LoginCommandTest {
 	
 	private LoginCommand command;
-	private static final String username = "westryank";
-	private static final String password = "Youthoughtidputmyrealpasswordheredidntyou";
+	private static final String username = "username";
+	private static final String password = "password";
 	
 	@Before
 	public void Init() {
@@ -26,8 +26,6 @@ public class LoginCommandTest {
 	
 	@Test
 	public void execute() throws Exception {
-		RootModel.getInstance().registerNewUser(username, password);
-
 		Result result = command.execute();
 		assertEquals("Should return a result of type LoginResult.",
 					 LoginResult.class,

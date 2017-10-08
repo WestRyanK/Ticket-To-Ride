@@ -19,6 +19,7 @@ public class StartGameCommandTest {
 	@Before
 	public void Init() {
 		command = new StartGameCommand(gameID);
+		command.setAuthToken("auth-token");
 	}
 	
 	@Test
@@ -27,7 +28,6 @@ public class StartGameCommandTest {
 		assertEquals("Should return a result of type StartGameResult.",
 					 StartGameResult.class,
 					 result.getClass());
-//		assertEquals("Command should've succeeded.", true, result.isSuccessful());
 	}
 	
 }
