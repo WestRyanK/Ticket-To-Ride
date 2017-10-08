@@ -14,4 +14,9 @@ public class User extends UserBase {
     public  String getPassword() {
         return password;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
 }
