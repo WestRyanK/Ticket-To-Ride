@@ -1,7 +1,10 @@
 package byu.codemonkeys.tickettoride.models;
 
+import java.util.UUID;
+
 import byu.codemonkeys.tickettoride.networking.ServerProxy;
 import byu.codemonkeys.tickettoride.shared.IClient;
+import byu.codemonkeys.tickettoride.shared.model.UserBase;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
 
@@ -40,6 +43,7 @@ public class ClientFacade implements IClient {
 		ModelRoot modelRoot = ModelRoot.getInstance();
 		String authToken = modelRoot.getSession().getAuthToken();
 		PendingGameResult result = ServerProxy.getInstance().getPendingGame(authToken);
+		result.getGame().getUsers().add(new UserBase(UUID.randomUUID().toString()));
 		if (result.getErrorMessage() == null) {
 			modelRoot.setPendingGame(result.getGame());
 		} else {
