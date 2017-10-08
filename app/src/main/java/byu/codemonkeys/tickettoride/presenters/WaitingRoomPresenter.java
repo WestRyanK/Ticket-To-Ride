@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import byu.codemonkeys.tickettoride.async.ICallback;
 import byu.codemonkeys.tickettoride.exceptions.NoPendingGameException;
 import byu.codemonkeys.tickettoride.exceptions.UnauthorizedException;
 import byu.codemonkeys.tickettoride.models.IModelFacade;
@@ -17,6 +18,7 @@ import byu.codemonkeys.tickettoride.networking.PendingGamePoller;
 import byu.codemonkeys.tickettoride.networking.PendingGamesPoller;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
+import byu.codemonkeys.tickettoride.shared.results.Result;
 
 /**
  * Created by Ryan on 10/3/2017.
@@ -38,19 +40,35 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 	@Override
 	public void startGame() {
 		if (canStartGame()) {
-			try {
-				modelFacade.startGame();
-			} catch (Exception e) {
-				messageDisplayer.displayMessage(e.getMessage());
+			ICallback startGameCallback = new ICallback() {
+				@Override
+				public void callback(Result result) {
+					if (result.isSuccessful()) {
+						messageDisplayer.displayMessage("Game Started");
+					} else {
+						messageDisplayer.displayMessage(result.getErrorMessage());
+					}
+				}
+			};
+			modelFacade.startGameAsync(startGameCallback);
 			}
 		}
-	}
 	
 	@Override
 	public void leaveGame() {
 		
-		PendingGamePoller.getInstance().stopPolling();
-		this.navigator.NavigateBack();
+		ICallback leaveGameCallback = new ICallback() {
+			@Override
+			public void callback(Result result) {
+				if (result.isSuccessful()) {
+					navigator.NavigateBack();
+					PendingGamePoller.getInstance().stopPolling();
+				} else {
+					messageDisplayer.displayMessage(result.getErrorMessage());
+				}
+			}
+		};
+		modelFacade.leavePendingGameAsync(leaveGameCallback);
 	}
 	
 	private boolean canStartGame() {

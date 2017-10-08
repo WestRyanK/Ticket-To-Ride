@@ -186,35 +186,58 @@ public class ModelFacade implements IModelFacade {
 	}
 	
 	@Override
-	public void leavePendingGame() throws UnauthorizedException, NoPendingGameException {
-		if (models.getPendingGame() == null) {
-			throw new NoPendingGameException();
-		} else {
-			PendingGamesResult result = serverProxy.leavePendingGame(models.getSession()
-																		   .getAuthToken(),
-																	 models.getPendingGame()
-																		   .getID());
-			if (result.getErrorMessage() == null) {
-				models.setPendingGame(null);
-				//				start(pendingGamesPoller);
-			} else
-				throw new UnauthorizedException(result.getErrorMessage());
+	public PendingGamesResult leavePendingGame() {
+		//		if (models.getPendingGame() == null) {
+		//			throw new NoPendingGameException();
+		//		} else {
+		PendingGamesResult result = serverProxy.leavePendingGame(models.getSession().getAuthToken(),
+																 models.getPendingGame().getID());
+		if (result.getErrorMessage() == null) {
+			models.setPendingGame(null);
+			//				start(pendingGamesPoller);
 		}
+		return result;
+		//			} else
+		//				throw new UnauthorizedException(result.getErrorMessage());
 	}
 	
 	@Override
-	public GameBase startGame() throws UnauthorizedException, NoPendingGameException {
-		if (models.getPendingGame() == null) {
-			throw new NoPendingGameException();
-		} else {
-			StartGameResult result = serverProxy.startGame(models.getSession().getAuthToken(),
-														   models.getPendingGame().getID());
-			if (result.getErrorMessage() == null) {
-				models.setGame(result.getGame());
-				return models.getGame();
-			} else
-				throw new UnauthorizedException(result.getErrorMessage());
+	public void leavePendingGameAsync(ICallback leavePendingGameCallback) {
+		ICommand leavePendingGameCommand = new ICommand() {
+			@Override
+			public Result execute() {
+				return leavePendingGame();
+			}
+		};
+		
+		this.asyncTask.executeTask(leavePendingGameCommand, leavePendingGameCallback);
+	}
+	
+	@Override
+	public StartGameResult startGame() {
+		//		if (models.getPendingGame() == null) {
+		//			throw new NoPendingGameException();
+		//		} else {
+		StartGameResult result = serverProxy.startGame(models.getSession().getAuthToken(),
+													   models.getPendingGame().getID());
+		if (result.getErrorMessage() == null) {
+			models.setGame(result.getGame());
 		}
+		return result;
+		//			} else
+		//				throw new UnauthorizedException(result.getErrorMessage());
+	}
+	
+	@Override
+	public void startGameAsync(ICallback startGameCallback) {
+		ICommand startGameCommand = new ICommand() {
+			@Override
+			public Result execute() {
+				return startGame();
+			}
+		};
+		
+		this.asyncTask.executeTask(startGameCommand, startGameCallback);
 	}
 	
 	@Override

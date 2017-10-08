@@ -1,6 +1,7 @@
 package byu.codemonkeys.tickettoride.views;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,6 +40,7 @@ public class WaitingRoomFragment extends Fragment implements WaitingRoomContract
 	private UserRecyclerAdapter userAdapter;
 	private Button buttonStartGame;
 	private Button buttonLeaveGame;
+	private Activity thisActivity;
 	
 	
 	public WaitingRoomFragment() {
@@ -84,6 +86,7 @@ public class WaitingRoomFragment extends Fragment implements WaitingRoomContract
 		buttonStartGame = (Button) view.findViewById(R.id.waitingRoom_buttonStartGame);
 		buttonLeaveGame = (Button) view.findViewById(R.id.waitingRoom_buttonLeaveGame);
 		textViewGameName = (TextView) view.findViewById(R.id.waitingRoom_textViewGameName);
+		thisActivity = getActivity();
 		
 		layoutManagerUsers = new LinearLayoutManager(getActivity());
 		recyclerUsers.setLayoutManager(layoutManagerUsers);
@@ -128,7 +131,7 @@ public class WaitingRoomFragment extends Fragment implements WaitingRoomContract
 	// region WaitingRoomContract.View Implementation
 	@Override
 	public void setPendingGameName(final String gameName) {
-		getActivity().runOnUiThread(new Runnable() {
+		thisActivity.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				textViewGameName.setText(gameName);
@@ -139,7 +142,7 @@ public class WaitingRoomFragment extends Fragment implements WaitingRoomContract
 	@Override
 	public void setWaitingUsers(final List<UserBase> users) {
 		Log.d("WR", "Update waiting users");
-		getActivity().runOnUiThread(new Runnable() {
+		thisActivity.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				if (userAdapter == null) {

@@ -11,6 +11,9 @@ import byu.codemonkeys.tickettoride.shared.model.Session;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
+import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
+import byu.codemonkeys.tickettoride.shared.results.Result;
+import byu.codemonkeys.tickettoride.shared.results.StartGameResult;
 
 /**
  * Created by Megan on 10/3/2017.
@@ -45,9 +48,13 @@ public interface IModelFacade {
 	
 	GameBase getPendingGame() throws UnauthorizedException, NoPendingGameException;
 	
-	void leavePendingGame() throws UnauthorizedException, NoPendingGameException;
+	PendingGamesResult leavePendingGame();
 	
-	GameBase startGame() throws UnauthorizedException, NoPendingGameException;
+	void leavePendingGameAsync(ICallback leavePendingGameCallback);
+	
+	StartGameResult startGame();
+	
+	void startGameAsync(ICallback startGameCallback);
 	
 	void cancelGame() throws UnauthorizedException, NoPendingGameException;
 	
