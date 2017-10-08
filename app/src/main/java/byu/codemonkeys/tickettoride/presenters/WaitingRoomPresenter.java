@@ -51,8 +51,8 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 				}
 			};
 			modelFacade.startGameAsync(startGameCallback);
-			}
 		}
+	}
 	
 	@Override
 	public void leaveGame() {
@@ -61,8 +61,8 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 			@Override
 			public void callback(Result result) {
 				if (result.isSuccessful()) {
-					navigator.NavigateBack();
 					PendingGamePoller.getInstance().stopPolling();
+					navigator.NavigateBack();
 				} else {
 					messageDisplayer.displayMessage(result.getErrorMessage());
 				}
@@ -115,15 +115,15 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 	@Override
 	public void update(Observable observable, Object o) {
 		if (o == ModelFacade.PENDING_GAME_UPDATE) {
-			this.loadWaitingPlayers();
-			
 			try {
 				if (modelFacade.getPendingGame().isStarted())
 					messageDisplayer.displayMessage("Game started!");
+				this.loadWaitingPlayers();
 			} catch (UnauthorizedException e) {
 				e.printStackTrace();
 			} catch (NoPendingGameException e) {
-				e.printStackTrace();
+				stopPolling();
+				this.navigator.NavigateBack();
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 package byu.codemonkeys.tickettoride;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -42,78 +43,90 @@ public class MainActivity extends AppCompatActivity implements INavigator, IDisp
 	
 	// region INavigator Implementation
 	@Override
-	public void Navigate(PresenterEnum presenter, boolean allowBack) {
-		Fragment fragment;
-		switch (presenter) {
-			case Login:
-				LoginFragment loginFragment = LoginFragment.newInstance();
-				loginFragment.setPresenter(new LoginPresenter(loginFragment,
-															  this,
-															  this,
-															  ModelFacade.getInstance()));
-				fragment = loginFragment;
-				break;
-			case Register:
-				RegisterFragment registerFragment = RegisterFragment.newInstance();
-				registerFragment.setPresenter(new RegisterPresenter(registerFragment,
-																	this,
-																	this,
-																	ModelFacade.getInstance()));
-				fragment = registerFragment;
-				break;
-			case ConnectionSettings:
-				ConnectionSettingsFragment connectionSettingsFragment = ConnectionSettingsFragment.newInstance();
-				connectionSettingsFragment.setPresenter(new ConnectionSettingsPresenter(
-						connectionSettingsFragment,
-						this,
-						this,
-						ModelFacade.getInstance()));
-				fragment = connectionSettingsFragment;
-				break;
-			case CreateGame:
-				CreateGameFragment createGameFragment = CreateGameFragment.newInstance();
-				createGameFragment.setPresenter(new CreateGamePresenter(createGameFragment,
-																		this,
-																		this,
-																		ModelFacade.getInstance()));
-				fragment = createGameFragment;
-				break;
-			case Lobby:
-				LobbyFragment lobbyFragment = LobbyFragment.newInstance();
-				lobbyFragment.setPresenter(new LobbyPresenter(lobbyFragment,
-															  this,
-															  this,
-															  ModelFacade.getInstance()));
-				fragment = lobbyFragment;
-				break;
-			case WaitingRoom:
-				WaitingRoomFragment waitingRoomFragment = WaitingRoomFragment.newInstance();
-				waitingRoomFragment.setPresenter(new WaitingRoomPresenter(waitingRoomFragment,
-																		  this,
-																		  this,
-																		  ModelFacade.getInstance()));
-				fragment = waitingRoomFragment;
-				break;
-			default:
-				fragment = null;
-		}
-		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction()
-																	 .replace(R.id.main_fragmentContainer,
-																			  fragment);
-		if (allowBack)
-			transaction.addToBackStack(null);
-		transaction.commit();
-		
+	public void Navigate(final PresenterEnum presenter, final boolean allowBack) {
+		final MainActivity activity = this;
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				Fragment fragment;
+				switch (presenter) {
+					case Login:
+						LoginFragment loginFragment = LoginFragment.newInstance();
+						loginFragment.setPresenter(new LoginPresenter(loginFragment,
+																	  activity,
+																	  activity,
+																	  ModelFacade.getInstance()));
+						fragment = loginFragment;
+						break;
+					case Register:
+						RegisterFragment registerFragment = RegisterFragment.newInstance();
+						registerFragment.setPresenter(new RegisterPresenter(registerFragment,
+																			activity,
+																			activity,
+																			ModelFacade.getInstance()));
+						fragment = registerFragment;
+						break;
+					case ConnectionSettings:
+						ConnectionSettingsFragment connectionSettingsFragment = ConnectionSettingsFragment
+								.newInstance();
+						connectionSettingsFragment.setPresenter(new ConnectionSettingsPresenter(
+								connectionSettingsFragment,
+								activity,
+								activity,
+								ModelFacade.getInstance()));
+						fragment = connectionSettingsFragment;
+						break;
+					case CreateGame:
+						CreateGameFragment createGameFragment = CreateGameFragment.newInstance();
+						createGameFragment.setPresenter(new CreateGamePresenter(createGameFragment,
+																				activity,
+																				activity,
+																				ModelFacade.getInstance()));
+						fragment = createGameFragment;
+						break;
+					case Lobby:
+						LobbyFragment lobbyFragment = LobbyFragment.newInstance();
+						lobbyFragment.setPresenter(new LobbyPresenter(lobbyFragment,
+																	  activity,
+																	  activity,
+																	  ModelFacade.getInstance()));
+						fragment = lobbyFragment;
+						break;
+					case WaitingRoom:
+						WaitingRoomFragment waitingRoomFragment = WaitingRoomFragment.newInstance();
+						waitingRoomFragment.setPresenter(new WaitingRoomPresenter(
+								waitingRoomFragment,
+								activity,
+								activity,
+								ModelFacade.getInstance()));
+						fragment = waitingRoomFragment;
+						break;
+					default:
+						fragment = null;
+				}
+				FragmentTransaction transaction = getSupportFragmentManager().beginTransaction()
+																			 .replace(R.id.main_fragmentContainer,
+																					  fragment);
+				if (allowBack)
+					transaction.addToBackStack(null);
+				transaction.commit();
+				
+			}
+		});
 	}
 	
 	@Override
 	public void NavigateBack() {
-		getSupportFragmentManager().popBackStack();
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				getSupportFragmentManager().popBackStack();
+			}
+		});
 	}
 	// endregion
 	
-	// region IDisplaysMessages Implementation
-	@Override
+	// region IDisplaysMessages Implementation @Override
 	public void displayMessage(final String error) {
 		runOnUiThread(new Runnable() {
 			@Override
