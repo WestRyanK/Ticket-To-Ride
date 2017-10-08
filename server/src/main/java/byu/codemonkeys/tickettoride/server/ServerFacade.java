@@ -109,7 +109,9 @@ public class ServerFacade implements IServer {
             return new PendingGameResult("Invalid Game ID");
         }
 
-        User user = rootModel.getSession(authToken).getUser();
+        ServerSession session = rootModel.getSession(authToken);
+
+        User user = session.getUser();
 
         if (game.hasUser(user)) {
             return new PendingGameResult("You already joined the game");
@@ -117,6 +119,7 @@ public class ServerFacade implements IServer {
 
         try {
             game.addUser(user);
+            session.setGameID(gameID);
         } catch (FullGameException e) {
             return new PendingGameResult("The game is full");
         }
