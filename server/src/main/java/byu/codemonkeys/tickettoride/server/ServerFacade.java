@@ -140,6 +140,10 @@ public class ServerFacade implements IServer {
 
         User user = session.getUser();
 
+        if (game.getOwner().equals(user)) {
+            rootModel.removePendingGame(gameID);
+        }
+
         try {
             game.removeUser(user);
         } catch (EmptyGameException e) {
@@ -199,8 +203,12 @@ public class ServerFacade implements IServer {
     }
 
     @Override
-    public PendingGameResult getPendingGame(String gameID) {
-        PendingGame game = rootModel.getPendingGame(gameID);
+    public PendingGameResult getPendingGame(String authToken) {
+        ServerSession session = rootModel.getSession(authToken);
+        if (session == null) {
+            return new PendingGameResult("invalid authentication");
+        }
+        PendingGame game = rootModel.getPendingGame(session.getGameID());
         if (game == null) {
             return new PendingGameResult("Invalid Game ID");
         }

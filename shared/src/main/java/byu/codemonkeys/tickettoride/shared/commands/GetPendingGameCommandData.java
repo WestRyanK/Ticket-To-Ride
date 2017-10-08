@@ -5,3 +5,4 @@ public class GetPendingGameCommandData extends CommandData {
 		super(CommandType.GET_PENDING_GAME);
 	}
 }
+

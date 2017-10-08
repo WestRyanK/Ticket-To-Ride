@@ -81,8 +81,8 @@ public class ServerFacadeTest {
 
     @Test
     public void testGetPendingGame() {
-        assertTrue(ServerFacade.getInstance().getPendingGame("game-1-id").isSuccessful());
-        assertFalse(ServerFacade.getInstance().getPendingGame("no such game").isSuccessful());
+        assertTrue(ServerFacade.getInstance().getPendingGame("auth-token").isSuccessful());
+        assertFalse(ServerFacade.getInstance().getPendingGame("invalid-auth-token").isSuccessful());
     }
 
     @Test
