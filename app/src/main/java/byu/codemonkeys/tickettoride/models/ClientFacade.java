@@ -42,7 +42,6 @@ public class ClientFacade implements IClient {
 		ModelRoot modelRoot = ModelRoot.getInstance();
 		String authToken = modelRoot.getSession().getAuthToken();
 		PendingGameResult result = ServerProxy.getInstance().getPendingGame(authToken);
-		result.getGame().getUsers().add(new UserBase(UUID.randomUUID().toString()));
 		if (result.getErrorMessage() == null) {
 			modelRoot.setPendingGame(result.getGame());
 		} else {
