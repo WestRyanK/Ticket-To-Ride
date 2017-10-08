@@ -114,8 +114,13 @@ public class MainActivity extends AppCompatActivity implements INavigator, IDisp
 	
 	// region IDisplaysMessages Implementation
 	@Override
-	public void displayMessage(String error) {
-		Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+	public void displayMessage(final String error) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
 	// endregion
 }

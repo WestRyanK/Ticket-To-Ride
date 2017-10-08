@@ -1,5 +1,7 @@
 package byu.codemonkeys.tickettoride.presenters;
 
+import android.app.Notification;
+
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -93,7 +95,17 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 	
 	@Override
 	public void update(Observable observable, Object o) {
-		if (o == ModelFacade.PENDING_GAME_UPDATE)
-		this.loadWaitingPlayers();
+		if (o == ModelFacade.PENDING_GAME_UPDATE) {
+			this.loadWaitingPlayers();
+			
+			try {
+				if (modelFacade.getPendingGame().isStarted())
+					messageDisplayer.displayMessage("Game started!");
+			} catch (UnauthorizedException e) {
+				e.printStackTrace();
+			} catch (NoPendingGameException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

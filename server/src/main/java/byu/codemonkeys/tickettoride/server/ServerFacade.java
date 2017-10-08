@@ -93,6 +93,8 @@ public class ServerFacade implements IServer {
         PendingGame game = new PendingGame(rootModel.generateUniqueID(), gameName, user);
 
         rootModel.addPendingGame(game);
+        
+       session.setGameID(game.getID());
 
         return new PendingGameResult(game);
     }
