@@ -9,10 +9,6 @@ import byu.codemonkeys.tickettoride.shared.results.Result;
 public class GetPendingGameCommand extends GetPendingGameCommandData implements ICommand {
     @Override
     public Result execute() {
-        return ServerFacade.getInstance().getPendingGame(gameID);
-    }
-
-    public GetPendingGameCommand(String gameID) {
-        super(gameID);
+        return ServerFacade.getInstance().getPendingGame(getAuthToken());
     }
 }

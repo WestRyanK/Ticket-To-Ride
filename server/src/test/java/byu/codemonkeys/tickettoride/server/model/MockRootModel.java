@@ -57,7 +57,9 @@ public class MockRootModel implements IRootModel {
     public ServerSession getSession(String authToken) {
         if (authToken.equals("auth-token")) {
             User user = new User("username", "password");
-            return new ServerSession(user, "auth-token");
+            ServerSession session = new ServerSession(user, "auth-token");
+            session.setGameID("game-1-id");
+            return session;
         }
 
         if (authToken.equals("auth-token-0")) {
