@@ -65,6 +65,8 @@ class CommandHandler implements HttpHandler {
                 return serializer.deserialize(requestBody, CreateGameCommand.class);
             case CommandType.GET_PENDING_GAMES:
                 return serializer.deserialize(requestBody, GetPendingGamesCommand.class);
+            case CommandType.GET_PENDING_GAME:
+                return serializer.deserialize(requestBody, GetPendingGameCommand.class);
             case CommandType.JOIN_PENDING_GAME:
                 return serializer.deserialize(requestBody, JoinPendingGameCommand.class);
             case CommandType.LEAVE_PENDING_GAME:
