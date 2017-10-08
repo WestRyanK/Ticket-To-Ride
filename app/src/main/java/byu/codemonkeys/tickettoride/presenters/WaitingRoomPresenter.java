@@ -7,6 +7,7 @@ import java.util.Observer;
 import byu.codemonkeys.tickettoride.exceptions.NoPendingGameException;
 import byu.codemonkeys.tickettoride.exceptions.UnauthorizedException;
 import byu.codemonkeys.tickettoride.models.IModelFacade;
+import byu.codemonkeys.tickettoride.models.ModelFacade;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.mvpcontracts.WaitingRoomContract;
@@ -45,6 +46,7 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 	
 	@Override
 	public void leaveGame() {
+		PendingGamePoller.getInstance().stopPolling();
 		this.navigator.NavigateBack();
 	}
 	
@@ -91,6 +93,7 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 	
 	@Override
 	public void update(Observable observable, Object o) {
+		if (o == ModelFacade.PENDING_GAME_UPDATE)
 		this.loadWaitingPlayers();
 	}
 }

@@ -8,6 +8,7 @@ import java.util.Observer;
 import byu.codemonkeys.tickettoride.async.ICallback;
 import byu.codemonkeys.tickettoride.exceptions.UnauthorizedException;
 import byu.codemonkeys.tickettoride.models.IModelFacade;
+import byu.codemonkeys.tickettoride.models.ModelFacade;
 import byu.codemonkeys.tickettoride.models.ModelRoot;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
@@ -88,6 +89,7 @@ public class LobbyPresenter extends PresenterBase implements LobbyContract.Prese
 	
 	@Override
 	public void update(Observable observable, Object o) {
-		this.loadPendingGames();
+		if (o == ModelFacade.PENDING_GAMES_UPDATE)
+			this.loadPendingGames();
 	}
 }

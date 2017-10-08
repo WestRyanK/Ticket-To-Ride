@@ -3,12 +3,12 @@ package byu.codemonkeys.tickettoride.models;
 import java.util.List;
 import java.util.Observer;
 
-import byu.codemonkeys.tickettoride.exceptions.NoPendingGameException;
-import byu.codemonkeys.tickettoride.exceptions.RegisterException;
-import byu.codemonkeys.tickettoride.exceptions.SingleGameException;
-import byu.codemonkeys.tickettoride.exceptions.UnauthorizedException;
 import byu.codemonkeys.tickettoride.async.ICallback;
-import byu.codemonkeys.tickettoride.shared.model.*;
+import byu.codemonkeys.tickettoride.exceptions.NoPendingGameException;
+import byu.codemonkeys.tickettoride.exceptions.UnauthorizedException;
+import byu.codemonkeys.tickettoride.shared.model.GameBase;
+import byu.codemonkeys.tickettoride.shared.model.Session;
+import byu.codemonkeys.tickettoride.shared.model.UserBase;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 
@@ -17,6 +17,7 @@ import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
  */
 
 public interface IModelFacade {
+	
 	
 	void addObserver(Observer observer);
 	

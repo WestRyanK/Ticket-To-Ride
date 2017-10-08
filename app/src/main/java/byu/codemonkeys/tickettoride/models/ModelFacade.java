@@ -30,8 +30,10 @@ public class ModelFacade implements IModelFacade {
 	private IServer serverProxy = ServerProxy.getInstance();
 	private ClientCommunicator communicator = ClientCommunicator.getInstance();
 	private ModelRoot models = ModelRoot.getInstance();
-	private PendingGamesPoller pendingGamesPoller = PendingGamesPoller.getInstance();
 	private ITask asyncTask;
+	
+	public static final String PENDING_GAMES_UPDATE = "PendingGamesUpdate";
+	public static final String PENDING_GAME_UPDATE = "PendingGameUpdate";
 	
 	private ModelFacade() {
 	}
@@ -59,7 +61,7 @@ public class ModelFacade implements IModelFacade {
 		if (result.getErrorMessage() == null) {
 			models.setSession(result.getUserSession());
 			models.setUser(new UserBase(username));
-//			start(pendingGamesPoller);
+			//			start(pendingGamesPoller);
 		}
 		return result;
 	}
@@ -83,7 +85,7 @@ public class ModelFacade implements IModelFacade {
 		Result result = serverProxy.logout(models.getSession().getAuthToken());
 		if (result.getErrorMessage() == null) {
 			//clear the models since they are logging out
-//			stop(pendingGamesPoller);
+			//			stop(pendingGamesPoller);
 			models.getInstance().clear();
 		} else
 			throw new UnauthorizedException(result.getErrorMessage());
@@ -95,7 +97,7 @@ public class ModelFacade implements IModelFacade {
 		if (result.getErrorMessage() == null) {
 			models.setSession(result.getUserSession());
 			models.setUser(new UserBase(username));
-//			start(pendingGamesPoller);
+			//			start(pendingGamesPoller);
 		}
 		return result;
 	}
@@ -129,7 +131,7 @@ public class ModelFacade implements IModelFacade {
 														  gameName);
 		if (result.getErrorMessage() == null) {
 			models.setPendingGame(result.getGame());
-//			stop(pendingGamesPoller);
+			//			stop(pendingGamesPoller);
 			//TODO(compy-386): Poll for game started, waiting so no longer have to get all pending games
 		}
 		return result;
@@ -165,7 +167,7 @@ public class ModelFacade implements IModelFacade {
 															   game.getID());
 		if (result.getErrorMessage() == null) {
 			models.setPendingGame(result.getGame());
-//			start(pendingGamesPoller);
+			//			start(pendingGamesPoller);
 		}
 		//		}
 		return result;
@@ -194,7 +196,7 @@ public class ModelFacade implements IModelFacade {
 																		   .getID());
 			if (result.getErrorMessage() == null) {
 				models.setPendingGame(null);
-//				start(pendingGamesPoller);
+				//				start(pendingGamesPoller);
 			} else
 				throw new UnauthorizedException(result.getErrorMessage());
 		}
@@ -225,7 +227,7 @@ public class ModelFacade implements IModelFacade {
 			if (result.getErrorMessage() == null) {
 				models.setPendingGame(null);
 				models.setPendingGames(result.getGames());
-//				start(pendingGamesPoller);
+				//				start(pendingGamesPoller);
 			}
 		}
 	}
@@ -242,14 +244,14 @@ public class ModelFacade implements IModelFacade {
 		communicator.changeConfiguration(host, port);
 	}
 	
-//	private void start(Poller poller) {
-//		poller.startPolling();
-//	}
-//
-//	private void stop(Poller poller) {
-//		poller.stopPolling();
-//	}
-//
+	//	private void start(Poller poller) {
+	//		poller.startPolling();
+	//	}
+	//
+	//	private void stop(Poller poller) {
+	//		poller.stopPolling();
+	//	}
+	//
 	public void setAsyncTask(ITask asyncTask) {
 		this.asyncTask = asyncTask;
 	}

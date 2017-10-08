@@ -35,7 +35,6 @@ public class ClientFacade implements IClient {
 		} else {
 			throw new Exception(result.getErrorMessage());
 		}
-		modelRoot.notifyObservers();
 	}
 	
 	@Override
@@ -49,6 +48,5 @@ public class ClientFacade implements IClient {
 		} else {
 			throw new Exception(result.getErrorMessage());
 		}
-		modelRoot.notifyObservers();
 	}
 }

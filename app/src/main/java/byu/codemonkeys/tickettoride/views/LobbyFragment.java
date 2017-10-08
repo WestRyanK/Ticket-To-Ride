@@ -118,9 +118,11 @@ public class LobbyFragment extends Fragment implements LobbyContract.View {
 	@Override
 	public void setPendingGames(final List<GameBase> pendingGames) {
 		
+		Log.d("LOBBY", "SetPendingGames");
 		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
+				Log.d("LOBBY", "SetPendingGames Run");
 				if (pendingGamesAdapter == null) {
 					pendingGamesAdapter = new PendingGamesRecyclerAdapter(pendingGames,
 																		  new OnRecyclerItemClickListener<GameBase>() {

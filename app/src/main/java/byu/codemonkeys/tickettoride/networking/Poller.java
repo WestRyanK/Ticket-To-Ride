@@ -26,7 +26,9 @@ public abstract class Poller {
 	}
 	
 	public void stopPolling() {
-		timer.cancel();
-		timer = null;
+		if (timer != null) {
+			timer.cancel();
+			timer = null;
+		}
 	}
 }
