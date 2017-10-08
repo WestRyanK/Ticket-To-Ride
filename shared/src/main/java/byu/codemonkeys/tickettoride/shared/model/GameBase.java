@@ -7,6 +7,7 @@ public class GameBase {
     protected String gameID, gameName;
     protected UserBase gameOwner;
     protected List<UserBase> gameUsers;
+    protected boolean started;
 
     public String getID() {
         return gameID;
@@ -26,5 +27,13 @@ public class GameBase {
 
     public boolean hasUser(UserBase user) {
         return gameUsers.contains(user);
+    }
+
+    public boolean isStarted() {
+        return started;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
     }
 }
