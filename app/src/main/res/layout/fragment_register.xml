@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:orientation="vertical"
+              android:padding="10dp"
+              tools:context="byu.codemonkeys.tickettoride.views.RegisterFragment">
+
+    <EditText
+        android:id="@+id/register_editTextUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/username"
+        android:inputType="textNoSuggestions"
+        android:maxLines="1"/>
+
+    <EditText
+        android:id="@+id/register_editTextPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/password"
+        android:maxLines="1"
+        android:inputType="textPassword"/>
+
+    <Button
+        android:id="@+id/register_buttonRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/register"/>
+
+    <TextView
+        android:id="@+id/register_textViewCancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="onClickCancel"
+        android:text="@string/cancel"/>
+</LinearLayout>

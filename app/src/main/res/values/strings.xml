@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">Ticket To Ride</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Log In</string>
+    <string name="register">Register</string>
+    <string name="cancel">Cancel</string>
+    <string name="register_new_user">Register New User</string>
+    <string name="host">Host</string>
+    <string name="port">Port</string>
+    <string name="save">Save</string>
+    <string name="gameName">Game Name</string>
+    <string name="createGame">Create Game</string>
+    <string name="connection_settings">Change Connection</string>
+    <string name="playersWaiting">Players Waiting</string>
+    <string name="leave">Leave Game</string>
+    <string name="startGame">Start Game</string>
+    <string name="players">Players</string>
+    <string name="owner">Owner</string>
+    <string name="game">Game</string>
 </resources>

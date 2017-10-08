@@ -36,5 +36,6 @@ public interface IServer {
     PendingGamesResult leavePendingGame(String authToken, String gameID);
     PendingGamesResult cancelGame(String authToken, String gameID);
     PendingGamesResult getPendingGames(String authToken);
+    PendingGameResult getPendingGame(String authToken);
     StartGameResult startGame(String authToken, String gameID);
 }

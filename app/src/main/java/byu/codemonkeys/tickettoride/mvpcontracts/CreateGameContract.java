@@ -8,9 +8,13 @@ public interface CreateGameContract {
 	interface View {
 		void setGameName(String gameName);
 		
-		void setMinPlayers(int minPlayers);
+		String getGameName();
 		
-		void setMaxPlayers(int maxPlayers);
+		//		void setMinPlayers(int minPlayers);
+		//
+		//		void setMaxPlayers(int maxPlayers);
+		
+		void setCanCreateGame(boolean canCreateGame);
 	}
 	
 	interface Presenter {
@@ -18,10 +22,8 @@ public interface CreateGameContract {
 		
 		void cancel();
 		
-		void setGameName(String gameName);
+		void setDefaults();
 		
-		void setMinPlayers(int minPlayers);
-		
-		void setMaxPlayers(int maxPlayers);
+		boolean canCreateGame();
 	}
 }

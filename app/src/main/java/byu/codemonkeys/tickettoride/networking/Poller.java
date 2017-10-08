@@ -1,7 +1,7 @@
 package byu.codemonkeys.tickettoride.networking;
 
-import byu.codemonkeys.tickettoride.models.ClientFacade;
 import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -9,16 +9,24 @@ import java.util.Timer;
  */
 
 public abstract class Poller {
-    protected int pollingInterval = 1000;
-    protected int pollingDelay = 0;
-    protected Timer timer = new Timer();
-
-
-    public abstract void poll();
-    public void startPolling(){
-        poll();
-    };
-    public void stopPolling(){
-        timer.cancel();
-    };
+	protected int pollingInterval = 1000;
+	protected int pollingDelay = 0;
+	protected Timer timer;
+	
+	
+	protected abstract TimerTask createTask();
+	//	public abstract void poll();
+	
+	public void startPolling() {
+		if (this.timer == null) {
+			this.timer = new Timer();
+			TimerTask task = createTask();
+			this.timer.scheduleAtFixedRate(task, this.pollingDelay, this.pollingInterval);
+		}
+	}
+	
+	public void stopPolling() {
+		timer.cancel();
+		timer = null;
+	}
 }

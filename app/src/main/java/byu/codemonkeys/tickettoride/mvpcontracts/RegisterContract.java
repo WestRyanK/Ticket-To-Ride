@@ -8,7 +8,11 @@ public interface RegisterContract {
 	interface View {
 		void setUsername(String username);
 		
+		String getUsername();
+		
 		void setPassword(String password);
+		
+		String getPassword();
 		
 		void setCanRegister(Boolean canRegister);
 	}
@@ -18,8 +22,8 @@ public interface RegisterContract {
 		
 		void cancel();
 		
-		void setUsername(String username);
+		void setDefaults();
 		
-		void setPassword(String password);
+		boolean canRegister();
 	}
 }

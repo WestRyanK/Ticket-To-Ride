@@ -83,4 +83,11 @@ public class ServerProxy implements IServer {
         data.setAuthToken(authToken);
         return communicator.sendGetPendingGames(data);
     }
+    
+    @Override
+    public PendingGameResult getPendingGame(String authToken) {
+        GetPendingGameCommandData data = new GetPendingGameCommandData();
+        data.setAuthToken(authToken);
+        return communicator.sendGetPendingGame(data);
+    }
 }

@@ -1,8 +1,8 @@
 package byu.codemonkeys.tickettoride.mvpcontracts;
 
-import byu.codemonkeys.tickettoride.models.PendingGame;
-
 import java.util.List;
+
+import byu.codemonkeys.tickettoride.shared.model.GameBase;
 
 /**
  * Created by Ryan on 9/29/2017.
@@ -10,14 +10,20 @@ import java.util.List;
 
 public interface LobbyContract {
 	interface View {
-		void setPendingGames(List<PendingGame> pendingGames);
+		void setPendingGames(List<GameBase> pendingGames);
 	}
 	
 	interface Presenter {
 		void createGame();
 		
-		void joinGame();
+		void joinGame(GameBase game);
 		
 		void logout();
+		
+		void setDefaults();
+		
+		void startPolling();
+		
+		void stopPolling();
 	}
 }

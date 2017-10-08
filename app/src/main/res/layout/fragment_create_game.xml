@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:orientation="vertical"
+              android:padding="10dp"
+              tools:context="byu.codemonkeys.tickettoride.views.CreateGameFragment">
+
+<EditText
+    android:id="@+id/createGame_editTextGameName"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:maxLines="1"
+    android:inputType="textCapWords"
+    android:hint="@string/gameName"/>
+
+    <!--<LinearLayout-->
+        <!--android:gravity="center"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="60dp" android:orientation="horizontal">-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" android:text="Game can have "/>-->
+        <!--<NumberPicker-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--/>-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" android:text=" to "/>-->
+        <!--<NumberPicker-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"/>-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" android:text=" players"/>-->
+    <!--</LinearLayout>-->
+
+<Button
+    android:id="@+id/createGame_buttonCreateGame"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:text="@string/createGame"/>
+
+<TextView
+    android:id="@+id/createGame_textViewCancel"
+    android:layout_marginTop="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:clickable="true"
+    android:onClick="onClickCancel"
+    android:text="@string/cancel"/>
+</LinearLayout>

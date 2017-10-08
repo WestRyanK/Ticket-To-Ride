@@ -199,6 +199,15 @@ public class ServerFacade implements IServer {
     }
 
     @Override
+    public PendingGameResult getPendingGame(String gameID) {
+        PendingGame game = rootModel.getPendingGame(gameID);
+        if (game == null) {
+            return new PendingGameResult("Invalid Game ID");
+        }
+        return new PendingGameResult(game);
+    }
+
+    @Override
     public StartGameResult startGame(String authToken, String gameID) {
         ServerSession session = rootModel.getSession(authToken);
 
