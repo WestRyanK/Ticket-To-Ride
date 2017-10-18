@@ -32,7 +32,7 @@ public class LoginPresenter extends PresenterBase implements LoginContract.Prese
 			@Override
 			public void callback(Result result) {
 				if (result.isSuccessful()) {
-					navigator.Navigate(PresenterEnum.Lobby, false);
+					navigator.navigate(PresenterEnum.Lobby, false);
 				} else {
 					messageDisplayer.displayMessage(result.getErrorMessage());
 				}
@@ -46,12 +46,12 @@ public class LoginPresenter extends PresenterBase implements LoginContract.Prese
 	
 	@Override
 	public void navigateRegisterUser() {
-		this.navigator.Navigate(PresenterEnum.Register, true);
+		this.navigator.navigate(PresenterEnum.Register, true);
 	}
 	
 	@Override
 	public void navigateConnectionSettings() {
-		this.navigator.Navigate(PresenterEnum.ConnectionSettings, true);
+		this.navigator.navigate(PresenterEnum.ConnectionSettings, true);
 	}
 	
 	@Override

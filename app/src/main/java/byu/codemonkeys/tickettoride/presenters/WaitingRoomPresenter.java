@@ -62,7 +62,7 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 			public void callback(Result result) {
 				if (result.isSuccessful()) {
 					PendingGamePoller.getInstance().stopPolling();
-					navigator.NavigateBack();
+					navigator.navigateBack();
 				} else {
 					messageDisplayer.displayMessage(result.getErrorMessage());
 				}
@@ -123,7 +123,7 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 				e.printStackTrace();
 			} catch (NoPendingGameException e) {
 				stopPolling();
-				this.navigator.NavigateBack();
+				this.navigator.navigateBack();
 			}
 		}
 	}

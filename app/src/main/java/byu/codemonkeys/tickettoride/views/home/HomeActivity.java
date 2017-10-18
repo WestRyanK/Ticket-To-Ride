@@ -1,6 +1,6 @@
-package byu.codemonkeys.tickettoride;
+package byu.codemonkeys.tickettoride.views.home;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import byu.codemonkeys.tickettoride.R;
 import byu.codemonkeys.tickettoride.async.AndroidTask;
 import byu.codemonkeys.tickettoride.models.ModelFacade;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
@@ -19,14 +20,9 @@ import byu.codemonkeys.tickettoride.presenters.LoginPresenter;
 import byu.codemonkeys.tickettoride.presenters.PresenterEnum;
 import byu.codemonkeys.tickettoride.presenters.RegisterPresenter;
 import byu.codemonkeys.tickettoride.presenters.WaitingRoomPresenter;
-import byu.codemonkeys.tickettoride.views.ConnectionSettingsFragment;
-import byu.codemonkeys.tickettoride.views.CreateGameFragment;
-import byu.codemonkeys.tickettoride.views.LobbyFragment;
-import byu.codemonkeys.tickettoride.views.LoginFragment;
-import byu.codemonkeys.tickettoride.views.RegisterFragment;
-import byu.codemonkeys.tickettoride.views.WaitingRoomFragment;
+import byu.codemonkeys.tickettoride.views.game.GameActivity;
 
-public class MainActivity extends AppCompatActivity implements INavigator, IDisplaysMessages {
+public class HomeActivity extends AppCompatActivity implements INavigator, IDisplaysMessages {
 	
 	private FrameLayout fragmentContainer;
 	
@@ -38,13 +34,13 @@ public class MainActivity extends AppCompatActivity implements INavigator, IDisp
 		this.fragmentContainer = (FrameLayout) this.findViewById(R.id.main_fragmentContainer);
 		
 		((ModelFacade) ModelFacade.getInstance()).setAsyncTask(new AndroidTask());
-		Navigate(PresenterEnum.Login, false);
+		navigate(PresenterEnum.Login, false);
 	}
 	
 	// region INavigator Implementation
 	@Override
-	public void Navigate(final PresenterEnum presenter, final boolean allowBack) {
-		final MainActivity activity = this;
+	public void navigate(final PresenterEnum presenter, final boolean allowBack) {
+		final HomeActivity activity = this;
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
@@ -101,22 +97,27 @@ public class MainActivity extends AppCompatActivity implements INavigator, IDisp
 								ModelFacade.getInstance()));
 						fragment = waitingRoomFragment;
 						break;
+					case Game:
+						Intent intent = new Intent(HomeActivity.this, GameActivity.class);
+						startActivity(intent);
 					default:
 						fragment = null;
 				}
-				FragmentTransaction transaction = getSupportFragmentManager().beginTransaction()
-																			 .replace(R.id.main_fragmentContainer,
-																					  fragment);
-				if (allowBack)
-					transaction.addToBackStack(null);
-				transaction.commit();
+				if (fragment != null) {
+					FragmentTransaction transaction = getSupportFragmentManager().beginTransaction()
+																				 .replace(R.id.main_fragmentContainer,
+																						  fragment);
+					if (allowBack)
+						transaction.addToBackStack(null);
+					transaction.commit();
+				}
 				
 			}
 		});
 	}
 	
 	@Override
-	public void NavigateBack() {
+	public void navigateBack() {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {

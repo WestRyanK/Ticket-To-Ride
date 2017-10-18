@@ -1,4 +1,4 @@
-package byu.codemonkeys.tickettoride.views;
+package byu.codemonkeys.tickettoride.views.home;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import java.util.List;
 
 import byu.codemonkeys.tickettoride.R;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
+import byu.codemonkeys.tickettoride.views.OnRecyclerItemClickListener;
 
 /**
  * Created by Ryan on 10/3/2017.

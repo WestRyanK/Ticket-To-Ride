@@ -10,7 +10,8 @@ import byu.codemonkeys.tickettoride.presenters.PresenterEnum;
  */
 
 public interface INavigator {
-	void Navigate(PresenterEnum presenter, boolean allowBack);
+	void navigate(PresenterEnum presenter, boolean allowBack);
 	
-	void NavigateBack();
+	
+	void navigateBack();
 }

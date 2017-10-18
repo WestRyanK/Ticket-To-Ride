@@ -1,4 +1,4 @@
-package byu.codemonkeys.tickettoride.views;
+package byu.codemonkeys.tickettoride.views.home;
 
 
 import android.os.Bundle;
@@ -8,20 +8,18 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import byu.codemonkeys.tickettoride.R;
-import byu.codemonkeys.tickettoride.mvpcontracts.CreateGameContract;
+import byu.codemonkeys.tickettoride.mvpcontracts.RegisterContract;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CreateGameFragment#newInstance} factory method to
+ * Use the {@link RegisterFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CreateGameFragment extends Fragment implements CreateGameContract.View {
+public class RegisterFragment extends Fragment implements RegisterContract.View {
 	// TODO: Rename parameter arguments, choose names that match
 	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 	//	private static final String ARG_PARAM1 = "param1";
@@ -30,13 +28,14 @@ public class CreateGameFragment extends Fragment implements CreateGameContract.V
 	// TODO: Rename and change types of parameters
 	//	private String mParam1;
 	//	private String mParam2;
-	private CreateGameContract.Presenter presenter;
-	private EditText editTextGameName;
-	private Button buttonCreateGame;
+	private RegisterContract.Presenter presenter;
+	private EditText editTextUsername;
+	private EditText editTextPassword;
+	private TextView buttonRegister;
+	//	private Button buttonRegister;
 	private TextView textViewCancel;
 	
-	
-	public CreateGameFragment() {
+	public RegisterFragment() {
 		// Required empty public constructor
 	}
 	
@@ -47,11 +46,11 @@ public class CreateGameFragment extends Fragment implements CreateGameContract.V
 	 * //	 * @param param1 Parameter 1.
 	 * //	 * @param param2 Parameter 2.
 	 *
-	 * @return A new instance of fragment CreateGameFragment.
+	 * @return A new instance of fragment RegisterFragment.
 	 */
 	// TODO: Rename and change types and number of parameters
-	public static CreateGameFragment newInstance() {
-		CreateGameFragment fragment = new CreateGameFragment();
+	public static RegisterFragment newInstance() {
+		RegisterFragment fragment = new RegisterFragment();
 		Bundle args = new Bundle();
 		//		args.putString(ARG_PARAM1, param1);
 		//		args.putString(ARG_PARAM2, param2);
@@ -73,13 +72,14 @@ public class CreateGameFragment extends Fragment implements CreateGameContract.V
 							 ViewGroup container,
 							 Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		View view = inflater.inflate(R.layout.fragment_create_game, container, false);
+		View view = inflater.inflate(R.layout.fragment_register, container, false);
+		this.editTextUsername = (EditText) view.findViewById(R.id.register_editTextUsername);
+		this.editTextPassword = (EditText) view.findViewById(R.id.register_editTextPassword);
+		this.buttonRegister = (TextView) view.findViewById(R.id.register_buttonRegister);
+		//		this.buttonRegister = (Button) view.findViewById(R.id.register_buttonRegister);
+		this.textViewCancel = (TextView) view.findViewById(R.id.register_textViewCancel);
 		
-		this.editTextGameName = (EditText) view.findViewById(R.id.createGame_editTextGameName);
-		this.buttonCreateGame = (Button) view.findViewById(R.id.createGame_buttonCreateGame);
-		this.textViewCancel = (TextView) view.findViewById(R.id.createGame_textViewCancel);
-		
-		this.editTextGameName.addTextChangedListener(new TextWatcher() {
+		this.editTextUsername.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 				
@@ -92,14 +92,31 @@ public class CreateGameFragment extends Fragment implements CreateGameContract.V
 			
 			@Override
 			public void afterTextChanged(Editable editable) {
-				setCanCreateGame(presenter.canCreateGame());
+				setCanRegister(presenter.canRegister());
 			}
 		});
 		
-		this.buttonCreateGame.setOnClickListener(new View.OnClickListener() {
+		this.editTextPassword.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+				
+			}
+			
+			@Override
+			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable editable) {
+				setCanRegister(presenter.canRegister());
+			}
+		});
+		
+		this.buttonRegister.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				presenter.createGame();
+				presenter.register();
 			}
 		});
 		
@@ -114,23 +131,33 @@ public class CreateGameFragment extends Fragment implements CreateGameContract.V
 		return view;
 	}
 	
-	// region CreateGameContract.View implementation
+	// region RegisterContract.View implementation
 	@Override
-	public void setGameName(String gameName) {
-		this.editTextGameName.setText(gameName);
+	public void setUsername(String username) {
+		this.editTextUsername.setText(username);
 	}
 	
 	@Override
-	public String getGameName() {
-		return this.editTextGameName.getText().toString();
+	public String getUsername() {
+		return this.editTextUsername.getText().toString();
 	}
 	
 	@Override
-	public void setCanCreateGame(boolean canCreateGame) {
-		this.buttonCreateGame.setEnabled(canCreateGame);
+	public void setPassword(String password) {
+		this.editTextPassword.setText(password);
 	}
 	
-	public void setPresenter(CreateGameContract.Presenter presenter) {
+	@Override
+	public String getPassword() {
+		return this.editTextPassword.getText().toString();
+	}
+	
+	@Override
+	public void setCanRegister(Boolean canRegister) {
+		this.buttonRegister.setEnabled(canRegister);
+	}
+	
+	public void setPresenter(RegisterContract.Presenter presenter) {
 		this.presenter = presenter;
 	}
 	// endregion

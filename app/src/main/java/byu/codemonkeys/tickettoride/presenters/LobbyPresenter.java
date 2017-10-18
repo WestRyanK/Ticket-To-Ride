@@ -36,7 +36,7 @@ public class LobbyPresenter extends PresenterBase implements LobbyContract.Prese
 	
 	@Override
 	public void createGame() {
-		this.navigator.Navigate(PresenterEnum.CreateGame, true);
+		this.navigator.navigate(PresenterEnum.CreateGame, true);
 	}
 	
 	@Override
@@ -46,7 +46,7 @@ public class LobbyPresenter extends PresenterBase implements LobbyContract.Prese
 			@Override
 			public void callback(Result result) {
 				if (result.isSuccessful()) {
-					navigator.Navigate(PresenterEnum.WaitingRoom, true);
+					navigator.navigate(PresenterEnum.WaitingRoom, true);
 				} else {
 					messageDisplayer.displayMessage(result.getErrorMessage());
 				}
@@ -57,7 +57,7 @@ public class LobbyPresenter extends PresenterBase implements LobbyContract.Prese
 	
 	@Override
 	public void logout() {
-		this.navigator.Navigate(PresenterEnum.Login, false);
+		this.navigator.navigate(PresenterEnum.Login, false);
 	}
 	
 	@Override

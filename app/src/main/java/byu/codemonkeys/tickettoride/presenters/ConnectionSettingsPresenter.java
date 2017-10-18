@@ -26,13 +26,13 @@ public class ConnectionSettingsPresenter extends PresenterBase implements Connec
 		if (canSaveConnectionSettings()) {
 			int portNumber = Integer.parseInt(this.view.getPort());
 			modelFacade.changeConnectionConfiguration(this.view.getHostName(), portNumber);
-			this.navigator.NavigateBack();
+			this.navigator.navigateBack();
 		}
 	}
 	
 	@Override
 	public void cancel() {
-		this.navigator.NavigateBack();
+		this.navigator.navigateBack();
 	}
 	
 	@Override

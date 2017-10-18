@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:id="@+id/trainCard_background"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             tools:context="byu.codemonkeys.tickettoride.views.game.TrainCardsFragment">
+
+    <ImageView
+        android:id="@+id/playerStats_imageViewColor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/stroke_red"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/playerStats_textViewName"
+        style="@style/AvatarTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playerStats_imageViewColor"
+        tools:text="dcorey3"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/playerStats_textViewScore"
+        style="@style/AvatarTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/playerStats_imageViewScore"
+        app:layout_constraintRight_toLeftOf="@+id/playerStats_imageViewScore"
+        tools:text="132"/>
+
+    <ImageView
+        android:id="@+id/playerStats_imageViewScore"
+        style="@style/AvatarTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_scoreboard_small"
+        app:layout_constraintRight_toLeftOf="@id/guideline3"
+        app:layout_constraintTop_toBottomOf="@id/playerStats_textViewName"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/playerStats_textViewTrains"
+        style="@style/AvatarTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/playerStats_imageViewTrains"
+        app:layout_constraintRight_toLeftOf="@+id/playerStats_imageViewScore"
+        tools:text="24"/>
+
+    <ImageView
+        android:id="@+id/playerStats_imageViewTrains"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_old_train_small"
+        app:layout_constraintRight_toLeftOf="@id/guideline3"
+        app:layout_constraintTop_toBottomOf="@id/playerStats_imageViewScore"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/playerStats_textViewTrainCards"
+        style="@style/AvatarTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/playerStats_imageViewTrainCards"
+        app:layout_constraintRight_toLeftOf="@+id/playerStats_imageViewTrainCards"
+        tools:text="3"/>
+
+    <ImageView
+        android:id="@+id/playerStats_imageViewTrainCards"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_cards_small"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/playerStats_textViewName"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/playerStats_textViewDestinationCards"
+        style="@style/AvatarTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/playerStats_imageViewDestinationCards"
+        app:layout_constraintRight_toLeftOf="@+id/playerStats_imageViewDestinationCards"
+        tools:text="3"/>
+
+    <ImageView
+        android:id="@+id/playerStats_imageViewDestinationCards"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_destination_small"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/playerStats_imageViewScore"/>
+</android.support.constraint.ConstraintLayout>

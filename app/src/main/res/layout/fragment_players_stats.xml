@@ -1,0 +1,45 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/paper_background"
+                tools:context="byu.codemonkeys.tickettoride.views.game.PlayersStatsFragment">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <byu.codemonkeys.tickettoride.views.widgets.PlayerStatsWidget
+                android:id="@+id/playersStats_player0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <byu.codemonkeys.tickettoride.views.widgets.PlayerStatsWidget
+                android:id="@+id/playersStats_player1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <byu.codemonkeys.tickettoride.views.widgets.PlayerStatsWidget
+                android:id="@+id/playersStats_player2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <byu.codemonkeys.tickettoride.views.widgets.PlayerStatsWidget
+                android:id="@+id/playersStats_player3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <byu.codemonkeys.tickettoride.views.widgets.PlayerStatsWidget
+                android:id="@+id/playersStats_player4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

@@ -1,9 +1,7 @@
-package byu.codemonkeys.tickettoride.views;
+package byu.codemonkeys.tickettoride.views.home;
 
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,12 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.io.Console;
 import java.util.List;
 
 import byu.codemonkeys.tickettoride.R;
 import byu.codemonkeys.tickettoride.mvpcontracts.LobbyContract;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
+import byu.codemonkeys.tickettoride.views.OnRecyclerItemClickListener;
 
 /**
  * A simple {@link Fragment} subclass.

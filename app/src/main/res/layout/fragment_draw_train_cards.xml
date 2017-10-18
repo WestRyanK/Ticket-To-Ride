@@ -1,0 +1,151 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/paper_background"
+              android:orientation="vertical"
+              android:padding="5dp"
+              tools:context="byu.codemonkeys.tickettoride.views.game.DrawTrainCardsFragment">
+
+    <!--<byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView-->
+    <!--android:id="@+id/drawTrainCards_textViewBack"-->
+    <!--style="@style/AvatarTextStyle"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_horizontal"-->
+    <!--android:text="@string/back"-->
+    <!--app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--app:layout_constraintRight_toRightOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent"/>-->
+
+    <!--<byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget-->
+    <!--android:id="@+id/drawTrainCards_cardDeck"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:cardDrawable="@drawable/deck"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/drawTrainCards_card0"-->
+    <!--app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--app:layout_constraintRight_toRightOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/drawTrainCards_textViewBack"-->
+    <!--app:showCount="false"/>-->
+
+    <!--<byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget-->
+    <!--android:id="@+id/drawTrainCards_card0"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/drawTrainCards_card1"-->
+    <!--app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--app:layout_constraintRight_toRightOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/drawTrainCards_cardDeck"-->
+    <!--app:showCount="false"-->
+    <!--tools:cardDrawable="@drawable\card_blue"-->
+    <!--/>-->
+
+    <!--<byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget-->
+    <!--android:id="@+id/drawTrainCards_card1"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/drawTrainCards_card2"-->
+    <!--app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--app:layout_constraintRight_toRightOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/drawTrainCards_card0"-->
+    <!--app:showCount="false"-->
+    <!--/>-->
+
+    <!--<byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget-->
+    <!--android:id="@+id/drawTrainCards_card2"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/drawTrainCards_card3"-->
+    <!--app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--app:layout_constraintRight_toRightOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/drawTrainCards_card1"-->
+    <!--app:showCount="false"-->
+    <!--/>-->
+
+    <!--<byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget-->
+    <!--android:id="@+id/drawTrainCards_card3"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/drawTrainCards_card4"-->
+    <!--app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--app:layout_constraintRight_toRightOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/drawTrainCards_card2"-->
+    <!--app:showCount="false"-->
+    <!--/>-->
+
+    <!--<byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget-->
+    <!--android:id="@+id/drawTrainCards_card4"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--app:layout_constraintRight_toRightOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/drawTrainCards_card3"-->
+    <!--app:showCount="false"-->
+    <!--tools:cardDrawable="@drawable\card_yellow"-->
+    <!--/>-->
+
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/drawTrainCards_textViewBack"
+        style="@style/AvatarTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="1dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:text="@string/back"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget
+        android:id="@+id/drawTrainCards_cardDeck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="1dp"
+        app:cardDrawable="@drawable/deck"
+        app:showCount="false"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget
+        android:id="@+id/drawTrainCards_card0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="1dp"
+        app:showCount="false"
+        tools:cardDrawable="@drawable\card_blue"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget
+        android:id="@+id/drawTrainCards_card1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="1dp"
+        app:showCount="false"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget
+        android:id="@+id/drawTrainCards_card2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="1dp"
+        app:showCount="false"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget
+        android:id="@+id/drawTrainCards_card3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="1dp"
+        app:showCount="false"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget
+        android:id="@+id/drawTrainCards_card4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="1dp"
+        app:showCount="false"
+        tools:cardDrawable="@drawable\card_yellow"/>
+</LinearLayout>

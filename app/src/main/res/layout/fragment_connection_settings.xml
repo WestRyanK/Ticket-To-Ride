@@ -1,44 +1,58 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
+              style="@style/AvatarTextStyle"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@drawable/paper_background"
               android:gravity="center"
               android:orientation="vertical"
               android:padding="10dp"
-              tools:context="byu.codemonkeys.tickettoride.views.ConnectionSettingsFragment">
+              tools:context="byu.codemonkeys.tickettoride.views.home.ConnectionSettingsFragment">
 
-<EditText
-    android:id="@+id/connection_editTextHost"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:maxLines="1"
-    android:inputType="textNoSuggestions"
-    android:hint="@string/host"/>
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedEditText
+        android:id="@+id/connection_editTextHost"
+        style="@style/AvatarTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/host"
+        android:inputType="textNoSuggestions"
+        android:maxLines="1"/>
 
-<EditText
-    android:id="@+id/connection_editTextPort"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:maxLines="1"
-    android:inputType="number"
-    android:gravity="center"
-    android:hint="@string/port" />
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedEditText
+        android:id="@+id/connection_editTextPort"
+        style="@style/AvatarTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/port"
+        android:inputType="number"
+        android:maxLines="1"/>
 
-<Button
-    android:id="@+id/connection_buttonSave"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="20dp"
-    android:text="@string/save"/>
+    <!--<Button-->
+    <!--android:id="@+id/connection_buttonSave"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="20dp"-->
+    <!--android:text="@string/save"/>-->
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/connection_buttonSave"
+        style="@style/AvatarTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/save"
+        android:textSize="@dimen/title2_size"/>
 
-<TextView
-    android:id="@+id/connection_textViewCancel"
-    android:layout_marginTop="10dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:clickable="true"
-    android:onClick="onClickCancel"
-    android:text="@string/cancel"/>
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/connection_textViewCancel"
+        style="@style/AvatarTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="onClickCancel"
+        android:text="@string/cancel"/>
 </LinearLayout>

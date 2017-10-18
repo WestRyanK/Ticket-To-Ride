@@ -34,8 +34,8 @@ public class RegisterPresenter extends PresenterBase implements RegisterContract
 			@Override
 			public void callback(Result result) {
 				if (result.isSuccessful()) {
-					navigator.NavigateBack();
-					navigator.Navigate(PresenterEnum.Lobby, false);
+					navigator.navigateBack();
+					navigator.navigate(PresenterEnum.Lobby, false);
 				} else {
 					messageDisplayer.displayMessage(result.getErrorMessage());
 				}
@@ -51,7 +51,7 @@ public class RegisterPresenter extends PresenterBase implements RegisterContract
 	
 	@Override
 	public void cancel() {
-		this.navigator.NavigateBack();
+		this.navigator.navigateBack();
 	}
 	
 	@Override

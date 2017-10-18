@@ -1,4 +1,4 @@
-package byu.codemonkeys.tickettoride.views;
+package byu.codemonkeys.tickettoride.views.home;
 
 
 import android.os.Bundle;
@@ -8,35 +8,36 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import byu.codemonkeys.tickettoride.R;
-import byu.codemonkeys.tickettoride.mvpcontracts.ConnectionSettingsContract;
+import byu.codemonkeys.tickettoride.mvpcontracts.LoginContract;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ConnectionSettingsFragment#newInstance} factory method to
+ * Use the {@link LoginFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ConnectionSettingsFragment extends Fragment implements ConnectionSettingsContract.View {
+public class LoginFragment extends Fragment implements LoginContract.View {
 	// TODO: Rename parameter arguments, choose names that match
 	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 	//	private static final String ARG_PARAM1 = "param1";
 	//	private static final String ARG_PARAM2 = "param2";
-	private ConnectionSettingsContract.Presenter presenter;
-	private EditText editTextHost;
-	private EditText editTextPort;
-	private Button buttonSave;
-	private TextView textViewCancel;
 	
 	// TODO: Rename and change types of parameters
 	//	private String mParam1;
 	//	private String mParam2;
+	private LoginContract.Presenter presenter;
+	private EditText editTextUsername;
+	private EditText editTextPassword;
+	private TextView buttonLogin;
+	//	private Button buttonLogin;
+	private TextView textViewRegister;
+	private TextView textViewConnectionSettings;
 	
 	
-	public ConnectionSettingsFragment() {
+	public LoginFragment() {
 		// Required empty public constructor
 	}
 	
@@ -47,11 +48,11 @@ public class ConnectionSettingsFragment extends Fragment implements ConnectionSe
 	 * //	 * @param param1 Parameter 1.
 	 * //	 * @param param2 Parameter 2.
 	 *
-	 * @return A new instance of fragment ConnectionSettingsFragment.
+	 * @return A new instance of fragment LoginFragment.
 	 */
 	// TODO: Rename and change types and number of parameters
-	public static ConnectionSettingsFragment newInstance() {
-		ConnectionSettingsFragment fragment = new ConnectionSettingsFragment();
+	public static LoginFragment newInstance() {
+		LoginFragment fragment = new LoginFragment();
 		Bundle args = new Bundle();
 		//		args.putString(ARG_PARAM1, param1);
 		//		args.putString(ARG_PARAM2, param2);
@@ -73,14 +74,17 @@ public class ConnectionSettingsFragment extends Fragment implements ConnectionSe
 							 ViewGroup container,
 							 Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		View view = inflater.inflate(R.layout.fragment_connection_settings, container, false);
+		View view = inflater.inflate(R.layout.fragment_login, container, false);
 		
-		this.editTextHost = (EditText) view.findViewById(R.id.connection_editTextHost);
-		this.editTextPort = (EditText) view.findViewById(R.id.connection_editTextPort);
-		this.buttonSave = (Button) view.findViewById(R.id.connection_buttonSave);
-		this.textViewCancel = (TextView) view.findViewById(R.id.connection_textViewCancel);
+		// Get references to byu.codemonkeys.tickettoride.views.widgets in the view
+		this.editTextUsername = (EditText) view.findViewById(R.id.login_editTextUsername);
+		this.editTextPassword = (EditText) view.findViewById(R.id.login_editTextPassword);
+		//		this.buttonLogin = (Button) view.findViewById(R.id.login_buttonLogin);
+		this.buttonLogin = (TextView) view.findViewById(R.id.login_buttonLogin);
+		this.textViewRegister = (TextView) view.findViewById(R.id.login_textViewRegister);
+		this.textViewConnectionSettings = (TextView) view.findViewById(R.id.login_textViewConnectionSettings);
 		
-		this.editTextHost.addTextChangedListener(new TextWatcher() {
+		this.editTextUsername.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 				
@@ -93,11 +97,11 @@ public class ConnectionSettingsFragment extends Fragment implements ConnectionSe
 			
 			@Override
 			public void afterTextChanged(Editable editable) {
-				setCanSave(presenter.canSaveConnectionSettings());
+				setCanLogin(presenter.canLogin());
 			}
 		});
 		
-		this.editTextPort.addTextChangedListener(new TextWatcher() {
+		this.editTextPassword.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 				
@@ -110,21 +114,28 @@ public class ConnectionSettingsFragment extends Fragment implements ConnectionSe
 			
 			@Override
 			public void afterTextChanged(Editable editable) {
-				setCanSave(presenter.canSaveConnectionSettings());
+				setCanLogin(presenter.canLogin());
 			}
 		});
 		
-		this.buttonSave.setOnClickListener(new View.OnClickListener() {
+		this.buttonLogin.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				presenter.saveConnectionSettings();
+				presenter.login();
 			}
 		});
 		
-		this.textViewCancel.setOnClickListener(new View.OnClickListener() {
+		this.textViewRegister.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				presenter.cancel();
+				presenter.navigateRegisterUser();
+			}
+		});
+		
+		this.textViewConnectionSettings.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				presenter.navigateConnectionSettings();
 			}
 		});
 		
@@ -132,33 +143,33 @@ public class ConnectionSettingsFragment extends Fragment implements ConnectionSe
 		return view;
 	}
 	
-	// region ConnectionSettingsContract.View
+	// region LoginContract.View implementation
 	@Override
-	public void setHostName(String host) {
-		this.editTextHost.setText(host);
+	public void setUsername(String username) {
+		this.editTextUsername.setText(username);
 	}
 	
 	@Override
-	public String getHostName() {
-		return this.editTextHost.getText().toString();
+	public String getUsername() {
+		return this.editTextUsername.getText().toString();
 	}
 	
 	@Override
-	public void setPort(String port) {
-		this.editTextPort.setText(port);
+	public void setPassword(String password) {
+		this.editTextPassword.setText(password);
 	}
 	
 	@Override
-	public String getPort() {
-		return this.editTextPort.getText().toString();
+	public String getPassword() {
+		return this.editTextPassword.getText().toString();
 	}
 	
 	@Override
-	public void setCanSave(Boolean canSave) {
-		this.buttonSave.setEnabled(canSave);
+	public void setCanLogin(Boolean canLogin) {
+		this.buttonLogin.setEnabled(canLogin);
 	}
 	
-	public void setPresenter(ConnectionSettingsContract.Presenter presenter) {
+	public void setPresenter(LoginContract.Presenter presenter) {
 		this.presenter = presenter;
 	}
 	// endregion

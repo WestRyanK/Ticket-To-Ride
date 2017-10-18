@@ -1,4 +1,4 @@
-package byu.codemonkeys.tickettoride.views;
+package byu.codemonkeys.tickettoride.views.home;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

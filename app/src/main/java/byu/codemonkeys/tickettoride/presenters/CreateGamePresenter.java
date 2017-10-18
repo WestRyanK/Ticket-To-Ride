@@ -30,8 +30,8 @@ public class CreateGamePresenter extends PresenterBase implements CreateGameCont
 			@Override
 			public void callback(Result result) {
 				if (result.isSuccessful()) {
-					navigator.NavigateBack();
-					navigator.Navigate(PresenterEnum.WaitingRoom, true);
+					navigator.navigateBack();
+					navigator.navigate(PresenterEnum.WaitingRoom, true);
 				} else {
 					messageDisplayer.displayMessage(result.getErrorMessage());
 				}
@@ -45,7 +45,7 @@ public class CreateGamePresenter extends PresenterBase implements CreateGameCont
 	
 	@Override
 	public void cancel() {
-		this.navigator.NavigateBack();
+		this.navigator.navigateBack();
 	}
 	
 	@Override

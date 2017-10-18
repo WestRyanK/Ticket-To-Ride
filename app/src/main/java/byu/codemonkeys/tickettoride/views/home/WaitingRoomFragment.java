@@ -1,4 +1,4 @@
-package byu.codemonkeys.tickettoride.views;
+package byu.codemonkeys.tickettoride.views.home;
 
 
 import android.app.Activity;
@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
@@ -38,8 +37,10 @@ public class WaitingRoomFragment extends Fragment implements WaitingRoomContract
 	private RecyclerView recyclerUsers;
 	private LinearLayoutManager layoutManagerUsers;
 	private UserRecyclerAdapter userAdapter;
-	private Button buttonStartGame;
-	private Button buttonLeaveGame;
+	//	private Button buttonStartGame;
+	//	private Button buttonLeaveGame;
+	private TextView buttonStartGame;
+	private TextView buttonLeaveGame;
 	private Activity thisActivity;
 	
 	
@@ -83,8 +84,10 @@ public class WaitingRoomFragment extends Fragment implements WaitingRoomContract
 		View view = inflater.inflate(R.layout.fragment_waiting_room, container, false);
 		
 		recyclerUsers = (RecyclerView) view.findViewById(R.id.waitingRoom_recyclerUsers);
-		buttonStartGame = (Button) view.findViewById(R.id.waitingRoom_buttonStartGame);
-		buttonLeaveGame = (Button) view.findViewById(R.id.waitingRoom_buttonLeaveGame);
+		//		buttonStartGame = (Button) view.findViewById(R.id.waitingRoom_buttonStartGame);
+		//		buttonLeaveGame = (Button) view.findViewById(R.id.waitingRoom_buttonLeaveGame);
+		buttonStartGame = (TextView) view.findViewById(R.id.waitingRoom_buttonStartGame);
+		buttonLeaveGame = (TextView) view.findViewById(R.id.waitingRoom_buttonLeaveGame);
 		textViewGameName = (TextView) view.findViewById(R.id.waitingRoom_textViewGameName);
 		thisActivity = getActivity();
 		
