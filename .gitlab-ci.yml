@@ -7,11 +7,13 @@ variables:
 before_script:
   - export GRADLE_USER_HOME=$(pwd)/.gradle
   - chmod +x ./gradlew
+  - ls -al
+  - pwd
   - if [ ! -d "/cache$ANDROID_HOME" ]; then mv $ANDROID_HOME /cache$ANDROID_HOME; fi
   - export ANDROID_HOME=/cache$ANDROID_HOME
   
 cache:
-  key: ${CI_PROJECT_ID}
+  key: $CI_PROJECT_ID
   paths:
   - .gradle/
 
