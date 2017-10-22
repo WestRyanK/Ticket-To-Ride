@@ -1,5 +1,9 @@
 package byu.codemonkeys.tickettoride.presenters;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import byu.codemonkeys.tickettoride.models.DestinationCard;
 import byu.codemonkeys.tickettoride.models.IModelFacade;
 import byu.codemonkeys.tickettoride.mvpcontracts.DestinationCardsContract;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;

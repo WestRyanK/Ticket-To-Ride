@@ -10,7 +10,9 @@ import byu.codemonkeys.tickettoride.R;
 import byu.codemonkeys.tickettoride.models.ModelFacade;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
+import byu.codemonkeys.tickettoride.presenters.ChatHistoryPresenter;
 import byu.codemonkeys.tickettoride.presenters.DestinationCardsPresenter;
+import byu.codemonkeys.tickettoride.presenters.DrawDestinationCardsPresenter;
 import byu.codemonkeys.tickettoride.presenters.Phase2TestingPresenter;
 import byu.codemonkeys.tickettoride.presenters.PresenterEnum;
 
@@ -19,6 +21,8 @@ public class GameActivity extends AppCompatActivity implements INavigator, IDisp
 	private static final String GAME_TAG = "GAME_TAG";
 	private static final String PHASE2TESTING_TAG = "PHASE2TESTING_TAG";
 	private static final String DESTINATION_CARDS_TAG = "DESTINATION_CARDS_TAG";
+	private static final String DRAW_DESTINATION_CARDS_TAG = "DRAW_DESTINATION_CARDS_TAG";
+	private static final String CHAT_HISTORY_TAG = "CHAT_HISTORY_TAG";
 	
 	private PresenterEnum currentView;
 	
@@ -68,8 +72,14 @@ public class GameActivity extends AppCompatActivity implements INavigator, IDisp
 						
 						break;
 					case DrawDestinationCards:
-						fragment = null;
-						tag = null;
+						DrawDestinationCardsFragment drawDestinationCardsFragment = new DrawDestinationCardsFragment();
+						drawDestinationCardsFragment.setPresenter(new DrawDestinationCardsPresenter(
+								drawDestinationCardsFragment,
+								activity,
+								activity,
+								ModelFacade.getInstance()));
+						fragment = drawDestinationCardsFragment;
+						tag = DRAW_DESTINATION_CARDS_TAG;
 						break;
 					case DestinationCards:
 						DestinationCardsFragment destinationCardsFragment = new DestinationCardsFragment();
@@ -80,6 +90,16 @@ public class GameActivity extends AppCompatActivity implements INavigator, IDisp
 								ModelFacade.getInstance()));
 						fragment = destinationCardsFragment;
 						tag = DESTINATION_CARDS_TAG;
+						break;
+					case ChatHistory:
+						ChatHistoryFragment chatHistoryFragment = new ChatHistoryFragment();
+						chatHistoryFragment.setPresenter(new ChatHistoryPresenter(
+								chatHistoryFragment,
+								activity,
+								activity,
+								ModelFacade.getInstance()));
+						fragment = chatHistoryFragment;
+						tag = CHAT_HISTORY_TAG;
 						break;
 					default:
 						fragment = null;

@@ -7,12 +7,10 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import byu.codemonkeys.tickettoride.R;
+import byu.codemonkeys.tickettoride.views.game.CitiesData;
 
 /**
  * Created by Ryan on 10/18/2017.
@@ -20,9 +18,6 @@ import byu.codemonkeys.tickettoride.R;
 
 public class DestinationCardWidget extends View {
 	
-	private TextView textViewDestinationA;
-	private TextView textViewDestinationB;
-	private TextView textViewPointValue;
 	private static Typeface levibrush;
 	private static Paint textPaint;
 	
@@ -34,64 +29,40 @@ public class DestinationCardWidget extends View {
 		textPaint.setColor(getResources().getColor(R.color.colorPrimary));
 		textPaint.setTypeface(levibrush);
 		textPaint.setTextSize(100);
+		textPaint.setTextAlign(Paint.Align.CENTER);
 	}
 	
 	// region Constructors
 	public DestinationCardWidget(Context context) {
 		super(context);
-		init(context);
 	}
 	
 	public DestinationCardWidget(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		init(context);
 	}
-	
-	public DestinationCardWidget(Context context, AttributeSet attrs, int defStyleAttr) {
-		super(context, attrs, defStyleAttr);
-		init(context);
-		
-	}
-	
-	private void init(Context context) {
-		//		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		//		inflater.inflate(R.layout.destination_card, this, true);
-		//		getViews();
-		
-		//		applyAttributes(context, attrs);
-		
-		
-	}
-	
-	private void getViews() {
-		this.textViewDestinationA = (TextView) findViewById(R.id.destinationCard_textViewDestinationA);
-		this.textViewDestinationB = (TextView) findViewById(R.id.destinationCard_textViewDestinationB);
-		this.textViewPointValue = (TextView) findViewById(R.id.destinationCard_textViewPointValue);
-	}
-	// endregion
 	
 	// region Public Properties
 	// region DestinationA Property
-	private String destinationA;
+	private int destinationA;
 	
-	public String getDestinationA() {
+	public int getDestinationA() {
 		return destinationA;
 	}
 	
-	public void setDestinationA(String destinationA) {
+	public void setDestinationA(int destinationA) {
 		this.destinationA = destinationA;
 		//		this.textViewDestinationA.setText(destinationA);
 	}
 	// endregion
 	
 	// region DestinationB Property
-	private String destinationB;
+	private int destinationB;
 	
-	public String getDestinationB() {
+	public int getDestinationB() {
 		return destinationB;
 	}
 	
-	public void setDestinationB(String destinationB) {
+	public void setDestinationB(int destinationB) {
 		this.destinationB = destinationB;
 		//		this.textViewDestinationB.setText(destinationB);
 	}
@@ -116,21 +87,51 @@ public class DestinationCardWidget extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		final float destinationARatio = 0.145f;
-		final float destinationBRatio = 0.9191f;
-		final float pointsXRatio = 1.1f;
-		final float pointsYRatio = 0.742f;
-		final float fontSizeRatio = 0.1f;
+		final float destinationARatio = 0.14f;
+		final float destinationBRatio = 0.915f;
+		final float pointsXRatio = 1.154f;
+		final float pointsYRatio = 0.735f;
+		final float fontSizeRatio = 0.085f;
 		textPaint.setTextSize(fontSizeRatio * this.getHeight());
 		Drawable d = getResources().getDrawable(R.drawable.destination_card);
 		d.setBounds(canvas.getClipBounds());
 		d.draw(canvas);
-		canvas.drawText(this.destinationA, 10, destinationARatio * this.getHeight(), textPaint);
-		canvas.drawText(this.destinationB, 10, destinationBRatio * this.getHeight(), textPaint);
+		CitiesData.CityData destinationA = CitiesData.getInstance().getCity(this.destinationA);
+		CitiesData.CityData destinationB = CitiesData.getInstance().getCity(this.destinationB);
+		canvas.drawText(destinationA.getCityName(),
+						this.getWidth() / 2,
+						destinationARatio * this.getHeight(),
+						textPaint);
+		canvas.drawText(destinationB.getCityName(),
+						this.getWidth() / 2,
+						destinationBRatio * this.getHeight(),
+						textPaint);
 		canvas.drawText(String.valueOf(this.pointValue),
 						pointsXRatio * this.getHeight(),
 						pointsYRatio * this.getHeight(),
 						textPaint);
+		
+		drawMarker(canvas,
+				   destinationA.getCityDestinationCardXRatio(),
+				   destinationA.getCityDestinationCardYRatio());
+		drawMarker(canvas,
+				   destinationB.getCityDestinationCardXRatio(),
+				   destinationB.getCityDestinationCardYRatio());
+		
+	}
+	
+	private void drawMarker(Canvas canvas, float ratioX, float ratioY) {
+		final float markerRatio = 0.03f;
+		float markerRadius = markerRatio * getHeight();
+		float x = ratioX * getWidth();
+		float y = ratioY * getHeight();
+		Drawable m = getResources().getDrawable(R.drawable.destination_marker);
+		m.setBounds((int) (x - markerRadius),
+					(int) (y - markerRadius),
+					(int) (x + markerRadius),
+					(int) (y + markerRadius));
+		m.draw(canvas);
+		
 	}
 	
 	private float DPsToPixels(float dp) {
@@ -154,7 +155,7 @@ public class DestinationCardWidget extends View {
 		int heightMode = MeasureSpec.getMode(heightMeasureSpec);
 		int width, height;
 		
-		if (widthMode == MeasureSpec.EXACTLY) {
+		if (widthMode == MeasureSpec.EXACTLY || widthMode == MeasureSpec.AT_MOST) {
 			width = widthSize;
 			height = (int) (width / drawableRatio);
 		} else {
@@ -164,7 +165,6 @@ public class DestinationCardWidget extends View {
 		
 		int childWidthSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY);
 		int childHeightSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
-		//		measureChildren(childWidthSpec, childHeightSpec);
 		setMeasuredDimension(width, height);
 	}
 }

@@ -1,6 +1,8 @@
 package byu.codemonkeys.tickettoride.views.game;
 
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +32,6 @@ public class DestinationCardRecyclerAdapter extends RecyclerView.Adapter<Destina
 	@Override
 	public DestinationCardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		DestinationCardWidget cardWidget = new DestinationCardWidget(parent.getContext());
-		//		D view = LayoutInflater.from(parent.getContext()).inflate(R.layout., parent, false);
 		
 		return new DestinationCardHolder(cardWidget, this.clickListener);
 	}
@@ -38,13 +39,19 @@ public class DestinationCardRecyclerAdapter extends RecyclerView.Adapter<Destina
 	@Override
 	public void onBindViewHolder(DestinationCardHolder holder, int position) {
 		
-		DestinationCard destinationCard = destinationCards.get(position);
+		DestinationCard destinationCard = destinationCards.get(position % destinationCards.size());
 		holder.bindDestinationCard(destinationCard);
 	}
 	
 	@Override
 	public int getItemCount() {
-		return destinationCards.size();
+		return Integer.MAX_VALUE;//destinationCards.size();
+	}
+	
+	public void updateData(List<DestinationCard> cards) {
+		this.destinationCards.clear();
+		this.destinationCards.addAll(cards);
+		this.notifyDataSetChanged();
 	}
 	
 	public class DestinationCardHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -56,6 +63,7 @@ public class DestinationCardRecyclerAdapter extends RecyclerView.Adapter<Destina
 									 OnRecyclerItemClickListener<DestinationCard> clickListener) {
 			super(view);
 			this.cardWidget = (DestinationCardWidget) view;
+			
 			this.clickListener = clickListener;
 			view.setOnClickListener(this);
 			

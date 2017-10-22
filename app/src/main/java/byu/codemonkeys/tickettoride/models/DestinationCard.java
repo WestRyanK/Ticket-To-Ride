@@ -6,17 +6,17 @@ package byu.codemonkeys.tickettoride.models;
 
 public class DestinationCard {
 	// region DestinationA Property
-	private String destinationA;
+	private int destinationA;
 	
-	public String getDestinationA() {
+	public int getDestinationA() {
 		return destinationA;
 	}
 	// endregion
 	
 	// region DestinationB Property
-	private String destinationB;
+	private int destinationB;
 	
-	public String getDestinationB() {
+	public int getDestinationB() {
 		return destinationB;
 	}
 	// endregion
@@ -28,4 +28,10 @@ public class DestinationCard {
 		return pointValue;
 	}
 	// endregion
+	
+	public DestinationCard(int destinationA, int destinationB, int pointValue) {
+		this.destinationA = destinationA;
+		this.destinationB = destinationB;
+		this.pointValue = pointValue;
+	}
 }

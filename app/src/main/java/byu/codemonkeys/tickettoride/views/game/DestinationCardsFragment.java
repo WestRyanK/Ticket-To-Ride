@@ -5,19 +5,20 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import byu.codemonkeys.tickettoride.R;
 import byu.codemonkeys.tickettoride.models.DestinationCard;
 import byu.codemonkeys.tickettoride.mvpcontracts.DestinationCardsContract;
-import byu.codemonkeys.tickettoride.views.home.PendingGamesRecyclerAdapter;
-import byu.codemonkeys.tickettoride.views.widgets.DestinationCardWidget;
+import byu.codemonkeys.tickettoride.views.OnRecyclerItemClickListener;
+import byu.codemonkeys.tickettoride.views.widgets.HorizontalSpaceItemDecoration;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,14 +26,12 @@ import byu.codemonkeys.tickettoride.views.widgets.DestinationCardWidget;
 public class DestinationCardsFragment extends Fragment implements DestinationCardsContract.View {
 	
 	DestinationCardsContract.Presenter presenter;
-	
 	private TextView textViewBack;
-	private ImageView imageViewDeck;
+	private TextView textViewDraw;
 	private RecyclerView recyclerDestinationCards;
 	private LinearLayoutManager layoutManagerDestinationCards;
-	private PendingGamesRecyclerAdapter pendingDestinationCards;
-	
-	private DestinationCardWidget cardWidget;
+	private DestinationCardRecyclerAdapter destinationCardsAdapter;
+	private int cardSpacing;
 	
 	public DestinationCardsFragment() {
 		// Required empty public constructor
@@ -48,12 +47,44 @@ public class DestinationCardsFragment extends Fragment implements DestinationCar
 		getViews(view);
 		initRecycler(view);
 		setClickListeners();
+		
+		List<DestinationCard> cards = new ArrayList<>();
+//		cards.add(new DestinationCard("Lair of the Firebending Masters",
+//									  "Southern Earth Kingdom Islands",
+//									  10));
+//		cards.add(new DestinationCard("Ba Sing Se (South)", "Kyoshi Island", 12));
+//		cards.add(new DestinationCard("Hei Bei's Forest", "Southern Air Temple (West)", 4));
+		cards.add( new DestinationCard(0,1,23));
+		cards.add( new DestinationCard(2,3,16));
+		cards.add( new DestinationCard(4,5,3));
+		cards.add( new DestinationCard(6,7,3));
+		cards.add( new DestinationCard(8,9,3));
+		cards.add( new DestinationCard(10,11,3));
+		cards.add( new DestinationCard(12,13,3));
+		cards.add( new DestinationCard(14,15,3));
+		cards.add( new DestinationCard(16,17,3));
+		cards.add( new DestinationCard(18,19,3));
+		cards.add( new DestinationCard(20,21,3));
+		cards.add( new DestinationCard(22,23,3));
+		cards.add( new DestinationCard(24,25,3));
+		cards.add( new DestinationCard(26,27,3));
+		cards.add( new DestinationCard(28,29,3));
+		cards.add( new DestinationCard(30,31,3));
+		cards.add( new DestinationCard(32,33,3));
+		cards.add( new DestinationCard(34,35,3));
+//		cards.add( new DestinationCard(36,37,3));
+		setDestinationCards(cards);
 		return view;
 	}
 	
 	private void initRecycler(View view) {
-//		layoutManagerDestinationCards = new LinearLayoutManager(getActivity());
-//		recyclerDestinationCards.setLayoutManager(layoutManagerDestinationCards);
+		layoutManagerDestinationCards = new LinearLayoutManager(getActivity());
+		layoutManagerDestinationCards.setOrientation(LinearLayoutManager.HORIZONTAL);
+		recyclerDestinationCards.setLayoutManager(layoutManagerDestinationCards);
+		cardSpacing = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+													  20,
+													  this.getResources().getDisplayMetrics());
+		recyclerDestinationCards.addItemDecoration(new HorizontalSpaceItemDecoration(cardSpacing));
 	}
 	
 	private void setClickListeners() {
@@ -63,7 +94,7 @@ public class DestinationCardsFragment extends Fragment implements DestinationCar
 				presenter.navigateBack();
 			}
 		});
-		this.imageViewDeck.setOnClickListener(new View.OnClickListener() {
+		this.textViewDraw.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				presenter.navigateDrawDestinationCards();
@@ -73,19 +104,36 @@ public class DestinationCardsFragment extends Fragment implements DestinationCar
 	
 	private void getViews(View view) {
 		this.textViewBack = (TextView) view.findViewById(R.id.destinationCards_textViewBack);
-		this.imageViewDeck = (ImageView) view.findViewById(R.id.destinationCards_imageViewDeck);
-//		recyclerDestinationCards = (RecyclerView) view.findViewById(R.id.destinationCards_recyclerCards);
-		
-		this.cardWidget = (DestinationCardWidget) view.findViewById(R.id.destinationCards_card);
-		this.cardWidget.setDestinationA("Test1");
-		this.cardWidget.setDestinationB("Test2");
-		this.cardWidget.setPointValue(23);
-		
+		this.textViewDraw = (TextView) view.findViewById(R.id.destinationCards_textViewDraw);
+		recyclerDestinationCards = (RecyclerView) view.findViewById(R.id.destinationCards_recyclerCards);
 	}
 	
 	@Override
 	public void setDestinationCards(List<DestinationCard> cards) {
-		
+		if (destinationCardsAdapter == null) {
+			destinationCardsAdapter = new DestinationCardRecyclerAdapter(cards,
+																		 new OnRecyclerItemClickListener<DestinationCard>() {
+																			 @Override
+																			 public void onItemClick(
+																					 DestinationCard card) {
+																			 }
+																		 });
+			recyclerDestinationCards.setAdapter(destinationCardsAdapter);
+			scrollToMiddle();
+		} else {
+			recyclerDestinationCards.setAdapter(destinationCardsAdapter);
+			destinationCardsAdapter.updateData(cards);
+			scrollToMiddle();
+		}
+	}
+	
+	private void scrollToMiddle() {
+		//		int dpOffset = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+		//													   recyclerDestinationCards.getWidth(),
+		//													   this.getResources().getDisplayMetrics());
+		//		layoutManagerDestinationCards.scrollToPositionWithOffset(Integer.MAX_VALUE / 2, recyclerDestinationCards.getWidth() / 2);
+		//		int dpOffset = (recyclerDestinationCards.getWidth() / 2) - cardSpacing;
+		layoutManagerDestinationCards.scrollToPosition(Integer.MAX_VALUE / 2);
 	}
 	
 	public void setPresenter(DestinationCardsContract.Presenter presenter) {

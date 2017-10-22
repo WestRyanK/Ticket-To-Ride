@@ -18,6 +18,18 @@
         android:textSize="@dimen/title2_size"/>
 
     <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/destinationCards_textViewDraw"
+        style="@style/AvatarTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/destinationCards_textViewTitle"
+        android:layout_alignParentRight="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="10dp"
+        android:text="@string/draw"
+        android:textSize="@dimen/title2_size"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
         android:id="@+id/destinationCards_textViewTitle"
         style="@style/AvatarTextStyle"
         android:layout_width="wrap_content"
@@ -37,26 +49,11 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="-15dp"
         android:src="@drawable/ic_underline"/>
-
-    <ImageView
-        android:id="@+id/destinationCards_imageViewDeck"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <android.support.v4.widget.NestedScrollView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/destinationCards_recyclerCards"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/destinationCards_imageViewUnderline">
-
-        <byu.codemonkeys.tickettoride.views.widgets.DestinationCardWidget
-            android:id="@+id/destinationCards_card"
-            android:layout_width="400dp"
-            android:layout_height="wrap_content"/>
-
-        <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/destinationCards_recyclerCards"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"/>-->
-    </android.support.v4.widget.NestedScrollView>
+        android:layout_height="match_parent"
+        android:layout_below="@id/destinationCards_imageViewUnderline"
+        android:layout_marginBottom="80dp"/>
 </RelativeLayout>
 
