@@ -5,7 +5,15 @@ variables:
   ANDROID_BUILD_TOOLS: "26.0.1"
 
 before_script:
+  - export GRADLE_USER_HOME=$(pwd)/.gradle
   - chmod +x ./gradlew
+  - if [ ! -d "/cache$ANDROID_HOME" ]; then mv $ANDROID_HOME /cache$ANDROID_HOME; fi
+  - export ANDROID_HOME=/cache$ANDROID_HOME
+  
+cache:
+  key: ${CI_PROJECT_ID}
+  paths:
+  - .gradle/
 
 stages:
   - build
