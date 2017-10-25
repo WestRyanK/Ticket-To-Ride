@@ -18,7 +18,7 @@ import byu.codemonkeys.tickettoride.views.viewdata.PlayerColorData;
  * Created by Ryan on 10/23/2017.
  */
 
-public class MapPointBubble extends View {
+public class MapEdgeWidget extends View {
 	
 	private static Typeface levibrush;
 	private static Paint textPaint;
@@ -72,17 +72,17 @@ public class MapPointBubble extends View {
 	// endregion
 	
 	// region Constructors
-	public MapPointBubble(Context context) {
+	public MapEdgeWidget(Context context) {
 		super(context);
 		init(context);
 	}
 	
-	public MapPointBubble(Context context, @Nullable AttributeSet attrs) {
+	public MapEdgeWidget(Context context, @Nullable AttributeSet attrs) {
 		super(context, attrs);
 		init(context);
 	}
 	
-	public MapPointBubble(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+	public MapEdgeWidget(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		init(context);
 	}

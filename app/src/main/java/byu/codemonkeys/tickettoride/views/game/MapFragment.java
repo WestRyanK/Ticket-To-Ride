@@ -15,7 +15,7 @@ import java.util.Map;
 import byu.codemonkeys.tickettoride.R;
 import byu.codemonkeys.tickettoride.models.PlayerColorEnum;
 import byu.codemonkeys.tickettoride.views.viewdata.PointBubblesData;
-import byu.codemonkeys.tickettoride.views.widgets.MapPointBubble;
+import byu.codemonkeys.tickettoride.views.widgets.MapEdgeWidget;
 import byu.codemonkeys.tickettoride.views.widgets.Viewport;
 
 /**
@@ -24,7 +24,7 @@ import byu.codemonkeys.tickettoride.views.widgets.Viewport;
 public class MapFragment extends Fragment {
 	
 	private Viewport viewport;
-	private MapPointBubble pointBubble;
+	private MapEdgeWidget pointBubble;
 	private ImageView imageViewMap;
 	
 	public MapFragment() {
@@ -52,7 +52,7 @@ public class MapFragment extends Fragment {
 														 getResources().getDisplayMetrics());
 		Drawable mapDrawable = getResources().getDrawable(R.drawable.avatarmap);
 		for (PointBubblesData.PointBubbleData bubble : bubbleData.values()) {
-			final MapPointBubble pointBubble = new MapPointBubble(getContext());
+			final MapEdgeWidget pointBubble = new MapEdgeWidget(getContext());
 			pointBubble.setPoints(bubble.getPointValue());
 			int x = (int) (bubble.getMapXRatio() * mapDrawable.getIntrinsicWidth() -
 					bubbleSize / 2.0f);
@@ -74,8 +74,8 @@ public class MapFragment extends Fragment {
 	}
 	
 	private void setupViewport() {
-		this.viewport.setMaxZoom(1.0f);
-		this.viewport.setMinZoom(0.35f);
+		this.viewport.setMaxZoom(2.0f);
+		this.viewport.setMinZoom(0.25f);
 		this.viewport.setZoomFactor(0.35f);
 		
 	}

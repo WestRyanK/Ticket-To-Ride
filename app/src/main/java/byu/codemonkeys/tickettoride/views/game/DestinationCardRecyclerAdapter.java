@@ -105,7 +105,7 @@ public class DestinationCardRecyclerAdapter extends RecyclerView.Adapter<Destina
 									 DestinationCardRecyclerAdapter adapter) {
 			super(view);
 			this.cardWidget = (DestinationCardWidget) view;
-			
+
 			this.clickListener = clickListener;
 			view.setOnClickListener(this);
 			this.adapter = adapter;

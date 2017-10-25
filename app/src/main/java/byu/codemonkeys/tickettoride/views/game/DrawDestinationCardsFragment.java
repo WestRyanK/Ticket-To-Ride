@@ -45,7 +45,7 @@ public class DrawDestinationCardsFragment extends Fragment implements DrawDestin
 		View view = inflater.inflate(R.layout.fragment_draw_destination_cards, container, false);
 		getViews(view);
 		initRecycler(view);
-		setClickListeners();
+//		setClickListeners();
 		return view;
 	}
 	
@@ -72,7 +72,7 @@ public class DrawDestinationCardsFragment extends Fragment implements DrawDestin
 																		 }
 																	 });
 		recyclerDestinationCards.setAdapter(destinationCardsAdapter);
-		scrollToMiddle();
+//		scrollToMiddle();
 	}
 	
 	private void scrollToMiddle() {

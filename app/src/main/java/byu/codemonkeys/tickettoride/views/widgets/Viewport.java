@@ -4,17 +4,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.PointF;
-import android.icu.util.Currency;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
-import android.view.View;
 import android.widget.AbsoluteLayout;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 /**
  * Created by Ryan on 10/23/2017.
@@ -24,6 +18,7 @@ public class Viewport extends AbsoluteLayout {
 	//region Public Properties
 	// region ZoomFactor Property
 	private float zoomFactor;
+	private int previousPointerID;
 	
 	public float getZoomFactor() {
 		return zoomFactor;
@@ -89,7 +84,7 @@ public class Viewport extends AbsoluteLayout {
 	// endregion
 	
 	private static final float ZOOM_INCREMENT = 0.1f;
-	private PointF prev = new PointF();
+	private PointF previousPoint = new PointF();
 	private float previousPinchDistance;
 	private Matrix transformMatrix;
 	
@@ -157,16 +152,38 @@ public class Viewport extends AbsoluteLayout {
 	}
 	
 	private void handlePan(MotionEvent event) {
+		if (event.getPointerCount() > 1) {
+			MotionEvent.PointerCoords coords = new MotionEvent.PointerCoords();
+			if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_POINTER_UP) {
+				//				if (this.previousPointerID != event.getPointerId(0))
+				if (event.getPointerId(event.getActionIndex()) == this.previousPointerID) {
+					event.getPointerCoords(1 - event.getActionIndex(), coords);
+					updatePreviousPointer(coords.getAxisValue(0),
+										  coords.getAxisValue(1),
+										  event.getPointerId(1 - event.getActionIndex()));
+				}
+			}
+			event.getPointerCoords(event.findPointerIndex(this.previousPointerID), coords);
+			updatePreviousPointer(coords.getAxisValue(0),
+								  coords.getAxisValue(1),
+								  this.previousPointerID);
+		}
 		if (event.getPointerCount() <= 1) {
 			switch (event.getAction() & MotionEvent.ACTION_MASK) {
-				case MotionEvent.ACTION_DOWN:
-					PanBegin(event.getX(), event.getY());
-					break;
-				case MotionEvent.ACTION_MOVE:
-					Pan(event.getX(), event.getY());
+				case MotionEvent.ACTION_POINTER_UP:
+					Log.v("VP", "ACTION_POINTER_UP");
 					break;
 				case MotionEvent.ACTION_UP:
-					PanEnd();
+					//					previousPoint = new PointF(event.getX(), event.getY());
+					Log.v("VP", "ACTION_UP");
+					break;
+				case MotionEvent.ACTION_DOWN:
+					updatePreviousPointer(event.getX(), event.getY(), event.getPointerId(0));
+					Log.v("VP", "ACTION_DOWN");
+					break;
+				case MotionEvent.ACTION_MOVE:
+					pan(event.getX(), event.getY(), event.getPointerId(0));
+					Log.v("VP", "ACTION_MOVE");
 					break;
 			}
 		}
@@ -186,7 +203,6 @@ public class Viewport extends AbsoluteLayout {
 		invalidate();
 		return result;
 	}
-	
 	// endregion
 	
 	// region Zooming
@@ -222,16 +238,6 @@ public class Viewport extends AbsoluteLayout {
 		this.invalidate();
 	}
 	
-	private Matrix getInverse() {
-		Matrix inverse = new Matrix();
-		this.transformMatrix.invert(inverse);
-		return inverse;
-	}
-	
-	private void updateTransformationMatrix() {
-		transformMatrix.setTranslate(-offsetX, -offsetY);
-		transformMatrix.preScale(this.zoomFactor, this.zoomFactor);
-	}
 	// endregion
 	
 	// region Utilities
@@ -244,39 +250,36 @@ public class Viewport extends AbsoluteLayout {
 		return imgCoords;
 	}
 	
-	public PointF ViewportPointFromImage(PointF imageCoords) {
-		PointF viewportCoords = new PointF();
-		
-		viewportCoords.x = (imageCoords.x * zoomFactor - this.getOffsetX());
-		viewportCoords.y = (imageCoords.y * zoomFactor - this.getOffsetY());
-		
-		return viewportCoords;
+	private Matrix getInverse() {
+		Matrix inverse = new Matrix();
+		this.transformMatrix.invert(inverse);
+		return inverse;
+	}
+	
+	private void updateTransformationMatrix() {
+		transformMatrix.setTranslate(-offsetX, -offsetY);
+		transformMatrix.preScale(this.zoomFactor, this.zoomFactor);
 	}
 	// endregion
 	
 	// region Panning
-	private void Pan(float x, float y) {
+	private void pan(float x, float y, int pointerId) {
+		//		if (this.previousPointerID != pointerId)
+		//			updatePreviousPointer(x, y, pointerId);
 		// Pans the viewport
-		this.offsetX += prev.x - x;
-		this.offsetY += prev.y - y;
+		this.offsetX += previousPoint.x - x;
+		this.offsetY += previousPoint.y - y;
 		
-		prev = new PointF(x, y);
+		previousPoint = new PointF(x, y);
 		
 		updateTransformationMatrix();
 		// Draw the viewport (the paint function makes sure the image is within the viewport)
 		this.invalidate();
 	}
 	
-	private void PanEnd() {
-		//		if (this.cursorOriginal != null)
-		//			this.Cursor = this.cursorOriginal;
-	}
-	
-	private void PanBegin(float x, float y) {
-		//		this.cursorOriginal = this.Cursor;
-		//		this.Cursor = Cursors.SizeAll;
-		
-		prev = new PointF(x, y);
+	private void updatePreviousPointer(float x, float y, int pointerID) {
+		this.previousPointerID = pointerID;
+		this.previousPoint = new PointF(x, y);
 	}
 	// endregion
 }

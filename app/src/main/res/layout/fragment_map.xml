@@ -12,9 +12,10 @@
 
         <ImageView
             android:id="@+id/map_imageViewMap"
-            android:layout_width="1448dp"
-            android:layout_height="1055dp"
+            android:layout_width="1024dp"
+            android:layout_height="746dp"
             android:src="@drawable/avatarmap"/>
+        <!--android:src="@drawable/card_orange"/>-->
 
     </byu.codemonkeys.tickettoride.views.widgets.Viewport>
     <!--android:src="@drawable/avatarmap_small"-->

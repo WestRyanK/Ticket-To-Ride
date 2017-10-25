@@ -39,10 +39,11 @@ public class PlayersStatsFragment extends Fragment implements PlayerStatsContrac
 		List<Player> players = new ArrayList<>();
 		players.add(new Player("dcorey3", PlayerColorEnum.Blue, 125, 35, 22, 4));
 		players.add(new Player("westryan", PlayerColorEnum.Red, 77, 43, 3, 12));
-				players.add(new Player("richmeg", PlayerColorEnum.Green, 188, 21, 53, 143));
-				players.add(new Player("jacobeast", PlayerColorEnum.Yellow, 188, 21, 53, 143));
-				players.add(new Player("aang314", PlayerColorEnum.Black, 188, 21, 53, 143));
+		players.add(new Player("richmeg", PlayerColorEnum.Green, 188, 21, 53, 143));
+		players.add(new Player("jacobeast", PlayerColorEnum.Yellow, 188, 21, 53, 143));
+		players.add(new Player("aang314", PlayerColorEnum.Black, 188, 21, 53, 143));
 		setPlayerStats(players);
+		setCurrentTurn(3);
 		return view;
 	}
 	
@@ -82,6 +83,8 @@ public class PlayersStatsFragment extends Fragment implements PlayerStatsContrac
 	
 	@Override
 	public void setCurrentTurn(int playerIndex) {
-		
+		for (int i = 0; i < this.playerStatsWidgets.size(); i++) {
+			this.playerStatsWidgets.get(i).setPlayersTurn(i == playerIndex);
+		}
 	}
 }

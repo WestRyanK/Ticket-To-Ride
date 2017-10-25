@@ -128,38 +128,24 @@ public class PlayerStatsWidget extends RelativeLayout {
 	}
 	// endregion
 	
+	// region IsPlayersTurn Property
+	private boolean isPlayersTurn;
+	
+	public boolean isPlayersTurn() {
+		return isPlayersTurn;
+	}
+	
+	public void setPlayersTurn(boolean playersTurn) {
+		isPlayersTurn = playersTurn;
+		if (this.isPlayersTurn) {
+			this.textViewName.setTextColor(getResources().getColor(R.color.colorAccent));
+		} else {
+			this.textViewName.setTextColor(getResources().getColor(R.color.colorPrimary));
+		}
+	}
 	// endregion
 	
-	
-	//	@Override
-	//	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-	//		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-	//
-	//		Drawable d = getCardDrawable();
-	//		if (d == null)
-	//			return;
-	//
-	//		float drawableRatio = d.getIntrinsicWidth() / (float) d.getIntrinsicHeight();
-	//		int widthSize = MeasureSpec.getSize(widthMeasureSpec);
-	//		int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-	//		int widthMode = MeasureSpec.getMode(widthMeasureSpec);
-	//		int heightMode = MeasureSpec.getMode(heightMeasureSpec);
-	//		int width, height;
-	//
-	//		if (widthMode == MeasureSpec.EXACTLY) {
-	//			width = widthSize;
-	//			height = (int) (width / drawableRatio);
-	//		} else {
-	//			height = heightSize;
-	//			width = (int) (heightSize * drawableRatio);
-	//		}
-	//
-	//		int childWidthSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY);
-	//		int childHeightSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
-	//		measureChildren(childWidthSpec, childHeightSpec);
-	//		setMeasuredDimension(width, height);
-	//	}
-	
+	// region Constructors
 	public PlayerStatsWidget(Context context) {
 		this(context, null);
 	}
@@ -201,5 +187,7 @@ public class PlayerStatsWidget extends RelativeLayout {
 		//			a.recycle();
 		//		}
 	}
+	
+	// endregion
 	
 }
