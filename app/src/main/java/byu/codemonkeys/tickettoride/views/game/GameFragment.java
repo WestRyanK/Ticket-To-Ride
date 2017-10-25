@@ -10,9 +10,9 @@ import android.widget.FrameLayout;
 
 import byu.codemonkeys.tickettoride.R;
 import byu.codemonkeys.tickettoride.models.ModelFacade;
-import byu.codemonkeys.tickettoride.presenters.DrawTrainCardsPresenter;
-import byu.codemonkeys.tickettoride.presenters.GameSidebarPresenter;
-import byu.codemonkeys.tickettoride.presenters.PlayerStatsPresenter;
+import byu.codemonkeys.tickettoride.presenters.game.DrawTrainCardsPresenter;
+import byu.codemonkeys.tickettoride.presenters.game.GameSidebarPresenter;
+import byu.codemonkeys.tickettoride.presenters.game.PlayerStatsPresenter;
 
 /**
  * A simple {@link Fragment} subclass.

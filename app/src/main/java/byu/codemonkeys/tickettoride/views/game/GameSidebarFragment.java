@@ -10,8 +10,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import byu.codemonkeys.tickettoride.R;
-import byu.codemonkeys.tickettoride.mvpcontracts.GameSidebarContract;
-import byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView;
+import byu.codemonkeys.tickettoride.models.PlayerColorEnum;
+import byu.codemonkeys.tickettoride.mvpcontracts.game.GameSidebarContract;
+import byu.codemonkeys.tickettoride.views.widgets.MapPointBubble;
 
 /**
  * A simple {@link Fragment} subclass.

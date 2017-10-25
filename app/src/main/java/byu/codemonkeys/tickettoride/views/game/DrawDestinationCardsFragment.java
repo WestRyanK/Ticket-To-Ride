@@ -11,11 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import byu.codemonkeys.tickettoride.R;
 import byu.codemonkeys.tickettoride.models.DestinationCard;
-import byu.codemonkeys.tickettoride.mvpcontracts.DrawDestinationCardsContract;
+import byu.codemonkeys.tickettoride.mvpcontracts.game.DrawDestinationCardsContract;
+import byu.codemonkeys.tickettoride.views.OnRecyclerItemClickListener;
 import byu.codemonkeys.tickettoride.views.widgets.HorizontalSpaceItemDecoration;
 
 /**
@@ -60,6 +62,21 @@ public class DrawDestinationCardsFragment extends Fragment implements DrawDestin
 													  20,
 													  this.getResources().getDisplayMetrics());
 		recyclerDestinationCards.addItemDecoration(new HorizontalSpaceItemDecoration(cardSpacing));
+		
+		
+		destinationCardsAdapter = new DestinationCardRecyclerAdapter(new ArrayList<DestinationCard>(),
+																	 new OnRecyclerItemClickListener<DestinationCard>() {
+																		 @Override
+																		 public void onItemClick(
+																				 DestinationCard card) {
+																		 }
+																	 });
+		recyclerDestinationCards.setAdapter(destinationCardsAdapter);
+		scrollToMiddle();
+	}
+	
+	private void scrollToMiddle() {
+		layoutManagerDestinationCards.scrollToPosition(Integer.MAX_VALUE / 2);
 	}
 	
 	private void setClickListeners() {
@@ -74,7 +91,7 @@ public class DrawDestinationCardsFragment extends Fragment implements DrawDestin
 	// region DrawDestinationCardsContract.View Implementation
 	@Override
 	public List<DestinationCard> getSelectedCards() {
-		return null;
+		return this.destinationCardsAdapter.getSelectedCards();
 	}
 	
 	@Override
@@ -84,11 +101,13 @@ public class DrawDestinationCardsFragment extends Fragment implements DrawDestin
 	
 	@Override
 	public void setCards(List<DestinationCard> cards) {
+		this.destinationCardsAdapter.updateData(cards);
 		
 	}
 	
 	@Override
 	public void setCanContinue(boolean canContinue) {
+		this.textViewContinue.setEnabled(canContinue);
 		
 	}
 	

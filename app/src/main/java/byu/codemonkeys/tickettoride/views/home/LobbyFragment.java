@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import byu.codemonkeys.tickettoride.R;
-import byu.codemonkeys.tickettoride.mvpcontracts.LobbyContract;
+import byu.codemonkeys.tickettoride.mvpcontracts.home.LobbyContract;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
 import byu.codemonkeys.tickettoride.views.OnRecyclerItemClickListener;
 

@@ -10,7 +10,7 @@ import android.util.TypedValue;
 import android.view.View;
 
 import byu.codemonkeys.tickettoride.R;
-import byu.codemonkeys.tickettoride.views.game.CitiesData;
+import byu.codemonkeys.tickettoride.views.viewdata.CitiesData;
 
 /**
  * Created by Ryan on 10/18/2017.
@@ -30,6 +30,7 @@ public class DestinationCardWidget extends View {
 		textPaint.setTypeface(levibrush);
 		textPaint.setTextSize(100);
 		textPaint.setTextAlign(Paint.Align.CENTER);
+		textPaint.setAntiAlias(true);
 	}
 	
 	// region Constructors
@@ -117,7 +118,11 @@ public class DestinationCardWidget extends View {
 		drawMarker(canvas,
 				   destinationB.getCityDestinationCardXRatio(),
 				   destinationB.getCityDestinationCardYRatio());
-		
+		if (this.isSelected()) {
+			Drawable selectedCircle = getResources().getDrawable(R.drawable.ic_selected_circle);
+			selectedCircle.setBounds(canvas.getClipBounds());
+			selectedCircle.draw(canvas);
+		}
 	}
 	
 	private void drawMarker(Canvas canvas, float ratioX, float ratioY) {

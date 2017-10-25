@@ -8,10 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import byu.codemonkeys.tickettoride.R;
-import byu.codemonkeys.tickettoride.mvpcontracts.Phase2TestingContract;
+import byu.codemonkeys.tickettoride.mvpcontracts.game.Phase2TestingContract;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -13,13 +13,13 @@ import byu.codemonkeys.tickettoride.async.AndroidTask;
 import byu.codemonkeys.tickettoride.models.ModelFacade;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
-import byu.codemonkeys.tickettoride.presenters.ConnectionSettingsPresenter;
-import byu.codemonkeys.tickettoride.presenters.CreateGamePresenter;
-import byu.codemonkeys.tickettoride.presenters.LobbyPresenter;
-import byu.codemonkeys.tickettoride.presenters.LoginPresenter;
+import byu.codemonkeys.tickettoride.presenters.home.ConnectionSettingsPresenter;
+import byu.codemonkeys.tickettoride.presenters.home.CreateGamePresenter;
+import byu.codemonkeys.tickettoride.presenters.home.LobbyPresenter;
+import byu.codemonkeys.tickettoride.presenters.home.LoginPresenter;
 import byu.codemonkeys.tickettoride.presenters.PresenterEnum;
-import byu.codemonkeys.tickettoride.presenters.RegisterPresenter;
-import byu.codemonkeys.tickettoride.presenters.WaitingRoomPresenter;
+import byu.codemonkeys.tickettoride.presenters.home.RegisterPresenter;
+import byu.codemonkeys.tickettoride.presenters.home.WaitingRoomPresenter;
 import byu.codemonkeys.tickettoride.views.game.GameActivity;
 
 public class HomeActivity extends AppCompatActivity implements INavigator, IDisplaysMessages {
@@ -118,10 +118,18 @@ public class HomeActivity extends AppCompatActivity implements INavigator, IDisp
 	
 	@Override
 	public void navigateBack() {
+		navigateBack(null);
+	}
+	
+	@Override
+	public void navigateBack(final PresenterEnum presenter) {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				getSupportFragmentManager().popBackStack();
+				if (presenter == null)
+					getSupportFragmentManager().popBackStack();
+				else
+					getSupportFragmentManager().popBackStack(presenter.name(), 0);
 			}
 		});
 	}

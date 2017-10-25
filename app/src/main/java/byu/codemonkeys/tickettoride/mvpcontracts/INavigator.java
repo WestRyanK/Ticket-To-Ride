@@ -14,4 +14,6 @@ public interface INavigator {
 	
 	
 	void navigateBack();
+	
+	void navigateBack(PresenterEnum presenter);
 }

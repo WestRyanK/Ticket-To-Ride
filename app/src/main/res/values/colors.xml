@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FFB53931</color>
     <color name="darkGray">#888888</color>
+    <color name="mapBackgroundColor">#FF18182e</color>
 </resources>

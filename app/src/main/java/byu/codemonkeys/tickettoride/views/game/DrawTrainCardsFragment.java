@@ -14,7 +14,7 @@ import java.util.List;
 
 import byu.codemonkeys.tickettoride.R;
 import byu.codemonkeys.tickettoride.models.TrainCard;
-import byu.codemonkeys.tickettoride.mvpcontracts.DrawTrainCardsContract;
+import byu.codemonkeys.tickettoride.mvpcontracts.game.DrawTrainCardsContract;
 import byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget;
 
 /**

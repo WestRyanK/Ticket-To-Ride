@@ -12,7 +12,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import byu.codemonkeys.tickettoride.R;
-import byu.codemonkeys.tickettoride.mvpcontracts.ChatHistoryContract;
+import byu.codemonkeys.tickettoride.mvpcontracts.game.ChatHistoryContract;
 import byu.codemonkeys.tickettoride.views.widgets.VerticalSpaceItemDecoration;
 
 /**

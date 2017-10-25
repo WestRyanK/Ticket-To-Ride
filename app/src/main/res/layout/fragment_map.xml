@@ -1,13 +1,21 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:background="@color/mapBackgroundColor"
              tools:context="byu.codemonkeys.tickettoride.views.game.MapFragment">
 
     <byu.codemonkeys.tickettoride.views.widgets.Viewport
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/avatarmap_small"
-        >
+        android:id="@+id/map_viewport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/map_imageViewMap"
+            android:layout_width="1448dp"
+            android:layout_height="1055dp"
+            android:src="@drawable/avatarmap"/>
+
     </byu.codemonkeys.tickettoride.views.widgets.Viewport>
+    <!--android:src="@drawable/avatarmap_small"-->
 </FrameLayout>

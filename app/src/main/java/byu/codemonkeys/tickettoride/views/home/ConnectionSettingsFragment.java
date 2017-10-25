@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import byu.codemonkeys.tickettoride.R;
-import byu.codemonkeys.tickettoride.mvpcontracts.ConnectionSettingsContract;
+import byu.codemonkeys.tickettoride.mvpcontracts.home.ConnectionSettingsContract;
 
 /**
  * A simple {@link Fragment} subclass.

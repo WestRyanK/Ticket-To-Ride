@@ -15,7 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import byu.codemonkeys.tickettoride.R;
-import byu.codemonkeys.tickettoride.mvpcontracts.WaitingRoomContract;
+import byu.codemonkeys.tickettoride.mvpcontracts.home.WaitingRoomContract;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
 
 /**

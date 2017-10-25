@@ -13,7 +13,7 @@ import java.util.List;
 import byu.codemonkeys.tickettoride.R;
 import byu.codemonkeys.tickettoride.models.Player;
 import byu.codemonkeys.tickettoride.models.PlayerColorEnum;
-import byu.codemonkeys.tickettoride.mvpcontracts.PlayerStatsContract;
+import byu.codemonkeys.tickettoride.mvpcontracts.game.PlayerStatsContract;
 import byu.codemonkeys.tickettoride.views.widgets.PlayerStatsWidget;
 
 /**
