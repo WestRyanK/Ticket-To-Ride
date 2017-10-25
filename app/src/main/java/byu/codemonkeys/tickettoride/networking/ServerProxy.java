@@ -1,8 +1,12 @@
 package byu.codemonkeys.tickettoride.networking;
 
+import java.util.ArrayList;
+
 import byu.codemonkeys.tickettoride.shared.IServer;
+import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.results.*;
 import byu.codemonkeys.tickettoride.shared.commands.*;
+import byu.codemonkeys.tickettoride.shared.model.Message;
 
 
 
@@ -68,6 +72,34 @@ public class ServerProxy implements IServer {
         StartGameCommandData data = new StartGameCommandData(gameID);
         data.setAuthToken(authToken);
         return communicator.sendStartGame(data);
+    }
+
+    @Override
+    public HistoryResult updateHistory(String authToken, String gameID) {
+        UpdateHistoryCommandData data = new UpdateHistoryCommandData(gameID);
+        data.setAuthToken(authToken);
+        return communicator.sendUpdateHistory(data);
+    }
+
+    @Override
+    public DestinationCardResult drawDestinationCards(String authToken, String gameID) {
+        DrawDestinationCardsCommandData data = new DrawDestinationCardsCommandData(gameID);
+        data.setAuthToken(authToken);
+        return communicator.sendDrawDestinationCards(data);
+    }
+
+    @Override
+    public DestinationCardResult chooseDestinationCards(String authToken, int numSelected, ArrayList<DestinationCard> selected, String gameID) {
+        ChooseDestinationCardsCommandData data = new ChooseDestinationCardsCommandData(numSelected, selected, gameID);
+        data.setAuthToken(authToken);
+        return communicator.sendChooseDestinationCards(data);
+    }
+
+    @Override
+    public Result sendMessage(String authToken, String gameID, Message message) {
+        SendMessageCommandData data = new SendMessageCommandData(gameID, message);
+        data.setAuthToken(authToken);
+        return communicator.sendSendMessage(data);
     }
 
     @Override

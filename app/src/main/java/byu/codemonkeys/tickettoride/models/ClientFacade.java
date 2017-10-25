@@ -1,12 +1,16 @@
 package byu.codemonkeys.tickettoride.models;
 
 import java.util.UUID;
+import java.util.List;
 
 import byu.codemonkeys.tickettoride.networking.ServerProxy;
 import byu.codemonkeys.tickettoride.shared.IClient;
+import byu.codemonkeys.tickettoride.shared.commands.CommandData;
+import byu.codemonkeys.tickettoride.shared.commands.ICommand;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
+import byu.codemonkeys.tickettoride.shared.results.HistoryResult;
 
 /**
  * Created by meganrich on 10/5/17.
@@ -48,4 +52,25 @@ public class ClientFacade implements IClient {
 //			throw new Exception(result.getErrorMessage());
 //		}
 	}
+
+	@Override
+	public void updateGame() throws Exception {
+		ModelRoot modelRoot = ModelRoot.getInstance();
+		String authToken = modelRoot.getSession().getAuthToken();
+
+	}
+
+	@Override
+    public void updateHistory() throws Exception {
+        ModelRoot modelRoot = ModelRoot.getInstance();
+        String authToken = modelRoot.getSession().getAuthToken();
+        String gameID = modelRoot.getGame().getID();
+        HistoryResult result = ServerProxy.getInstance().updateHistory(authToken, gameID);
+        List<CommandData> commands = result.getHistory();
+        for(CommandData command: commands){
+            switch(command.getCommandType()){
+                //TODO:do appropriate action given the command type
+            }
+        }
+    }
 }
