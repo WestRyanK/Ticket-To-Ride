@@ -1,19 +1,19 @@
 package byu.codemonkeys.tickettoride.shared.model.map;
 
 
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class GameMap {
     List<City> cities;
-    Map<City, Set<Route>> routes;
+    Set<Route> routes;
 
     public GameMap() {
         loadMapFromResource();
     }
 
-    public GameMap(List<City> cities, Map<City, Set<Route>> routes) {
+    public GameMap(List<City> cities, Set<Route> routes) {
         this.cities = cities;
         this.routes = routes;
     }
@@ -22,7 +22,16 @@ public class GameMap {
         // this will load the map from a map spec file
     }
 
-    public Set<Route> getRoutes(City city) {
-        return routes.get(city);
+    public Set<Route> getRoutesForCity(City city) {
+        Set<Route> subRoutes = new HashSet<>();
+        for (Route route : routes) {
+            if (route.containsCity(city))
+                    subRoutes.add(route);
+        }
+        return subRoutes;
+    }
+
+    public Set<Route> getAllRoutes() {
+        return routes;
     }
 }
