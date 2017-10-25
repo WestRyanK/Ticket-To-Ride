@@ -26,6 +26,7 @@ import byu.codemonkeys.tickettoride.shared.results.StartGameResult;
 public class ServerFacade implements IServer {
     private static ServerFacade ourInstance;
     private IRootModel rootModel;
+    private CommandManager commandManager;
 
     private ServerFacade() {
         rootModel = RootModel.getInstance();
