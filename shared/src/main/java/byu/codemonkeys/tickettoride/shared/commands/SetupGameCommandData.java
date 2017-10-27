@@ -6,10 +6,11 @@ import byu.codemonkeys.tickettoride.shared.model.TrainCard;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-/**
- * Created by meganrich on 10/18/17.
- */
 
+/**
+ * The server sends a SetupGame command when the client begins polling for game commands. This class
+ * contains the data the client needs to construct the command.
+ */
 public class SetupGameCommandData extends CommandData {
     protected SetupGameCommandData(List<UserBase> order, Map<Color, UserBase> colors,
                                    int numTrains, List<TrainCard> trainCards) {
