@@ -1,4 +1,4 @@
-package byu.codemonkeys.tickettoride.server;
+package byu.codemonkeys.tickettoride.server.broadcast;
 
 
 import java.util.HashMap;

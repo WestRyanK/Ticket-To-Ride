@@ -1,10 +1,10 @@
 package byu.codemonkeys.tickettoride.server;
 
-import com.sun.corba.se.spi.activation.Server;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import byu.codemonkeys.tickettoride.server.broadcast.ClientProxy;
+import byu.codemonkeys.tickettoride.server.broadcast.CommandManager;
 import byu.codemonkeys.tickettoride.server.exceptions.AlreadyExistsException;
 import byu.codemonkeys.tickettoride.server.exceptions.EmptyGameException;
 import byu.codemonkeys.tickettoride.server.exceptions.FullGameException;
@@ -27,13 +27,16 @@ public class ServerFacade implements IServer {
     private static ServerFacade ourInstance;
     private IRootModel rootModel;
     private CommandManager commandManager;
+    private ClientProxy clientProxy;
 
     private ServerFacade() {
-        rootModel = RootModel.getInstance();
+        this(RootModel.getInstance());
     }
 
     private ServerFacade(IRootModel model) {
         rootModel = model;
+        commandManager = new CommandManager();
+        clientProxy = new ClientProxy(commandManager);
     }
 
     public static void initialize(IRootModel model) {
