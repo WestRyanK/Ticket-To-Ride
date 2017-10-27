@@ -7,9 +7,11 @@ public class Route {
     private City source, destination;
     private int length;
     private boolean claimed;
+    private int routeId;
+    private String ownerToken;
     //ResourceType type;
 
-    public Route(City x, City y, int length) {
+    public Route(City x, City y, int length, int routeId) {
         // we always want city 'source' to come first lexicographically
         if (x.getName().compareTo(y.getName()) > 0) {
             this.source = x;
@@ -21,11 +23,17 @@ public class Route {
         }
         this.length = length;
         this.claimed = false;
+        this.routeId = routeId;
     }
 
-    public void claim() {
-        //This might need more info, like the id of the claiming player
+    public boolean claim(String authToken) {
+        //This might need more info, like the routeId of the claiming player
+        if (isClaimed()) {
+            return false; //Can't claim a route twice
+        }
         claimed = true;
+        ownerToken = authToken;
+        return true;
     }
 
     public boolean isClaimed() {
@@ -48,6 +56,10 @@ public class Route {
         return destination;
     }
 
+    public String getOwnerToken() {
+        return ownerToken;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -59,7 +71,8 @@ public class Route {
 
         Route other = (Route) o;
 
-        if (this.source.equals(other.source) && this.destination.equals(other.destination) && this.length == other.length) {
+        if (this.source.equals(other.source) && this.destination.equals(other.destination) &&
+                this.routeId == other.routeId && this.length == other.length) {
             return true;
         }
         return false;
@@ -67,6 +80,6 @@ public class Route {
 
     @Override
     public int hashCode() {
-        return Objects.hash(source.getName(), destination.getName(), length);
+        return Objects.hash(source.getName(), destination.getName(), length, routeId);
     }
 }

@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Set;
 
 public class GameMap {
-    List<City> cities;
-    Set<Route> routes;
+    private List<City> cities;
+    private List<Route> routes;
 
     public GameMap() {
         loadMapFromResource();
     }
 
-    public GameMap(List<City> cities, Set<Route> routes) {
+    public GameMap(List<City> cities, List<Route> routes) {
         this.cities = cities;
         this.routes = routes;
     }
@@ -31,7 +31,18 @@ public class GameMap {
         return subRoutes;
     }
 
-    public Set<Route> getAllRoutes() {
+    public List<Route> getAllRoutes() {
         return routes;
     }
+
+    public boolean claimRoute(int routeId, String authToken) {
+        return routes.get(routeId).claim(authToken);
+    }
+
+    // TODO: Change all these authTokens to something the clients and server can both use.
+    public int calculateLongestPathForPlayer(String authToken) {
+        return 0;
+    }
+
+
 }
