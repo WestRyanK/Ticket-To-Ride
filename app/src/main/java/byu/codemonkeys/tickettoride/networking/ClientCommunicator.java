@@ -142,6 +142,46 @@ public class ClientCommunicator {
 			return new StartGameResult(e.getMessage());
 		}
 	}
+
+	public HistoryResult sendUpdateHistory(UpdateHistoryCommandData request) {
+		try {
+			return serializer.deserialize(getString(getURL(CommandType.UPDATE_HISTORY), request),
+					HistoryResult.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new HistoryResult(e.getMessage());
+		}
+	}
+
+    public DestinationCardResult sendDrawDestinationCards(DrawDestinationCardsCommandData request) {
+        try {
+            return serializer.deserialize(getString(getURL(CommandType.DRAW_DESTINATION_CARDS), request),
+                    DestinationCardResult.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new DestinationCardResult(e.getMessage());
+        }
+    }
+
+    public DestinationCardResult sendChooseDestinationCards(ChooseDestinationCardsCommandData request) {
+        try {
+            return serializer.deserialize(getString(getURL(CommandType.CHOOSE_DESTINATION_CARDS), request),
+                    DestinationCardResult.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new DestinationCardResult(e.getMessage());
+        }
+    }
+
+    public Result sendSendMessage(SendMessageCommandData request) {
+        try {
+            return serializer.deserialize(getString(getURL(CommandType.SEND_MESSAGE), request),
+                    Result.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new Result(e.getMessage());
+        }
+    }
 	
 	/**
 	 * Constructs a full HTTP URL String to the specified path.

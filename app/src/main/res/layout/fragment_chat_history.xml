@@ -1,0 +1,93 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             android:background="@drawable/paper_background"
+                                             tools:context="byu.codemonkeys.tickettoride.views.game.ChatHistoryFragment">
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/chatHistory_textViewBack"
+        style="@style/AvatarTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="10dp"
+        android:text="@string/back"
+        android:textSize="@dimen/title2_size"
+        app:layout_constraintBaseline_toBaselineOf="@+id/chatHistory_textViewTitle"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/chatHistory_textViewTitle"
+        style="@style/AvatarTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="@string/chatHistory"
+        android:textSize="@dimen/title_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Space
+        android:id="@+id/chatHistory_negativeUnderlineMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/chatHistory_textViewTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <ImageView
+        android:id="@+id/chatHistory_imageViewUnderline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:paddingTop="-40dp"
+        android:src="@drawable/ic_underline"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/chatHistory_negativeUnderlineMargin"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/chatHistory_recyclerMessages"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/chatHistory_editTextMessage"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chatHistory_negativeUnderlineMargin"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedEditText
+        android:id="@+id/chatHistory_editTextMessage"
+        style="@style/AvatarTextStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginStart="20dp"
+        android:hint="@string/enterMessage"
+        android:imeOptions="actionDone"
+        android:inputType="textShortMessage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/chatHistory_imageButtonSendMessage"/>
+
+    <ImageButton
+        android:id="@+id/chatHistory_imageButtonSendMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_send_button"
+        app:layout_constraintBottom_toBottomOf="@+id/chatHistory_editTextMessage"
+        app:layout_constraintRight_toRightOf="parent"/>
+</android.support.constraint.ConstraintLayout>

@@ -5,10 +5,5 @@ package byu.codemonkeys.tickettoride.presenters;
  */
 
 public enum PresenterEnum {
-	Login,
-	Register,
-	ConnectionSettings,
-	CreateGame,
-	WaitingRoom,
-	Lobby
+	Login, Register, ConnectionSettings, CreateGame, WaitingRoom, Game, DestinationCards, DrawTrainCards, ChatHistory, Phase2Testing, DrawDestinationCards, Lobby
 }

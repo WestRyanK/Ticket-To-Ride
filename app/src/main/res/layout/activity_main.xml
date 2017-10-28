@@ -5,6 +5,6 @@
              android:id="@+id/main_fragmentContainer"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="byu.codemonkeys.tickettoride.MainActivity">
+             tools:context="byu.codemonkeys.tickettoride.views.home.HomeActivity">
 
 </FrameLayout>
