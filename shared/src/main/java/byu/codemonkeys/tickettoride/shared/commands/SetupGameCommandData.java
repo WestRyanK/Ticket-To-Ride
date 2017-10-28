@@ -3,7 +3,6 @@ package byu.codemonkeys.tickettoride.shared.commands;
 import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
 import byu.codemonkeys.tickettoride.shared.model.TrainCard;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +11,7 @@ import java.util.Map;
  * contains the data the client needs to construct the command.
  */
 public class SetupGameCommandData extends CommandData {
-    protected SetupGameCommandData(List<UserBase> order, Map<Color, UserBase> colors,
+    protected SetupGameCommandData(List<UserBase> order, Map<PlayerColor, UserBase> colors,
                                    int numTrains, List<TrainCard> trainCards) {
         super(CommandType.SETUP_GAME);
         this.order = order;
@@ -22,7 +21,7 @@ public class SetupGameCommandData extends CommandData {
     }
 
     protected List<UserBase> order;
-    protected Map<Color, UserBase> colors;
+    protected Map<PlayerColor, UserBase> colors;
     protected int numTrains;
     protected List<TrainCard> trainCards;
 

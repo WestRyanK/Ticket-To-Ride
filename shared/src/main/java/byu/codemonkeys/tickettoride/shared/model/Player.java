@@ -8,7 +8,7 @@ public abstract class Player extends UserBase {
 
     private Type type;
     private int score;
-    private Color color;
+    private PlayerColor color;
 
     protected Player(String userName, Type type) {
         super(userName);
@@ -27,11 +27,11 @@ public abstract class Player extends UserBase {
         this.score = score;
     }
 
-    public Color getColor() {
+    public PlayerColor getColor() {
         return color;
     }
 
-    public void setColor(Color color) {
+    public void setColor(PlayerColor color) {
         this.color = color;
     }
 }
