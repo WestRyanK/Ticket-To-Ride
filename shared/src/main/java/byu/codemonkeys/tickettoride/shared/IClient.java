@@ -11,4 +11,8 @@ public interface IClient {
 	void updatePendingGames() throws Exception;
 	
 	void updatePendingGame() throws Exception;
+
+	void updateGame() throws Exception;
+
+    void updateHistory() throws Exception;
 }

@@ -2,22 +2,46 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:gravity="center"
+              android:background="@drawable/paper_background"
+              android:gravity="center_horizontal"
               android:orientation="vertical"
               android:padding="10dp"
-              tools:context="byu.codemonkeys.tickettoride.views.LoginFragment">
+              tools:context="byu.codemonkeys.tickettoride.views.home.LoginFragment">
 
-    <EditText
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/tickettoride"
+        android:textColor="@color/colorAccent"
+        android:textSize="50sp"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        style="@style/AvatarTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-20dp"
+        android:text="@string/avatarEdition"
+        android:textSize="20sp"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedEditText
         android:id="@+id/login_editTextUsername"
+        style="@style/AvatarTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:hint="@string/username"
         android:inputType="textNoSuggestions"
-        android:maxLines="1"/>
+        android:maxLines="1"
+        android:textColor="@color/colorPrimary"/>
 
-    <EditText
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedEditText
         android:id="@+id/login_editTextPassword"
+        style="@style/AvatarTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -25,15 +49,26 @@
         android:inputType="textPassword"
         android:maxLines="1"/>
 
-    <Button
+    <!--<Button-->
+    <!--android:id="@+id/login_buttonLogin"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="20dp"-->
+    <!--android:text="@string/login"/>-->
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
         android:id="@+id/login_buttonLogin"
+        style="@style/AvatarTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/login"/>
+        android:gravity="center"
+        android:text="@string/login"
+        android:textSize="@dimen/title2_size"/>
 
-    <TextView
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
         android:id="@+id/login_textViewRegister"
+        style="@style/AvatarTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -41,12 +76,14 @@
         android:gravity="center"
         android:text="@string/register_new_user"/>
 
-    <TextView
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
         android:id="@+id/login_textViewConnectionSettings"
+        style="@style/AvatarTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:clickable="true"
         android:gravity="center"
         android:text="@string/connection_settings"/>
+
 </LinearLayout>

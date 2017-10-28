@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/trainCard_background"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/darkGray"
+                tools:context="byu.codemonkeys.tickettoride.views.game.TrainCardsFragment">
+
+    <ImageView
+        android:id="@+id/trainCard_imageViewCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        tools:src="@drawable/card_red"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/trainCard_textViewCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="-5dp"
+        android:layout_marginLeft="4dp"
+        android:shadowColor="#FF000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="40"
+        android:textColor="#FFFFFFFF"
+        android:textSize="20sp"
+        tools:text="4"/>
+</RelativeLayout>

@@ -1,0 +1,156 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/paper_background"
+                tools:context="byu.codemonkeys.tickettoride.views.game.Phase2TestingFragment">
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/testing_textViewBack"
+        style="@style/AvatarTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/testing_textViewTitle"
+        android:layout_alignParentLeft="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="10dp"
+        android:text="@string/back"
+        android:textSize="@dimen/title2_size"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/testing_textViewTitle"
+        style="@style/AvatarTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="10dp"
+        android:text="@string/phase2TestingTitle"
+        android:textSize="@dimen/title_size"/>
+
+    <ImageView
+        android:id="@+id/testing_imageViewUnderline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/testing_textViewTitle"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="-15dp"
+        android:src="@drawable/ic_underline"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/testing_imageViewUnderline"
+        android:background="?attr/selectableItemBackgroundBorderless">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+                android:id="@+id/testing_textViewUpdatePlayerPoints"
+                style="@style/AvatarTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="10dp"
+                android:text="@string/updatePlayerPoints"
+                android:textSize="18sp"/>
+
+            <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+                android:id="@+id/testing_textViewAddRemoveTrainCardsThisPlayer"
+                style="@style/AvatarTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="10dp"
+                android:text="@string/addRemoveTrainCardsThisPlayer"
+                android:textSize="18sp"/>
+
+            <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+                android:id="@+id/testing_textViewAddRemoveDestinationCardsThisPlayer"
+                style="@style/AvatarTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="10dp"
+                android:text="@string/addRemoveDestinationCardsThisPlayer"
+                android:textSize="18sp"/>
+
+            <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+                android:id="@+id/testing_textViewUpdateTrainCardsOtherPlayers"
+                style="@style/AvatarTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="10dp"
+                android:text="@string/updateTrainCardsOtherPlayers"
+                android:textSize="18sp"/>
+
+            <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+                android:id="@+id/testing_textViewUpdateDestinationCardsOtherPlayers"
+                style="@style/AvatarTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="10dp"
+                android:text="@string/updateDestinationCardsOtherPlayers"
+                android:textSize="18sp"/>
+
+            <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+                android:id="@+id/testing_textViewUpdateVisibleInvisibleCardsInTrainCardDeck"
+                style="@style/AvatarTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="10dp"
+                android:text="@string/updateVisibleInvisibleCardsInTrainCardDeck"
+                android:textSize="18sp"/>
+
+            <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+                android:id="@+id/testing_textViewUpdateCardsInDestinationCardDeck"
+                style="@style/AvatarTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="10dp"
+                android:text="@string/updateCardsInDestinationCardDeck"
+                android:textSize="18sp"/>
+
+            <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+                android:id="@+id/testing_textViewAddClaimedRoute"
+                style="@style/AvatarTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="10dp"
+                android:text="@string/addClaimedRoute"
+                android:textSize="18sp"/>
+
+            <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+                android:id="@+id/testing_textViewAddChatMessage"
+                style="@style/AvatarTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="10dp"
+                android:text="@string/addChatMessage"
+                android:textSize="18sp"/>
+
+            <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+                android:id="@+id/testing_textViewAddGameHistoryEntry"
+                style="@style/AvatarTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="10dp"
+                android:text="@string/addGameHistoryEntry"
+                android:textSize="18sp"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

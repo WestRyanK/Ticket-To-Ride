@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TrainCardWidget">
+        <attr name="count" format="integer"/>
+        <attr name="showCount" format="boolean"/>
+        <attr name="isSelected" format="boolean"/>
+        <attr name="cardDrawable" format="reference"/>
+    </declare-styleable>
+</resources>

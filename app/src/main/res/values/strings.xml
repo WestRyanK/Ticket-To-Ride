@@ -19,6 +19,27 @@
     <string name="leave">Leave Game</string>
     <string name="startGame">Start Game</string>
     <string name="players">Players</string>
+    <string name="continueText">Continue</string>
     <string name="owner">Owner</string>
     <string name="game">Game</string>
+    <string name="phase2Testing">Test</string>
+    <string name="back">back</string>
+    <string name="addGameHistoryEntry">Add game history entry</string>
+    <string name="addChatMessage">Add chat message</string>
+    <string name="addClaimedRoute">Claim a route</string>
+    <string name="updateCardsInDestinationCardDeck">Update cards in destination card deck</string>
+    <string name="updateVisibleInvisibleCardsInTrainCardDeck">Update visible and invisible cards in train card deck</string>
+    <string name="updateDestinationCardsOtherPlayers">Update destination cards for other players</string>
+    <string name="updateTrainCardsOtherPlayers">Update train cards for other players</string>
+    <string name="addRemoveDestinationCardsThisPlayer">Add/Remove destination cards for this player</string>
+    <string name="addRemoveTrainCardsThisPlayer">Add/Remove train cards for this player</string>
+    <string name="updatePlayerPoints">Update points for this player</string>
+    <string name="phase2TestingTitle">Phase 2 Testing</string>
+    <string name="tickettoride">Ticket to Ride</string>
+    <string name="avatarEdition">Avatar Edition</string>
+    <string name="destinationCards">Destination Cards</string>
+    <string name="draw">Draw</string>
+    <string name="drawDestinationCards">Select at least 2 destination cards</string>
+    <string name="chatHistory">Messages</string>
+    <string name="enterMessage">Enter a message...</string>
 </resources>

@@ -15,7 +15,11 @@ import byu.codemonkeys.tickettoride.server.model.RootModel;
 import byu.codemonkeys.tickettoride.server.model.ServerSession;
 import byu.codemonkeys.tickettoride.server.model.User;
 import byu.codemonkeys.tickettoride.shared.IServer;
+import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
+import byu.codemonkeys.tickettoride.shared.model.Message;
+import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
+import byu.codemonkeys.tickettoride.shared.results.HistoryResult;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
@@ -251,5 +255,25 @@ public class ServerFacade implements IServer {
         ActiveGame activeGame = rootModel.activateGame(gameID);
 
         return new StartGameResult(activeGame);
+    }
+
+    @Override
+    public HistoryResult updateHistory(String authToken, String gameID) {
+        return null;
+    }
+
+    @Override
+    public DestinationCardResult drawDestinationCards(String authToken, String gameID) {
+        return null;
+    }
+
+    @Override
+    public DestinationCardResult chooseDestinationCards(String authToken, int numSelected, ArrayList<DestinationCard> selected, String gameID) {
+        return null;
+    }
+
+    @Override
+    public Result sendMessage(String authToken, String gameID, Message message) {
+        return null;
     }
 }

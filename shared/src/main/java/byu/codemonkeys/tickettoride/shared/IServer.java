@@ -1,11 +1,17 @@
 package byu.codemonkeys.tickettoride.shared;
 
 
+import java.util.ArrayList;
+
+import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
+import byu.codemonkeys.tickettoride.shared.model.Message;
+import byu.codemonkeys.tickettoride.shared.results.HistoryResult;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 import byu.codemonkeys.tickettoride.shared.results.StartGameResult;
+import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
 
 public interface IServer {
     /**
@@ -38,4 +44,9 @@ public interface IServer {
     PendingGamesResult getPendingGames(String authToken);
     PendingGameResult getPendingGame(String authToken);
     StartGameResult startGame(String authToken, String gameID);
+    //Phase 2
+    HistoryResult updateHistory(String authToken, String gameID);
+    DestinationCardResult drawDestinationCards(String authToken, String gameID);
+    DestinationCardResult chooseDestinationCards(String authToken, int numSelected, ArrayList<DestinationCard> selected, String gameID);
+    Result sendMessage(String authToken, String gameID, Message message);
 }

@@ -11,4 +11,10 @@ public class CommandType {
 	public static final String LOGOUT = "logout";
 	public static final String REGISTER = "register";
 	public static final String START_GAME = "startGame";
+	public static final String UPDATE_HISTORY = "updateHistory";
+	public static final String SEND_MESSAGE = "sendMessage";
+	public static final String CHOOSE_DESTINATION_CARDS = "chooseDestinationCards";
+	public static final String DRAW_DESTINATION_CARDS = "drawDestinationCards";
+	public static final String SETUP_GAME = "setupGame";
+	public static final String BEGIN_GAME = "beginGame";
 }

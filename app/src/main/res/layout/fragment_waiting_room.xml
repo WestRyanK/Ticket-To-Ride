@@ -2,9 +2,10 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/paper_background"
                 android:gravity="center_horizontal"
                 android:padding="@dimen/default_margin"
-                tools:context="byu.codemonkeys.tickettoride.views.WaitingRoomFragment">
+                tools:context="byu.codemonkeys.tickettoride.views.home.WaitingRoomFragment">
 
     <LinearLayout
         android:id="@+id/waitingRoom_header"
@@ -14,15 +15,17 @@
         android:layout_centerHorizontal="true"
         android:orientation="vertical">
 
-        <TextView
+        <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
             android:id="@+id/waitingRoom_textViewGameName"
+            style="@style/AvatarTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:textSize="@dimen/title_size"
             tools:text="Game name here"/>
 
-        <TextView
+        <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+            style="@style/AvatarTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -30,11 +33,20 @@
             android:text="@string/players"
             android:textSize="@dimen/title2_size"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/darkGray"/>
+        <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@color/darkGray"/>-->
 
+        <ImageView
+            android:id="@+id/testing_imageViewUnderline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/testing_textViewTitle"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="-15dp"
+            android:src="@drawable/ic_underline"/>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -43,18 +55,37 @@
         android:layout_height="match_parent"
         android:layout_below="@id/waitingRoom_header"/>
 
-    <Button
+    <!--<Button-->
+    <!--android:id="@+id/waitingRoom_buttonLeaveGame"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:text="@string/leave"/>-->
+
+    <!--<Button-->
+    <!--android:id="@+id/waitingRoom_buttonStartGame"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_above="@id/waitingRoom_buttonLeaveGame"-->
+    <!--android:text="@string/startGame"/>-->
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
         android:id="@+id/waitingRoom_buttonLeaveGame"
+        style="@style/AvatarTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="@string/leave"/>
+        android:gravity="center"
+        android:text="@string/leave"
+        android:textSize="@dimen/title2_size"/>
 
-    <Button
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
         android:id="@+id/waitingRoom_buttonStartGame"
+        style="@style/AvatarTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/waitingRoom_buttonLeaveGame"
-        android:text="@string/startGame"/>
-
+        android:gravity="center"
+        android:text="@string/startGame"
+        android:textSize="@dimen/title2_size"/>
 </RelativeLayout>
