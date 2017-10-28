@@ -1,5 +1,8 @@
 package byu.codemonkeys.tickettoride.shared.commands;
 
+/**
+ * The client sends a LoginCommand to the server to log in.
+ */
 public class LoginCommandData extends CommandData {
 	private String userName;
 	private String password;
