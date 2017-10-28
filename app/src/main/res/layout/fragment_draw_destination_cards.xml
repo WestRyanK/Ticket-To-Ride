@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/paper_background"
+                tools:context="byu.codemonkeys.tickettoride.views.game.DrawDestinationCardsFragment">
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/drawDestinationCards_textViewTitle"
+        style="@style/AvatarTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="10dp"
+        android:text="@string/drawDestinationCards"
+        android:textSize="@dimen/title2_size"/>
+
+    <ImageView
+        android:id="@+id/drawDestinationCards_imageViewUnderline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/drawDestinationCards_textViewTitle"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="-15dp"
+        android:src="@drawable/ic_underline"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/drawDestinationCards_recyclerCards"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/drawDestinationCards_imageViewUnderline"
+        android:layout_marginBottom="80dp"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/drawDestinationCards_textViewContinue"
+        style="@style/AvatarTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="10dp"
+        android:text="@string/continueText"
+        android:textSize="@dimen/title_size"/>
+</RelativeLayout>

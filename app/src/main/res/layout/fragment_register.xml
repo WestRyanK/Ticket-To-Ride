@@ -2,13 +2,15 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@drawable/paper_background"
               android:gravity="center"
               android:orientation="vertical"
               android:padding="10dp"
-              tools:context="byu.codemonkeys.tickettoride.views.RegisterFragment">
+              tools:context="byu.codemonkeys.tickettoride.views.home.RegisterFragment">
 
-    <EditText
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedEditText
         android:id="@+id/register_editTextUsername"
+        style="@style/AvatarTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -16,24 +18,36 @@
         android:inputType="textNoSuggestions"
         android:maxLines="1"/>
 
-    <EditText
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedEditText
         android:id="@+id/register_editTextPassword"
+        style="@style/AvatarTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:hint="@string/password"
-        android:maxLines="1"
-        android:inputType="textPassword"/>
+        android:inputType="textPassword"
+        android:maxLines="1"/>
 
-    <Button
+    <!--<Button-->
+    <!--android:id="@+id/register_buttonRegister"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="20dp"-->
+    <!--android:text="@string/register"/>-->
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
         android:id="@+id/register_buttonRegister"
+        style="@style/AvatarTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/register"/>
+        android:gravity="center"
+        android:text="@string/register"
+        android:textSize="@dimen/title2_size"/>
 
-    <TextView
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
         android:id="@+id/register_textViewCancel"
+        style="@style/AvatarTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

@@ -1,6 +1,6 @@
 package byu.codemonkeys.tickettoride.shared.commands;
 
-import byu.codemonkeys.tickettoride.shared.model.Color;
+import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
 import byu.codemonkeys.tickettoride.shared.model.TrainCard;
 import java.util.ArrayList;

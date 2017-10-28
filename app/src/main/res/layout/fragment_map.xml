@@ -1,0 +1,22 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:background="@color/mapBackgroundColor"
+             tools:context="byu.codemonkeys.tickettoride.views.game.MapFragment">
+
+    <byu.codemonkeys.tickettoride.views.widgets.Viewport
+        android:id="@+id/map_viewport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/map_imageViewMap"
+            android:layout_width="1024dp"
+            android:layout_height="746dp"
+            android:src="@drawable/avatarmap"/>
+        <!--android:src="@drawable/card_orange"/>-->
+
+    </byu.codemonkeys.tickettoride.views.widgets.Viewport>
+    <!--android:src="@drawable/avatarmap_small"-->
+</FrameLayout>

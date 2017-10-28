@@ -46,11 +46,11 @@ public class ClientFacade implements IClient {
 		ModelRoot modelRoot = ModelRoot.getInstance();
 		String authToken = modelRoot.getSession().getAuthToken();
 		PendingGameResult result = ServerProxy.getInstance().getPendingGame(authToken);
-		if (result.getErrorMessage() == null) {
+//		if (result.getErrorMessage() == null) {
 			modelRoot.setPendingGame(result.getGame());
-		} else {
-			throw new Exception(result.getErrorMessage());
-		}
+//		} else {
+//			throw new Exception(result.getErrorMessage());
+//		}
 	}
 
 	@Override

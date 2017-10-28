@@ -2,7 +2,8 @@
                                                  xmlns:tools="http://schemas.android.com/tools"
                                                  android:layout_width="match_parent"
                                                  android:layout_height="match_parent"
-                                                 tools:context="byu.codemonkeys.tickettoride.views.LobbyFragment">
+                                                 android:background="@drawable/paper_background"
+                                                 tools:context="byu.codemonkeys.tickettoride.views.home.LobbyFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,14 +17,16 @@
             android:layout_marginEnd="@dimen/default_margin"
             android:layout_marginStart="@dimen/default_margin">
 
-            <TextView
+            <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+                style="@style/AvatarTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:text="@string/game"
                 android:textSize="@dimen/title2_size"/>
 
-            <TextView
+            <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+                style="@style/AvatarTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -32,8 +35,9 @@
                 android:textSize="@dimen/title2_size"/>
             <!--android:layout_centerHorizontal="true"-->
 
-            <TextView
+            <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
                 android:id="@+id/lobby_textViewPlayers"
+                style="@style/AvatarTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -41,10 +45,18 @@
                 android:textSize="@dimen/title2_size"/>
         </RelativeLayout>
 
-        <View
+        <ImageView
+            android:id="@+id/testing_imageViewUnderline"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/darkGray"/>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="-15dp"
+            android:src="@drawable/ic_underline"/>
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@color/darkGray"/>-->
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/lobby_recyclerPendingGames"
