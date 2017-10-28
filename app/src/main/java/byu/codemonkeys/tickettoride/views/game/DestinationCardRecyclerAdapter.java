@@ -41,16 +41,25 @@ public class DestinationCardRecyclerAdapter extends RecyclerView.Adapter<Destina
 	@Override
 	public void onBindViewHolder(DestinationCardHolder holder, int position) {
 		
-		int wrappedPosition = position % destinationCards.size();
+		int wrappedPosition = wrapPosition(position);
 		DestinationCard destinationCard = destinationCards.get(wrappedPosition);
 		holder.bindDestinationCard(destinationCard,
 								   wrappedPosition,
 								   selectedCardIndices.contains(wrappedPosition));
 	}
 	
+	private int wrapPosition(int position) {
+		int wrappedPosition;
+		if (destinationCards.size() > 0)
+			wrappedPosition = position % destinationCards.size();
+		else
+			wrappedPosition = position;
+		return wrappedPosition;
+	}
+	
 	public void toggleSelection(int position) {
 		if (canSelectCards) {
-			int wrappedPosition = position % destinationCards.size();
+			int wrappedPosition = wrapPosition(position);
 			if (selectedCardIndices.contains(wrappedPosition)) {
 				selectedCardIndices.remove(wrappedPosition);
 			} else {
@@ -70,13 +79,16 @@ public class DestinationCardRecyclerAdapter extends RecyclerView.Adapter<Destina
 	}
 	
 	public boolean isCardSelected(int position) {
-		int wrappedPosition = position % destinationCards.size();
+		int wrappedPosition = wrapPosition(position);
 		return selectedCardIndices.contains(wrappedPosition);
 	}
 	
 	@Override
 	public int getItemCount() {
-		return Integer.MAX_VALUE;//destinationCards.size();
+		if (destinationCards.size() > 3)
+			return Integer.MAX_VALUE;//destinationCards.size();
+		else
+			return destinationCards.size();
 	}
 	
 	public void updateData(List<DestinationCard> cards) {
@@ -105,7 +117,7 @@ public class DestinationCardRecyclerAdapter extends RecyclerView.Adapter<Destina
 									 DestinationCardRecyclerAdapter adapter) {
 			super(view);
 			this.cardWidget = (DestinationCardWidget) view;
-
+			
 			this.clickListener = clickListener;
 			view.setOnClickListener(this);
 			this.adapter = adapter;
