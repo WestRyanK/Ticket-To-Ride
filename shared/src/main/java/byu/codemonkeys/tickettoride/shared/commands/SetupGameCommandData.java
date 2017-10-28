@@ -3,26 +3,26 @@ package byu.codemonkeys.tickettoride.shared.commands;
 import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
 import byu.codemonkeys.tickettoride.shared.model.TrainCard;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+
 /**
- * Created by meganrich on 10/18/17.
+ * The server sends a SetupGame command when the client begins polling for game commands. This class
+ * contains the data the client needs to construct the command.
  */
-
 public class SetupGameCommandData extends CommandData {
-    protected SetupGameCommandData(ArrayList<UserBase> order, Map<PlayerColor, UserBase> colors,
-                                   int numTrains, ArrayList<TrainCard> trainCards) {
+    protected SetupGameCommandData(List<UserBase> order, Map<PlayerColor, UserBase> colors,
+                                   int numTrains, List<TrainCard> trainCards) {
         super(CommandType.SETUP_GAME);
-        for(UserBase user: order) this.order.add(user);
-        for(TrainCard card: trainCards) this.trainCards.add(card);
-        this.colors.putAll(colors);
+        this.order = order;
+        this.trainCards = trainCards;
+        this.colors = colors;
         this.numTrains = numTrains;
-
     }
 
-    protected ArrayList<UserBase> order;
+    protected List<UserBase> order;
     protected Map<PlayerColor, UserBase> colors;
     protected int numTrains;
-    protected ArrayList<TrainCard> trainCards;
+    protected List<TrainCard> trainCards;
 
 }
