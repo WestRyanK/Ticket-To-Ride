@@ -2,20 +2,21 @@ package byu.codemonkeys.tickettoride.shared.commands;
 
 import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by meganrich on 10/18/17.
  */
 
 public class ChooseDestinationCardsCommandData extends CommandData {
-    public ChooseDestinationCardsCommandData(int numSelected, ArrayList<DestinationCard> selected, String gameID) {
+    public ChooseDestinationCardsCommandData(int numSelected, List<DestinationCard> selected, String gameID) {
         super(CommandType.CHOOSE_DESTINATION_CARDS);
         this.numSelected = numSelected;
         this.gameID = gameID;
-        for(DestinationCard card: selected) this.selected.add(card);
+        this.selected = selected;
     }
 
     protected int numSelected;
-    protected ArrayList<DestinationCard> selected;
+    protected List<DestinationCard> selected;
     protected String gameID;
 }

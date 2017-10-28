@@ -16,4 +16,5 @@ public class CommandType {
 	public static final String CHOOSE_DESTINATION_CARDS = "chooseDestinationCards";
 	public static final String DRAW_DESTINATION_CARDS = "drawDestinationCards";
 	public static final String SETUP_GAME = "setupGame";
+	public static final String BEGIN_GAME = "beginGame";
 }
