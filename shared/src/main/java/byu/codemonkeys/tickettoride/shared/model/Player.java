@@ -15,6 +15,10 @@ public abstract class Player extends UserBase {
         this.type = type;
     }
 
+    public Type getType() {
+        return type;
+    }
+
     public int getScore() {
         return score;
     }
