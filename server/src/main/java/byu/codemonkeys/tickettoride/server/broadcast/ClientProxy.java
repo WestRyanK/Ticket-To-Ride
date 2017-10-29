@@ -19,4 +19,14 @@ public class ClientProxy implements IClient {
     public void updatePendingGame() throws Exception {
         // no-op
     }
+
+    @Override
+    public void updateGame() throws Exception {
+
+    }
+
+    @Override
+    public void updateHistory() throws Exception {
+
+    }
 }
