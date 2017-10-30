@@ -1,5 +1,8 @@
 package byu.codemonkeys.tickettoride.shared.commands;
 
+/**
+ * The client sends a CreateGame command to the server to create a new game.
+ */
 public class CreateGameCommandData extends CommandData {
 	private String gameName;
 	private int minPlayers;
