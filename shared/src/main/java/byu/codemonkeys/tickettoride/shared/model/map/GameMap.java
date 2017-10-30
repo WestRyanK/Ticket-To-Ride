@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import byu.codemonkeys.tickettoride.shared.model.UserBase;
+
 public class GameMap {
     private List<City> cities;
     private List<Route> routes;
@@ -35,12 +37,12 @@ public class GameMap {
         return routes;
     }
 
-    public boolean claimRoute(int routeId, String authToken) {
-        return routes.get(routeId).claim(authToken);
+    public boolean claimRoute(int routeId, UserBase user) {
+        return routes.get(routeId).claim(user);
     }
 
     // TODO: Change all these authTokens to something the clients and server can both use.
-    public int calculateLongestPathForPlayer(String authToken) {
+    public int calculateLongestPathForPlayer(UserBase user) {
         return 0;
     }
 

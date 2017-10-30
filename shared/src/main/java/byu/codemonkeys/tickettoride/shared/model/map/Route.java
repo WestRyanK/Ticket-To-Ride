@@ -3,12 +3,14 @@ package byu.codemonkeys.tickettoride.shared.model.map;
 
 import java.util.Objects;
 
+import byu.codemonkeys.tickettoride.shared.model.UserBase;
+
 public class Route {
     private City source, destination;
     private int length;
     private boolean claimed;
     private int routeId;
-    private String ownerToken;
+    private UserBase owner;
     //ResourceType type;
 
     public Route(City x, City y, int length, int routeId) {
@@ -26,13 +28,13 @@ public class Route {
         this.routeId = routeId;
     }
 
-    public boolean claim(String authToken) {
+    public boolean claim(UserBase user) {
         //This might need more info, like the routeId of the claiming player
         if (isClaimed()) {
             return false; //Can't claim a route twice
         }
         claimed = true;
-        ownerToken = authToken;
+        owner = user;
         return true;
     }
 
@@ -56,8 +58,8 @@ public class Route {
         return destination;
     }
 
-    public String getOwnerToken() {
-        return ownerToken;
+    public UserBase getOwnerToken() {
+        return owner;
     }
 
     @Override
