@@ -72,8 +72,11 @@ public interface IModelFacade {
 
 	//Here for the sake of the demonstration, just in case we need them, although these should already be covered in the user actions
 	void addTrainCard(byu.codemonkeys.tickettoride.shared.model.TrainCard card); //should this be a list of cards?
+	void addTrainCards(List<byu.codemonkeys.tickettoride.shared.model.TrainCard> cards);
 	void removeTrainCard(TrainCard card); //also this
+
 	void addDestinationCard(byu.codemonkeys.tickettoride.shared.model.DestinationCard card);
+	void addDestinationCards(List<byu.codemonkeys.tickettoride.shared.model.DestinationCard> cards);
 	void removeDestinationCard(byu.codemonkeys.tickettoride.shared.model.DestinationCard card);
 
 	int getDestinationCardDeckSize();

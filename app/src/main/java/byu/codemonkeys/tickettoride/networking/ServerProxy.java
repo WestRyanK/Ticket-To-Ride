@@ -1,6 +1,6 @@
 package byu.codemonkeys.tickettoride.networking;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import byu.codemonkeys.tickettoride.shared.IServer;
 import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
@@ -88,7 +88,7 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public DestinationCardResult chooseDestinationCards(String authToken, int numSelected, ArrayList<DestinationCard> selected) {
+    public DestinationCardResult chooseDestinationCards(String authToken, int numSelected, List<DestinationCard> selected) {
         ChooseDestinationCardsCommandData data = new ChooseDestinationCardsCommandData(numSelected, selected);
         data.setAuthToken(authToken);
         return communicator.sendChooseDestinationCards(data);

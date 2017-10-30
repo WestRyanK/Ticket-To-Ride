@@ -10,7 +10,6 @@ import byu.codemonkeys.tickettoride.async.ITask;
 import byu.codemonkeys.tickettoride.exceptions.NoPendingGameException;
 import byu.codemonkeys.tickettoride.exceptions.UnauthorizedException;
 import byu.codemonkeys.tickettoride.networking.ClientCommunicator;
-import byu.codemonkeys.tickettoride.networking.PendingGamesPoller;
 import byu.codemonkeys.tickettoride.networking.ServerProxy;
 import byu.codemonkeys.tickettoride.shared.IServer;
 import byu.codemonkeys.tickettoride.shared.commands.ICommand;
@@ -281,18 +280,29 @@ public class ModelFacade implements IModelFacade {
 
 	//Here for the sake of the demonstration, just in case we need them, although these should already be covered in the user actions
 	public void addTrainCard(byu.codemonkeys.tickettoride.shared.model.TrainCard card) {
-	} //should this be a list of cards?
+		models.addTrainCard(card);
+	}
+
+	public void addTrainCards(List<byu.codemonkeys.tickettoride.shared.model.TrainCard> cards){
+		models.addTrainCards(cards);
+	}
 
 	public void removeTrainCard(byu.codemonkeys.tickettoride.shared.model.TrainCard card) {
-
+		models.removeTrainCard(card);
 	}
 
 	; //also this
 
 	public void addDestinationCard(byu.codemonkeys.tickettoride.shared.model.DestinationCard card) {
+		models.addDestinationCard(card);
+	}
+
+	public void addDestinationCards(List<byu.codemonkeys.tickettoride.shared.model.DestinationCard> cards){
+		models.addDestinationCards(cards);
 	}
 
 	public void removeDestinationCard(byu.codemonkeys.tickettoride.shared.model.DestinationCard card) {
+		models.removeDestinationCard(card);
 	}
 
 	public int getDestinationCardDeckSize() {
@@ -306,27 +316,29 @@ public class ModelFacade implements IModelFacade {
 	// User actions
 	public void sendMessage(Message message) {
 		//Make server call
-		//On success, add the message to the message list
+		Result result = serverProxy.sendMessage(models.getSession().getAuthToken(), message);
+		//only add to model on success
+		if(result.isSuccessful()) {
+			models.addMessage(message);
+		}
 	}
 
+	//TODO: implement this in a future phase
 	public List<byu.codemonkeys.tickettoride.shared.model.TrainCard> drawTrainCards() {
 		return null;
 	}
 
 	public List<byu.codemonkeys.tickettoride.shared.model.DestinationCard> drawDestinationCards() {
 		DestinationCardResult result = serverProxy.drawDestinationCards(models.getSession().getAuthToken());
-		return null;
+		return result.getDestinationCards();
 	}
 
-	public void selectTrainCards(List<byu.codemonkeys.tickettoride.shared.model.TrainCard> cards) {
-
-		//Make server call
-		//On server success, add the cards to the model
-		models.addTrainCards(cards);
-	}
+	//TODO: implement this in a future phase
+	public void selectTrainCards(List<byu.codemonkeys.tickettoride.shared.model.TrainCard> cards) {}
 
 	public void selectDestinationCards(List<DestinationCard> cards) {
 		//Make server call
+		DestinationCardResult result = serverProxy.chooseDestinationCards(models.getSession().getAuthToken(), cards.size(), cards);
 		//On server success, add the cards to the model
 
 	}

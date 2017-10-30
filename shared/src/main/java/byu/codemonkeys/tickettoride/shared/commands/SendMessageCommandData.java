@@ -14,5 +14,9 @@ public class SendMessageCommandData extends CommandData {
         this.message = message;
     }
     protected Message message;
+
+    public Message getMessage(){
+        return message;
+    }
 }
 

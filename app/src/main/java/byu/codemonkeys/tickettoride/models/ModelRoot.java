@@ -5,6 +5,7 @@ import java.util.Observable;
 
 import byu.codemonkeys.tickettoride.shared.model.*;
 import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
+import byu.codemonkeys.tickettoride.shared.model.TrainCard;
 
 /**
  * Created by Megan on 10/3/2017.
@@ -106,5 +107,13 @@ public class ModelRoot extends Observable {
 
 	public void addDestinationCards(List<DestinationCard> cards){
 		destinationCards.addAll(cards);
+	}
+
+	public void addDestinationCard(DestinationCard card){
+		destinationCards.add(card);
+	}
+
+	public void addTrainCard(TrainCard card){
+		trainCards.add(card);
 	}
 }

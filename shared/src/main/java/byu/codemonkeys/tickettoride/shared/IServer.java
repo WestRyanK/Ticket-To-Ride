@@ -1,7 +1,7 @@
 package byu.codemonkeys.tickettoride.shared;
 
 
-import java.util.ArrayList;
+import java.util.List;
 
 import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.Message;
@@ -47,6 +47,6 @@ public interface IServer {
     //Phase 2
     HistoryResult updateHistory(String authToken);
     DestinationCardResult drawDestinationCards(String authToken);
-    DestinationCardResult chooseDestinationCards(String authToken, int numSelected, ArrayList<DestinationCard> selected);
+    DestinationCardResult chooseDestinationCards(String authToken, int numSelected, List<DestinationCard> selected);
     Result sendMessage(String authToken, Message message);
 }
