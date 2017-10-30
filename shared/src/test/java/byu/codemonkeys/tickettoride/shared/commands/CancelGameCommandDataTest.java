@@ -15,7 +15,7 @@ public class CancelGameCommandDataTest {
 	
 	@Before
 	public void Init() {
-		commandData = new CancelGameCommandData(gameID);
+		commandData = new CancelGameCommandData();
 	}
 	
 	@Test
@@ -23,10 +23,6 @@ public class CancelGameCommandDataTest {
 		assertEquals("CommandData doesn't have correct commandName",
 					 CommandType.CANCEL_GAME,
 					 commandData.getCommandType());
-		
-		assertEquals("Should have held onto the gameID from construction.",
-					 gameID,
-					 commandData.getGameID());
 	}
 	
 }

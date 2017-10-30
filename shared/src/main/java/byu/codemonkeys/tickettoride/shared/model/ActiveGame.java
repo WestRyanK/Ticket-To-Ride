@@ -38,4 +38,12 @@ public class ActiveGame {
         throw new NoSuchElementException("There is no player with type Self.");
 
     }
+
+    public int getTurn() {
+        return turn;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }

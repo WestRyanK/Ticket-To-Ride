@@ -19,7 +19,7 @@ public class CancelGameCommandTest {
 	
 	@Before
 	public void Init() {
-		command = new CancelGameCommand(gameID);
+		command = new CancelGameCommand();
 		command.setAuthToken("auth-token");
 	}
 	

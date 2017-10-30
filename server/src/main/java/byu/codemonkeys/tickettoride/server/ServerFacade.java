@@ -134,12 +134,14 @@ public class ServerFacade implements IServer {
     }
 
     @Override
-    public PendingGamesResult leavePendingGame(String authToken, String gameID) {
+    public PendingGamesResult leavePendingGame(String authToken) {
         ServerSession session = rootModel.getSession(authToken);
 
         if (session == null) {
             return new PendingGamesResult("Authentication Error");
         }
+
+        String gameID = session.getGameID();
 
         PendingGame game = rootModel.getPendingGame(gameID);
 
@@ -163,12 +165,14 @@ public class ServerFacade implements IServer {
     }
 
     @Override
-    public PendingGamesResult cancelGame(String authToken, String gameID) {
+    public PendingGamesResult cancelGame(String authToken) {
         ServerSession session = rootModel.getSession(authToken);
 
         if (session == null) {
             return new PendingGamesResult("Authentication Error");
         }
+
+        String gameID = session.getGameID();
 
         PendingGame game = rootModel.getPendingGame(gameID);
 
@@ -222,12 +226,14 @@ public class ServerFacade implements IServer {
     }
 
     @Override
-    public StartGameResult startGame(String authToken, String gameID) {
+    public StartGameResult startGame(String authToken) {
         ServerSession session = rootModel.getSession(authToken);
 
         if (session == null) {
             return new StartGameResult("Authentication Error");
         }
+
+        String gameID = session.getGameID();
 
         PendingGame game = rootModel.getPendingGame(gameID);
 
@@ -259,12 +265,12 @@ public class ServerFacade implements IServer {
     }
 
     @Override
-    public DestinationCardResult drawDestinationCards(String authToken, String gameID) {
+    public DestinationCardResult drawDestinationCards(String authToken) {
         return null;
     }
 
     @Override
-    public DestinationCardResult chooseDestinationCards(String authToken, int numSelected, ArrayList<DestinationCard> selected, String gameID) {
+    public DestinationCardResult chooseDestinationCards(String authToken, int numSelected, List<DestinationCard> selected) {
         return null;
     }
 
