@@ -34,7 +34,7 @@ public class CommandManager {
         client.queueCommand(command);
     }
 
-    public List<CommandData>  getCommands(String username, int lastReadCommandPosition) {
+    public List<CommandData> getCommands(String username, int lastReadCommandPosition) {
         ClientCommands client = clients.get(username);
         if (client == null) {
             //TODO: make custom exception
