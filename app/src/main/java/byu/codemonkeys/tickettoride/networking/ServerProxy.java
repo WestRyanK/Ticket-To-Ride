@@ -59,52 +59,51 @@ public class ServerProxy implements IServer {
         return communicator.sendJoinPendingGame(data);
     }
 
-    //TODO(compy-386): fix this to gameID everywhere else
     @Override
-    public PendingGamesResult leavePendingGame(String authToken, String gameID) {
-        LeavePendingGameCommandData data = new LeavePendingGameCommandData(gameID);
+    public PendingGamesResult leavePendingGame(String authToken) {
+        LeavePendingGameCommandData data = new LeavePendingGameCommandData();
         data.setAuthToken(authToken);
         return communicator.sendLeavePendingGame(data);
     }
 
     @Override
-    public StartGameResult startGame(String authToken, String gameID) {
-        StartGameCommandData data = new StartGameCommandData(gameID);
+    public StartGameResult startGame(String authToken) {
+        StartGameCommandData data = new StartGameCommandData();
         data.setAuthToken(authToken);
         return communicator.sendStartGame(data);
     }
 
     @Override
-    public HistoryResult updateHistory(String authToken, String gameID) {
-        UpdateHistoryCommandData data = new UpdateHistoryCommandData(gameID);
+    public HistoryResult updateHistory(String authToken) {
+        UpdateHistoryCommandData data = new UpdateHistoryCommandData();
         data.setAuthToken(authToken);
         return communicator.sendUpdateHistory(data);
     }
 
     @Override
-    public DestinationCardResult drawDestinationCards(String authToken, String gameID) {
-        DrawDestinationCardsCommandData data = new DrawDestinationCardsCommandData(gameID);
+    public DestinationCardResult drawDestinationCards(String authToken) {
+        DrawDestinationCardsCommandData data = new DrawDestinationCardsCommandData();
         data.setAuthToken(authToken);
         return communicator.sendDrawDestinationCards(data);
     }
 
     @Override
-    public DestinationCardResult chooseDestinationCards(String authToken, int numSelected, ArrayList<DestinationCard> selected, String gameID) {
-        ChooseDestinationCardsCommandData data = new ChooseDestinationCardsCommandData(numSelected, selected, gameID);
+    public DestinationCardResult chooseDestinationCards(String authToken, int numSelected, ArrayList<DestinationCard> selected) {
+        ChooseDestinationCardsCommandData data = new ChooseDestinationCardsCommandData(numSelected, selected);
         data.setAuthToken(authToken);
         return communicator.sendChooseDestinationCards(data);
     }
 
     @Override
-    public Result sendMessage(String authToken, String gameID, Message message) {
-        SendMessageCommandData data = new SendMessageCommandData(gameID, message);
+    public Result sendMessage(String authToken, Message message) {
+        SendMessageCommandData data = new SendMessageCommandData(message);
         data.setAuthToken(authToken);
         return communicator.sendSendMessage(data);
     }
 
     @Override
-    public PendingGamesResult cancelGame(String authToken, String gameID) {
-        CancelGameCommandData data = new CancelGameCommandData(gameID);
+    public PendingGamesResult cancelGame(String authToken) {
+        CancelGameCommandData data = new CancelGameCommandData();
         data.setAuthToken(authToken);
         return communicator.sendCancelGame(data);
     }

@@ -10,10 +10,8 @@ import java.util.ArrayList;
 public class DrawDestinationCardsCommandData extends CommandData {
     /**
      * Constructs a new DrawDestinationCardsCommandData.
-     * @param gameID this will be removed in a future merge request. It is unnecessary because the
-     *               auth token will be used to determine the game ID.
      */
-    public DrawDestinationCardsCommandData(String gameID) {
+    public DrawDestinationCardsCommandData() {
         super(CommandType.DRAW_DESTINATION_CARDS);
     }
 }

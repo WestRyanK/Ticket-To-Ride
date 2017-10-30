@@ -3,6 +3,7 @@ package byu.codemonkeys.tickettoride.models;
 import java.util.List;
 import java.util.Map;
 import java.util.Observer;
+import java.util.ArrayList;
 
 import byu.codemonkeys.tickettoride.async.ICallback;
 import byu.codemonkeys.tickettoride.async.ITask;
@@ -15,11 +16,13 @@ import byu.codemonkeys.tickettoride.shared.IServer;
 import byu.codemonkeys.tickettoride.shared.commands.ICommand;
 import byu.codemonkeys.tickettoride.shared.model.*;
 import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
+import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 import byu.codemonkeys.tickettoride.shared.results.StartGameResult;
+import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
 
 /**
  * Created by Megan on 10/3/2017.
@@ -190,8 +193,7 @@ public class ModelFacade implements IModelFacade {
 		//		if (models.getPendingGame() == null) {
 		//			throw new NoPendingGameException();
 		//		} else {
-		PendingGamesResult result = serverProxy.leavePendingGame(models.getSession().getAuthToken(),
-				models.getPendingGame().getID());
+		PendingGamesResult result = serverProxy.leavePendingGame(models.getSession().getAuthToken());
 		if (result.getErrorMessage() == null) {
 			models.setPendingGame(null);
 			//				start(pendingGamesPoller);
@@ -213,19 +215,15 @@ public class ModelFacade implements IModelFacade {
 		this.asyncTask.executeTask(leavePendingGameCommand, leavePendingGameCallback);
 	}
 
+	//TODO: FIX TO WORK WITH NEW POLLER
 	@Override
 	public StartGameResult startGame() {
-		//		if (models.getPendingGame() == null) {
-		//			throw new NoPendingGameException();
-		//		} else {
-		StartGameResult result = serverProxy.startGame(models.getSession().getAuthToken(),
-				models.getPendingGame().getID());
+		//START POLLER?
+		StartGameResult result = serverProxy.startGame(models.getSession().getAuthToken());
 		if (result.getErrorMessage() == null) {
-			models.setGame(result.getGame());
+			//models.setGame(result.getGame());
 		}
 		return result;
-		//			} else
-		//				throw new UnauthorizedException(result.getErrorMessage());
 	}
 
 	@Override
@@ -245,8 +243,7 @@ public class ModelFacade implements IModelFacade {
 		if (models.getPendingGame() == null) {
 			throw new NoPendingGameException();
 		} else {
-			PendingGamesResult result = serverProxy.cancelGame(models.getSession().getAuthToken(),
-					models.getPendingGame().getID());
+			PendingGamesResult result = serverProxy.cancelGame(models.getSession().getAuthToken());
 			if (result.getErrorMessage() == null) {
 				models.setPendingGame(null);
 				models.setPendingGames(result.getGames());
@@ -267,26 +264,19 @@ public class ModelFacade implements IModelFacade {
 		communicator.changeConfiguration(host, port);
 	}
 
-	//	private void start(Poller poller) {
-	//		poller.startPolling();
-	//	}
-	//
-	//	private void stop(Poller poller) {
-	//		poller.stopPolling();
-	//	}
-	//
 	public void setAsyncTask(ITask asyncTask) {
 		this.asyncTask = asyncTask;
 	}
 
 	//The player whose turn it is currently, for the sake of the player to judge when their turn may be coming
-	public UserBase playerTurn() {
-		return null;
+	public Player playerTurn() {
+		int turn = models.getGame().getTurn();
+		return models.getGame().getPlayers().get(turn);
 	}
 
-	//I would rather avoid having this method but I'll have it here for the time being!
-	public List<byu.codemonkeys.tickettoride.shared.model.Player> getPlayerInfo() {
-		return null;
+	//this will return a list of players,
+	public List<Player> getPlayerInfo() {
+		return models.getGame().getPlayers();
 	}
 
 	//Here for the sake of the demonstration, just in case we need them, although these should already be covered in the user actions
@@ -294,6 +284,7 @@ public class ModelFacade implements IModelFacade {
 	} //should this be a list of cards?
 
 	public void removeTrainCard(byu.codemonkeys.tickettoride.shared.model.TrainCard card) {
+
 	}
 
 	; //also this
@@ -302,19 +293,6 @@ public class ModelFacade implements IModelFacade {
 	}
 
 	public void removeDestinationCard(byu.codemonkeys.tickettoride.shared.model.DestinationCard card) {
-	}
-
-	// Public numbers for all to see on the board, player methods include the user
-	public Map<UserBase, Integer> getPlayerTrainCards() {
-		return null;
-	}
-
-	public Map<UserBase, Integer> getPlayerDestinationCards() {
-		return null;
-	}
-
-	public Map<UserBase, Integer> getPlayerPoints() {
-		return null;
 	}
 
 	public int getDestinationCardDeckSize() {
@@ -327,6 +305,8 @@ public class ModelFacade implements IModelFacade {
 
 	// User actions
 	public void sendMessage(Message message) {
+		//Make server call
+		//On success, add the message to the message list
 	}
 
 	public List<byu.codemonkeys.tickettoride.shared.model.TrainCard> drawTrainCards() {
@@ -334,19 +314,29 @@ public class ModelFacade implements IModelFacade {
 	}
 
 	public List<byu.codemonkeys.tickettoride.shared.model.DestinationCard> drawDestinationCards() {
+		DestinationCardResult result = serverProxy.drawDestinationCards(models.getSession().getAuthToken());
 		return null;
 	}
 
 	public void selectTrainCards(List<byu.codemonkeys.tickettoride.shared.model.TrainCard> cards) {
+
+		//Make server call
+		//On server success, add the cards to the model
+		models.addTrainCards(cards);
 	}
 
 	public void selectDestinationCards(List<DestinationCard> cards) {
+		//Make server call
+		//On server success, add the cards to the model
+
 	}
 	//TODO: add claimed route, waiting on map
 
-	public List<Message> updateMessages() {
-		return null;
+	public List<Message> getMessages() {
+		return models.getMessages();
 	}
 
-	public List<GameHistoryEntry> updateGameHistory(){return null;}
+	public List<GameHistoryEntry> getGameHistory(){
+		return models.getGameHistory();
+	}
 }

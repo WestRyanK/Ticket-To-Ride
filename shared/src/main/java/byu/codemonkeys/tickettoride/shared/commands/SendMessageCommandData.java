@@ -9,12 +9,10 @@ import byu.codemonkeys.tickettoride.shared.model.Message;
  */
 
 public class SendMessageCommandData extends CommandData {
-    public SendMessageCommandData(String gameID, Message message) {
+    public SendMessageCommandData(Message message) {
         super(CommandType.SEND_MESSAGE);
         this.message = message;
-        this.gameID = gameID;
     }
     protected Message message;
-    protected String gameID;
 }
 

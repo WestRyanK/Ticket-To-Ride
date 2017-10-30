@@ -11,4 +11,12 @@ public class ActiveGame {
 //    private GameMap map;
     private int turn;
     private List <Player> players;
+
+    public List<Player> getPlayers(){
+        return players;
+    }
+
+    public int getTurn(){
+        return turn;
+    }
 }
