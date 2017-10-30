@@ -75,8 +75,8 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public HistoryResult updateHistory(String authToken, String gameID) {
-        UpdateHistoryCommandData data = new UpdateHistoryCommandData(gameID);
+    public HistoryResult updateHistory(String authToken, int lastSeenCommandIndex) {
+        UpdateHistoryCommandData data = new UpdateHistoryCommandData(lastSeenCommandIndex);
         data.setAuthToken(authToken);
         return communicator.sendUpdateHistory(data);
     }
@@ -96,8 +96,8 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public Result sendMessage(String authToken, String gameID, Message message) {
-        SendMessageCommandData data = new SendMessageCommandData(gameID, message);
+    public Result sendMessage(String authToken, Message message) {
+        SendMessageCommandData data = new SendMessageCommandData(message);
         data.setAuthToken(authToken);
         return communicator.sendSendMessage(data);
     }

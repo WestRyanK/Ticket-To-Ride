@@ -29,4 +29,6 @@ public interface IRootModel {
     public void removePendingGame(String gameID);
 
     public ActiveGame activateGame(String gameID) throws NoSuchElementException;
+
+    public ActiveGame getActiveGame(String gameID);
 }

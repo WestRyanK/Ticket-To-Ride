@@ -1,7 +1,5 @@
 package byu.codemonkeys.tickettoride.shared.commands;
 
-import java.util.ArrayList;
-
 import byu.codemonkeys.tickettoride.shared.model.Message;
 
 /**
@@ -10,12 +8,26 @@ import byu.codemonkeys.tickettoride.shared.model.Message;
  * chat messages other users in the same game have broadcast.
  */
 public class SendMessageCommandData extends CommandData {
-    public SendMessageCommandData(String gameID, Message message) {
+    public SendMessageCommandData(String sender, Message message) {
         super(CommandType.SEND_MESSAGE);
         this.message = message;
-        this.gameID = gameID;
+        this.sender = sender;
     }
+
+    /**
+     * Holds a message without specifying a sender. Used by the client, the server will determine
+     * the sender via the AuthToken.
+     * @param message
+     */
+    public SendMessageCommandData(Message message) {
+        this(null, message);
+    }
+
     protected Message message;
-    protected String gameID;
+
+    /**
+     * The sender's username
+     */
+    protected String sender;
 }
 
