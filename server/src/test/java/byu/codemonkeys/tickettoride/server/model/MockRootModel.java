@@ -131,4 +131,9 @@ public class MockRootModel implements IRootModel {
 
         return null;
     }
+
+    @Override
+    public ActiveGame getActiveGame(String gameID) {
+        return activateGame(gameID);
+    }
 }

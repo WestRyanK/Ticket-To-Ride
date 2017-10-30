@@ -15,8 +15,8 @@ public class CommandManager {
         clients = new HashMap<>();
     }
 
-    public void addClient(String authToken) {
-        clients.put(authToken, new ClientCommands(authToken));
+    public void addClient(String username) {
+        clients.put(username, new ClientCommands(username));
     }
 
     public void queueCommand(CommandData command) {
@@ -25,8 +25,8 @@ public class CommandManager {
         }
     }
 
-    public void queueCommandSingleClient(CommandData command, String authToken) {
-        ClientCommands client = clients.get(authToken);
+    public void queueCommandSingleClient(CommandData command, String username) {
+        ClientCommands client = clients.get(username);
         if (client == null) {
             //TODO: make custom exception
             throw new RuntimeException("CommandManager Error: Client not found");
@@ -34,8 +34,8 @@ public class CommandManager {
         client.queueCommand(command);
     }
 
-    public List<CommandData>  getCommands(String authToken, int lastReadCommandPosition) {
-        ClientCommands client = clients.get(authToken);
+    public List<CommandData>  getCommands(String username, int lastReadCommandPosition) {
+        ClientCommands client = clients.get(username);
         if (client == null) {
             //TODO: make custom exception
             throw new RuntimeException("CommandManager Error: Client not found");

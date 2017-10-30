@@ -30,6 +30,7 @@ public class GamePoller extends Poller{
                 Log.d("POLLER!", "Polled!");
                 try {
                     //c.updatePendingGame();
+                    c.updateHistory();
                     //TODO: Implement updateGame
                 } catch (Exception e) {
                     //TODO(compy-386): handle this error?

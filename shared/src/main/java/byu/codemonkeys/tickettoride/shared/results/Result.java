@@ -21,4 +21,8 @@ public class Result {
 		this.successful = true;
 		this.errorMessage = null;
 	}
+
+	public static Result success() {
+		return new Result();
+	}
 }

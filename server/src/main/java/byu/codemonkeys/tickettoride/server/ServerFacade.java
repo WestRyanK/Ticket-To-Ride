@@ -15,6 +15,8 @@ import byu.codemonkeys.tickettoride.server.model.RootModel;
 import byu.codemonkeys.tickettoride.server.model.ServerSession;
 import byu.codemonkeys.tickettoride.server.model.User;
 import byu.codemonkeys.tickettoride.shared.IServer;
+import byu.codemonkeys.tickettoride.shared.commands.CommandData;
+import byu.codemonkeys.tickettoride.shared.commands.SendMessageCommandData;
 import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
 import byu.codemonkeys.tickettoride.shared.model.Message;
@@ -207,10 +209,7 @@ public class ServerFacade implements IServer {
      */
     private List<GameBase> toGameBaseList(List<PendingGame> pendingGames) {
         List<GameBase> games = new ArrayList<>();
-
-        for (PendingGame pendingGame : pendingGames) {
-            games.add(pendingGame);
-        }
+        games.addAll(pendingGames);
 
         return games;
     }
@@ -258,8 +257,11 @@ public class ServerFacade implements IServer {
     }
 
     @Override
-    public HistoryResult updateHistory(String authToken, String gameID) {
-        return null;
+    public HistoryResult updateHistory(String authToken, int lastSeenCommandIndex) {
+        ServerSession session = rootModel.getSession(authToken);
+        ActiveGame game = rootModel.getActiveGame(session.getGameID());
+        List<CommandData> history = game.getGameHistory(session.getUser().getUsername(), lastSeenCommandIndex);
+        return new HistoryResult(history);
     }
 
     @Override
@@ -273,7 +275,12 @@ public class ServerFacade implements IServer {
     }
 
     @Override
-    public Result sendMessage(String authToken, String gameID, Message message) {
-        return null;
+    public Result sendMessage(String authToken, Message message) {
+        ServerSession session = rootModel.getSession(authToken);
+        String username = session.getUser().getUsername();
+        String gameID = session.getGameID();
+        SendMessageCommandData messageCommand = new SendMessageCommandData(username, message);
+        rootModel.getActiveGame(gameID).broadcastCommand(messageCommand);
+        return Result.success();
     }
 }
