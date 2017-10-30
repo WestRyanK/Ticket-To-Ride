@@ -271,10 +271,17 @@ public class ServerFacade implements IServer {
     @Override
     public Result sendMessage(String authToken, Message message) {
         ServerSession session = rootModel.getSession(authToken);
+        if (session == null) {
+            return Result.failed("Authentication Error");
+        }
         String username = session.getUser().getUsername();
         String gameID = session.getGameID();
         SendMessageCommandData messageCommand = new SendMessageCommandData(username, message);
-        rootModel.getActiveGame(gameID).broadcastCommand(messageCommand);
+        ActiveGame game = rootModel.getActiveGame(gameID);
+        if (game == null) {
+            return Result.failed("Player is not part of an active game");
+        }
+        game.broadcastCommand(messageCommand);
         return Result.success();
     }
 }

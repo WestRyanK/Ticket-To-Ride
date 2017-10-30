@@ -25,4 +25,8 @@ public class Result {
 	public static Result success() {
 		return new Result();
 	}
+
+	public static Result failed(String errorMessage) {
+		return new Result(errorMessage);
+	}
 }
