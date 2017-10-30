@@ -171,6 +171,15 @@ public class RootModel implements IRootModel {
     }
 
     /**
+     * Queries for the ActiveGame specified by the gameID
+     * @param gameID
+     * @return An ActiveGame if one exists or null otherwise
+     */
+    public ActiveGame getActiveGame(String gameID) {
+        return activeGames.get(gameID);
+    }
+
+    /**
      * Changes the pending game with the specified ID to an active game.
      * @param gameID a game ID.
      */

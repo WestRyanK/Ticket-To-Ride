@@ -74,8 +74,8 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public HistoryResult updateHistory(String authToken) {
-        UpdateHistoryCommandData data = new UpdateHistoryCommandData();
+    public HistoryResult updateHistory(String authToken, int lastSeenCommandIndex) {
+        UpdateHistoryCommandData data = new UpdateHistoryCommandData(lastSeenCommandIndex);
         data.setAuthToken(authToken);
         return communicator.sendUpdateHistory(data);
     }

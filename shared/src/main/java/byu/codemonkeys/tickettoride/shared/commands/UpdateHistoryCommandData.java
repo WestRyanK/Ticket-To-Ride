@@ -5,10 +5,28 @@ package byu.codemonkeys.tickettoride.shared.commands;
  * received yet. This class specifies the data needed for the server to construct the command.
  */
 public class UpdateHistoryCommandData extends CommandData {
+
     /**
-     * Constructs a new UpdateHistoryCommandData
+     * index used when no commands have been seen such as at the start of a game
+     */
+    public static final int NO_COMMANDS_SEEN_INDEX = -1;
+
+    /**
+     * Constructs a new UpdateHistoryCommandData to fetch all command history since the last seen command
+     * @param lastSeenCommandIndex the index of the last seen command. -1 indicates that no commands
+     *                             have been seen.
+     */
+    public UpdateHistoryCommandData(int lastSeenCommandIndex) {
+        super(CommandType.UPDATE_HISTORY);
+        this.lastSeenCommandIndex = lastSeenCommandIndex;
+    }
+
+    /**
+     * Constructs a new UpdateHistoryCommandData to fetch all command history
      */
     public UpdateHistoryCommandData() {
-        super(CommandType.UPDATE_HISTORY);
+        this(NO_COMMANDS_SEEN_INDEX);
     }
+
+    protected int lastSeenCommandIndex;
 }

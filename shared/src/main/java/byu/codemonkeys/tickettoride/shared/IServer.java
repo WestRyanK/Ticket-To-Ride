@@ -45,7 +45,7 @@ public interface IServer {
     PendingGameResult getPendingGame(String authToken);
     StartGameResult startGame(String authToken);
     //Phase 2
-    HistoryResult updateHistory(String authToken);
+    HistoryResult updateHistory(String authToken, int lastSeenCommandIndex);
     DestinationCardResult drawDestinationCards(String authToken);
     DestinationCardResult chooseDestinationCards(String authToken, int numSelected, List<DestinationCard> selected);
     Result sendMessage(String authToken, Message message);
