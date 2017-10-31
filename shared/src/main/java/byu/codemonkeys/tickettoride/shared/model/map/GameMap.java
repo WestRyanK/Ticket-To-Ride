@@ -8,8 +8,8 @@ import java.util.Set;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
 
 public class GameMap {
-    private List<City> cities;
-    private List<Route> routes;
+    transient private List<City> cities;
+    transient private List<Route> routes;
 
     public GameMap() {
         loadMapFromResource();
