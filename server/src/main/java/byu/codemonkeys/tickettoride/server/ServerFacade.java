@@ -15,9 +15,11 @@ import byu.codemonkeys.tickettoride.server.model.User;
 import byu.codemonkeys.tickettoride.shared.IServer;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SendMessageCommandData;
+import byu.codemonkeys.tickettoride.shared.commands.SetupGameCommandData;
 import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
 import byu.codemonkeys.tickettoride.shared.model.Message;
+import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
 import byu.codemonkeys.tickettoride.shared.results.HistoryResult;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
@@ -66,7 +68,10 @@ public class ServerFacade implements IServer {
             rootModel.registerNewUser(username, password);
         } catch (AlreadyExistsException e) {
             return new LoginResult("username already exists");
+        } catch (IllegalArgumentException e) {
+            return new LoginResult("username may not be null");
         }
+
         return executeLogin(username);
     }
 
@@ -252,6 +257,12 @@ public class ServerFacade implements IServer {
         }
 
         ActiveGame activeGame = rootModel.activateGame(gameID);
+
+        for (Player player : activeGame.getPlayers()) {
+            byu.codemonkeys.tickettoride.shared.model.ActiveGame preparedGame =
+                    activeGame.prepareForClient(player);
+            activeGame.sendCommand(new SetupGameCommandData(preparedGame), player.getUsername());
+        }
 
         return new StartGameResult(activeGame);
     }

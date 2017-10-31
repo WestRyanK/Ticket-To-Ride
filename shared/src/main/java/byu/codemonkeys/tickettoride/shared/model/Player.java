@@ -6,15 +6,24 @@ public abstract class Player extends UserBase {
         Opponent
     }
 
-    private Type type;
-    private int score;
-    private PlayerColor color;
-    private int numTrainCards;
-    private int numDestinationCards;
+    protected Type type;
+    protected int score;
+    protected PlayerColor color;
+    protected int numTrainCards;
+    protected int numDestinationCards;
+    protected int numTrains;
 
     protected Player(String userName, Type type) {
         super(userName);
         this.type = type;
+        this.numTrains = ActiveGame.MAX_TRAINS;
+    }
+
+    protected Player(String userName, Type type, PlayerColor color) {
+        super(userName);
+        this.type = type;
+        this.color = color;
+        this.numTrains = ActiveGame.MAX_TRAINS;
     }
 
     public Type getType() {
@@ -45,7 +54,19 @@ public abstract class Player extends UserBase {
         return numTrainCards;
     }
 
+    public void addTrainCard(TrainCard card) {
+        ++numTrainCards;
+    }
+
     public int getNumDestinationCards(){
         return numDestinationCards;
+    }
+
+    public int getNumTrains() {
+        return numTrains;
+    }
+
+    public void setNumTrains(int numTrains) {
+        this.numTrains = numTrains;
     }
 }
