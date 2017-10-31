@@ -10,9 +10,6 @@ import byu.codemonkeys.tickettoride.shared.model.*;
 import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.TrainCard;
 
-/**
- * Created by Megan on 10/3/2017.
- */
 public class ModelRoot extends Observable {
 	private static ModelRoot instance;
 	private UserBase user;

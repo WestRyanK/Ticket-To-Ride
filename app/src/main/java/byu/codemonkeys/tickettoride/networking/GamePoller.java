@@ -6,10 +6,6 @@ import java.util.TimerTask;
 
 import byu.codemonkeys.tickettoride.models.ClientFacade;
 
-/**
- * Created by meganrich on 10/18/17.
- */
-
 public class GamePoller extends Poller{
     private static GamePoller instance;
 
