@@ -3,13 +3,13 @@ package byu.codemonkeys.tickettoride.models;
 import java.util.List;
 import java.util.Observable;
 
+import byu.codemonkeys.tickettoride.models.history.ChatManager;
+import byu.codemonkeys.tickettoride.models.history.CommandHistoryEntry;
+import byu.codemonkeys.tickettoride.models.history.HistoryManager;
 import byu.codemonkeys.tickettoride.shared.model.*;
 import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.TrainCard;
 
-/**
- * Created by Megan on 10/3/2017.
- */
 public class ModelRoot extends Observable {
 	private static ModelRoot instance;
 	private UserBase user;
@@ -17,13 +17,15 @@ public class ModelRoot extends Observable {
 	private List<GameBase> pendingGames;
 	private Session session;
 	private ActiveGame game;
-	private List<GameHistoryEntry> gameHistory;
-	private List<Message> messages;
+	private HistoryManager history;
+	private ChatManager chat;
 	private List<byu.codemonkeys.tickettoride.shared.model.TrainCard> trainCards;
 	private List<DestinationCard> destinationCards;
 
 	
 	private ModelRoot() {
+		history = new HistoryManager();
+		chat = new ChatManager();
 	}
 	
 	public static ModelRoot getInstance() {
@@ -81,12 +83,8 @@ public class ModelRoot extends Observable {
 		return this.game;
 	}
 
-	public void addMessage(Message m){
-		messages.add(m);
-	}
-
 	public List<Message> getMessages(){
-		return messages;
+		return chat.getMessages();
 	}
 
 	public void removeTrainCard(byu.codemonkeys.tickettoride.shared.model.TrainCard card){
@@ -97,8 +95,8 @@ public class ModelRoot extends Observable {
 		destinationCards.remove(card);
 	}
 
-	public List<GameHistoryEntry> getGameHistory() {
-		return gameHistory;
+	public List<CommandHistoryEntry> getGameHistory() {
+		return history.getCommandHistory();
 	}
 
 	public void addTrainCards(List<byu.codemonkeys.tickettoride.shared.model.TrainCard> cards){
@@ -115,5 +113,17 @@ public class ModelRoot extends Observable {
 
 	public void addTrainCard(TrainCard card){
 		trainCards.add(card);
+	}
+
+	public int getLastReadCommandIndex() {
+		return history.getLastReadCommandIndex();
+	}
+
+	public void addMessage(Message message) {
+		chat.addMessage(message);
+	}
+
+	public HistoryManager getHistoryManager() {
+		return history;
 	}
 }
