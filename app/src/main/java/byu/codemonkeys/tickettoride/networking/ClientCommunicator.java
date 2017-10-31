@@ -1,15 +1,22 @@
 package byu.codemonkeys.tickettoride.networking;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import byu.codemonkeys.tickettoride.shared.Serializer;
 import byu.codemonkeys.tickettoride.shared.commands.*;
 import byu.codemonkeys.tickettoride.shared.results.*;
+import byu.codemonkeys.tickettoride.utils.HistoryDeserializer;
 
 public class ClientCommunicator {
 	private static ClientCommunicator instance;
@@ -145,8 +152,8 @@ public class ClientCommunicator {
 
 	public HistoryResult sendUpdateHistory(UpdateHistoryCommandData request) {
 		try {
-			return serializer.deserialize(getString(getURL(CommandType.UPDATE_HISTORY), request),
-					HistoryResult.class);
+			String json = getString(getURL(CommandType.UPDATE_HISTORY), request);
+			return HistoryDeserializer.deserializeHistoryResult(json);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return new HistoryResult(e.getMessage());
