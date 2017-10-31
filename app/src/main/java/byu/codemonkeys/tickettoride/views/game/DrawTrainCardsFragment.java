@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import byu.codemonkeys.tickettoride.R;
-import byu.codemonkeys.tickettoride.models.TrainCard;
+import byu.codemonkeys.tickettoride.models.cards.TrainCard;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.DrawTrainCardsContract;
 import byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget;
 

@@ -280,9 +280,8 @@ public class ServerFacade implements IServer {
         if (session == null) {
             return Result.failed("Authentication Error");
         }
-        String username = session.getUser().getUsername();
         String gameID = session.getGameID();
-        SendMessageCommandData messageCommand = new SendMessageCommandData(username, message);
+        SendMessageCommandData messageCommand = new SendMessageCommandData(message);
         ActiveGame game = rootModel.getActiveGame(gameID);
         if (game == null) {
             return Result.failed("Player is not part of an active game");

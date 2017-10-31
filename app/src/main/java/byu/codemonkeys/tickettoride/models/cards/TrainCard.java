@@ -1,6 +1,4 @@
-package byu.codemonkeys.tickettoride.models;
-
-import android.graphics.drawable.Drawable;
+package byu.codemonkeys.tickettoride.models.cards;
 
 /**
  * Created by Ryan on 10/17/2017.

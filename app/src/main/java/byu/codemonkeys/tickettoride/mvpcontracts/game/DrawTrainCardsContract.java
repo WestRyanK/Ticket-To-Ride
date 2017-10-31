@@ -2,7 +2,7 @@ package byu.codemonkeys.tickettoride.mvpcontracts.game;
 
 import java.util.List;
 
-import byu.codemonkeys.tickettoride.models.TrainCard;
+import byu.codemonkeys.tickettoride.models.cards.TrainCard;
 
 /**
  * Created by Ryan on 10/17/2017.

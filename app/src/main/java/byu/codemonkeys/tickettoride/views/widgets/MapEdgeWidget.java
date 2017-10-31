@@ -4,14 +4,12 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import byu.codemonkeys.tickettoride.R;
-import byu.codemonkeys.tickettoride.models.PlayerColorEnum;
+import byu.codemonkeys.tickettoride.models.player.PlayerColorEnum;
 import byu.codemonkeys.tickettoride.views.viewdata.PlayerColorData;
 
 /**

@@ -1,11 +1,9 @@
 package byu.codemonkeys.tickettoride.server;
 
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import byu.codemonkeys.tickettoride.server.model.MockRootModel;
-import byu.codemonkeys.tickettoride.server.model.RootModel;
 
 import static org.junit.Assert.*;
 
