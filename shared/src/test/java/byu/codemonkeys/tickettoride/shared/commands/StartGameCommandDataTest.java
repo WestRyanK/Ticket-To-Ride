@@ -15,7 +15,7 @@ public class StartGameCommandDataTest {
 	
 	@Before
 	public void Init() {
-		commandData = new StartGameCommandData(gameID);
+		commandData = new StartGameCommandData();
 	}
 	
 	@Test
@@ -23,9 +23,5 @@ public class StartGameCommandDataTest {
 		assertEquals("CommandData doesn't have correct commandName",
 					 CommandType.START_GAME,
 					 commandData.getCommandType());
-		
-		assertEquals("Should have held onto the gameID from construction.",
-					 gameID,
-					 commandData.getGameID());
 	}
 }

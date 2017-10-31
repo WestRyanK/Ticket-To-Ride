@@ -8,12 +8,8 @@ import byu.codemonkeys.tickettoride.shared.results.LoginResult;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 
 public class CancelGameCommand extends CancelGameCommandData implements ICommand {
-	public CancelGameCommand(String gameID) {
-		super(gameID);
-	}
-	
 	@Override
 	public Result execute() {
-		return ServerFacade.getInstance().cancelGame(this.getAuthToken(), this.getGameID());
+		return ServerFacade.getInstance().cancelGame(this.getAuthToken());
 	}
 }

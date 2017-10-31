@@ -13,6 +13,7 @@ public class ActiveGame {
 
 //    private GameMap map;
     private int turn;
+
     private List<Player> players;
 
     public ActiveGame(List<Player> players, int turn) {
@@ -35,5 +36,14 @@ public class ActiveGame {
         }
 
         throw new NoSuchElementException("There is no player with type Self.");
+
+    }
+
+    public int getTurn() {
+        return turn;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }

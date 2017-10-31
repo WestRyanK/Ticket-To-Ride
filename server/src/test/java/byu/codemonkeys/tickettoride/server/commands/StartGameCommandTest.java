@@ -18,7 +18,7 @@ public class StartGameCommandTest {
 	
 	@Before
 	public void Init() {
-		command = new StartGameCommand(gameID);
+		command = new StartGameCommand();
 		command.setAuthToken("auth-token");
 	}
 	

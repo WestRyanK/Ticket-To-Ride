@@ -8,12 +8,9 @@ import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 
 public class LeavePendingGameCommand extends LeavePendingGameCommandData implements ICommand {
-	public LeavePendingGameCommand(String gameID) {
-		super(gameID);
-	}
 	
 	@Override
 	public Result execute() {
-		return ServerFacade.getInstance().leavePendingGame(this.getAuthToken(), this.getGameID());
+		return ServerFacade.getInstance().leavePendingGame(this.getAuthToken());
 	}
 }

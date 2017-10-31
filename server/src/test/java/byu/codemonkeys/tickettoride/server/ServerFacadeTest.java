@@ -60,17 +60,14 @@ public class ServerFacadeTest {
 
     @Test
     public void testLeavePendingGame() {
-        assertFalse(ServerFacade.getInstance().leavePendingGame("invalid-auth-token", "game-1-id").isSuccessful());
-        assertFalse(ServerFacade.getInstance().leavePendingGame("auth-token","invalid-game-id").isSuccessful());
-        assertTrue(ServerFacade.getInstance().leavePendingGame("auth-token", "game-1-id").isSuccessful());
+        assertFalse(ServerFacade.getInstance().leavePendingGame("invalid-auth-token").isSuccessful());
+        assertTrue(ServerFacade.getInstance().leavePendingGame("auth-token").isSuccessful());
     }
 
     @Test
     public void testCancelGame() {
-        assertFalse(ServerFacade.getInstance().cancelGame("invalid-auth-token", "game-1-id").isSuccessful());
-        assertFalse(ServerFacade.getInstance().cancelGame("auth-token", "invalid-game-id").isSuccessful());
-        assertFalse(ServerFacade.getInstance().cancelGame("auth-token", "game-2-id").isSuccessful());
-        assertTrue(ServerFacade.getInstance().cancelGame("auth-token", "game-1-id").isSuccessful());
+        assertFalse(ServerFacade.getInstance().cancelGame("invalid-auth-token").isSuccessful());
+        assertTrue(ServerFacade.getInstance().cancelGame("auth-token").isSuccessful());
     }
 
     @Test
@@ -87,10 +84,7 @@ public class ServerFacadeTest {
 
     @Test
     public void testStartGame() {
-        assertFalse(ServerFacade.getInstance().startGame("invalid-auth-token", "game-1-id").isSuccessful());
-        assertFalse(ServerFacade.getInstance().startGame("auth-token", "invalid-game-id").isSuccessful());
-        assertFalse(ServerFacade.getInstance().startGame("auth-token", "full-game-id").isSuccessful());
-        assertFalse(ServerFacade.getInstance().startGame("auth-token", "game-1-id").isSuccessful());
-        assertTrue(ServerFacade.getInstance().startGame("auth-token-0", "full-game-id").isSuccessful());
+        assertFalse(ServerFacade.getInstance().startGame("invalid-auth-token").isSuccessful());
+        assertTrue(ServerFacade.getInstance().startGame("auth-token").isSuccessful());
     }
 }

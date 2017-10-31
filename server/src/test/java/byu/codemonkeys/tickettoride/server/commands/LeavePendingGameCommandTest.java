@@ -18,7 +18,7 @@ public class LeavePendingGameCommandTest {
 	
 	@Before
 	public void Init() {
-		command = new LeavePendingGameCommand(gameID);
+		command = new LeavePendingGameCommand();
 		command.setAuthToken("auth-token");
 	}
 	

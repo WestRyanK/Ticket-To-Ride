@@ -3,9 +3,9 @@ package byu.codemonkeys.tickettoride.models;
 import java.util.List;
 import java.util.Observable;
 
-import byu.codemonkeys.tickettoride.shared.model.Session;
-import byu.codemonkeys.tickettoride.shared.model.GameBase;
-import byu.codemonkeys.tickettoride.shared.model.UserBase;
+import byu.codemonkeys.tickettoride.shared.model.*;
+import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
+import byu.codemonkeys.tickettoride.shared.model.TrainCard;
 
 /**
  * Created by Megan on 10/3/2017.
@@ -16,7 +16,12 @@ public class ModelRoot extends Observable {
 	private GameBase pendingGame;
 	private List<GameBase> pendingGames;
 	private Session session;
-	private GameBase game;
+	private ActiveGame game;
+	private List<GameHistoryEntry> gameHistory;
+	private List<Message> messages;
+	private List<byu.codemonkeys.tickettoride.shared.model.TrainCard> trainCards;
+	private List<DestinationCard> destinationCards;
+
 	
 	private ModelRoot() {
 	}
@@ -68,12 +73,47 @@ public class ModelRoot extends Observable {
 		this.session = session;
 	}
 	
-	public void setGame(GameBase game) {
+	public void setGame(ActiveGame game) {
 		this.game = game;
 	}
 	
-	public GameBase getGame() {
+	public ActiveGame getGame() {
 		return this.game;
 	}
-	
+
+	public void addMessage(Message m){
+		messages.add(m);
+	}
+
+	public List<Message> getMessages(){
+		return messages;
+	}
+
+	public void removeTrainCard(byu.codemonkeys.tickettoride.shared.model.TrainCard card){
+		trainCards.remove(card);
+	}
+
+	public void removeDestinationCard(DestinationCard card) {
+		destinationCards.remove(card);
+	}
+
+	public List<GameHistoryEntry> getGameHistory() {
+		return gameHistory;
+	}
+
+	public void addTrainCards(List<byu.codemonkeys.tickettoride.shared.model.TrainCard> cards){
+		trainCards.addAll(cards);
+	}
+
+	public void addDestinationCards(List<DestinationCard> cards){
+		destinationCards.addAll(cards);
+	}
+
+	public void addDestinationCard(DestinationCard card){
+		destinationCards.add(card);
+	}
+
+	public void addTrainCard(TrainCard card){
+		trainCards.add(card);
+	}
 }

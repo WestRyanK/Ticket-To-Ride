@@ -23,11 +23,14 @@ public class SendMessageCommandData extends CommandData {
         this(null, message);
     }
 
-    protected Message message;
-
+    public Message getMessage(){
+        return message;
+    }
+    
     /**
      * The sender's username
      */
     protected String sender;
+    protected Message message;
 }
 

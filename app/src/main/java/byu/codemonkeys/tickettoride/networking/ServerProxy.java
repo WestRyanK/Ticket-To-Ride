@@ -1,6 +1,6 @@
 package byu.codemonkeys.tickettoride.networking;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import byu.codemonkeys.tickettoride.shared.IServer;
 import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
@@ -59,17 +59,16 @@ public class ServerProxy implements IServer {
         return communicator.sendJoinPendingGame(data);
     }
 
-    //TODO(compy-386): fix this to gameID everywhere else
     @Override
-    public PendingGamesResult leavePendingGame(String authToken, String gameID) {
-        LeavePendingGameCommandData data = new LeavePendingGameCommandData(gameID);
+    public PendingGamesResult leavePendingGame(String authToken) {
+        LeavePendingGameCommandData data = new LeavePendingGameCommandData();
         data.setAuthToken(authToken);
         return communicator.sendLeavePendingGame(data);
     }
 
     @Override
-    public StartGameResult startGame(String authToken, String gameID) {
-        StartGameCommandData data = new StartGameCommandData(gameID);
+    public StartGameResult startGame(String authToken) {
+        StartGameCommandData data = new StartGameCommandData();
         data.setAuthToken(authToken);
         return communicator.sendStartGame(data);
     }
@@ -82,15 +81,15 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public DestinationCardResult drawDestinationCards(String authToken, String gameID) {
-        DrawDestinationCardsCommandData data = new DrawDestinationCardsCommandData(gameID);
+    public DestinationCardResult drawDestinationCards(String authToken) {
+        DrawDestinationCardsCommandData data = new DrawDestinationCardsCommandData();
         data.setAuthToken(authToken);
         return communicator.sendDrawDestinationCards(data);
     }
 
     @Override
-    public DestinationCardResult chooseDestinationCards(String authToken, int numSelected, ArrayList<DestinationCard> selected, String gameID) {
-        ChooseDestinationCardsCommandData data = new ChooseDestinationCardsCommandData(numSelected, selected, gameID);
+    public DestinationCardResult chooseDestinationCards(String authToken, int numSelected, List<DestinationCard> selected) {
+        ChooseDestinationCardsCommandData data = new ChooseDestinationCardsCommandData(numSelected, selected);
         data.setAuthToken(authToken);
         return communicator.sendChooseDestinationCards(data);
     }
@@ -103,8 +102,8 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public PendingGamesResult cancelGame(String authToken, String gameID) {
-        CancelGameCommandData data = new CancelGameCommandData(gameID);
+    public PendingGamesResult cancelGame(String authToken) {
+        CancelGameCommandData data = new CancelGameCommandData();
         data.setAuthToken(authToken);
         return communicator.sendCancelGame(data);
     }
