@@ -1,20 +1,36 @@
 package byu.codemonkeys.tickettoride.shared.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import byu.codemonkeys.tickettoride.shared.model.map.GameMap;
 
 /**
  * We need to decide whether ActiveGame should extend GameBase. As it stands, ActiveGame doesn't
  * need any of the fields of GameBase except gameID. What we might want to do is move all the other
  * fields of GameBase to a shared PendingGame class.
  */
-public class ActiveGame {
+public class ActiveGame extends GameBase {
     public static final int MAX_TRAINS = 45;
 
-//    private GameMap map;
-    private int turn;
+    protected GameMap map;
+    protected int turn;
+    protected List<Player> players;
+    protected Deck deck;
 
-    private List<Player> players;
+    public ActiveGame(GameBase game) {
+        map = new GameMap();
+        turn = 0;
+        deck = new Deck();
+
+        // Copy GameBase fields
+        this.gameID = game.getID();
+        this.gameName = game.getName();
+        this.gameOwner = game.getOwner();
+        this.gameUsers = game.getUsers();
+        this.started = true;
+    }
 
     public ActiveGame(List<Player> players, int turn) {
         this.players = players;
@@ -36,7 +52,10 @@ public class ActiveGame {
         }
 
         throw new NoSuchElementException("There is no player with type Self.");
+    }
 
+    public GameMap getMap() {
+        return map;
     }
 
     public int getTurn() {

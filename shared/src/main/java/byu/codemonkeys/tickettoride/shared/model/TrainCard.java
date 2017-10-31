@@ -1,9 +1,5 @@
 package byu.codemonkeys.tickettoride.shared.model;
 
-/**
- * Created by meganrich on 10/18/17.
- */
-
 public class TrainCard {
     public static enum Type {
         Box,
@@ -21,5 +17,9 @@ public class TrainCard {
 
     public TrainCard(Type type) {
         this.type = type;
+    }
+
+    public Type getType() {
+        return type;
     }
 }

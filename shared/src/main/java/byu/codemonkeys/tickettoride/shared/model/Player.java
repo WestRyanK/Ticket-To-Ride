@@ -17,6 +17,12 @@ public abstract class Player extends UserBase {
         this.type = type;
     }
 
+    protected Player(String userName, Type type, PlayerColor color) {
+        super(userName);
+        this.type = type;
+        this.color = color;
+    }
+
     public Type getType() {
         return type;
     }
@@ -43,6 +49,10 @@ public abstract class Player extends UserBase {
 
     public int getNumTrainCards(){
         return numTrainCards;
+    }
+
+    public void addTrainCard(TrainCard card) {
+        ++numTrainCards;
     }
 
     public int getNumDestinationCards(){
