@@ -11,9 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import byu.codemonkeys.tickettoride.R;
-import byu.codemonkeys.tickettoride.models.Player;
-import byu.codemonkeys.tickettoride.models.PlayerColorEnum;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.PlayerStatsContract;
+import byu.codemonkeys.tickettoride.shared.model.Player;
+import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
+import byu.codemonkeys.tickettoride.shared.model.Self;
 import byu.codemonkeys.tickettoride.views.widgets.PlayerStatsWidget;
 
 /**
@@ -37,13 +38,13 @@ public class PlayersStatsFragment extends Fragment implements PlayerStatsContrac
 		View view = inflater.inflate(R.layout.fragment_players_stats, container, false);
 		getViews(view);
 		List<Player> players = new ArrayList<>();
-		players.add(new Player("dcorey3", PlayerColorEnum.Blue, 125, 35, 22, 4));
-		players.add(new Player("westryan", PlayerColorEnum.Red, 77, 43, 3, 12));
-		players.add(new Player("richmeg", PlayerColorEnum.Green, 188, 21, 53, 143));
-		players.add(new Player("jacobeast", PlayerColorEnum.Yellow, 188, 21, 53, 143));
-		players.add(new Player("aang314", PlayerColorEnum.Black, 188, 21, 53, 143));
-		setPlayerStats(players);
-		setCurrentTurn(3);
+//		players.add(new Self("dcorey3", PlayerColor.Blue, 125, 35, 22, 4));
+//		players.add(new Self("westryan", PlayerColor.Red, 77, 43, 3, 12));
+//		players.add(new Self("richmeg", PlayerColor.Green, 188, 21, 53, 143));
+//		players.add(new Self("jacobeast", PlayerColor.Yellow, 188, 21, 53, 143));
+//		players.add(new Self("aang314", PlayerColor.Black, 188, 21, 53, 143));
+//		setPlayerStats(players);
+//		setCurrentTurn(3);
 		return view;
 	}
 	
@@ -69,12 +70,12 @@ public class PlayersStatsFragment extends Fragment implements PlayerStatsContrac
 			PlayerStatsWidget widget = playerStatsWidgets.get(i);
 			if (i < players.size()) {
 				widget.setVisibility(View.VISIBLE);
-				widget.setPlayerColor(players.get(i).getPlayerColor());
+				widget.setPlayerColor(players.get(i).getColor());
 				widget.setPlayerName(players.get(i).getUsername());
 				widget.setPlayerScore(players.get(i).getScore());
-				widget.setPlayerTrainCards(players.get(i).getTrainCardsCount());
-				widget.setPlayerTrains(players.get(i).getTrainsCount());
-				widget.setPlayerDestinationCards(players.get(i).getDestinationCardsCount());
+//				widget.setPlayerTrainCards(players.get(i).getTrainCardsCount());
+//				widget.setPlayerTrains(players.get(i).getTrainsCount());
+//				widget.setPlayerDestinationCards(players.get(i).getDestinationCardsCount());
 			} else {
 				widget.setVisibility(View.GONE);
 			}

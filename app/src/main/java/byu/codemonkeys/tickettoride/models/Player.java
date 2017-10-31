@@ -1,19 +1,21 @@
 package byu.codemonkeys.tickettoride.models;
 
+import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
+
 /**
  * Created by Ryan on 10/3/2017.
  */
 
 public class Player {
 	private String username;
-	private PlayerColorEnum playerColor;
+	private PlayerColor playerColor;
 	private int score;
 	private int trainsCount;
 	private int trainCardsCount;
 	private int destinationCardsCount;
 	
 	public Player(String username,
-				  PlayerColorEnum playerColor,
+				  PlayerColor playerColor,
 				  int score,
 				  int trainsCount,
 				  int trainCardsCount,
@@ -34,7 +36,7 @@ public class Player {
 		this.username = username;
 	}
 	
-	public PlayerColorEnum getPlayerColor() {
+	public PlayerColor getPlayerColor() {
 		return playerColor;
 	}
 	

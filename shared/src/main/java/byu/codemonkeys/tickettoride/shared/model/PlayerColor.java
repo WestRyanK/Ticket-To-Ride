@@ -5,5 +5,5 @@ package byu.codemonkeys.tickettoride.shared.model;
  */
 
 public enum PlayerColor {
-    BLUE, RED, GREEN, YELLOW, BLACK
+    None, Blue, Red, Green, Yellow, Black
 }
