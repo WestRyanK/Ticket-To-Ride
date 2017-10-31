@@ -68,7 +68,10 @@ public class ServerFacade implements IServer {
             rootModel.registerNewUser(username, password);
         } catch (AlreadyExistsException e) {
             return new LoginResult("username already exists");
+        } catch (IllegalArgumentException e) {
+            return new LoginResult("username may not be null");
         }
+
         return executeLogin(username);
     }
 

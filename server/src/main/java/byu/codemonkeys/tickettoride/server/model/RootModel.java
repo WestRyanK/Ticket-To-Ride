@@ -95,7 +95,12 @@ public class RootModel implements IRootModel {
      * @param password secret used to authenticate the user upon login.
      */
     public void registerNewUser(String username, String password) {
+        if (username == null) {
+            throw new IllegalArgumentException();
+        }
+
         if (users.containsKey(username)) {
+            System.out.println(username + "already exists");
             throw new AlreadyExistsException();
         }
         User user = new User(username, password);
