@@ -16,7 +16,7 @@ public class LeavePendingGameCommandDataTest {
 	
 	@Before
 	public void Init() {
-		commandData = new LeavePendingGameCommandData(gameID);
+		commandData = new LeavePendingGameCommandData();
 	}
 	
 	@Test
@@ -24,9 +24,5 @@ public class LeavePendingGameCommandDataTest {
 		assertEquals("CommandData doesn't have correct commandName",
 					 CommandType.LEAVE_PENDING_GAME,
 					 commandData.getCommandType());
-		
-		assertEquals("Should have held onto the gameID from construction.",
-					 gameID,
-					 commandData.getGameID());
 	}
 }

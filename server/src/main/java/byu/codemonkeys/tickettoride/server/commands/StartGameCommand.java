@@ -8,12 +8,8 @@ import byu.codemonkeys.tickettoride.shared.results.StartGameResult;
 
 public class StartGameCommand extends StartGameCommandData implements ICommand {
 	
-	public StartGameCommand(String gameID) {
-		super(gameID);
-	}
-	
 	@Override
 	public Result execute() {
-		return ServerFacade.getInstance().startGame(this.getAuthToken(), this.getGameID());
+		return ServerFacade.getInstance().startGame(this.getAuthToken());
 	}
 }

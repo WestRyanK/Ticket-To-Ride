@@ -21,4 +21,12 @@ public class Result {
 		this.successful = true;
 		this.errorMessage = null;
 	}
+
+	public static Result success() {
+		return new Result();
+	}
+
+	public static Result failed(String errorMessage) {
+		return new Result(errorMessage);
+	}
 }

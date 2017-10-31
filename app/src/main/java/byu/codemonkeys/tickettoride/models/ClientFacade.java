@@ -6,7 +6,12 @@ import java.util.List;
 import byu.codemonkeys.tickettoride.networking.ServerProxy;
 import byu.codemonkeys.tickettoride.shared.IClient;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
+import byu.codemonkeys.tickettoride.shared.commands.CommandType;
 import byu.codemonkeys.tickettoride.shared.commands.ICommand;
+import byu.codemonkeys.tickettoride.shared.commands.SendMessageCommandData;
+import byu.codemonkeys.tickettoride.shared.commands.SetupGameCommandData;
+import byu.codemonkeys.tickettoride.shared.commands.ChooseDestinationCardsCommandData;
+import byu.codemonkeys.tickettoride.shared.commands.UpdateHistoryCommandData;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
@@ -64,13 +69,25 @@ public class ClientFacade implements IClient {
     public void updateHistory() throws Exception {
         ModelRoot modelRoot = ModelRoot.getInstance();
         String authToken = modelRoot.getSession().getAuthToken();
-        String gameID = modelRoot.getGame().getID();
-        HistoryResult result = ServerProxy.getInstance().updateHistory(authToken, gameID);
+        //TODO: Track the last seen and executed command and pass into updateHistory
+        HistoryResult result = ServerProxy.getInstance().updateHistory(authToken, UpdateHistoryCommandData.NO_COMMANDS_SEEN_INDEX);
         List<CommandData> commands = result.getHistory();
-        for(CommandData command: commands){
-            switch(command.getCommandType()){
-                //TODO:do appropriate action given the command type
-            }
-        }
+
+        executeCommands(commands);
     }
+
+    private void executeCommands(List<CommandData> commands) {
+		ModelRoot modelRoot = ModelRoot.getInstance();
+
+		for(CommandData command: commands){
+			if(command instanceof SendMessageCommandData){
+				SendMessageCommandData comm = (SendMessageCommandData)command;
+				modelRoot.addMessage(comm.getMessage());
+			} else if (command instanceof SetupGameCommandData){
+				// TODO: add game information in the model root
+			} else if (command instanceof ChooseDestinationCardsCommandData){
+				// TODO: update number of destination cards for player
+			}
+		}
+	}
 }

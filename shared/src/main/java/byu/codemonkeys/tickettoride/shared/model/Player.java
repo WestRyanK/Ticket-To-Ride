@@ -9,10 +9,16 @@ public abstract class Player extends UserBase {
     private Type type;
     private int score;
     private PlayerColor color;
+    private int numTrainCards;
+    private int numDestinationCards;
 
     protected Player(String userName, Type type) {
         super(userName);
         this.type = type;
+    }
+
+    public Type getType() {
+        return type;
     }
 
     public int getScore() {
@@ -33,5 +39,13 @@ public abstract class Player extends UserBase {
 
     public void setColor(PlayerColor color) {
         this.color = color;
+    }
+
+    public int getNumTrainCards(){
+        return numTrainCards;
+    }
+
+    public int getNumDestinationCards(){
+        return numDestinationCards;
     }
 }

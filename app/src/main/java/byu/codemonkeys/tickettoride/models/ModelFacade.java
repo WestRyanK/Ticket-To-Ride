@@ -3,28 +3,26 @@ package byu.codemonkeys.tickettoride.models;
 import java.util.List;
 import java.util.Map;
 import java.util.Observer;
+import java.util.ArrayList;
 
 import byu.codemonkeys.tickettoride.async.ICallback;
 import byu.codemonkeys.tickettoride.async.ITask;
 import byu.codemonkeys.tickettoride.exceptions.NoPendingGameException;
 import byu.codemonkeys.tickettoride.exceptions.UnauthorizedException;
 import byu.codemonkeys.tickettoride.networking.ClientCommunicator;
-import byu.codemonkeys.tickettoride.networking.PendingGamesPoller;
 import byu.codemonkeys.tickettoride.networking.ServerProxy;
 import byu.codemonkeys.tickettoride.shared.IServer;
 import byu.codemonkeys.tickettoride.shared.commands.ICommand;
 import byu.codemonkeys.tickettoride.shared.model.*;
 import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
+import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 import byu.codemonkeys.tickettoride.shared.results.StartGameResult;
+import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
 
-/**
- * Created by Megan on 10/3/2017.
- */
-//TODO(compy-386): implement poller for game starting, get API endpoint for it
 public class ModelFacade implements IModelFacade {
 	private static IModelFacade instance;
 	private IServer serverProxy = ServerProxy.getInstance();
@@ -59,10 +57,9 @@ public class ModelFacade implements IModelFacade {
 	@Override
 	public LoginResult login(String username, String password) {
 		LoginResult result = serverProxy.login(username, password);
-		if (result.getErrorMessage() == null) {
+		if (result.isSuccessful()) {
 			models.setSession(result.getUserSession());
 			models.setUser(new UserBase(username));
-			//			start(pendingGamesPoller);
 		}
 		return result;
 	}
@@ -84,10 +81,8 @@ public class ModelFacade implements IModelFacade {
 	@Override
 	public void logout() throws UnauthorizedException {
 		Result result = serverProxy.logout(models.getSession().getAuthToken());
-		if (result.getErrorMessage() == null) {
-			//clear the models since they are logging out
-			//			stop(pendingGamesPoller);
-			models.getInstance().clear();
+		if (result.isSuccessful()) {
+			models.clear();
 		} else
 			throw new UnauthorizedException(result.getErrorMessage());
 	}
@@ -95,10 +90,9 @@ public class ModelFacade implements IModelFacade {
 	@Override
 	public LoginResult register(String username, String password) {
 		LoginResult result = serverProxy.register(username, password);
-		if (result.getErrorMessage() == null) {
+		if (result.isSuccessful()) {
 			models.setSession(result.getUserSession());
 			models.setUser(new UserBase(username));
-			//			start(pendingGamesPoller);
 		}
 		return result;
 	}
@@ -130,10 +124,8 @@ public class ModelFacade implements IModelFacade {
 	public PendingGameResult createGame(String gameName) {
 		PendingGameResult result = serverProxy.createGame(models.getSession().getAuthToken(),
 				gameName);
-		if (result.getErrorMessage() == null) {
+		if (result.isSuccessful()) {
 			models.setPendingGame(result.getGame());
-			//			stop(pendingGamesPoller);
-			//TODO(compy-386): Poll for game started, waiting so no longer have to get all pending games
 		}
 		return result;
 	}
@@ -163,14 +155,11 @@ public class ModelFacade implements IModelFacade {
 
 	@Override
 	public PendingGameResult joinPendingGame(GameBase game) {
-		//		if (models.getPendingGame() == null) {
-		PendingGameResult result = serverProxy.joinPendingGame(models.getSession().getAuthToken(),
-				game.getID());
-		if (result.getErrorMessage() == null) {
+		PendingGameResult result = serverProxy.joinPendingGame(models.getSession().getAuthToken(), game.getID());
+		if (result.isSuccessful()) {
 			models.setPendingGame(result.getGame());
-			//			start(pendingGamesPoller);
+
 		}
-		//		}
 		return result;
 	}
 
@@ -188,18 +177,12 @@ public class ModelFacade implements IModelFacade {
 
 	@Override
 	public PendingGamesResult leavePendingGame() {
-		//		if (models.getPendingGame() == null) {
-		//			throw new NoPendingGameException();
-		//		} else {
-		PendingGamesResult result = serverProxy.leavePendingGame(models.getSession().getAuthToken(),
-				models.getPendingGame().getID());
-		if (result.getErrorMessage() == null) {
+		PendingGamesResult result = serverProxy.leavePendingGame(models.getSession().getAuthToken());
+		if (result.isSuccessful()) {
 			models.setPendingGame(null);
-			//				start(pendingGamesPoller);
+
 		}
 		return result;
-		//			} else
-		//				throw new UnauthorizedException(result.getErrorMessage());
 	}
 
 	@Override
@@ -216,17 +199,7 @@ public class ModelFacade implements IModelFacade {
 
 	@Override
 	public StartGameResult startGame() {
-		//		if (models.getPendingGame() == null) {
-		//			throw new NoPendingGameException();
-		//		} else {
-		StartGameResult result = serverProxy.startGame(models.getSession().getAuthToken(),
-				models.getPendingGame().getID());
-		if (result.getErrorMessage() == null) {
-			models.setGame(result.getGame());
-		}
-		return result;
-		//			} else
-		//				throw new UnauthorizedException(result.getErrorMessage());
+		return serverProxy.startGame(models.getSession().getAuthToken());
 	}
 
 	@Override
@@ -246,12 +219,10 @@ public class ModelFacade implements IModelFacade {
 		if (models.getPendingGame() == null) {
 			throw new NoPendingGameException();
 		} else {
-			PendingGamesResult result = serverProxy.cancelGame(models.getSession().getAuthToken(),
-					models.getPendingGame().getID());
-			if (result.getErrorMessage() == null) {
+			PendingGamesResult result = serverProxy.cancelGame(models.getSession().getAuthToken());
+			if (result.isSuccessful()) {
 				models.setPendingGame(null);
 				models.setPendingGames(result.getGames());
-				//				start(pendingGamesPoller);
 			}
 		}
 	}
@@ -260,62 +231,50 @@ public class ModelFacade implements IModelFacade {
 	public Session getSession() {
 		return models.getSession();
 	}
-
-
-	//TODO(compy-386): Add error checking for invalid host and port inputs?
+	
 	@Override
 	public void changeConnectionConfiguration(String host, int port) {
 		communicator.changeConfiguration(host, port);
 	}
 
-	//	private void start(Poller poller) {
-	//		poller.startPolling();
-	//	}
-	//
-	//	private void stop(Poller poller) {
-	//		poller.stopPolling();
-	//	}
-	//
 	public void setAsyncTask(ITask asyncTask) {
 		this.asyncTask = asyncTask;
 	}
 
 	//The player whose turn it is currently, for the sake of the player to judge when their turn may be coming
-	public UserBase playerTurn() {
-		return null;
+	public Player playerTurn() {
+		int turn = models.getGame().getTurn();
+		return models.getGame().getPlayers().get(turn);
 	}
 
-	//I would rather avoid having this method but I'll have it here for the time being!
-	public List<byu.codemonkeys.tickettoride.shared.model.Player> getPlayerInfo() {
-		return null;
+	//this will return a list of players,
+	public List<Player> getPlayerInfo() {
+		return models.getGame().getPlayers();
 	}
 
 	//Here for the sake of the demonstration, just in case we need them, although these should already be covered in the user actions
 	public void addTrainCard(byu.codemonkeys.tickettoride.shared.model.TrainCard card) {
-	} //should this be a list of cards?
-
-	public void removeTrainCard(byu.codemonkeys.tickettoride.shared.model.TrainCard card) {
+		models.addTrainCard(card);
 	}
 
-	; //also this
+	public void addTrainCards(List<byu.codemonkeys.tickettoride.shared.model.TrainCard> cards){
+		models.addTrainCards(cards);
+	}
+
+	public void removeTrainCard(byu.codemonkeys.tickettoride.shared.model.TrainCard card) {
+		models.removeTrainCard(card);
+	}
 
 	public void addDestinationCard(byu.codemonkeys.tickettoride.shared.model.DestinationCard card) {
+		models.addDestinationCard(card);
+	}
+
+	public void addDestinationCards(List<byu.codemonkeys.tickettoride.shared.model.DestinationCard> cards){
+		models.addDestinationCards(cards);
 	}
 
 	public void removeDestinationCard(byu.codemonkeys.tickettoride.shared.model.DestinationCard card) {
-	}
-
-	// Public numbers for all to see on the board, player methods include the user
-	public Map<UserBase, Integer> getPlayerTrainCards() {
-		return null;
-	}
-
-	public Map<UserBase, Integer> getPlayerDestinationCards() {
-		return null;
-	}
-
-	public Map<UserBase, Integer> getPlayerPoints() {
-		return null;
+		models.removeDestinationCard(card);
 	}
 
 	public int getDestinationCardDeckSize() {
@@ -327,27 +286,36 @@ public class ModelFacade implements IModelFacade {
 	}
 
 	// User actions
-	public void sendMessage(Message message) {
+	public Result sendMessage(Message message) {
+		return serverProxy.sendMessage(models.getSession().getAuthToken(), message);
 	}
 
+	//TODO: implement this in a future phase
 	public List<byu.codemonkeys.tickettoride.shared.model.TrainCard> drawTrainCards() {
 		return null;
 	}
 
 	public List<byu.codemonkeys.tickettoride.shared.model.DestinationCard> drawDestinationCards() {
-		return null;
+		DestinationCardResult result = serverProxy.drawDestinationCards(models.getSession().getAuthToken());
+		return result.getDestinationCards();
 	}
 
-	public void selectTrainCards(List<byu.codemonkeys.tickettoride.shared.model.TrainCard> cards) {
-	}
+	//TODO: implement this in a future phase
+	public void selectTrainCards(List<byu.codemonkeys.tickettoride.shared.model.TrainCard> cards) {}
 
 	public void selectDestinationCards(List<DestinationCard> cards) {
+		//Make server call
+		DestinationCardResult result = serverProxy.chooseDestinationCards(models.getSession().getAuthToken(), cards.size(), cards);
+		//On server success, add the cards to the model
+
 	}
 	//TODO: add claimed route, waiting on map
 
-	public List<Message> updateMessages() {
-		return null;
+	public List<Message> getMessages() {
+		return models.getMessages();
 	}
 
-	public List<GameHistoryEntry> updateGameHistory(){return null;}
+	public List<GameHistoryEntry> getGameHistory(){
+		return models.getGameHistory();
+	}
 }

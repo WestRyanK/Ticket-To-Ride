@@ -79,6 +79,10 @@ class CommandHandler implements HttpHandler {
                 return serializer.deserialize(requestBody, RegisterCommand.class);
             case CommandType.START_GAME:
                 return serializer.deserialize(requestBody, StartGameCommand.class);
+            case CommandType.SEND_MESSAGE:
+                return serializer.deserialize(requestBody, SendMessageCommand.class);
+            case CommandType.UPDATE_HISTORY:
+                return serializer.deserialize(requestBody, UpdateHistoryCommand.class);
             default:
                 throw new InvalidCommandException();
         }

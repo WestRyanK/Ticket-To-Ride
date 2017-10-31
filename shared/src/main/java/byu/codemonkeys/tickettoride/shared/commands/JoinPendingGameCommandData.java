@@ -1,5 +1,8 @@
 package byu.codemonkeys.tickettoride.shared.commands;
 
+/**
+ * The client sends a JoinPendingGameCommand to the server to join a pending game.
+ */
 public class JoinPendingGameCommandData extends CommandData {
 	private String gameID;
 	

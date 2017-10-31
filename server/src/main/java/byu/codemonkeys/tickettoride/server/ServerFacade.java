@@ -13,6 +13,8 @@ import byu.codemonkeys.tickettoride.server.model.RootModel;
 import byu.codemonkeys.tickettoride.server.model.ServerSession;
 import byu.codemonkeys.tickettoride.server.model.User;
 import byu.codemonkeys.tickettoride.shared.IServer;
+import byu.codemonkeys.tickettoride.shared.commands.CommandData;
+import byu.codemonkeys.tickettoride.shared.commands.SendMessageCommandData;
 import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
 import byu.codemonkeys.tickettoride.shared.model.Message;
@@ -30,7 +32,7 @@ public class ServerFacade implements IServer {
     private IRootModel rootModel;
 
     private ServerFacade() {
-        rootModel = RootModel.getInstance();
+        this(RootModel.getInstance());
     }
 
     private ServerFacade(IRootModel model) {
@@ -132,12 +134,14 @@ public class ServerFacade implements IServer {
     }
 
     @Override
-    public PendingGamesResult leavePendingGame(String authToken, String gameID) {
+    public PendingGamesResult leavePendingGame(String authToken) {
         ServerSession session = rootModel.getSession(authToken);
 
         if (session == null) {
             return new PendingGamesResult("Authentication Error");
         }
+
+        String gameID = session.getGameID();
 
         PendingGame game = rootModel.getPendingGame(gameID);
 
@@ -161,12 +165,14 @@ public class ServerFacade implements IServer {
     }
 
     @Override
-    public PendingGamesResult cancelGame(String authToken, String gameID) {
+    public PendingGamesResult cancelGame(String authToken) {
         ServerSession session = rootModel.getSession(authToken);
 
         if (session == null) {
             return new PendingGamesResult("Authentication Error");
         }
+
+        String gameID = session.getGameID();
 
         PendingGame game = rootModel.getPendingGame(gameID);
 
@@ -201,10 +207,7 @@ public class ServerFacade implements IServer {
      */
     private List<GameBase> toGameBaseList(List<PendingGame> pendingGames) {
         List<GameBase> games = new ArrayList<>();
-
-        for (PendingGame pendingGame : pendingGames) {
-            games.add(pendingGame);
-        }
+        games.addAll(pendingGames);
 
         return games;
     }
@@ -223,12 +226,14 @@ public class ServerFacade implements IServer {
     }
 
     @Override
-    public StartGameResult startGame(String authToken, String gameID) {
+    public StartGameResult startGame(String authToken) {
         ServerSession session = rootModel.getSession(authToken);
 
         if (session == null) {
             return new StartGameResult("Authentication Error");
         }
+
+        String gameID = session.getGameID();
 
         PendingGame game = rootModel.getPendingGame(gameID);
 
@@ -252,22 +257,37 @@ public class ServerFacade implements IServer {
     }
 
     @Override
-    public HistoryResult updateHistory(String authToken, String gameID) {
+    public HistoryResult updateHistory(String authToken, int lastSeenCommandIndex) {
+        ServerSession session = rootModel.getSession(authToken);
+        ActiveGame game = rootModel.getActiveGame(session.getGameID());
+        List<CommandData> history = game.getGameHistory(session.getUser().getUsername(), lastSeenCommandIndex);
+        return new HistoryResult(history);
+    }
+
+    @Override
+    public DestinationCardResult drawDestinationCards(String authToken) {
         return null;
     }
 
     @Override
-    public DestinationCardResult drawDestinationCards(String authToken, String gameID) {
+    public DestinationCardResult chooseDestinationCards(String authToken, int numSelected, List<DestinationCard> selected) {
         return null;
     }
 
     @Override
-    public DestinationCardResult chooseDestinationCards(String authToken, int numSelected, ArrayList<DestinationCard> selected, String gameID) {
-        return null;
-    }
-
-    @Override
-    public Result sendMessage(String authToken, String gameID, Message message) {
-        return null;
+    public Result sendMessage(String authToken, Message message) {
+        ServerSession session = rootModel.getSession(authToken);
+        if (session == null) {
+            return Result.failed("Authentication Error");
+        }
+        String username = session.getUser().getUsername();
+        String gameID = session.getGameID();
+        SendMessageCommandData messageCommand = new SendMessageCommandData(username, message);
+        ActiveGame game = rootModel.getActiveGame(gameID);
+        if (game == null) {
+            return Result.failed("Player is not part of an active game");
+        }
+        game.broadcastCommand(messageCommand);
+        return Result.success();
     }
 }

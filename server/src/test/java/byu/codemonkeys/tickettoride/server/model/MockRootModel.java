@@ -63,8 +63,10 @@ public class MockRootModel implements IRootModel {
         }
 
         if (authToken.equals("auth-token-0")) {
-            User user = new User("user0", "password");
-            return new ServerSession(user, "auth-token-0");
+            User user = new User("username", "password");
+            ServerSession session = new ServerSession(user, "auth-token-0");
+            session.setGameID("game-1-id");
+            return session;
         }
 
         return null;
@@ -86,7 +88,11 @@ public class MockRootModel implements IRootModel {
         if (gameID.equals("game-1-id")) {
             User user = new User("username", "password");
 
-            return new PendingGame("game-1-id", "game-1-name", user);
+            PendingGame game = new PendingGame("game-1-id", "game-1-name", user);
+
+            game.addUser(new User("username2", "password"));
+
+            return game;
         }
 
         if (gameID.equals("game-2-id")) {
@@ -130,5 +136,10 @@ public class MockRootModel implements IRootModel {
         }
 
         return null;
+    }
+
+    @Override
+    public ActiveGame getActiveGame(String gameID) {
+        return activateGame(gameID);
     }
 }

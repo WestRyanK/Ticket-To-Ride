@@ -1,7 +1,7 @@
 package byu.codemonkeys.tickettoride.shared;
 
 
-import java.util.ArrayList;
+import java.util.List;
 
 import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.Message;
@@ -39,14 +39,14 @@ public interface IServer {
 
     PendingGameResult createGame(String authToken, String gameName);
     PendingGameResult joinPendingGame(String authToken, String gameID);
-    PendingGamesResult leavePendingGame(String authToken, String gameID);
-    PendingGamesResult cancelGame(String authToken, String gameID);
+    PendingGamesResult leavePendingGame(String authToken);
+    PendingGamesResult cancelGame(String authToken);
     PendingGamesResult getPendingGames(String authToken);
     PendingGameResult getPendingGame(String authToken);
-    StartGameResult startGame(String authToken, String gameID);
+    StartGameResult startGame(String authToken);
     //Phase 2
-    HistoryResult updateHistory(String authToken, String gameID);
-    DestinationCardResult drawDestinationCards(String authToken, String gameID);
-    DestinationCardResult chooseDestinationCards(String authToken, int numSelected, ArrayList<DestinationCard> selected, String gameID);
-    Result sendMessage(String authToken, String gameID, Message message);
+    HistoryResult updateHistory(String authToken, int lastSeenCommandIndex);
+    DestinationCardResult drawDestinationCards(String authToken);
+    DestinationCardResult chooseDestinationCards(String authToken, int numSelected, List<DestinationCard> selected);
+    Result sendMessage(String authToken, Message message);
 }
