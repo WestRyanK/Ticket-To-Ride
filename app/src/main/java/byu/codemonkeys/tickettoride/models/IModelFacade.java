@@ -83,7 +83,7 @@ public interface IModelFacade {
 	int getTrainCardDeckSize();
 
 	// User actions
-	void sendMessage(Message message);
+	Result sendMessage(Message message);
 	List<TrainCard> drawTrainCards();
 	List<DestinationCard> drawDestinationCards();
 	void selectTrainCards(List<TrainCard> cards);

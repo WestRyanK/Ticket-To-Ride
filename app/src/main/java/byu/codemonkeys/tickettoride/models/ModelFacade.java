@@ -23,10 +23,6 @@ import byu.codemonkeys.tickettoride.shared.results.Result;
 import byu.codemonkeys.tickettoride.shared.results.StartGameResult;
 import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
 
-/**
- * Created by Megan on 10/3/2017.
- */
-//TODO(compy-386): implement poller for game starting, get API endpoint for it
 public class ModelFacade implements IModelFacade {
 	private static IModelFacade instance;
 	private IServer serverProxy = ServerProxy.getInstance();
@@ -60,10 +56,9 @@ public class ModelFacade implements IModelFacade {
 	@Override
 	public LoginResult login(String username, String password) {
 		LoginResult result = serverProxy.login(username, password);
-		if (result.getErrorMessage() == null) {
+		if (result.isSuccessful()) {
 			models.setSession(result.getUserSession());
 			models.setUser(new UserBase(username));
-			//			start(pendingGamesPoller);
 		}
 		return result;
 	}
@@ -85,10 +80,8 @@ public class ModelFacade implements IModelFacade {
 	@Override
 	public void logout() throws UnauthorizedException {
 		Result result = serverProxy.logout(models.getSession().getAuthToken());
-		if (result.getErrorMessage() == null) {
-			//clear the models since they are logging out
-			//			stop(pendingGamesPoller);
-			models.getInstance().clear();
+		if (result.isSuccessful()) {
+			models.clear();
 		} else
 			throw new UnauthorizedException(result.getErrorMessage());
 	}
@@ -96,10 +89,9 @@ public class ModelFacade implements IModelFacade {
 	@Override
 	public LoginResult register(String username, String password) {
 		LoginResult result = serverProxy.register(username, password);
-		if (result.getErrorMessage() == null) {
+		if (result.isSuccessful()) {
 			models.setSession(result.getUserSession());
 			models.setUser(new UserBase(username));
-			//			start(pendingGamesPoller);
 		}
 		return result;
 	}
@@ -131,10 +123,8 @@ public class ModelFacade implements IModelFacade {
 	public PendingGameResult createGame(String gameName) {
 		PendingGameResult result = serverProxy.createGame(models.getSession().getAuthToken(),
 				gameName);
-		if (result.getErrorMessage() == null) {
+		if (result.isSuccessful()) {
 			models.setPendingGame(result.getGame());
-			//			stop(pendingGamesPoller);
-			//TODO(compy-386): Poll for game started, waiting so no longer have to get all pending games
 		}
 		return result;
 	}
@@ -164,14 +154,11 @@ public class ModelFacade implements IModelFacade {
 
 	@Override
 	public PendingGameResult joinPendingGame(GameBase game) {
-		//		if (models.getPendingGame() == null) {
-		PendingGameResult result = serverProxy.joinPendingGame(models.getSession().getAuthToken(),
-				game.getID());
-		if (result.getErrorMessage() == null) {
+		PendingGameResult result = serverProxy.joinPendingGame(models.getSession().getAuthToken(), game.getID());
+		if (result.isSuccessful()) {
 			models.setPendingGame(result.getGame());
-			//			start(pendingGamesPoller);
+
 		}
-		//		}
 		return result;
 	}
 
@@ -189,17 +176,12 @@ public class ModelFacade implements IModelFacade {
 
 	@Override
 	public PendingGamesResult leavePendingGame() {
-		//		if (models.getPendingGame() == null) {
-		//			throw new NoPendingGameException();
-		//		} else {
 		PendingGamesResult result = serverProxy.leavePendingGame(models.getSession().getAuthToken());
-		if (result.getErrorMessage() == null) {
+		if (result.isSuccessful()) {
 			models.setPendingGame(null);
-			//				start(pendingGamesPoller);
+
 		}
 		return result;
-		//			} else
-		//				throw new UnauthorizedException(result.getErrorMessage());
 	}
 
 	@Override
@@ -214,15 +196,9 @@ public class ModelFacade implements IModelFacade {
 		this.asyncTask.executeTask(leavePendingGameCommand, leavePendingGameCallback);
 	}
 
-	//TODO: FIX TO WORK WITH NEW POLLER
 	@Override
 	public StartGameResult startGame() {
-		//START POLLER?
-		StartGameResult result = serverProxy.startGame(models.getSession().getAuthToken());
-		if (result.getErrorMessage() == null) {
-			//models.setGame(result.getGame());
-		}
-		return result;
+		return serverProxy.startGame(models.getSession().getAuthToken());
 	}
 
 	@Override
@@ -243,10 +219,9 @@ public class ModelFacade implements IModelFacade {
 			throw new NoPendingGameException();
 		} else {
 			PendingGamesResult result = serverProxy.cancelGame(models.getSession().getAuthToken());
-			if (result.getErrorMessage() == null) {
+			if (result.isSuccessful()) {
 				models.setPendingGame(null);
 				models.setPendingGames(result.getGames());
-				//				start(pendingGamesPoller);
 			}
 		}
 	}
@@ -255,9 +230,7 @@ public class ModelFacade implements IModelFacade {
 	public Session getSession() {
 		return models.getSession();
 	}
-
-
-	//TODO(compy-386): Add error checking for invalid host and port inputs?
+	
 	@Override
 	public void changeConnectionConfiguration(String host, int port) {
 		communicator.changeConfiguration(host, port);
@@ -291,8 +264,6 @@ public class ModelFacade implements IModelFacade {
 		models.removeTrainCard(card);
 	}
 
-	; //also this
-
 	public void addDestinationCard(byu.codemonkeys.tickettoride.shared.model.DestinationCard card) {
 		models.addDestinationCard(card);
 	}
@@ -314,13 +285,8 @@ public class ModelFacade implements IModelFacade {
 	}
 
 	// User actions
-	public void sendMessage(Message message) {
-		//Make server call
-		Result result = serverProxy.sendMessage(models.getSession().getAuthToken(), message);
-		//only add to model on success
-		if(result.isSuccessful()) {
-			models.addMessage(message);
-		}
+	public Result sendMessage(Message message) {
+		return serverProxy.sendMessage(models.getSession().getAuthToken(), message);
 	}
 
 	//TODO: implement this in a future phase

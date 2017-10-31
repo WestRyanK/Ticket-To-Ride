@@ -72,8 +72,15 @@ public class ClientFacade implements IClient {
         //TODO: Track the last seen and executed command and pass into updateHistory
         HistoryResult result = ServerProxy.getInstance().updateHistory(authToken, UpdateHistoryCommandData.NO_COMMANDS_SEEN_INDEX);
         List<CommandData> commands = result.getHistory();
-        for(CommandData command: commands){
-            if(command instanceof SendMessageCommandData){
+
+        executeCommands(commands);
+    }
+
+    private void executeCommands(List<CommandData> commands) {
+		ModelRoot modelRoot = ModelRoot.getInstance();
+
+		for(CommandData command: commands){
+			if(command instanceof SendMessageCommandData){
 				SendMessageCommandData comm = (SendMessageCommandData)command;
 				modelRoot.addMessage(comm.getMessage());
 			} else if (command instanceof SetupGameCommandData){
@@ -81,6 +88,6 @@ public class ClientFacade implements IClient {
 			} else if (command instanceof ChooseDestinationCardsCommandData){
 				// TODO: update number of destination cards for player
 			}
-        }
-    }
+		}
+	}
 }
