@@ -13,6 +13,7 @@ import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.mvpcontracts.home.WaitingRoomContract;
 import byu.codemonkeys.tickettoride.networking.PendingGamePoller;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
+import byu.codemonkeys.tickettoride.presenters.PresenterEnum;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 
@@ -112,9 +113,12 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 	public void update(Observable observable, Object o) {
 		if (o == ModelFacade.PENDING_GAME_UPDATE) {
 			try {
-				if (modelFacade.getPendingGame().isStarted())
-					messageDisplayer.displayMessage("Game started!");
-				this.loadWaitingPlayers();
+				if (modelFacade.getPendingGame().isStarted()) {
+					stopPolling();
+					this.navigator.navigate(PresenterEnum.Game, false);
+				} else {
+					this.loadWaitingPlayers();
+				}
 			} catch (UnauthorizedException e) {
 				e.printStackTrace();
 			} catch (NoPendingGameException e) {
