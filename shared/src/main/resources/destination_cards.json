@@ -1,0 +1,254 @@
+﻿[
+ {
+   "ID": 0,
+   "Destination A": "Vancouver",
+   "Destination B": "Lair of the Firebending Master",
+   "DestinationCardXRatio": 0.3324808184,
+   "DestinationCardYRatio": 0.3727409639
+ },
+ {
+   "ID": 1,
+   "Destination A": "Calgary",
+   "Destination B": "Western Air Temple",
+   "DestinationCardXRatio": 0.378516624,
+   "DestinationCardYRatio": 0.3388554217
+ },
+ {
+   "ID": 2,
+   "Destination A": "Seattle",
+   "Destination B": "Fire Nation Capitol",
+   "DestinationCardXRatio": 0.2992327366,
+   "DestinationCardYRatio": 0.4743975904
+ },
+ {
+   "ID": 3,
+   "Destination A": "Portland",
+   "Destination B": "Fire Nation Harbor City",
+   "DestinationCardXRatio": 0.3043478261,
+   "DestinationCardYRatio": 0.5195783133
+ },
+ {
+   "ID": 4,
+   "Destination A": "San Francisco",
+   "Destination B": "The Great Gates of Azulon",
+   "DestinationCardXRatio": 0.3324808184,
+   "DestinationCardYRatio": 0.5195783133
+ },
+ {
+   "ID": 5,
+   "Destination A": "Las Vegas",
+   "Destination B": "Fire Fountain City",
+   "DestinationCardXRatio": 0.3938618926,
+   "DestinationCardYRatio": 0.5045180723
+ },
+ {
+   "ID": 6,
+   "Destination A": "Los Angeles",
+   "Destination B": "Southern Air Temple (West)",
+   "DestinationCardXRatio": 0.3836317136,
+   "DestinationCardYRatio": 0.6287650602
+ },
+ {
+   "ID": 7,
+   "Destination A": "El Paso",
+   "Destination B": "Aang's Iceberg",
+   "DestinationCardXRatio": 0.4450127877,
+   "DestinationCardYRatio": 0.7153614458
+ },
+ {
+   "ID": 8,
+   "Destination A": "Houston",
+   "Destination B": "Southern Water Tribe",
+   "DestinationCardXRatio": 0.5063938619,
+   "DestinationCardYRatio": 0.734186747
+ },
+ {
+   "ID": 9,
+   "Destination A": "Phoenix",
+   "Destination B": "Southern Air Temple (Central)",
+   "DestinationCardXRatio": 0.4450127877,
+   "DestinationCardYRatio": 0.6212349398
+ },
+ {
+   "ID": 10,
+   "Destination A": "Santa Fe",
+   "Destination B": "Whale Tail Island",
+   "DestinationCardXRatio": 0.4808184143,
+   "DestinationCardYRatio": 0.5873493976
+ },
+ {
+   "ID": 11,
+   "Destination A": "Oklahoma City",
+   "Destination B": "Kyoshi Island",
+   "DestinationCardXRatio": 0.5242966752,
+   "DestinationCardYRatio": 0.5911144578
+ },
+ {
+   "ID": 12,
+   "Destination A": "Kansas City",
+   "Destination B": "Omashu",
+   "DestinationCardXRatio": 0.537084399,
+   "DestinationCardYRatio": 0.4969879518
+ },
+ {
+   "ID": 13,
+   "Destination A": "Little Rock",
+   "Destination B": "Bei Fong Estate",
+   "DestinationCardXRatio": 0.557544757,
+   "DestinationCardYRatio": 0.5760542169
+ },
+ {
+   "ID": 14,
+   "Destination A": "Dallas",
+   "Destination B": "Southern Air Temple (East)",
+   "DestinationCardXRatio": 0.5140664962,
+   "DestinationCardYRatio": 0.625
+ },
+ {
+   "ID": 15,
+   "Destination A": "Salt Lake City",
+   "Destination B": "The Lion Turtle's Cliff Face",
+   "DestinationCardXRatio": 0.4092071611,
+   "DestinationCardYRatio": 0.4141566265
+ },
+ {
+   "ID": 16,
+   "Destination A": "Helena",
+   "Destination B": "Battlefield of 100 Year War",
+   "DestinationCardXRatio": 0.4219948849,
+   "DestinationCardYRatio": 0.3689759036
+ },
+ {
+   "ID": 17,
+   "Destination A": "Winnipeg",
+   "Destination B": "Northern Water Tribe",
+   "DestinationCardXRatio": 0.4859335038,
+   "DestinationCardYRatio": 0.2786144578
+ },
+ {
+   "ID": 18,
+   "Destination A": "Sault St. Marie",
+   "Destination B": "Northern Air Temple",
+   "DestinationCardXRatio": 0.5421994885,
+   "DestinationCardYRatio": 0.2936746988
+ },
+ {
+   "ID": 19,
+   "Destination A": "Montreal",
+   "Destination B": "Ba Sing Se North",
+   "DestinationCardXRatio": 0.6138107417,
+   "DestinationCardYRatio": 0.3350903614
+ },
+ {
+   "ID": 20,
+   "Destination A": "Boston",
+   "Destination B": "Ba Sing Se East",
+   "DestinationCardXRatio": 0.6393861893,
+   "DestinationCardYRatio": 0.3689759036
+ },
+ {
+   "ID": 21,
+   "Destination A": "New York",
+   "Destination B": "Ba Sing Se South",
+   "DestinationCardXRatio": 0.6189258312,
+   "DestinationCardYRatio": 0.3990963855
+ },
+ {
+   "ID": 22,
+   "Destination A": "Pittsburg",
+   "Destination B": "Chameleon Bay",
+   "DestinationCardXRatio": 0.641943734,
+   "DestinationCardYRatio": 0.4856927711
+ },
+ {
+   "ID": 23,
+   "Destination A": "Raleigh",
+   "Destination B": "Eastern Air Temple (North)",
+   "DestinationCardXRatio": 0.7058823529,
+   "DestinationCardYRatio": 0.5384036145
+ },
+ {
+   "ID": 24,
+   "Destination A": "Charleston",
+   "Destination B": "Eastern Air Temple (Central)",
+   "DestinationCardXRatio": 0.6982097187,
+   "DestinationCardYRatio": 0.5873493976
+ },
+ {
+   "ID": 25,
+   "Destination A": "Duluth",
+   "Destination B": "Pohuai Stronghold",
+   "DestinationCardXRatio": 0.5012787724,
+   "DestinationCardYRatio": 0.3727409639
+ },
+ {
+   "ID": 26,
+   "Destination A": "Omaha",
+   "Destination B": "Harbor Town",
+   "DestinationCardXRatio": 0.4859335038,
+   "DestinationCardYRatio": 0.406626506
+ },
+ {
+   "ID": 27,
+   "Destination A": "Denver",
+   "Destination B": "Hei Bei's Forest",
+   "DestinationCardXRatio": 0.4833759591,
+   "DestinationCardYRatio": 0.4518072289
+ },
+ {
+   "ID": 28,
+   "Destination A": "Chicago",
+   "Destination B": "Jet's Forest",
+   "DestinationCardXRatio": 0.557544757,
+   "DestinationCardYRatio": 0.4480421687
+ },
+ {
+   "ID": 29,
+   "Destination A": "Saint Louis",
+   "Destination B": "Wan Shi Tong's Library",
+   "DestinationCardXRatio": 0.6010230179,
+   "DestinationCardYRatio": 0.5045180723
+ },
+ {
+   "ID": 30,
+   "Destination A": "Nashville",
+   "Destination B": "Tu Zin Ghost Town",
+   "DestinationCardXRatio": 0.6163682864,
+   "DestinationCardYRatio": 0.5384036145
+ },
+ {
+   "ID": 31,
+   "Destination A": "Toronto",
+   "Destination B": "Serpent's Pass",
+   "DestinationCardXRatio": 0.5780051151,
+   "DestinationCardYRatio": 0.3990963855
+ },
+ {
+   "ID": 32,
+   "Destination A": "Atlanta",
+   "Destination B": "Iroh's Campsite",
+   "DestinationCardXRatio": 0.6342710997,
+   "DestinationCardYRatio": 0.5722891566
+ },
+ {
+   "ID": 33,
+   "Destination A": "Miami",
+   "Destination B": "Eastern Air Temple (South)",
+   "DestinationCardXRatio": 0.6598465473,
+   "DestinationCardYRatio": 0.6174698795
+ },
+ {
+   "ID": 34,
+   "Destination A": "New Orleans",
+   "Destination B": "Southern Earth Kingom Islands",
+   "DestinationCardXRatio": 0.5780051151,
+   "DestinationCardYRatio": 0.6626506024
+ },
+ {
+   "ID": 35,
+   "Destination A": "Washington",
+   "Destination B": "Earth Kingdom Penninsula",
+   "DestinationCardXRatio": 0.6956521739,
+   "DestinationCardYRatio": 0.4631024096
+ }
+]
