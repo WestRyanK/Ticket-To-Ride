@@ -58,11 +58,31 @@ public class ActiveGame extends GameBase {
         return map;
     }
 
+    public void setMap(GameMap map) {
+        this.map = map;
+    }
+
     public int getTurn() {
         return turn;
     }
 
+    public void setTurn(int turn) {
+        this.turn = turn;
+    }
+
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+    public Deck getDeck() {
+        return deck;
+    }
+
+    public void setDeck(Deck deck) {
+        this.deck = deck;
     }
 }

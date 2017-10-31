@@ -45,4 +45,20 @@ public class Self extends Player {
     public void giveDestinationCards(Set<DestinationCard> cards) {
         this.selecting = cards;
     }
+
+    @Override
+    public int getNumTrainCards() {
+        int count = 0;
+
+        for (Map.Entry<TrainCard.Type, Integer> entry : hand.entrySet()) {
+            count += entry.getValue();
+        }
+
+        return count;
+    }
+
+    @Override
+    public int getNumDestinationCards() {
+        return destinations.size();
+    }
 }

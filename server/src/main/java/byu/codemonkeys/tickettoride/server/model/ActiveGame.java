@@ -1,5 +1,6 @@
 package byu.codemonkeys.tickettoride.server.model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -7,10 +8,13 @@ import java.util.Queue;
 import byu.codemonkeys.tickettoride.server.broadcast.CommandManager;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
+import byu.codemonkeys.tickettoride.shared.model.Opponent;
 import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
 import byu.codemonkeys.tickettoride.shared.model.Self;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
+
+import static byu.codemonkeys.tickettoride.shared.model.Player.Type.Opponent;
 
 public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.ActiveGame {
     private static int STARTING_CARDS = 4;
@@ -86,6 +90,26 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
      * @return the prepared game.
      */
     public byu.codemonkeys.tickettoride.shared.model.ActiveGame prepareForClient(UserBase user) {
+        byu.codemonkeys.tickettoride.shared.model.ActiveGame clientGame =
+                new byu.codemonkeys.tickettoride.shared.model.ActiveGame(this);
+
+        clientGame.setMap(this.getMap());
+        clientGame.setTurn(this.turn);
+
+        List<Player> clientPlayers = new ArrayList<>();
+
+        for (Player player : players) {
+            if (!player.getUsername().equals(user.getUsername())) {
+                clientPlayers.add(new Opponent(player));
+                continue;
+            }
+
+            clientPlayers.add(player);
+        }
+
+        clientGame.setPlayers(clientPlayers);
+        clientGame.setDeck(new byu.codemonkeys.tickettoride.shared.model.Deck(this.getDeck()));
+
         return null;
     }
 }

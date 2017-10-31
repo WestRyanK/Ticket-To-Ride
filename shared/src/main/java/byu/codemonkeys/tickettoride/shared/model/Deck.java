@@ -10,6 +10,14 @@ public class Deck {
     protected int numHidden;
     protected int numDestinationCards;
 
+    public Deck() {}
+
+    public Deck(Deck deck) {
+        this.revealed = deck.getRevealed();
+        this.numHidden = deck.getNumHidden();
+        this.numDestinationCards = deck.getNumDestinationCards();
+    }
+
     public List<TrainCard> getRevealed() {
         return revealed;
     }
