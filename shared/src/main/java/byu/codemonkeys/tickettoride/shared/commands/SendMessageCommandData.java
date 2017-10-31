@@ -8,29 +8,19 @@ import byu.codemonkeys.tickettoride.shared.model.Message;
  * chat messages other users in the same game have broadcast.
  */
 public class SendMessageCommandData extends CommandData {
-    public SendMessageCommandData(String sender, Message message) {
-        super(CommandType.SEND_MESSAGE);
-        this.message = message;
-        this.sender = sender;
-    }
-
     /**
-     * Holds a message without specifying a sender. Used by the client, the server will determine
-     * the sender via the AuthToken.
-     * @param message
+     * Holds a message.
+     * @param message message to deliver
      */
     public SendMessageCommandData(Message message) {
-        this(null, message);
+        super(CommandType.SEND_MESSAGE);
+        this.message = message;
     }
 
     public Message getMessage(){
         return message;
     }
-    
-    /**
-     * The sender's username
-     */
-    protected String sender;
+
     protected Message message;
 }
 

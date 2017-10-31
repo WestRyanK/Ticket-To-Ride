@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import java.util.Map;
 
 import byu.codemonkeys.tickettoride.R;
-import byu.codemonkeys.tickettoride.models.PlayerColorEnum;
+import byu.codemonkeys.tickettoride.models.player.PlayerColorEnum;
 import byu.codemonkeys.tickettoride.views.viewdata.PointBubblesData;
 import byu.codemonkeys.tickettoride.views.widgets.MapEdgeWidget;
 import byu.codemonkeys.tickettoride.views.widgets.Viewport;

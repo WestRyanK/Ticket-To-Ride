@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import byu.codemonkeys.tickettoride.models.CardColorEnum;
+import byu.codemonkeys.tickettoride.models.cards.CardColorEnum;
 import byu.codemonkeys.tickettoride.models.IModelFacade;
-import byu.codemonkeys.tickettoride.models.TrainCard;
+import byu.codemonkeys.tickettoride.models.cards.TrainCard;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.DrawTrainCardsContract;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
