@@ -30,10 +30,12 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
             colors.add(color);
         }
 
-        for (UserBase user : gameUsers) {
+        for (UserBase user : pendingGame.getUsers()) {
             this.players.add(new Self(user.getUsername(), colors.poll()));
             commandManager.addClient(user.getUsername());
         }
+
+        setDeck(new Deck());
 
         deal();
     }
@@ -61,16 +63,14 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
      * Gives each player their starting train cards.
      */
     public void deal() {
-        Deck serverDeck = (Deck) deck;
-
         for (Player player : players) {
             Self self = (Self) player;
 
             for (int i = 0; i < STARTING_CARDS; ++i) {
-                self.addTrainCard(serverDeck.drawTrainCard());
+                self.addTrainCard(deck.drawTrainCard());
             }
 
-            self.giveDestinationCards(serverDeck.drawDestinationCards());
+            self.giveDestinationCards(deck.drawDestinationCards());
         }
     }
 

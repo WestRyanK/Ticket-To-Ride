@@ -9,9 +9,10 @@ import java.util.Random;
 import java.util.Set;
 
 import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
+import byu.codemonkeys.tickettoride.shared.model.IDeck;
 import byu.codemonkeys.tickettoride.shared.model.TrainCard;
 
-public class Deck extends byu.codemonkeys.tickettoride.shared.model.Deck {
+public class Deck extends byu.codemonkeys.tickettoride.shared.model.Deck implements IDeck {
     // The number of each non-wild type the full deck contains
     private static int NUM_STANDARD = 12;
     // The number of locomotives the full deck contains
@@ -55,6 +56,7 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.Deck {
      * Take the top card from the face-down draw pile.
      * @return the drawn card.
      */
+    @Override
     public TrainCard drawTrainCard() {
         return hidden.poll();
     }
@@ -64,6 +66,7 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.Deck {
      * Take the top cards from the destination cards pile.
      * @return the drawn cards.
      */
+    @Override
     public Set<DestinationCard> drawDestinationCards() {
         Set<DestinationCard> drawn = new HashSet<>();
 

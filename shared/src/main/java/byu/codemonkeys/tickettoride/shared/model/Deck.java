@@ -1,8 +1,9 @@
 package byu.codemonkeys.tickettoride.shared.model;
 
 import java.util.List;
+import java.util.Set;
 
-public class Deck {
+public class Deck implements IDeck {
     // The maximum number of revealed drawable cards
     private static int NUM_REVEALED = 5;
 
@@ -12,7 +13,7 @@ public class Deck {
 
     public Deck() {}
 
-    public Deck(Deck deck) {
+    public Deck(IDeck deck) {
         this.revealed = deck.getRevealed();
         this.numHidden = deck.getNumHidden();
         this.numDestinationCards = deck.getNumDestinationCards();
@@ -28,5 +29,15 @@ public class Deck {
 
     public int getNumDestinationCards() {
         return numDestinationCards;
+    }
+
+    @Override
+    public TrainCard drawTrainCard() {
+        return null;
+    }
+
+    @Override
+    public Set<DestinationCard> drawDestinationCards() {
+        return null;
     }
 }

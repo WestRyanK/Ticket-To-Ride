@@ -17,11 +17,12 @@ public class ActiveGame extends GameBase {
     protected GameMap map;
     protected int turn;
     protected List<Player> players;
-    protected Deck deck;
+    protected IDeck deck;
 
     public ActiveGame(GameBase game) {
         map = new GameMap();
         turn = 0;
+        this.players = new ArrayList<>();
         deck = new Deck();
 
         // Copy GameBase fields
@@ -78,11 +79,11 @@ public class ActiveGame extends GameBase {
         this.players = players;
     }
 
-    public Deck getDeck() {
+    public IDeck getDeck() {
         return deck;
     }
 
-    public void setDeck(Deck deck) {
+    public void setDeck(IDeck deck) {
         this.deck = deck;
     }
 }
