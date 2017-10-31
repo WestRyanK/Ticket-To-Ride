@@ -25,6 +25,10 @@ public class SetupGameCommandData extends CommandData {
         this.game = game;
     }
 
+    public ActiveGame getGame() {
+        return game;
+    }
+
     /**
      * Constructs a new SetupGameCommand.
      * @param order the players' associated users in order of turn.

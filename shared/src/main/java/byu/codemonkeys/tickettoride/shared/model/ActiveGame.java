@@ -33,11 +33,6 @@ public class ActiveGame extends GameBase {
         this.started = true;
     }
 
-    public ActiveGame(List<Player> players, int turn) {
-        this.players = players;
-        this.turn = turn;
-    }
-
     /**
      * Returns the user's player.
      * @return the user's Self object.
@@ -47,7 +42,7 @@ public class ActiveGame extends GameBase {
      */
     public Self getSelf() throws NoSuchElementException {
         for (Player player : players) {
-            if (player.getType() == Player.Type.Self) {
+            if (player instanceof Self) {
                 return (Self) player;
             }
         }
