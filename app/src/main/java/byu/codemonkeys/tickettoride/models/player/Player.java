@@ -1,4 +1,4 @@
-package byu.codemonkeys.tickettoride.models;
+package byu.codemonkeys.tickettoride.models.player;
 
 /**
  * Created by Ryan on 10/3/2017.

@@ -1,14 +1,13 @@
 package byu.codemonkeys.tickettoride.models;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Observer;
-import java.util.ArrayList;
 
 import byu.codemonkeys.tickettoride.async.ICallback;
 import byu.codemonkeys.tickettoride.async.ITask;
 import byu.codemonkeys.tickettoride.exceptions.NoPendingGameException;
 import byu.codemonkeys.tickettoride.exceptions.UnauthorizedException;
+import byu.codemonkeys.tickettoride.models.history.CommandHistoryEntry;
 import byu.codemonkeys.tickettoride.networking.ClientCommunicator;
 import byu.codemonkeys.tickettoride.networking.ServerProxy;
 import byu.codemonkeys.tickettoride.shared.IServer;
@@ -314,7 +313,7 @@ public class ModelFacade implements IModelFacade {
 		return models.getMessages();
 	}
 
-	public List<GameHistoryEntry> getGameHistory(){
+	public List<CommandHistoryEntry> getGameHistory(){
 		return models.getGameHistory();
 	}
 }

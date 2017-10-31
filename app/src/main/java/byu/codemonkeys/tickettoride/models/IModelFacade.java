@@ -2,11 +2,11 @@ package byu.codemonkeys.tickettoride.models;
 
 import java.util.List;
 import java.util.Observer;
-import java.util.Map;
 
 import byu.codemonkeys.tickettoride.async.ICallback;
 import byu.codemonkeys.tickettoride.exceptions.NoPendingGameException;
 import byu.codemonkeys.tickettoride.exceptions.UnauthorizedException;
+import byu.codemonkeys.tickettoride.models.history.CommandHistoryEntry;
 import byu.codemonkeys.tickettoride.shared.model.*;
 import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.Player;
@@ -91,6 +91,6 @@ public interface IModelFacade {
 	//TODO: add claimed route, waiting on map
 
 	List<Message> getMessages();
-	List<GameHistoryEntry> getGameHistory();
+	List<CommandHistoryEntry> getGameHistory();
 
 }

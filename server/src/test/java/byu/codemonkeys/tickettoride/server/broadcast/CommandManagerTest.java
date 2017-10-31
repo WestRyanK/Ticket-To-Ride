@@ -20,8 +20,8 @@ public class CommandManagerTest {
         manager.addClient("testClient1");
         manager.addClient("testClient2");
 
-        SendMessageCommand command1 = new SendMessageCommand("testClient1", new Message());
-        SendMessageCommand command2 = new SendMessageCommand("testClient2", new Message());
+        SendMessageCommand command1 = new SendMessageCommand(new Message());
+        SendMessageCommand command2 = new SendMessageCommand(new Message());
 
         manager.queueCommand(command1);
         manager.queueCommandSingleClient(command2, "testClient2");

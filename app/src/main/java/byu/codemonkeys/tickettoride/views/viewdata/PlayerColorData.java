@@ -5,7 +5,7 @@ import android.graphics.Color;
 import java.util.HashMap;
 import java.util.Map;
 
-import byu.codemonkeys.tickettoride.models.PlayerColorEnum;
+import byu.codemonkeys.tickettoride.models.player.PlayerColorEnum;
 
 /**
  * Created by Ryan on 10/23/2017.

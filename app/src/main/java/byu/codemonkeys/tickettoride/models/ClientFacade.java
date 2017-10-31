@@ -1,25 +1,14 @@
 package byu.codemonkeys.tickettoride.models;
 
-import java.util.UUID;
 import java.util.List;
 
+import byu.codemonkeys.tickettoride.commands.IClientCommand;
 import byu.codemonkeys.tickettoride.networking.ServerProxy;
 import byu.codemonkeys.tickettoride.shared.IClient;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
-import byu.codemonkeys.tickettoride.shared.commands.CommandType;
-import byu.codemonkeys.tickettoride.shared.commands.ICommand;
-import byu.codemonkeys.tickettoride.shared.commands.SendMessageCommandData;
-import byu.codemonkeys.tickettoride.shared.commands.SetupGameCommandData;
-import byu.codemonkeys.tickettoride.shared.commands.ChooseDestinationCardsCommandData;
-import byu.codemonkeys.tickettoride.shared.commands.UpdateHistoryCommandData;
-import byu.codemonkeys.tickettoride.shared.model.UserBase;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
 import byu.codemonkeys.tickettoride.shared.results.HistoryResult;
-
-/**
- * Created by meganrich on 10/5/17.
- */
 
 public class ClientFacade implements IClient {
 	private static ClientFacade instance;
@@ -62,31 +51,19 @@ public class ClientFacade implements IClient {
 	public void updateGame() throws Exception {
 		ModelRoot modelRoot = ModelRoot.getInstance();
 		String authToken = modelRoot.getSession().getAuthToken();
+		int lastReadCommandIndex = modelRoot.getLastReadCommandIndex();
 
+		HistoryResult result = ServerProxy.getInstance().updateHistory(authToken, lastReadCommandIndex);
+		List<CommandData> commands = result.getHistory();
+
+		executeCommands(commands);
+		modelRoot.getHistoryManager().addHistory(commands);
 	}
 
-	@Override
-    public void updateHistory() throws Exception {
-        ModelRoot modelRoot = ModelRoot.getInstance();
-        String authToken = modelRoot.getSession().getAuthToken();
-        //TODO: Track the last seen and executed command and pass into updateHistory
-        HistoryResult result = ServerProxy.getInstance().updateHistory(authToken, UpdateHistoryCommandData.NO_COMMANDS_SEEN_INDEX);
-        List<CommandData> commands = result.getHistory();
-
-        executeCommands(commands);
-    }
-
     private void executeCommands(List<CommandData> commands) {
-		ModelRoot modelRoot = ModelRoot.getInstance();
-
 		for(CommandData command: commands){
-			if(command instanceof SendMessageCommandData){
-				SendMessageCommandData comm = (SendMessageCommandData)command;
-				modelRoot.addMessage(comm.getMessage());
-			} else if (command instanceof SetupGameCommandData){
-				// TODO: add game information in the model root
-			} else if (command instanceof ChooseDestinationCardsCommandData){
-				// TODO: update number of destination cards for player
+			if(command instanceof IClientCommand){
+				((IClientCommand) command).execute();
 			}
 		}
 	}
