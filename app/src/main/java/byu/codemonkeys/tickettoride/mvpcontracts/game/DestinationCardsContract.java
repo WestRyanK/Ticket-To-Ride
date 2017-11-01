@@ -20,5 +20,6 @@ public interface DestinationCardsContract {
 		
 		void navigateDrawDestinationCards();
 		
+		void loadDestinationCards();
 	}
 }

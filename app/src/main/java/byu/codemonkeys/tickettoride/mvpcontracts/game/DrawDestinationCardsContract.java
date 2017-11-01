@@ -24,5 +24,7 @@ public interface DrawDestinationCardsContract {
 		void acceptSelectedCards();
 		
 		void loadDestinationCards();
+		
+		boolean canAccept();
 	}
 }

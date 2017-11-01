@@ -14,83 +14,85 @@ import byu.codemonkeys.tickettoride.shared.model.map.GameMap;
  * fields of GameBase to a shared PendingGame class.
  */
 public class ActiveGame extends GameBase {
-    public static final int MAX_TRAINS = 45;
-
-    protected GameMap map;
-    protected int turn;
-    protected List<Player> players;
-    protected IDeck deck;
-
-    public ActiveGame(GameBase game) {
-        map = new GameMap();
-        turn = 0;
-        this.players = new ArrayList<>();
-        deck = new Deck();
-
-        // Copy GameBase fields
-        this.gameID = game.getID();
-        this.gameName = game.getName();
-        this.gameOwner = game.getOwner();
-        this.gameUsers = game.getUsers();
-        this.started = true;
-    }
-
-    /**
-     * Returns the user's player.
-     * @return the user's Self object.
-     * @throws NoSuchElementException this is thrown if there is no player marked as the user's
-     *         self. This should never be thrown because it indicates a bug. Perhaps an assertion
-     *         should be used instead in the future.
-     */
-    public Self getSelf() throws NoSuchElementException {
-        for (Player player : players) {
-            if (player instanceof Self) {
-                return (Self) player;
-            }
-        }
-
-        throw new NoSuchElementException("There is no player with type Self.");
-    }
-
-    public GameMap getMap() {
-        return map;
-    }
-
-    public void setMap(GameMap map) {
-        this.map = map;
-    }
-
-    public int getTurn() {
-        return turn;
-    }
-
-    public void setTurn(int turn) {
-        this.turn = turn;
-    }
-
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public Player getPlayer(UserBase user) {
-        for (Player player : players) {
-            if (user.equals(player)) {
-                return player;
-            }
-        }
-
-        return null;
-    }
-
-    public void setPlayers(List<Player> players) {
-        this.players = players;
-    }
-
-    public IDeck getDeck() {
-        return deck;
-    }
-
-    public void setDeck(IDeck deck) {
-        this.deck = deck;
-    }
+	public static final int MAX_TRAINS = 45;
+	
+	protected GameMap map;
+	protected int turn;
+	protected List<Player> players;
+	protected IDeck deck;
+	
+	public ActiveGame(GameBase game) {
+		map = new GameMap();
+		turn = 0;
+		this.players = new ArrayList<>();
+		deck = new Deck();
+		
+		// Copy GameBase fields
+		this.gameID = game.getID();
+		this.gameName = game.getName();
+		this.gameOwner = game.getOwner();
+		this.gameUsers = game.getUsers();
+		this.started = true;
+	}
+	
+	/**
+	 * Returns the user's player.
+	 *
+	 * @return the user's Self object.
+	 * @throws NoSuchElementException this is thrown if there is no player marked as the user's
+	 *                                self. This should never be thrown because it indicates a bug. Perhaps an assertion
+	 *                                should be used instead in the future.
+	 */
+	public Self getSelf() throws NoSuchElementException {
+		for (Player player : players) {
+			if (player instanceof Self) {
+				return (Self) player;
+			}
+		}
+		
+		throw new NoSuchElementException("There is no player with type Self.");
+	}
+	
+	public GameMap getMap() {
+		return map;
+	}
+	
+	public void setMap(GameMap map) {
+		this.map = map;
+	}
+	
+	public int getTurn() {
+		return turn;
+	}
+	
+	public void setTurn(int turn) {
+		this.turn = turn;
+	}
+	
+	public List<Player> getPlayers() {
+		return players;
+	}
+	
+	public Player getPlayer(UserBase user) {
+		for (Player player : players) {
+			//            if (user.equals(player)) {
+			if (user.userName.equals(player.userName)) {
+				return player;
+			}
+		}
+		
+		return null;
+	}
+	
+	public void setPlayers(List<Player> players) {
+		this.players = players;
+	}
+	
+	public IDeck getDeck() {
+		return deck;
+	}
+	
+	public void setDeck(IDeck deck) {
+		this.deck = deck;
+	}
 }

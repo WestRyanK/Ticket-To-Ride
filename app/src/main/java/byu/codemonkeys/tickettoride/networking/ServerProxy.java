@@ -91,7 +91,8 @@ public class ServerProxy implements IServer {
     public DestinationCardResult chooseDestinationCards(String authToken, int numSelected, List<DestinationCard> selected) {
         ChooseDestinationCardsCommandData data = new ChooseDestinationCardsCommandData(numSelected, selected);
         data.setAuthToken(authToken);
-        return communicator.sendChooseDestinationCards(data);
+        DestinationCardResult result = communicator.sendChooseDestinationCards(data);
+		return result;
     }
 
     @Override
