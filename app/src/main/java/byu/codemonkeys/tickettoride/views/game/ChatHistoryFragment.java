@@ -52,13 +52,13 @@ public class ChatHistoryFragment extends Fragment implements ChatHistoryContract
 		setEventListeners();
 		return view;
 	}
-
+	
 	@Override
 	public void onStart() {
 		super.onStart();
 		presenter.loadHistory();
 	}
-
+	
 	private void setEventListeners() {
 		this.textViewBack.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -164,8 +164,13 @@ public class ChatHistoryFragment extends Fragment implements ChatHistoryContract
 	}
 	
 	@Override
-	public void setCurrentMessage(String message) {
-		this.editTextMessage.setText(message);
+	public void setCurrentMessage(final String message) {
+		getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				editTextMessage.setText(message);
+			}
+		});
 	}
 	
 	public void setPresenter(ChatHistoryContract.Presenter presenter) {
