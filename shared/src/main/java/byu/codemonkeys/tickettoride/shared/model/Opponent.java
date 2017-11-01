@@ -11,4 +11,10 @@ public class Opponent extends Player {
         this.numDestinationCards = player.getNumDestinationCards();
         this.color = player.getColor();
     }
+    
+    public void setNumDestinationCards(int numDestinationCards){
+        this.numDestinationCards = numDestinationCards;
+        setChanged();
+        notifyObservers();
+    }
 }
