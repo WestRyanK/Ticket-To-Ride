@@ -4,7 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
@@ -57,6 +59,21 @@ public class ActiveGameTest {
         for (Player player : preparedGame.getPlayers()) {
             assertFalse(used.contains(player.getColor()));
             used.add(player.getColor());
+        }
+    }
+
+    @Test
+    public void testDestinateCards() {
+        Set<DestinationCard> used = new HashSet<>();
+
+        for (Player player : game.getPlayers()) {
+            Self self = (Self) player;
+
+            for (DestinationCard card : self.getSelecting()) {
+                assertFalse(used.contains(card));
+
+                used.add(card);
+            }
         }
     }
 }
