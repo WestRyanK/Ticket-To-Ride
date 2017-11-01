@@ -3,7 +3,6 @@ package byu.codemonkeys.tickettoride.models;
 import java.util.List;
 import java.util.Observable;
 
-import byu.codemonkeys.tickettoride.models.history.ChatManager;
 import byu.codemonkeys.tickettoride.models.history.CommandHistoryEntry;
 import byu.codemonkeys.tickettoride.models.history.HistoryManager;
 import byu.codemonkeys.tickettoride.shared.model.*;
@@ -18,14 +17,12 @@ public class ModelRoot extends Observable {
 	private Session session;
 	private ActiveGame game;
 	private HistoryManager history;
-	private ChatManager chat;
 	private List<TrainCard> trainCards;
 	private List<DestinationCard> destinationCards;
 
 	
 	private ModelRoot() {
 		history = new HistoryManager();
-		chat = new ChatManager();
 	}
 	
 	public static ModelRoot getInstance() {
@@ -85,10 +82,6 @@ public class ModelRoot extends Observable {
 		return this.game;
 	}
 
-	public List<Message> getMessages(){
-		return chat.getMessages();
-	}
-
 	public void removeTrainCard(TrainCard card){
 		trainCards.remove(card);
 	}
@@ -127,10 +120,6 @@ public class ModelRoot extends Observable {
 
 	public HistoryManager getHistoryManager() {
 		return history;
-	}
-
-	public ChatManager getChatManager() {
-		return chat;
 	}
 
 	public void historyUpdated() {

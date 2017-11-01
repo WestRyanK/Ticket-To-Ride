@@ -350,10 +350,6 @@ public class ModelFacade implements IModelFacade {
 	}
 	//TODO: add claimed route, waiting on map
 	
-	public List<Message> getMessages() {
-		return models.getMessages();
-	}
-	
 	public List<CommandHistoryEntry> getGameHistory() {
 		return models.getGameHistory();
 	}
