@@ -26,7 +26,7 @@ public interface IModelFacade {
 	
 	void addObserver(Observer observer);
 	
-	UserBase getUser() throws UnauthorizedException;
+	UserBase getUser();
 	
 	LoginResult login(String username, String password);
 	

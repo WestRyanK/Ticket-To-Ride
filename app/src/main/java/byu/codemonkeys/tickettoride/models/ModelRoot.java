@@ -121,9 +121,15 @@ public class ModelRoot extends Observable {
 
 	public void addMessage(Message message) {
 		chat.addMessage(message);
+		setChanged();
+		notifyObservers(ModelFacade.CHAT_UPDATE);
 	}
 
 	public HistoryManager getHistoryManager() {
 		return history;
+	}
+
+	public ChatManager getChatManager() {
+		return chat;
 	}
 }

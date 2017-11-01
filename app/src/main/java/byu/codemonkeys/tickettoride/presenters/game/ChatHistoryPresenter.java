@@ -1,13 +1,18 @@
 package byu.codemonkeys.tickettoride.presenters.game;
 
+import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 
 import byu.codemonkeys.tickettoride.models.IModelFacade;
+import byu.codemonkeys.tickettoride.models.ModelFacade;
+import byu.codemonkeys.tickettoride.models.ModelRoot;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.ChatHistoryContract;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
+import byu.codemonkeys.tickettoride.shared.model.Message;
+import byu.codemonkeys.tickettoride.shared.results.Result;
 
 /**
  * Created by Ryan on 10/21/2017.
@@ -22,12 +27,18 @@ public class ChatHistoryPresenter extends PresenterBase implements ChatHistoryCo
 								IModelFacade modelFacade) {
 		super(navigator, messageDisplayer, modelFacade);
 		this.view = view;
+		modelFacade.addObserver(this);
 	}
 	
 	@Override
 	public void sendMessage(String message) {
-		this.view.addMessage(message);
-		this.view.setCurrentMessage("");
+		Message m = new Message(modelFacade.getUser(), message, new Date());
+		Result result = modelFacade.sendMessage(m);
+		if (result.isSuccessful()) {
+			this.view.setCurrentMessage("");
+		} else {
+			messageDisplayer.displayMessage(result.getErrorMessage());
+		}
 	}
 	
 	@Override
@@ -45,6 +56,10 @@ public class ChatHistoryPresenter extends PresenterBase implements ChatHistoryCo
 	
 	@Override
 	public void update(Observable observable, Object o) {
-		
+		if (o == ModelFacade.CHAT_UPDATE) {
+			for (Message message : ModelRoot.getInstance().getChatManager().getLatestMessages()) {
+				this.view.addMessage(message.toString());
+			}
+		}
 	}
 }
