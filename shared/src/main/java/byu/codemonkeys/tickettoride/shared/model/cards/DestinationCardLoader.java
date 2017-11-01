@@ -33,12 +33,14 @@ public class DestinationCardLoader extends LoaderBase {
 																  new TypeToken<ArrayList<DestinationCardData>>() {
 																  }.getType());
 		List<DestinationCard> cards = new ArrayList<>();
-		for (DestinationCardData cardData : cardsData) {
-			DestinationCard card = new DestinationCard(cardData.ID,
-													   cardData.DestinationA,
-													   cardData.DestinationB,
-													   cardData.PointValue);
-			cards.add(card);
+		if (cardsData != null) {
+			for (DestinationCardData cardData : cardsData) {
+				DestinationCard card = new DestinationCard(cardData.ID,
+														   cardData.DestinationA,
+														   cardData.DestinationB,
+														   cardData.PointValue);
+				cards.add(card);
+			}
 		}
 		
 		return cards;

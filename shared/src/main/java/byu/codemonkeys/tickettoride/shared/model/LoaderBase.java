@@ -26,7 +26,7 @@ public class LoaderBase {
 		} finally {
 			try {
 				isr.close();
-			} catch (IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}

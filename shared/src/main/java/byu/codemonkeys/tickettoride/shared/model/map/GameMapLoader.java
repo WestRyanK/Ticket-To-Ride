@@ -45,9 +45,11 @@ public class GameMapLoader extends LoaderBase {
 														}.getType());
 		List<City> cities = new ArrayList<>();
 		
-		for (CityData cityData : citiesData) {
-			City city = new City(cityData.ID, cityData.City);
-			cities.add(city);
+		if (citiesData != null) {
+			for (CityData cityData : citiesData) {
+				City city = new City(cityData.ID, cityData.City);
+				cities.add(city);
+			}
 		}
 		
 		return cities;
@@ -60,14 +62,20 @@ public class GameMapLoader extends LoaderBase {
 		List<Route> routes = new ArrayList<>();
 		
 		
-		for (RouteData routeData : routesData) {
-			City cityA = getCityWithID(cities, routeData.DestinationA);
-			City cityB = getCityWithID(cities, routeData.DestinationB);
-			assert cityA != null;
-			assert cityB != null;
-			
-			Route route = new Route(routeData.ID, routeData.Color, cityA, cityB, routeData.length);
-			routes.add(route);
+		if (routesData != null) {
+			for (RouteData routeData : routesData) {
+				City cityA = getCityWithID(cities, routeData.DestinationA);
+				City cityB = getCityWithID(cities, routeData.DestinationB);
+				assert cityA != null;
+				assert cityB != null;
+				
+				Route route = new Route(routeData.ID,
+										routeData.Color,
+										cityA,
+										cityB,
+										routeData.length);
+				routes.add(route);
+			}
 		}
 		
 		return routes;
