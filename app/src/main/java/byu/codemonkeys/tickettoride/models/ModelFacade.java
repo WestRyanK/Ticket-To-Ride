@@ -35,7 +35,7 @@ public class ModelFacade implements IModelFacade {
 	public static final String PENDING_GAME_UPDATE = "PendingGameUpdate";
 	public static final String PLAYER_STATS_UPDATE = "PlayerStatsUpdate";
 	public static final String CHAT_UPDATE = "ChatUpdate";
-	
+
 	private ModelFacade() {
 	}
 	
@@ -293,7 +293,6 @@ public class ModelFacade implements IModelFacade {
 	public Result sendMessage(Message message) {
 		return serverProxy.sendMessage(models.getSession().getAuthToken(), message);
 	}
-<<<<<<< HEAD
 
 	@Override
 	public void sendMessageAsync(final Message message, ICallback sendMessageCallback) {
@@ -307,9 +306,6 @@ public class ModelFacade implements IModelFacade {
 		this.asyncTask.executeTask(sendMessageCommand, sendMessageCallback);
 	}
 
-=======
-	
->>>>>>> feature/gamePresenters
 	//TODO: implement this in a future phase
 	public List<TrainCard> drawTrainCards() {
 		return null;
