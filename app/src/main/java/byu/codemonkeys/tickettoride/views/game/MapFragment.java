@@ -13,6 +13,9 @@ import android.widget.ImageView;
 import java.util.Map;
 
 import byu.codemonkeys.tickettoride.R;
+import byu.codemonkeys.tickettoride.models.ModelFacade;
+import byu.codemonkeys.tickettoride.models.ModelRoot;
+import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
 import byu.codemonkeys.tickettoride.views.viewdata.PointBubblesData;
 import byu.codemonkeys.tickettoride.views.widgets.MapEdgeWidget;
@@ -66,8 +69,10 @@ public class MapFragment extends Fragment {
 			pointBubble.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					pointBubble.setClaimedColor(PlayerColor.Red);
-					
+					Player self = ModelRoot.getInstance().getGame().getSelf();
+					pointBubble.setClaimedColor(self.getColor());
+					self.setScore(self.getScore() + 1);
+					self.setNumTrains(self.getNumTrains() - 1);
 				}
 			});
 		}
