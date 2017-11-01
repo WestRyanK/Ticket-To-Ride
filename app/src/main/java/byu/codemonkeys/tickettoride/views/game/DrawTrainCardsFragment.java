@@ -135,4 +135,9 @@ public class DrawTrainCardsFragment extends Fragment implements DrawTrainCardsCo
 			
 		}
 	}
+
+	@Override
+	public void setNumHidden(int count) {
+		cardDeck.setCount(count);
+	}
 }
