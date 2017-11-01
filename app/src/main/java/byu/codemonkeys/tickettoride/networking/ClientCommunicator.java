@@ -27,7 +27,7 @@ public class ClientCommunicator {
 	private int port;
 	
 	private ClientCommunicator() {
-		host = "192.168.1.31";
+		host = "192.168.1.13";
 		port = 8080;
 		serializer = new Serializer();
 	}

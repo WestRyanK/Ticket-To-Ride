@@ -29,7 +29,8 @@ public class ModelFacade implements IModelFacade {
 	private ClientCommunicator communicator = ClientCommunicator.getInstance();
 	private ModelRoot models = ModelRoot.getInstance();
 	private ITask asyncTask;
-
+	
+	public static final String GAME_UPDATE = "GameUpdate";
 	public static final String PENDING_GAMES_UPDATE = "PendingGamesUpdate";
 	public static final String PENDING_GAME_UPDATE = "PendingGameUpdate";
 	public static final String PLAYER_STATS_UPDATE = "PlayerStatsUpdate";
