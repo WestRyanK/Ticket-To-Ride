@@ -18,6 +18,6 @@ public class Message {
 
     @Override
     public String toString() {
-        return String.format("[%s] %s", user.getUsername(), message);
+        return String.format("[%s]: %s", user.getUsername(), message);
     }
 }

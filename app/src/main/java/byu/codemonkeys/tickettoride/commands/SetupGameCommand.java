@@ -13,4 +13,9 @@ public class SetupGameCommand extends SetupGameCommandData implements IClientCom
     public void execute() {
         ModelRoot.getInstance().setGame(game);
     }
+
+    @Override
+    public String toString() {
+        return "[GAME SETUP]";
+    }
 }
