@@ -10,6 +10,7 @@ import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.TrainCardsContract;
+import byu.codemonkeys.tickettoride.shared.model.Player;
 
 public class TrainCardsPresenter extends PresenterBase implements TrainCardsContract.Presenter, Observer {
     private TrainCardsContract.View view;
@@ -35,7 +36,7 @@ public class TrainCardsPresenter extends PresenterBase implements TrainCardsCont
         if (o == ModelFacade.GAME_UPDATE) {
             // This will be changed to use ModelFacade
             loadHand();
-        } else if (o == ModelFacade.PLAYER_TRAIN_CARDS_UPDATE) {
+        } else if (o == Player.PLAYER_TRAIN_CARDS_UPDATE) {
             loadHand();
         }
     }
