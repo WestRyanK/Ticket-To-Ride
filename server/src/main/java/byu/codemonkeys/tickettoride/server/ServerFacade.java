@@ -373,7 +373,7 @@ public class ServerFacade implements IServer {
 			return;
 		}
 		
-		Map<UserBase, Integer> numDestinations = new HashMap<>();
+		Map<String, Integer> numDestinations = new HashMap<>();
 		
 		for (Player player : game.getPlayers()) {
 			Self self = (Self) player;
@@ -384,7 +384,7 @@ public class ServerFacade implements IServer {
 				return;
 			}
 			
-			numDestinations.put(player, numDestinationCards);
+			numDestinations.put(player.getUsername(), numDestinationCards);
 		}
 		
 		game.begin();
