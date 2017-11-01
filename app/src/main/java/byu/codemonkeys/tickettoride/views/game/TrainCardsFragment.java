@@ -36,6 +36,12 @@ public class TrainCardsFragment extends Fragment implements TrainCardsContract.V
 		return view;
 	}
 
+	@Override
+    public void onResume() {
+	    super.onResume();
+        presenter.loadHand();
+    }
+
 	private void getViews(View view) {
 		trainCardWidgets = new HashMap<>();
 		trainCardWidgets.put(CardType.Wild, (TrainCardWidget) view.findViewById(R.id.card_wild));

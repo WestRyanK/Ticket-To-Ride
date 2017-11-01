@@ -24,8 +24,13 @@ public class TrainCardsPresenter extends PresenterBase implements TrainCardsCont
     }
 
     @Override
+    public void loadHand() {
+        this.view.setHand(ModelRoot.getInstance().getGame().getSelf().getHand());
+    }
+
+    @Override
     public void update(Observable observable, Object o) {
-        if (o == ModelFacade.PLAYER_STATS_UPDATE) {
+        if (o == ModelFacade.GAME_UPDATE) {
             // This will be changed to use ModelFacade
             this.view.setHand(ModelRoot.getInstance().getGame().getSelf().getHand());
         }

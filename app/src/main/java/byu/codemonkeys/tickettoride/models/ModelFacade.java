@@ -35,6 +35,7 @@ public class ModelFacade implements IModelFacade {
 	public static final String PENDING_GAME_UPDATE = "PendingGameUpdate";
 	public static final String PLAYER_STATS_UPDATE = "PlayerStatsUpdate";
 	public static final String CHAT_UPDATE = "ChatUpdate";
+	public static final String HAND_UPDATE = "HandUpdate";
 
 	private ModelFacade() {
 	}

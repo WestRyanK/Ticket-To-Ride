@@ -10,6 +10,6 @@ public interface TrainCardsContract {
     }
 
     interface Presenter {
-
+        public void loadHand();
     }
 }
