@@ -3,15 +3,18 @@ package byu.codemonkeys.tickettoride.presenters.game;
 import java.util.Observable;
 import java.util.Observer;
 
+import byu.codemonkeys.tickettoride.async.ICallback;
 import byu.codemonkeys.tickettoride.models.IModelFacade;
+import byu.codemonkeys.tickettoride.models.ModelFacade;
+import byu.codemonkeys.tickettoride.models.ModelRoot;
+import byu.codemonkeys.tickettoride.models.history.CommandHistoryEntry;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.ChatHistoryContract;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
+import byu.codemonkeys.tickettoride.shared.model.Message;
+import byu.codemonkeys.tickettoride.shared.results.Result;
 
-/**
- * Created by Ryan on 10/21/2017.
- */
 
 public class ChatHistoryPresenter extends PresenterBase implements ChatHistoryContract.Presenter , Observer {
 	ChatHistoryContract.View view;
@@ -22,12 +25,26 @@ public class ChatHistoryPresenter extends PresenterBase implements ChatHistoryCo
 								IModelFacade modelFacade) {
 		super(navigator, messageDisplayer, modelFacade);
 		this.view = view;
+		modelFacade.addObserver(this);
 	}
 	
 	@Override
 	public void sendMessage(String message) {
-		this.view.addMessage(message);
-		this.view.setCurrentMessage("");
+		Message m = new Message(modelFacade.getUser(), message);
+
+		ICallback sendMessageCallback = new ICallback() {
+			@Override
+			public void callback(Result result) {
+				if (result.isSuccessful()) {
+					view.setCurrentMessage("");
+				} else {
+					messageDisplayer.displayMessage(result.getErrorMessage());
+				}
+			}
+		};
+		if (canSendMessage()) {
+			modelFacade.sendMessageAsync(m, sendMessageCallback);
+		}
 	}
 	
 	@Override
@@ -42,9 +59,20 @@ public class ChatHistoryPresenter extends PresenterBase implements ChatHistoryCo
 				currentMessage.length() > 0 &&
 				currentMessage.length() < 160;
 	}
-	
+
+	@Override
+	public void loadHistory() {
+		for (CommandHistoryEntry entry : ModelRoot.getInstance().getHistoryManager().getCommandHistory()) {
+			this.view.addMessage(entry.toString());
+		}
+	}
+
 	@Override
 	public void update(Observable observable, Object o) {
-		
+		if (o == ModelFacade.HISTORY_UPDATE) {
+			for (CommandHistoryEntry entry : ModelRoot.getInstance().getHistoryManager().getLatestCommandHistory()) {
+				this.view.addMessage(entry.toString());
+			}
+		}
 	}
 }

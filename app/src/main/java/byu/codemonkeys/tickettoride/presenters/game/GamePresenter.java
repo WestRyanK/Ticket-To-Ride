@@ -13,10 +13,6 @@ import byu.codemonkeys.tickettoride.networking.GamePoller;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
 import byu.codemonkeys.tickettoride.presenters.PresenterEnum;
 
-/**
- * Created by Ryan on 10/30/2017.
- */
-
 public class GamePresenter extends PresenterBase implements GameContract.Presenter, Observer {
 	private GameContract.View view;
 	

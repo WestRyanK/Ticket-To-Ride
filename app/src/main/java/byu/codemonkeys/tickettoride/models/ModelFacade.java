@@ -36,12 +36,13 @@ public class ModelFacade implements IModelFacade {
 	public static final String PENDING_GAMES_UPDATE = "PendingGamesUpdate";
 	public static final String PENDING_GAME_UPDATE = "PendingGameUpdate";
 	public static final String PLAYER_STATS_UPDATE = "PlayerStatsUpdate";
+	public static final String HISTORY_UPDATE = "HistoryUpdate";
 	public static final String SCORE_UPDATE = "ScoreUpdate";
 	public static final String COLOR_UPDATE = "ColorUpdate";
 	public static final String PLAYER_TRAINS_UPDATE = "NumTrainsUpdate";
 	public static final String PLAYER_TRAIN_CARDS_UPDATE = "NumTrainCardsUpdate";
 	public static final String PLAYER_DESTINATION_CARDS_UPDATE = "NumDestinationCardsUpdate";
-	
+
 	private ModelFacade() {
 	}
 	
@@ -299,7 +300,19 @@ public class ModelFacade implements IModelFacade {
 	public Result sendMessage(Message message) {
 		return serverProxy.sendMessage(models.getSession().getAuthToken(), message);
 	}
-	
+
+	@Override
+	public void sendMessageAsync(final Message message, ICallback sendMessageCallback) {
+		ICommand sendMessageCommand = new ICommand() {
+			@Override
+			public Result execute() {
+				return sendMessage(message);
+			}
+		};
+
+		this.asyncTask.executeTask(sendMessageCommand, sendMessageCallback);
+	}
+
 	//TODO: implement this in a future phase
 	public List<TrainCard> drawTrainCards() {
 		return null;
@@ -348,10 +361,6 @@ public class ModelFacade implements IModelFacade {
 		
 	}
 	//TODO: add claimed route, waiting on map
-	
-	public List<Message> getMessages() {
-		return models.getMessages();
-	}
 	
 	public List<CommandHistoryEntry> getGameHistory() {
 		return models.getGameHistory();

@@ -15,4 +15,9 @@ public class BeginGameCommand extends BeginGameCommandData implements IClientCom
     public void execute() {
         ModelFacade.getInstance().beginGame(this.numDestinationCards);
     }
+
+    @Override
+    public String toString() {
+        return "[GAME STARTED]";
+    }
 }

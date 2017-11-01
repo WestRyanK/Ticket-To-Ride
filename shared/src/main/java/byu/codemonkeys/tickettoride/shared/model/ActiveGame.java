@@ -94,6 +94,10 @@ public class ActiveGame extends GameBase implements Observer{
 				setChanged();
 				notifyObservers(TURN_UPDATE);
 	}
+
+	public void nextTurn() {
+		this.turn = (turn + 1) % players.size();
+	}
 	
 	public List<Player> getPlayers() {
 		return players;

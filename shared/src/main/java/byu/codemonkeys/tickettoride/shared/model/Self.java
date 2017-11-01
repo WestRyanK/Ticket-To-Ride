@@ -53,6 +53,10 @@ public class Self extends Player {
 		this.color = player.color;
 	}
 
+	public Map<CardType, Integer> getHand() {
+	    return hand;
+    }
+
     public Set<DestinationCard> getSelecting() {
         return selecting;
     }

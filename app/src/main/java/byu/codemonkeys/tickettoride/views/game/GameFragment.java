@@ -9,12 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import byu.codemonkeys.tickettoride.R;
 import byu.codemonkeys.tickettoride.models.ModelFacade;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.GameContract;
 import byu.codemonkeys.tickettoride.presenters.game.DrawTrainCardsPresenter;
 import byu.codemonkeys.tickettoride.presenters.game.GameSidebarPresenter;
+import byu.codemonkeys.tickettoride.presenters.game.MapPresenter;
 import byu.codemonkeys.tickettoride.presenters.game.PlayerStatsPresenter;
+import byu.codemonkeys.tickettoride.presenters.game.TrainCardsPresenter;
+import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
+import byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,20 +80,20 @@ public class GameFragment extends Fragment implements GameContract.View{
 				.commit();
 		frameTrainCards = (FrameLayout) view.findViewById(R.id.game_frameTrainCards);
 		TrainCardsFragment trainCardsFragment = new TrainCardsFragment();
-		//		trainCardsFragment.SetPresenter(new TrainCardsPresenter(trainCardsFragment,
-		//																activity,
-		//																activity,
-		//																ModelFacade.getInstance()));
+		trainCardsFragment.setPresenter(new TrainCardsPresenter(trainCardsFragment,
+																		activity,
+																		activity,
+																		ModelFacade.getInstance()));
 		activity.getSupportFragmentManager()
 				.beginTransaction()
 				.replace(R.id.game_frameTrainCards, trainCardsFragment)
 				.commit();
 		frameMap = (FrameLayout) view.findViewById(R.id.game_frameMap);
 		MapFragment mapFragment = new MapFragment();
-		//		mapFragment.setPresenter(new MapPresenter(mapFragment,
-		//															  activity,
-		//															  activity,
-		//															  ModelFacade.getInstance()));
+		mapFragment.setPresenter(new MapPresenter(mapFragment,
+															  activity,
+															  activity,
+															  ModelFacade.getInstance()));
 		activity.getSupportFragmentManager()
 				.beginTransaction()
 				.replace(R.id.game_frameMap, mapFragment)
@@ -120,6 +127,7 @@ public class GameFragment extends Fragment implements GameContract.View{
 			.replace(R.id.game_frameSidebar, fragment)
 			.commit();
 	}
+
 		@Override
 	public void onResume() {
 		super.onResume();
