@@ -56,8 +56,11 @@ public class ClientFacade implements IClient {
 		HistoryResult result = ServerProxy.getInstance().updateHistory(authToken, lastReadCommandIndex);
 		List<CommandData> commands = result.getHistory();
 
-		executeCommands(commands);
-		modelRoot.getHistoryManager().addHistory(commands);
+		if (commands.size() > 0){
+			executeCommands(commands);
+			modelRoot.getHistoryManager().addHistory(commands);
+			modelRoot.historyUpdated();
+		}
 	}
 
     private void executeCommands(List<CommandData> commands) {

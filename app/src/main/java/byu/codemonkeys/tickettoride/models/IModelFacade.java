@@ -94,7 +94,6 @@ public interface IModelFacade {
 	
 	//TODO: add claimed route, waiting on map
 
-	List<Message> getMessages();
 	List<CommandHistoryEntry> getGameHistory();
 
 }
