@@ -28,6 +28,7 @@ public class Self extends Player {
 		super(userName, Player.Type.Self, color);
 		this.hand = new HashMap<>();
 		this.destinations = new HashSet<>();
+		this.selecting = new HashSet<>();
 	}
 
 	public Self(String userName, Map<CardType, Integer> hand, Set<DestinationCard> destinations) {
