@@ -7,10 +7,10 @@ public class Message {
 
     }
 
-    public Message(UserBase user, String message, Date time) {
+    public Message(UserBase user, String message) {
         this.user = user;
         this.message = message;
-        this.time = time;
+        this.time = new Date();
     }
     protected UserBase user;
     protected String message;
@@ -18,6 +18,6 @@ public class Message {
 
     @Override
     public String toString() {
-        return String.format("[%s] %s: %s", time.toString(), user.getUsername(), message);
+        return String.format("[%s] %s", user.getUsername(), message);
     }
 }

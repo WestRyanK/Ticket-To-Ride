@@ -34,7 +34,7 @@ public class ChatHistoryPresenter extends PresenterBase implements ChatHistoryCo
 	
 	@Override
 	public void sendMessage(String message) {
-		Message m = new Message(modelFacade.getUser(), message, new Date());
+		Message m = new Message(modelFacade.getUser(), message);
 
 		ICallback sendMessageCallback = new ICallback() {
 			@Override
