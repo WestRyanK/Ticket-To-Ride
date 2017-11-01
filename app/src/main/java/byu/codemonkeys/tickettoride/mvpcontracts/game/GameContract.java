@@ -10,7 +10,7 @@ import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
 
 public interface GameContract {
 	interface View {
-		void setHand(Map<CardType, Integer> hand);
+
 	}
 	
 	interface Presenter {
