@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import byu.codemonkeys.tickettoride.R;
-import byu.codemonkeys.tickettoride.models.player.PlayerColorEnum;
+import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
 
 public class PlayerStatsWidget extends RelativeLayout {
 	
@@ -23,13 +23,13 @@ public class PlayerStatsWidget extends RelativeLayout {
 	
 	// region Public Properties
 	// region PlayerColor Property
-	private PlayerColorEnum playerColor;
+	private PlayerColor playerColor;
 	
-	public PlayerColorEnum getPlayerColor() {
+	public PlayerColor getPlayerColor() {
 		return playerColor;
 	}
 	
-	public void setPlayerColor(PlayerColorEnum playerColor) {
+	public void setPlayerColor(PlayerColor playerColor) {
 		this.playerColor = playerColor;
 		int drawableID = -1;
 		switch (this.playerColor) {
@@ -156,7 +156,7 @@ public class PlayerStatsWidget extends RelativeLayout {
 		inflater.inflate(R.layout.player_stats, this, true);
 		getViews();
 		
-		this.setPlayerColor(PlayerColorEnum.Blue);
+		this.setPlayerColor(PlayerColor.Blue);
 		
 		applyAttributes(context, attrs);
 	}

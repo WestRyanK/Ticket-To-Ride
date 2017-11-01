@@ -1,4 +1,4 @@
-package byu.codemonkeys.tickettoride.shared.model;
+package byu.codemonkeys.tickettoride.shared.model.cards;
 
 import java.util.ArrayList;
 import java.util.List;

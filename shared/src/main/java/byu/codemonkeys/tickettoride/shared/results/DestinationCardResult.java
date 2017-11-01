@@ -1,7 +1,8 @@
 package byu.codemonkeys.tickettoride.shared.results;
 
 import java.util.List;
-import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
+
+import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 
 /**
  * Created by meganrich on 10/18/17.

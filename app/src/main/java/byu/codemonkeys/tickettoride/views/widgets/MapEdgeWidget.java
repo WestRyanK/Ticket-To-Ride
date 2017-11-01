@@ -9,7 +9,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import byu.codemonkeys.tickettoride.models.player.PlayerColorEnum;
+import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
 import byu.codemonkeys.tickettoride.views.viewdata.PlayerColorData;
 
 /**
@@ -56,13 +56,13 @@ public class MapEdgeWidget extends View {
 	// endregion
 	
 	// region ClaimedColor Property
-	private PlayerColorEnum claimedColor;
+	private PlayerColor claimedColor;
 	
-	public PlayerColorEnum getClaimedColor() {
+	public PlayerColor getClaimedColor() {
 		return claimedColor;
 	}
 	
-	public void setClaimedColor(PlayerColorEnum claimedColor) {
+	public void setClaimedColor(PlayerColor claimedColor) {
 		this.claimedColor = claimedColor;
 		this.invalidate();
 	}
@@ -87,7 +87,7 @@ public class MapEdgeWidget extends View {
 	
 	private void init(Context context) {
 		this.setPoints(0);
-		this.setClaimedColor(PlayerColorEnum.None);
+		this.setClaimedColor(PlayerColor.None);
 		this.circleFillPaint = new Paint();
 		this.circleFillPaint.setStyle(Paint.Style.FILL);
 		this.circleFillPaint.setAntiAlias(true);

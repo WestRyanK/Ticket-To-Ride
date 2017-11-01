@@ -8,9 +8,9 @@ import byu.codemonkeys.tickettoride.exceptions.NoPendingGameException;
 import byu.codemonkeys.tickettoride.exceptions.UnauthorizedException;
 import byu.codemonkeys.tickettoride.models.history.CommandHistoryEntry;
 import byu.codemonkeys.tickettoride.shared.model.*;
-import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.Player;
-import byu.codemonkeys.tickettoride.shared.model.TrainCard;
+import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
+import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
@@ -71,13 +71,13 @@ public interface IModelFacade {
 	List<Player> getPlayerInfo();
 
 	//Here for the sake of the demonstration, just in case we need them, although these should already be covered in the user actions
-	void addTrainCard(byu.codemonkeys.tickettoride.shared.model.TrainCard card); //should this be a list of cards?
-	void addTrainCards(List<byu.codemonkeys.tickettoride.shared.model.TrainCard> cards);
+	void addTrainCard(TrainCard card); //should this be a list of cards?
+	void addTrainCards(List<TrainCard> cards);
 	void removeTrainCard(TrainCard card); //also this
 
-	void addDestinationCard(byu.codemonkeys.tickettoride.shared.model.DestinationCard card);
-	void addDestinationCards(List<byu.codemonkeys.tickettoride.shared.model.DestinationCard> cards);
-	void removeDestinationCard(byu.codemonkeys.tickettoride.shared.model.DestinationCard card);
+	void addDestinationCard(DestinationCard card);
+	void addDestinationCards(List<DestinationCard> cards);
+	void removeDestinationCard(DestinationCard card);
 
 	int getDestinationCardDeckSize();
 	int getTrainCardDeckSize();

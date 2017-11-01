@@ -1,10 +1,20 @@
 apply plugin: 'java'
 
+
+//task copyResources(type: Copy) {
+//    from('src/main/resources/')
+//    into('build/classes/main/')
+//}
+//
+//compileJava.dependsOn("copyResources")
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/gson-2.8.1.jar')
     compile 'junit:junit:4.12'
 }
+
+
 
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"

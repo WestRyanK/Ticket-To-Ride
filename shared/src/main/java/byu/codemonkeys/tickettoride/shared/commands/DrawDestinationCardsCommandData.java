@@ -1,8 +1,5 @@
 package byu.codemonkeys.tickettoride.shared.commands;
 
-import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
-import java.util.ArrayList;
-
 /**
  * The client sends a DrawDestinationCardsCommand to the server to request three destination cards
  * from which to choose.

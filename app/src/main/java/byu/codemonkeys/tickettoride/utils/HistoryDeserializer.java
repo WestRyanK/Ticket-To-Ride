@@ -3,6 +3,7 @@ package byu.codemonkeys.tickettoride.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
@@ -19,7 +20,7 @@ import byu.codemonkeys.tickettoride.commands.SendMessageCommand;
 import byu.codemonkeys.tickettoride.commands.SetupGameCommand;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
 import byu.codemonkeys.tickettoride.shared.commands.CommandType;
-import byu.codemonkeys.tickettoride.shared.model.IDeck;
+import byu.codemonkeys.tickettoride.shared.model.cards.IDeck;
 import byu.codemonkeys.tickettoride.shared.model.Opponent;
 import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.Self;
@@ -64,6 +65,7 @@ public class HistoryDeserializer {
             return new HistoryResult(obj.get("errorMessage").getAsString());
         }
         if (obj.has("history")) {
+            JsonElement element = obj.get("history");
             history = HistoryDeserializer.deserialize(obj.get("history").toString());
         }
 
