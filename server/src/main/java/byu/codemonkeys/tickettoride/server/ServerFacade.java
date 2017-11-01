@@ -19,6 +19,7 @@ import byu.codemonkeys.tickettoride.shared.commands.SetupGameCommandData;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
 import byu.codemonkeys.tickettoride.shared.model.Message;
 import byu.codemonkeys.tickettoride.shared.model.Player;
+import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
 import byu.codemonkeys.tickettoride.shared.results.HistoryResult;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;

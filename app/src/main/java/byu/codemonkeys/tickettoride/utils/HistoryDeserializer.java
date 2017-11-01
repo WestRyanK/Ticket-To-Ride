@@ -19,7 +19,7 @@ import byu.codemonkeys.tickettoride.commands.SendMessageCommand;
 import byu.codemonkeys.tickettoride.commands.SetupGameCommand;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
 import byu.codemonkeys.tickettoride.shared.commands.CommandType;
-import byu.codemonkeys.tickettoride.shared.model.IDeck;
+import byu.codemonkeys.tickettoride.shared.model.cards.IDeck;
 import byu.codemonkeys.tickettoride.shared.model.Opponent;
 import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.Self;

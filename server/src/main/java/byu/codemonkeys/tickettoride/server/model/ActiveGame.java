@@ -108,7 +108,7 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
         }
 
         clientGame.setPlayers(clientPlayers);
-        clientGame.setDeck(new byu.codemonkeys.tickettoride.shared.model.Deck(this.getDeck()));
+        clientGame.setDeck(new byu.codemonkeys.tickettoride.shared.model.cards.Deck(this.getDeck()));
 
         return clientGame;
     }
