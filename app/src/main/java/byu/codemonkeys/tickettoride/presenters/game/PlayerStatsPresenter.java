@@ -1,6 +1,10 @@
 package byu.codemonkeys.tickettoride.presenters.game;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import byu.codemonkeys.tickettoride.models.IModelFacade;
+import byu.codemonkeys.tickettoride.models.ModelFacade;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.PlayerStatsContract;
@@ -10,7 +14,7 @@ import byu.codemonkeys.tickettoride.presenters.PresenterBase;
  * Created by Ryan on 10/17/2017.
  */
 
-public class PlayerStatsPresenter extends PresenterBase implements PlayerStatsContract.Presenters {
+public class PlayerStatsPresenter extends PresenterBase implements PlayerStatsContract.Presenters, Observer {
 	private PlayerStatsContract.View view;
 	
 	public PlayerStatsPresenter(PlayerStatsContract.View view,
@@ -19,5 +23,14 @@ public class PlayerStatsPresenter extends PresenterBase implements PlayerStatsCo
 								IModelFacade modelFacade) {
 		super(navigator, messageDisplayer, modelFacade);
 		this.view = view;
+		this.modelFacade.addObserver(this);
+	}
+	
+	@Override
+	public void update(Observable observable, Object o) {
+		if (o == ModelFacade.PLAYER_STATS_UPDATE){
+			this.view.setPlayerStats(this.modelFacade.getPlayerInfo());
+		}
+		
 	}
 }

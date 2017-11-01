@@ -1,12 +1,21 @@
-package byu.codemonkeys.tickettoride.models.cards;
+package byu.codemonkeys.tickettoride.shared.model.cards;
 
 /**
  * Created by Ryan on 10/18/2017.
  */
 
 public class DestinationCard {
+	//region Properties
+	// region ID Property
+	private final int id;
+	
+	public int getId() {
+		return id;
+	}
+	// endregion
+	
 	// region DestinationA Property
-	private int destinationA;
+	private final int destinationA;
 	
 	public int getDestinationA() {
 		return destinationA;
@@ -14,7 +23,7 @@ public class DestinationCard {
 	// endregion
 	
 	// region DestinationB Property
-	private int destinationB;
+	private final int destinationB;
 	
 	public int getDestinationB() {
 		return destinationB;
@@ -22,16 +31,18 @@ public class DestinationCard {
 	// endregion
 	
 	// region Point Value Property
-	private int pointValue;
+	private final int pointValue;
 	
 	public int getPointValue() {
 		return pointValue;
 	}
 	// endregion
+	// endregion
 	
-	public DestinationCard(int destinationA, int destinationB, int pointValue) {
+	public DestinationCard(int id, int destinationA, int destinationB, int pointValue) {
 		this.destinationA = destinationA;
 		this.destinationB = destinationB;
 		this.pointValue = pointValue;
+		this.id = id;
 	}
 }

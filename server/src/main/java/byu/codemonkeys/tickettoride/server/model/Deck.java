@@ -8,15 +8,16 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
 
-import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
-import byu.codemonkeys.tickettoride.shared.model.IDeck;
-import byu.codemonkeys.tickettoride.shared.model.TrainCard;
+import byu.codemonkeys.tickettoride.shared.model.cards.IDeck;
+import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
+import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
+import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 
-public class Deck extends byu.codemonkeys.tickettoride.shared.model.Deck implements IDeck {
+public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck implements IDeck {
     // The number of each non-wild type the full deck contains
     private static int NUM_STANDARD = 12;
     // The number of locomotives the full deck contains
-    private static int NUM_LOCOMOTIVE = 14;
+    private static int NUM_WILD = 14;
     // The number of destination cards a player must typically draw
     private static int NUM_DESTINATIONS_TO_DRAW = 3;
 
@@ -31,8 +32,8 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.Deck impleme
 
         List<TrainCard> shuffler = new ArrayList<>();
 
-        for (TrainCard.Type type : TrainCard.Type.values()) {
-            int amount = type == TrainCard.Type.Locomotive ? NUM_LOCOMOTIVE : NUM_STANDARD;
+        for (CardType type : CardType.values()) {
+            int amount = type == CardType.Wild ? NUM_WILD : NUM_STANDARD;
 
             for (int i = 0; i < amount; ++i) {
                 shuffler.add(new TrainCard(type));

@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import byu.codemonkeys.tickettoride.R;
-import byu.codemonkeys.tickettoride.models.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.DrawDestinationCardsContract;
+import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.views.OnRecyclerItemClickListener;
 import byu.codemonkeys.tickettoride.views.widgets.HorizontalSpaceItemDecoration;
 
@@ -45,7 +45,7 @@ public class DrawDestinationCardsFragment extends Fragment implements DrawDestin
 		View view = inflater.inflate(R.layout.fragment_draw_destination_cards, container, false);
 		getViews(view);
 		initRecycler(view);
-//		setClickListeners();
+		setClickListeners();
 		return view;
 	}
 	
@@ -71,8 +71,9 @@ public class DrawDestinationCardsFragment extends Fragment implements DrawDestin
 																				 DestinationCard card) {
 																		 }
 																	 });
+		destinationCardsAdapter.setCanSelectCards(true);
 		recyclerDestinationCards.setAdapter(destinationCardsAdapter);
-//		scrollToMiddle();
+		//		scrollToMiddle();
 	}
 	
 	private void scrollToMiddle() {

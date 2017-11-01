@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import java.util.Map;
 
 import byu.codemonkeys.tickettoride.R;
-import byu.codemonkeys.tickettoride.models.player.PlayerColorEnum;
+import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
 import byu.codemonkeys.tickettoride.views.viewdata.PointBubblesData;
 import byu.codemonkeys.tickettoride.views.widgets.MapEdgeWidget;
 import byu.codemonkeys.tickettoride.views.widgets.Viewport;
@@ -59,14 +59,14 @@ public class MapFragment extends Fragment {
 			int y = (int) (bubble.getMapYRatio() * mapDrawable.getIntrinsicHeight() -
 					bubbleSize / 2.0f);
 			pointBubble.setLayoutParams(new Viewport.LayoutParams(bubbleSize, bubbleSize, x, y));
-			pointBubble.setClaimedColor(PlayerColorEnum.None);
+			pointBubble.setClaimedColor(PlayerColor.None);
 			this.viewport.addView(pointBubble);
 			
 			pointBubble.setClickable(true);
 			pointBubble.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					pointBubble.setClaimedColor(PlayerColorEnum.Red);
+					pointBubble.setClaimedColor(PlayerColor.Red);
 					
 				}
 			});

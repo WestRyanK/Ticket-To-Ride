@@ -7,8 +7,8 @@ import byu.codemonkeys.tickettoride.models.history.ChatManager;
 import byu.codemonkeys.tickettoride.models.history.CommandHistoryEntry;
 import byu.codemonkeys.tickettoride.models.history.HistoryManager;
 import byu.codemonkeys.tickettoride.shared.model.*;
-import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
-import byu.codemonkeys.tickettoride.shared.model.TrainCard;
+import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
+import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 
 public class ModelRoot extends Observable {
 	private static ModelRoot instance;
@@ -19,7 +19,7 @@ public class ModelRoot extends Observable {
 	private ActiveGame game;
 	private HistoryManager history;
 	private ChatManager chat;
-	private List<byu.codemonkeys.tickettoride.shared.model.TrainCard> trainCards;
+	private List<TrainCard> trainCards;
 	private List<DestinationCard> destinationCards;
 
 	
@@ -87,7 +87,7 @@ public class ModelRoot extends Observable {
 		return chat.getMessages();
 	}
 
-	public void removeTrainCard(byu.codemonkeys.tickettoride.shared.model.TrainCard card){
+	public void removeTrainCard(TrainCard card){
 		trainCards.remove(card);
 	}
 
@@ -99,7 +99,7 @@ public class ModelRoot extends Observable {
 		return history.getCommandHistory();
 	}
 
-	public void addTrainCards(List<byu.codemonkeys.tickettoride.shared.model.TrainCard> cards){
+	public void addTrainCards(List<TrainCard> cards){
 		trainCards.addAll(cards);
 	}
 

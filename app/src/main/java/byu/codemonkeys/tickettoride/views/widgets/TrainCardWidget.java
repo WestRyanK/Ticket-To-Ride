@@ -2,6 +2,11 @@ package byu.codemonkeys.tickettoride.views.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -15,12 +20,28 @@ import android.widget.TextView;
 
 import byu.codemonkeys.tickettoride.R;
 
-public class TrainCardWidget extends RelativeLayout implements OnClickListener, OnFocusChangeListener, OnLongClickListener {
+public class TrainCardWidget extends View implements OnClickListener, OnFocusChangeListener, OnLongClickListener {
 	
 	private static final String TAG = "TRAIN_CARD";
-	private TextView textViewCount;
-	private RelativeLayout layoutBackground;
-	private ImageView imageViewCard;
+	private Rect clipBounds = new Rect();
+	//	private TextView textViewCount;
+	//	private RelativeLayout layoutBackground;
+	//	private ImageView imageViewCard;
+	
+	private static Typeface levibrush;
+	private static Paint textPaint;
+	
+	{
+		levibrush = Typeface.createFromAsset(getContext().getAssets(),
+											 //				, "levibrush.ttf");
+											 "fonts/levibrush.ttf");
+		textPaint = new Paint();
+		textPaint.setColor(Color.parseColor("#FFFFFF"));
+		textPaint.setTypeface(levibrush);
+		textPaint.setTextSize(100);
+		textPaint.setTextAlign(Paint.Align.CENTER);
+		textPaint.setAntiAlias(true);
+	}
 	
 	// region Public Properties
 	
@@ -33,7 +54,7 @@ public class TrainCardWidget extends RelativeLayout implements OnClickListener, 
 	
 	public void setCount(int count) {
 		this.count = count;
-		this.textViewCount.setText(String.valueOf(count));
+		this.invalidate();
 	}
 	// endregion
 	
@@ -46,11 +67,7 @@ public class TrainCardWidget extends RelativeLayout implements OnClickListener, 
 	
 	public void setShowCount(boolean showCount) {
 		this.showCount = showCount;
-		if (this.isShowCount()) {
-			this.textViewCount.setVisibility(View.VISIBLE);
-		} else {
-			this.textViewCount.setVisibility(View.INVISIBLE);
-		}
+		this.invalidate();
 	}
 	// endregion
 	
@@ -63,14 +80,33 @@ public class TrainCardWidget extends RelativeLayout implements OnClickListener, 
 	
 	public void setCardDrawable(Drawable cardDrawable) {
 		this.cardDrawable = cardDrawable;
-		this.imageViewCard.setImageDrawable(cardDrawable);
-		//		this.imageViewCard.setBackground(cardDrawable);
-		//						this.layoutBackground.setBackground(cardDrawable);
+		this.invalidate();
 	}
 	// endregion
-	
 	// endregion
 	
+	
+	@Override
+	protected void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
+		final float countXRatio = 0.25f;
+		final float countYRatio = 0.85f;
+		final float fontSizeRatio = 0.5f;
+		textPaint.setTextSize(fontSizeRatio * this.getHeight());
+		
+		if (this.cardDrawable != null) {
+			canvas.getClipBounds(clipBounds);
+			this.cardDrawable.setBounds(clipBounds);
+			this.cardDrawable.draw(canvas);
+		}
+		
+		if (this.showCount) {
+			canvas.drawText(String.valueOf(this.count),
+							countXRatio * this.getHeight(),
+							countYRatio * this.getHeight(),
+							textPaint);
+		}
+	}
 	
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -78,7 +114,7 @@ public class TrainCardWidget extends RelativeLayout implements OnClickListener, 
 		
 		Drawable d = getCardDrawable();
 		if (d == null)
-			return;
+			d = getResources().getDrawable(R.drawable.card_black);
 		
 		float drawableRatio = d.getIntrinsicWidth() / (float) d.getIntrinsicHeight();
 		int widthSize = MeasureSpec.getSize(widthMeasureSpec);
@@ -97,10 +133,10 @@ public class TrainCardWidget extends RelativeLayout implements OnClickListener, 
 		
 		int childWidthSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY);
 		int childHeightSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
-		measureChildren(childWidthSpec, childHeightSpec);
 		setMeasuredDimension(width, height);
 	}
 	
+	// region Constructors
 	public TrainCardWidget(Context context) {
 		this(context, null);
 	}
@@ -112,17 +148,7 @@ public class TrainCardWidget extends RelativeLayout implements OnClickListener, 
 	@SuppressWarnings({"UnusedDeclaration"})
 	public TrainCardWidget(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs);
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		inflater.inflate(R.layout.train_card, this, true);
-		getViews();
-		
 		applyAttributes(context, attrs);
-	}
-	
-	private void getViews() {
-		textViewCount = (TextView) findViewById(R.id.trainCard_textViewCount);
-		layoutBackground = (RelativeLayout) findViewById(R.id.trainCard_background);
-		imageViewCard = (ImageView) findViewById(R.id.trainCard_imageViewCard);
 	}
 	
 	private void applyAttributes(Context context, AttributeSet attrs) {
@@ -137,6 +163,7 @@ public class TrainCardWidget extends RelativeLayout implements OnClickListener, 
 			a.recycle();
 		}
 	}
+	// endregion
 	
 	public void onClick(View v) {
 	}

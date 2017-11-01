@@ -1,5 +1,7 @@
 package byu.codemonkeys.tickettoride.shared.model;
 
+import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
+
 public abstract class Player extends UserBase {
     public static class Type {
         public static final String Self = "self";

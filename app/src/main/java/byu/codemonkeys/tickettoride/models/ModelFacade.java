@@ -13,8 +13,9 @@ import byu.codemonkeys.tickettoride.networking.ServerProxy;
 import byu.codemonkeys.tickettoride.shared.IServer;
 import byu.codemonkeys.tickettoride.shared.commands.ICommand;
 import byu.codemonkeys.tickettoride.shared.model.*;
-import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.Player;
+import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
+import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
@@ -31,6 +32,7 @@ public class ModelFacade implements IModelFacade {
 
 	public static final String PENDING_GAMES_UPDATE = "PendingGamesUpdate";
 	public static final String PENDING_GAME_UPDATE = "PendingGameUpdate";
+	public static final String PLAYER_STATS_UPDATE = "PlayerStatsUpdate";
 
 	private ModelFacade() {
 	}
@@ -251,27 +253,27 @@ public class ModelFacade implements IModelFacade {
 	}
 
 	//Here for the sake of the demonstration, just in case we need them, although these should already be covered in the user actions
-	public void addTrainCard(byu.codemonkeys.tickettoride.shared.model.TrainCard card) {
+	public void addTrainCard(byu.codemonkeys.tickettoride.shared.model.cards.TrainCard card) {
 		models.addTrainCard(card);
 	}
 
-	public void addTrainCards(List<byu.codemonkeys.tickettoride.shared.model.TrainCard> cards){
+	public void addTrainCards(List<TrainCard> cards){
 		models.addTrainCards(cards);
 	}
 
-	public void removeTrainCard(byu.codemonkeys.tickettoride.shared.model.TrainCard card) {
+	public void removeTrainCard(TrainCard card) {
 		models.removeTrainCard(card);
 	}
 
-	public void addDestinationCard(byu.codemonkeys.tickettoride.shared.model.DestinationCard card) {
+	public void addDestinationCard(DestinationCard card) {
 		models.addDestinationCard(card);
 	}
 
-	public void addDestinationCards(List<byu.codemonkeys.tickettoride.shared.model.DestinationCard> cards){
+	public void addDestinationCards(List<DestinationCard> cards){
 		models.addDestinationCards(cards);
 	}
 
-	public void removeDestinationCard(byu.codemonkeys.tickettoride.shared.model.DestinationCard card) {
+	public void removeDestinationCard(DestinationCard card) {
 		models.removeDestinationCard(card);
 	}
 
@@ -289,17 +291,17 @@ public class ModelFacade implements IModelFacade {
 	}
 
 	//TODO: implement this in a future phase
-	public List<byu.codemonkeys.tickettoride.shared.model.TrainCard> drawTrainCards() {
+	public List<TrainCard> drawTrainCards() {
 		return null;
 	}
 
-	public List<byu.codemonkeys.tickettoride.shared.model.DestinationCard> drawDestinationCards() {
+	public List<DestinationCard> drawDestinationCards() {
 		DestinationCardResult result = serverProxy.drawDestinationCards(models.getSession().getAuthToken());
 		return result.getDestinationCards();
 	}
 
 	//TODO: implement this in a future phase
-	public void selectTrainCards(List<byu.codemonkeys.tickettoride.shared.model.TrainCard> cards) {}
+	public void selectTrainCards(List<TrainCard> cards) {}
 
 	public void selectDestinationCards(List<DestinationCard> cards) {
 		//Make server call
