@@ -17,9 +17,19 @@ public class ModelRoot extends Observable {
 	private List<GameBase> pendingGames;
 	private Session session;
 	private ActiveGame game;
+<<<<<<< HEAD
 	private HistoryManager history;
 	private ChatManager chat;
 	private List<TrainCard> trainCards;
+||||||| merged common ancestors
+	private List<GameHistoryEntry> gameHistory;
+	private List<Message> messages;
+	private List<byu.codemonkeys.tickettoride.shared.model.TrainCard> trainCards;
+=======
+	private HistoryManager history;
+	private ChatManager chat;
+	private List<byu.codemonkeys.tickettoride.shared.model.TrainCard> trainCards;
+>>>>>>> master
 	private List<DestinationCard> destinationCards;
 
 	
@@ -77,8 +87,6 @@ public class ModelRoot extends Observable {
 	
 	public void setGame(ActiveGame game) {
 		this.game = game;
-		setChanged();
-		notifyObservers(ModelFacade.GAME_UPDATE);
 	}
 	
 	public ActiveGame getGame() {
@@ -123,15 +131,9 @@ public class ModelRoot extends Observable {
 
 	public void addMessage(Message message) {
 		chat.addMessage(message);
-		setChanged();
-		notifyObservers(ModelFacade.CHAT_UPDATE);
 	}
 
 	public HistoryManager getHistoryManager() {
 		return history;
-	}
-
-	public ChatManager getChatManager() {
-		return chat;
 	}
 }

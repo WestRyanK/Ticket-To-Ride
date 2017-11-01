@@ -89,6 +89,9 @@ public interface IModelFacade {
 	List<DestinationCard> drawDestinationCards();
 	void selectTrainCards(List<TrainCard> cards);
 	void selectDestinationCards(List<DestinationCard> cards);
+	
+	void selectDestinationCardsAsync(List<DestinationCard> cards, ICallback selectDestinationCardsCallback);
+	
 	//TODO: add claimed route, waiting on map
 
 	List<Message> getMessages();

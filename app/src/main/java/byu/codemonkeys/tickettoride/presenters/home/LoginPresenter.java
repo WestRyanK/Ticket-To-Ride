@@ -63,7 +63,7 @@ public class LoginPresenter extends PresenterBase implements LoginContract.Prese
 	
 	@Override
 	public void setDefaults() {
-		this.view.setUsername("");
-		this.view.setPassword("");
+		this.view.setUsername("westryank");
+		this.view.setPassword("password");
 	}
 }
