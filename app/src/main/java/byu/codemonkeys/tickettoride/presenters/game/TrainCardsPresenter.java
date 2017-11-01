@@ -34,7 +34,9 @@ public class TrainCardsPresenter extends PresenterBase implements TrainCardsCont
     public void update(Observable observable, Object o) {
         if (o == ModelFacade.GAME_UPDATE) {
             // This will be changed to use ModelFacade
-            this.view.setHand(ModelRoot.getInstance().getGame().getSelf().getHand());
+            loadHand();
+        } else if (o == ModelFacade.PLAYER_TRAIN_CARDS_UPDATE) {
+            loadHand();
         }
     }
 }

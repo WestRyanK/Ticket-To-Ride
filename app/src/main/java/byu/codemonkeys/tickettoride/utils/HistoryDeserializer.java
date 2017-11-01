@@ -20,6 +20,7 @@ import byu.codemonkeys.tickettoride.commands.SendMessageCommand;
 import byu.codemonkeys.tickettoride.commands.SetupGameCommand;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
 import byu.codemonkeys.tickettoride.shared.commands.CommandType;
+import byu.codemonkeys.tickettoride.shared.model.cards.Deck;
 import byu.codemonkeys.tickettoride.shared.model.cards.IDeck;
 import byu.codemonkeys.tickettoride.shared.model.Opponent;
 import byu.codemonkeys.tickettoride.shared.model.Player;
@@ -38,10 +39,14 @@ public class HistoryDeserializer {
             .registerSubtype(Self.class, Player.Type.Self)
             .registerSubtype(Opponent.class, Player.Type.Opponent);
 
+    private static final RuntimeTypeAdapterFactory<IDeck> deckTypeFactory =
+            RuntimeTypeAdapterFactory.of(IDeck.class, "type")
+            .registerSubtype(Deck.class, "deck");
+
     private static final Gson gson = new GsonBuilder()
             .registerTypeAdapterFactory(typeFactory)
             .registerTypeAdapterFactory(playerTypeFactory)
-            .registerTypeAdapter(IDeck.class, new IDeckInstanceCreator())
+            .registerTypeAdapterFactory(deckTypeFactory)
             .create();
 
     public static List<CommandData> deserialize(String json) {

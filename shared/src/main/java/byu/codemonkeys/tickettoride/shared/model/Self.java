@@ -1,5 +1,6 @@
 package byu.codemonkeys.tickettoride.shared.model;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -79,6 +80,23 @@ public class Self extends Player {
 		hand.put(card.getCardColor(), hand.get(card.getCardColor()) + 1);
 //		setChanged();
 //		notifyObservers(PLAYER_TRAIN_CARDS_UPDATE);
+	}
+
+	public void setHand(Collection<TrainCard> cards) {
+    	Map<CardType, Integer> hand = new HashMap<>();
+
+    	for (TrainCard card : cards) {
+    		if (!hand.containsKey(card.getCardColor())) {
+    			hand.put(card.getCardColor(), 0);
+			}
+
+			hand.put(card.getCardColor(), hand.get(card.getCardColor()) + 1);
+		}
+
+		this.hand = hand;
+
+		setChanged();
+		notifyObservers(PLAYER_TRAIN_CARDS_UPDATE);
 	}
 
 	public void giveDestinationCards(Set<DestinationCard> cards) {

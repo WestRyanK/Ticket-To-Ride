@@ -8,6 +8,8 @@ public class Deck implements IDeck {
     // The maximum number of revealed drawable cards
     private static int NUM_REVEALED = 5;
 
+    protected String type = "deck";
+
     protected List<TrainCard> revealed;
     protected int numHidden;
     protected int numDestinationCards;
