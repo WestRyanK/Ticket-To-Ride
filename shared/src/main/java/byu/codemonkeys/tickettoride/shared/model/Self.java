@@ -42,6 +42,10 @@ public class Self extends Player {
 		this.destinations = destinations;
 	}
 
+	public Map<CardType, Integer> getHand() {
+	    return hand;
+    }
+
     public Set<DestinationCard> getSelecting() {
         return selecting;
     }

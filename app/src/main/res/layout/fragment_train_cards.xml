@@ -15,6 +15,7 @@
     <!--android:layout_width="60dp"-->
     <!--android:layout_height="42dp"-->
     <byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget
+        android:id="@+id/card_wild"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -22,6 +23,7 @@
         app:showCount="true"/>
 
     <byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget
+        android:id="@+id/card_red"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -29,6 +31,7 @@
         app:showCount="true"/>
 
     <byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget
+        android:id="@+id/card_orange"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -37,6 +40,7 @@
         app:showCount="true"/>
 
     <byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget
+        android:id="@+id/card_yellow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -44,6 +48,7 @@
         app:showCount="true"/>
 
     <byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget
+        android:id="@+id/card_green"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -51,6 +56,7 @@
         app:showCount="true"/>
 
     <byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget
+        android:id="@+id/card_blue"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -58,6 +64,7 @@
         app:showCount="true"/>
 
     <byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget
+        android:id="@+id/card_purple"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -65,6 +72,7 @@
         app:showCount="true"/>
 
     <byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget
+        android:id="@+id/card_black"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -72,6 +80,7 @@
         app:showCount="true"/>
 
     <byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget
+        android:id="@+id/card_white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"

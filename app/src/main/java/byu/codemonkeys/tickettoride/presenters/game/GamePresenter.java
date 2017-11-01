@@ -42,6 +42,7 @@ public class GamePresenter extends PresenterBase implements GameContract.Present
 	@Override
 	public void update(Observable observable, Object o) {
 		if (o == ModelFacade.GAME_UPDATE) {
+			this.view.setHand(ModelRoot.getInstance().getGame().getSelf().getHand());
 			this.navigator.navigate(PresenterEnum.DrawDestinationCards, true);
 		}
 	}
