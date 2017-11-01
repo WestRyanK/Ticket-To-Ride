@@ -15,6 +15,12 @@ public abstract class Player extends UserBase {
 	protected int numDestinationCards;
 	protected int numTrains;
 	
+	public static final String PLAYER_SCORE_UPDATE = "ScoreUpdate";
+	public static final String PLAYER_COLOR_UPDATE = "ColorUpdate";
+	public static final String PLAYER_TRAINS_UPDATE = "NumTrainsUpdate";
+	public static final String PLAYER_TRAIN_CARDS_UPDATE = "NumTrainCardsUpdate";
+	public static final String PLAYER_DESTINATION_CARDS_UPDATE = "NumDestinationCardsUpdate";
+	
 	protected Player(String userName, String type) {
 		super(userName);
 		this.type = type;
@@ -22,12 +28,11 @@ public abstract class Player extends UserBase {
 	}
 	
 	public static Player copyPlayer(Player player) {
-		if (player.getClass() == Self.class){
+		if (player.getClass() == Self.class) {
 			return new Self(player);
-		} else if (player.getClass() == Opponent.class){
+		} else if (player.getClass() == Opponent.class) {
 			return new Opponent(player);
-		}
-		else
+		} else
 			return null;
 	}
 	
@@ -52,8 +57,8 @@ public abstract class Player extends UserBase {
 		}
 		
 		this.score = score;
-		//        setChanged();
-		//        notifyObservers(SCORE_UPDATE);
+		setChanged();
+		notifyObservers(PLAYER_SCORE_UPDATE);
 	}
 	
 	public PlayerColor getColor() {
@@ -62,8 +67,8 @@ public abstract class Player extends UserBase {
 	
 	public void setColor(PlayerColor color) {
 		this.color = color;
-		//        setChanged();
-		//        notifyObservers(COLOR_UPDATE);
+		setChanged();
+		notifyObservers(PLAYER_COLOR_UPDATE);
 	}
 	
 	public int getNumTrainCards() {
@@ -72,8 +77,8 @@ public abstract class Player extends UserBase {
 	
 	public void addTrainCard(TrainCard card) {
 		++numTrainCards;
-		//        setChanged();
-		//        notifyObservers(PLAYER_TRAIN_CARDS_UPDATE);
+		setChanged();
+		notifyObservers(PLAYER_TRAIN_CARDS_UPDATE);
 	}
 	
 	public int getNumDestinationCards() {
@@ -86,7 +91,7 @@ public abstract class Player extends UserBase {
 	
 	public void setNumTrains(int numTrains) {
 		this.numTrains = numTrains;
-		//        setChanged();
-		//        notifyObservers(PLAYER_TRAINS_UPDATE);
+		setChanged();
+		notifyObservers(PLAYER_TRAINS_UPDATE);
 	}
 }
