@@ -86,7 +86,7 @@ public class MapEdgeWidget extends View {
 	}
 	
 	private void init(Context context) {
-		this.setPoints(0);
+		this.setPoints(1);
 		this.setClaimedColor(PlayerColor.None);
 		this.circleFillPaint = new Paint();
 		this.circleFillPaint.setStyle(Paint.Style.FILL);

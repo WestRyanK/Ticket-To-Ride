@@ -14,6 +14,7 @@ import byu.codemonkeys.tickettoride.models.ModelFacade;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.GameContract;
 import byu.codemonkeys.tickettoride.presenters.game.DrawTrainCardsPresenter;
 import byu.codemonkeys.tickettoride.presenters.game.GameSidebarPresenter;
+import byu.codemonkeys.tickettoride.presenters.game.MapPresenter;
 import byu.codemonkeys.tickettoride.presenters.game.PlayerStatsPresenter;
 
 /**
@@ -83,10 +84,10 @@ public class GameFragment extends Fragment implements GameContract.View{
 				.commit();
 		frameMap = (FrameLayout) view.findViewById(R.id.game_frameMap);
 		MapFragment mapFragment = new MapFragment();
-		//		mapFragment.setPresenter(new MapPresenter(mapFragment,
-		//															  activity,
-		//															  activity,
-		//															  ModelFacade.getInstance()));
+		mapFragment.setPresenter(new MapPresenter(mapFragment,
+															  activity,
+															  activity,
+															  ModelFacade.getInstance()));
 		activity.getSupportFragmentManager()
 				.beginTransaction()
 				.replace(R.id.game_frameMap, mapFragment)
