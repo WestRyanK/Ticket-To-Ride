@@ -12,7 +12,7 @@ public class GameMap {
 	transient private List<Route> routes;
 	
 	public GameMap() {
-		GameMap map = GameMapLoader.loadGameMapFromResources();
+		GameMap map = GameMapLoader.getInstance().loadGameMapFromResources();
 		init(map.cities, map.routes);
 	}
 	

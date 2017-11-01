@@ -9,6 +9,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import byu.codemonkeys.tickettoride.shared.model.LoaderBase;
 import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
 
 /**
@@ -16,18 +17,29 @@ import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
  */
 
 
-public class GameMapLoader {
-	private static ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+public class GameMapLoader extends LoaderBase {
+	
+	private static GameMapLoader instance;
+	
+	public static GameMapLoader getInstance() {
+		if (instance == null)
+			instance = new GameMapLoader();
+		return instance;
+	}
+	
+	private GameMapLoader() {
+		
+	}
 	
 	
-	public static GameMap loadGameMapFromResources() {
+	public GameMap loadGameMapFromResources() {
 		List<City> cities = loadCitiesFromResource();
 		List<Route> routes = loadRoutesFromResource(cities);
 		GameMap map = new GameMap(cities, routes);
 		return map;
 	}
 	
-	private static List<City> loadCitiesFromResource() {
+	private List<City> loadCitiesFromResource() {
 		List<CityData> citiesData = getDataFromResource("cities.json",
 														new TypeToken<ArrayList<CityData>>() {
 														}.getType());
@@ -41,7 +53,7 @@ public class GameMapLoader {
 		return cities;
 	}
 	
-	private static List<Route> loadRoutesFromResource(List<City> cities) {
+	private List<Route> loadRoutesFromResource(List<City> cities) {
 		List<RouteData> routesData = getDataFromResource("routes.json",
 														 new TypeToken<ArrayList<RouteData>>() {
 														 }.getType());
@@ -61,7 +73,7 @@ public class GameMapLoader {
 		return routes;
 	}
 	
-	private static City getCityWithID(List<City> cities, int id) {
+	private City getCityWithID(List<City> cities, int id) {
 		City city = cities.get(id);
 		if (city.getID() == id)
 			return city;
@@ -74,27 +86,6 @@ public class GameMapLoader {
 		return null;
 	}
 	
-	private static <T> List<T> getDataFromResource(String resourceName, Type type) {
-		List<T> data = null;
-		InputStreamReader isr = null;
-		try {
-			isr = new InputStreamReader(classLoader.getResourceAsStream(resourceName));
-			Gson gson = new Gson();
-			data = gson.fromJson(isr, type);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				isr.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return data;
-	}
-	
-	
 	private class CityData {
 		public int ID;
 		public String City;
@@ -106,7 +97,7 @@ public class GameMapLoader {
 		public int DestinationA;
 		public int DestinationB;
 		public double ratioX;
-		public int ratioY;
+		public double ratioY;
 		public int length;
 	}
 }

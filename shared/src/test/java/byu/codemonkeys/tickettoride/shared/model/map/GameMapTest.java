@@ -13,7 +13,7 @@ public class GameMapTest {
 	public void LoadMapTest()
 	{
 		GameMap map = new GameMap();
-		assertEquals(map.getAllRoutes().size(), 102);
+		assertEquals(103, map.getAllRoutes().size());
 	}
 	
 }
