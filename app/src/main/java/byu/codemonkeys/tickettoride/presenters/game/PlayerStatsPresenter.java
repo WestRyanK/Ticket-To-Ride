@@ -29,12 +29,19 @@ public class PlayerStatsPresenter extends PresenterBase implements PlayerStatsCo
 	
 	@Override
 	public void update(Observable observable, Object o) {
-		if (o == ModelFacade.PLAYER_STATS_UPDATE) {
-			this.view.setPlayerStats(this.modelFacade.getPlayerInfo());
-		} else if (o == ModelFacade.PLAYER_TURN_UPDATE) {
-			int currentTurn = ModelRoot.getInstance().getGame().getTurn();
-			this.view.setCurrentTurn(currentTurn);
+		if (o == ModelFacade.PLAYER_STATS_UPDATE || o == ModelFacade.GAME_UPDATE || o == ModelFacade.PLAYER_TURN_UPDATE ) {
+			loadPlayerStats();
 		}
-		
+//		if (o == ModelFacade.PLAYER_TURN_UPDATE || o == ModelFacade.GAME_UPDATE) {
+//			int currentTurn = ModelRoot.getInstance().getGame().getTurn();
+//			this.view.setCurrentTurn(currentTurn);
+//		}
+	}
+	
+	@Override
+	public void loadPlayerStats() {
+		this.view.setPlayerStats(this.modelFacade.getPlayerInfo());
+		int currentTurn = ModelRoot.getInstance().getGame().getTurn();
+		this.view.setCurrentTurn(currentTurn);
 	}
 }

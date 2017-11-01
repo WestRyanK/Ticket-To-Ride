@@ -2,11 +2,24 @@ apply plugin: 'com.android.application'
 
 task deleteResources(type: Delete) {
     delete fileTree('../shared/build/classes/main/') {
-        include '*.json'
+        include '**/*.json'
     }
 }
 
-build.dependsOn deleteResources
+//task copyResources(type: Copy) {
+//    from('../shared/src/main/resources/')
+//    into('../shared/build/classes/main/')
+//}
+
+//gradle.buildFinished {
+////    task copyResources(type: Copy){
+////        from('shared/src/main/resources/')
+////        into('shared/build/classes/main/')
+////    }
+////    myPrint
+//    println "#################"
+//}
+preBuild.dependsOn deleteResources
 
 
 android {

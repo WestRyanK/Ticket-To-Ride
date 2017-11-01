@@ -30,7 +30,7 @@ import byu.codemonkeys.tickettoride.views.widgets.PlayerStatsWidget;
  */
 public class PlayersStatsFragment extends Fragment implements PlayerStatsContract.View {
 	
-	private PlayerStatsContract.Presenters presenters;
+	private PlayerStatsContract.Presenters presenter;
 	private List<PlayerStatsWidget> playerStatsWidgets;
 	
 	public PlayersStatsFragment() {
@@ -65,8 +65,8 @@ public class PlayersStatsFragment extends Fragment implements PlayerStatsContrac
 		playerStatsWidgets.add((PlayerStatsWidget) view.findViewById(R.id.playersStats_player4));
 	}
 	
-	public void setPresenters(PlayerStatsContract.Presenters presenters) {
-		this.presenters = presenters;
+	public void setPresenters(PlayerStatsContract.Presenters presenter) {
+		this.presenter = presenter;
 	}
 	
 	@Override

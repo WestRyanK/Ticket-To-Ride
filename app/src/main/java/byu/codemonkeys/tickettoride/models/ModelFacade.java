@@ -1,6 +1,7 @@
 package byu.codemonkeys.tickettoride.models;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Observer;
 
 import byu.codemonkeys.tickettoride.async.ICallback;
@@ -343,7 +344,8 @@ public class ModelFacade implements IModelFacade {
 	}
 	
 	@Override
-	public void beginGame() {
+	public void beginGame(Map<UserBase, Integer> numDestinationCards) {
+		
 	}
 	//TODO: add claimed route, waiting on map
 	

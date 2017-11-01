@@ -61,8 +61,8 @@ public class RegisterPresenter extends PresenterBase implements RegisterContract
 	
 	@Override
 	public void setDefaults() {
-		this.view.setUsername("");
-		this.view.setPassword("");
+		this.view.setUsername("westryank");
+		this.view.setPassword("password");
 		
 	}
 }

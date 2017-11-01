@@ -1,5 +1,7 @@
 package byu.codemonkeys.tickettoride.shared.model;
 
+import com.sun.org.apache.xerces.internal.xni.parser.XMLDTDContentModelFilter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -41,20 +43,14 @@ public class ActiveGame extends GameBase implements Observer{
 		this.started = true;
 	}
 	
-	public ActiveGame(ActiveGame game) {
-		map = new GameMap();
-		turn = 0;
-		deck = game.getDeck();
+	public static ActiveGame copyActiveGame(ActiveGame game){
+		ActiveGame activeGame = new ActiveGame(game);
+		activeGame.deck = game.getDeck();
 		for (Player player : game.getPlayers()) {
-			this.players.add(Player.copyPlayer(player));
+			activeGame.players.add(Player.copyPlayer(player));
 		}
 		
-		// Copy GameBase fields
-		this.gameID = game.getID();
-		this.gameName = game.getName();
-		this.gameOwner = game.getOwner();
-		this.gameUsers = game.getUsers();
-		this.started = true;
+		return activeGame;
 	}
 	
 	/**
@@ -145,6 +141,5 @@ public class ActiveGame extends GameBase implements Observer{
 		public void update(Observable o, Object arg) {
 			setChanged();
 			notifyObservers(o);
-
 		}
 }

@@ -22,9 +22,9 @@ public abstract class Player extends UserBase {
 	}
 	
 	public static Player copyPlayer(Player player) {
-		if (player.getType() == Type.Self) {
+		if (player.getClass() == Self.class){
 			return new Self(player);
-		} else if (player.getType() == Type.Opponent) {
+		} else if (player.getClass() == Opponent.class){
 			return new Opponent(player);
 		}
 		else

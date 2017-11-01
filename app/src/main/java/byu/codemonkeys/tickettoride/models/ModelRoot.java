@@ -77,13 +77,13 @@ public class ModelRoot extends Observable implements Observer {
 	}
 	
 	public void setGame(ActiveGame game) {
-//		if (this.game != null && this.game.countObservers() > 0)
-//			this.game.deleteObservers();
+		if (this.game != null && this.game.countObservers() > 0)
+			this.game.deleteObservers();
 		this.game = game;
-//		if (this.game != null) {
-//			this.game.addObserver(this);
-//			this.game.setObservesChildren(true);
-//		}
+		if (this.game != null) {
+			this.game.addObserver(this);
+			this.game.setObservesChildren(true);
+		}
 		setChanged();
 		notifyObservers(ModelFacade.GAME_UPDATE);
 	}
@@ -142,15 +142,15 @@ public class ModelRoot extends Observable implements Observer {
 		notifyObservers(o);
 	}
 	
-	public void setScore(Player player, int score){
-		this.getGame().getPlayer(player).setScore(score);
-		this.setChanged();
-		this.notifyObservers(ModelFacade.SCORE_UPDATE);
-	}
-	
-	public void setTurn(int turn){
-		this.getGame().setTurn(turn);
-		this.setChanged();
-		this.notifyObservers(ModelFacade.PLAYER_TURN_UPDATE);
-	}
+//	public void setScore(Player player, int score){
+//		this.getGame().getPlayer(player).setScore(score);
+//		this.setChanged();
+//		this.notifyObservers(ModelFacade.SCORE_UPDATE);
+//	}
+//
+//	public void setTurn(int turn){
+//		this.getGame().setTurn(turn);
+//		this.setChanged();
+//		this.notifyObservers(ModelFacade.PLAYER_TURN_UPDATE);
+//	}
 }

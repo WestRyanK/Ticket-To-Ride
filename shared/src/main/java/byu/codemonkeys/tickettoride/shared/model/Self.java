@@ -49,6 +49,8 @@ public class Self extends Player {
 		Self playerSelf = (Self) player;
 		this.hand = playerSelf.hand;
 		this.destinations = playerSelf.destinations;
+		this.selecting = ((Self) player).getSelecting();
+		this.color = player.color;
 	}
 
     public Set<DestinationCard> getSelecting() {
