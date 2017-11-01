@@ -139,16 +139,4 @@ public class ModelRoot extends Observable implements Observer {
 		setChanged();
 		notifyObservers(o);
 	}
-	
-//	public void setScore(Player player, int score){
-//		this.getGame().getPlayer(player).setScore(score);
-//		this.setChanged();
-//		this.notifyObservers(ModelFacade.SCORE_UPDATE);
-//	}
-//
-//	public void setTurn(int turn){
-//		this.getGame().setTurn(turn);
-//		this.setChanged();
-//		this.notifyObservers(ModelFacade.PLAYER_TURN_UPDATE);
-//	}
 }

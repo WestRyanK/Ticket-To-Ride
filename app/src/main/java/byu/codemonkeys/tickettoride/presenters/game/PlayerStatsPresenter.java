@@ -32,7 +32,7 @@ public class PlayerStatsPresenter extends PresenterBase implements PlayerStatsCo
 	@Override
 	public void update(Observable observable, Object o) {
 		if (o == ModelFacade.PLAYER_STATS_UPDATE || o == ModelFacade.GAME_UPDATE || o == ModelFacade.PLAYER_TURN_UPDATE  ||
-				o == Player.PLAYER_SCORE_UPDATE || o == Player.PLAYER_TRAINS_UPDATE || o == ActiveGame.TURN_UPDATE) {
+				o == Player.PLAYER_SCORE_UPDATE || o == Player.PLAYER_TRAINS_UPDATE || o == ActiveGame.TURN_UPDATE || o == Player.PLAYER_DESTINATION_CARDS_UPDATE) {
 			loadPlayerStats();
 		}
 	}
