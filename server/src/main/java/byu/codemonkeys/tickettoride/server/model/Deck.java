@@ -8,6 +8,7 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
 
+import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCardLoader;
 import byu.codemonkeys.tickettoride.shared.model.cards.IDeck;
 import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
@@ -111,6 +112,10 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
     }
 
     private void loadFromResource() {
+        List<DestinationCard> destinations = DestinationCardLoader.getInstance().loadDestinationCardsFromResources();
 
+        for (DestinationCard destination : destinations) {
+            this.destinations.add(destination);
+        }
     }
 }

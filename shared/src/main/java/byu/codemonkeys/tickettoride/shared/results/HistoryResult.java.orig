@@ -1,0 +1,30 @@
+package byu.codemonkeys.tickettoride.shared.results;
+
+import byu.codemonkeys.tickettoride.shared.commands.CommandData;
+
+<<<<<<< HEAD
+||||||| merged common ancestors
+/**
+ * Created by meganrich on 10/18/17.
+ */
+
+=======
+import java.util.ArrayList;
+import java.util.List;
+
+>>>>>>> master
+public class HistoryResult extends Result {
+    private List<CommandData> history;
+
+    public HistoryResult(List<CommandData> history) {
+        super();
+        this.history = history;
+    }
+
+    public HistoryResult(String errorMessage) {
+        super(errorMessage);
+    }
+    public List<CommandData> getHistory(){
+        return this.history;
+    }
+}

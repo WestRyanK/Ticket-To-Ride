@@ -1,0 +1,30 @@
+package byu.codemonkeys.tickettoride.mvpcontracts.game;
+
+import java.util.List;
+
+<<<<<<< HEAD
+import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
+
+||||||| merged common ancestors
+import byu.codemonkeys.tickettoride.models.DestinationCard;
+=======
+import byu.codemonkeys.tickettoride.models.cards.DestinationCard;
+>>>>>>> master
+
+/**
+ * Created by Ryan on 10/18/2017.
+ */
+
+public interface DestinationCardsContract {
+	interface View {
+		
+		void setDestinationCards(List<DestinationCard> cards);
+	}
+	
+	interface Presenter {
+		void navigateBack();
+		
+		void navigateDrawDestinationCards();
+		
+	}
+}
