@@ -3,6 +3,8 @@ package byu.codemonkeys.tickettoride.shared.model.cards;
 import java.util.List;
 import java.util.Set;
 
+import byu.codemonkeys.tickettoride.shared.model.IDeck;
+
 public class Deck implements IDeck {
     // The maximum number of revealed drawable cards
     private static int NUM_REVEALED = 5;

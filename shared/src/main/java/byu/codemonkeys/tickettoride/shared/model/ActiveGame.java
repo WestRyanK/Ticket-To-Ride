@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import byu.codemonkeys.tickettoride.shared.model.cards.Deck;
 import byu.codemonkeys.tickettoride.shared.model.map.GameMap;
 
 /**
