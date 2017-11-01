@@ -3,8 +3,6 @@ package byu.codemonkeys.tickettoride.shared.model;
 import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 
 public abstract class Player extends UserBase {
-	public static final String PLAYER_TRAINS_UPDATE = "NumTrainsUpdate";
-	public static final String PLAYER_TRAIN_CARDS_UPDATE = "NumTrainCardsUpdate";
 
 	public static class Type {
 		public static final String Self = "self";
