@@ -19,12 +19,16 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.Deck impleme
     private static int NUM_LOCOMOTIVE = 14;
     // The number of destination cards a player must typically draw
     private static int NUM_DESTINATIONS_TO_DRAW = 3;
+    // The maximum number of revealed cards
+    private static int MAX_REVEALED = 5;
 
     private Queue<TrainCard> hidden;
     private Set<TrainCard> discarded;
     private Queue<DestinationCard> destinations;
 
     public Deck() {
+        super();
+
         hidden = new LinkedList<>();
         discarded = new HashSet<>();
         destinations = new LinkedList<>();
@@ -44,6 +48,8 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.Deck impleme
 
             hidden.add(shuffler.remove(random.nextInt(shuffler.size())));
         }
+
+        reveal(5);
 
         loadFromResource();
 
@@ -77,6 +83,22 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.Deck impleme
         return drawn;
     }
 
+    /**
+     * Reveals the specified number of cards from the top of the draw pile.
+     * @param number the number of cards to reveal.
+     * @throws IllegalStateException revealing the specified number of cards would cause there to be
+     *                               too many revealed cards.
+     */
+    public void reveal(int number) throws IllegalStateException {
+        if ((revealed.size() + number) > MAX_REVEALED) {
+            throw new IllegalStateException();
+        }
+
+        for (int i = 0; i < number; ++i) {
+            revealed.add(drawTrainCard());
+        }
+    }
+
     @Override
     public int getNumHidden() {
         return hidden.size();
@@ -88,6 +110,6 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.Deck impleme
     }
 
     private void loadFromResource() {
-        // Loads the destination cards from a file
+
     }
 }

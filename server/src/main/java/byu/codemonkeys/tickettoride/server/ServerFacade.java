@@ -1,7 +1,9 @@
 package byu.codemonkeys.tickettoride.server;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import byu.codemonkeys.tickettoride.server.exceptions.AlreadyExistsException;
 import byu.codemonkeys.tickettoride.server.exceptions.EmptyGameException;
@@ -13,6 +15,7 @@ import byu.codemonkeys.tickettoride.server.model.RootModel;
 import byu.codemonkeys.tickettoride.server.model.ServerSession;
 import byu.codemonkeys.tickettoride.server.model.User;
 import byu.codemonkeys.tickettoride.shared.IServer;
+import byu.codemonkeys.tickettoride.shared.commands.BeginGameCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SendMessageCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SetupGameCommandData;
@@ -20,6 +23,8 @@ import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
 import byu.codemonkeys.tickettoride.shared.model.Message;
 import byu.codemonkeys.tickettoride.shared.model.Player;
+import byu.codemonkeys.tickettoride.shared.model.Self;
+import byu.codemonkeys.tickettoride.shared.model.UserBase;
 import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
 import byu.codemonkeys.tickettoride.shared.results.HistoryResult;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
@@ -282,7 +287,13 @@ public class ServerFacade implements IServer {
 
     @Override
     public DestinationCardResult chooseDestinationCards(String authToken, int numSelected, List<DestinationCard> selected) {
-        return null;
+        Result result = chooseDestinationCards(authToken, selected);
+
+        if (result.isSuccessful()) {
+            return new DestinationCardResult(selected);
+        }
+
+        return new DestinationCardResult(result.getErrorMessage());
     }
 
     @Override
@@ -299,5 +310,69 @@ public class ServerFacade implements IServer {
         }
         game.broadcastCommand(messageCommand);
         return Result.success();
+    }
+
+    public Result chooseDestinationCards(String authToken, List<DestinationCard> cards) {
+        ServerSession session = rootModel.getSession(authToken);
+
+        if (session == null) {
+            return Result.failed("Authentication Error");
+        }
+
+        String gameID = session.getGameID();
+
+        ActiveGame game = rootModel.getActiveGame(gameID);
+
+        if (game == null) {
+            return Result.failed("Player is not part of an active game");
+        }
+
+        User user = session.getUser();
+
+        Player player = game.getPlayer(user);
+
+        if (player == null) {
+            return Result.failed("Could not find the user in the game. This is a server error");
+        }
+
+        Self self = (Self) player;
+
+        if (!self.getSelecting().containsAll(cards)) {
+            return Result.failed("You tried to select a card you haven't drawn.");
+        }
+
+        for (DestinationCard card : cards) {
+            self.select(card);
+        }
+
+        self.getSelecting().clear();
+
+        beginGame(game);
+
+        return Result.success();
+    }
+
+    private void beginGame(ActiveGame game) {
+        if (game.isBegun()) {
+            return;
+        }
+
+        Map<UserBase, Integer> numDestinations = new HashMap<>();
+
+        for (Player player : game.getPlayers()) {
+            Self self = (Self) player;
+
+            int numDestinationCards = self.getNumDestinationCards();
+
+            if (numDestinationCards == 0) {
+                return;
+            }
+
+            numDestinations.put(player, numDestinationCards);
+        }
+
+        game.begin();
+
+        game.broadcastCommand(new BeginGameCommandData(numDestinations));
     }
 }

@@ -46,6 +46,19 @@ public class Self extends Player {
         this.selecting = cards;
     }
 
+    public Set<DestinationCard> getSelecting() {
+        return selecting;
+    }
+
+    /**
+     * Moves the specified card from the selecting Set to the owned Set.
+     * @param card a DestinationCard in the player's selecting Set.
+     */
+    public void select(DestinationCard card) {
+        selecting.remove(card);
+        destinations.add(card);
+    }
+
     @Override
     public int getNumTrainCards() {
         int count = 0;
