@@ -356,9 +356,9 @@ public class ModelFacade implements IModelFacade {
 	}
 	
 	@Override
-	public void beginGame(Map<UserBase, Integer> numDestinationCards) {
-		for (Map.Entry<UserBase, Integer> entry : numDestinationCards.entrySet()) {
-			Player player = (Player) models.getGame().getPlayer(entry.getKey());
+	public void beginGame(Map<String, Integer> numDestinationCards) {
+		for (Map.Entry<String, Integer> entry : numDestinationCards.entrySet()) {
+			Player player = (Player) models.getGame().getPlayer(new UserBase(entry.getKey()));
 			if (player.getClass() == Opponent.class) {
 				Opponent opponent = (Opponent) player;
 				opponent.setNumDestinationCards(entry.getValue());
