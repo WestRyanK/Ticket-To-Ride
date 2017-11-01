@@ -1,5 +1,6 @@
 package byu.codemonkeys.tickettoride.models;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Observer;
@@ -260,6 +261,9 @@ public class ModelFacade implements IModelFacade {
 	
 	//this will return a list of players,
 	public List<Player> getPlayerInfo() {
+		if (models.getGame() == null) {
+			return new ArrayList<>();
+		}
 		return models.getGame().getPlayers();
 	}
 	

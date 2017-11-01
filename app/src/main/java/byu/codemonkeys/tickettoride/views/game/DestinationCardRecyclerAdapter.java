@@ -133,11 +133,13 @@ public class DestinationCardRecyclerAdapter extends RecyclerView.Adapter<Destina
 		public void bindDestinationCard(DestinationCard destinationCard,
 										int position,
 										boolean isSelected) {
-			cardWidget.setDestinationA(destinationCard.getDestinationA());
-			cardWidget.setDestinationB(destinationCard.getDestinationB());
-			cardWidget.setPointValue(destinationCard.getPointValue());
-			this.position = position;
-			cardWidget.setSelected(isSelected);
+			if (destinationCard != null) {
+				cardWidget.setDestinationA(destinationCard.getDestinationA());
+				cardWidget.setDestinationB(destinationCard.getDestinationB());
+				cardWidget.setPointValue(destinationCard.getPointValue());
+				this.position = position;
+				cardWidget.setSelected(isSelected);
+			}
 		}
 	}
 }
