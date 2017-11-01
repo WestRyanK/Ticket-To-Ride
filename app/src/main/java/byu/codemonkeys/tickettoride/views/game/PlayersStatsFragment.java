@@ -61,28 +61,30 @@ public class PlayersStatsFragment extends Fragment implements PlayerStatsContrac
 	
 	@Override
 	public void setPlayerStats(final List<Player> players) {
-		getActivity().runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				if (players.size() > playerStatsWidgets.size())
-					throw new IllegalArgumentException("More players than the game can handle!");
-				
-				for (int i = 0; i < playerStatsWidgets.size(); i++) {
-					PlayerStatsWidget widget = playerStatsWidgets.get(i);
-					if (i < players.size()) {
-						widget.setVisibility(View.VISIBLE);
-						widget.setPlayerColor(players.get(i).getColor());
-						widget.setPlayerName(players.get(i).getUsername());
-						widget.setPlayerScore(players.get(i).getScore());
-						widget.setPlayerTrainCards(players.get(i).getNumTrainCards());
-						widget.setPlayerTrains(players.get(i).getNumTrains());
-						widget.setPlayerDestinationCards(players.get(i).getNumDestinationCards());
-					} else {
-						widget.setVisibility(View.GONE);
+		if (getActivity() != null) {
+			getActivity().runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					if (players.size() > playerStatsWidgets.size())
+						throw new IllegalArgumentException("More players than the game can handle!");
+
+					for (int i = 0; i < playerStatsWidgets.size(); i++) {
+						PlayerStatsWidget widget = playerStatsWidgets.get(i);
+						if (i < players.size()) {
+							widget.setVisibility(View.VISIBLE);
+							widget.setPlayerColor(players.get(i).getColor());
+							widget.setPlayerName(players.get(i).getUsername());
+							widget.setPlayerScore(players.get(i).getScore());
+							widget.setPlayerTrainCards(players.get(i).getNumTrainCards());
+							widget.setPlayerTrains(players.get(i).getNumTrains());
+							widget.setPlayerDestinationCards(players.get(i).getNumDestinationCards());
+						} else {
+							widget.setVisibility(View.GONE);
+						}
 					}
 				}
-			}
-		});
+			});
+		}
 	}
 	
 	@Override
@@ -93,13 +95,15 @@ public class PlayersStatsFragment extends Fragment implements PlayerStatsContrac
 	
 	@Override
 	public void setCurrentTurn(final int playerIndex) {
-		getActivity().runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				for (int i = 0; i < playerStatsWidgets.size(); i++) {
-					playerStatsWidgets.get(i).setPlayersTurn(i == playerIndex);
+		if (getActivity() != null) {
+			getActivity().runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					for (int i = 0; i < playerStatsWidgets.size(); i++) {
+						playerStatsWidgets.get(i).setPlayersTurn(i == playerIndex);
+					}
 				}
-			}
-		});
+			});
+		}
 	}
 }
