@@ -2,8 +2,9 @@ package byu.codemonkeys.tickettoride.shared.model;
 
 
 import java.util.List;
+import java.util.Observable;
 
-public class GameBase {
+public class GameBase extends ObservableExt{
 
     protected String gameID, gameName;
     protected UserBase gameOwner;
@@ -14,6 +15,7 @@ public class GameBase {
 	public static int MAX_PLAYERS = 5;
 	public static int MIN_GAME_NAME_LENGTH = 6;
 	public static int MAX_GAME_NAME_LENGTH = 12;
+	public static final String STARTED_UPDATE = "StartedUpdate";
 
     public String getID() {
         return gameID;
@@ -41,6 +43,8 @@ public class GameBase {
 
     public void setStarted(boolean started) {
         this.started = started;
+		setChanged();
+		notifyObservers();
     }
     
 	public static boolean isValidGameName(String gameName) {

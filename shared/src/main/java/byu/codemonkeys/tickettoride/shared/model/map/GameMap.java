@@ -3,13 +3,15 @@ package byu.codemonkeys.tickettoride.shared.model.map;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Observable;
 import java.util.Set;
 
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
 
-public class GameMap {
+public class GameMap extends Observable {
 	transient private List<City> cities;
 	transient private List<Route> routes;
+	public static final String ROUTE_UPDATE = "RouteUpdate";
 	
 	public GameMap() {
 		//GameMap map = GameMapLoader.getInstance().loadGameMapFromResources();
@@ -43,6 +45,8 @@ public class GameMap {
 	}
 	
 	public boolean claimRoute(int routeId, UserBase user) {
+		setChanged();
+		notifyObservers(ROUTE_UPDATE);
 		return routes.get(routeId).claim(user);
 	}
 	

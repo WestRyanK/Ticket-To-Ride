@@ -2,6 +2,7 @@ package byu.codemonkeys.tickettoride.models;
 
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 
 import byu.codemonkeys.tickettoride.models.history.CommandHistoryEntry;
 import byu.codemonkeys.tickettoride.models.history.HistoryManager;
@@ -9,7 +10,7 @@ import byu.codemonkeys.tickettoride.shared.model.*;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 
-public class ModelRoot extends Observable {
+public class ModelRoot extends Observable implements Observer {
 	private static ModelRoot instance;
 	private UserBase user;
 	private GameBase pendingGame;
@@ -19,7 +20,7 @@ public class ModelRoot extends Observable {
 	private HistoryManager history;
 	private List<TrainCard> trainCards;
 	private List<DestinationCard> destinationCards;
-
+	
 	
 	private ModelRoot() {
 		history = new HistoryManager();
@@ -73,7 +74,13 @@ public class ModelRoot extends Observable {
 	}
 	
 	public void setGame(ActiveGame game) {
+		if (this.game != null && this.game.countObservers() > 0)
+			this.game.deleteObservers();
 		this.game = game;
+		if (this.game != null) {
+			this.game.addObserver(this);
+			this.game.setObservesChildren(true);
+		}
 		setChanged();
 		notifyObservers(ModelFacade.GAME_UPDATE);
 	}
@@ -81,43 +88,43 @@ public class ModelRoot extends Observable {
 	public ActiveGame getGame() {
 		return this.game;
 	}
-
-	public void removeTrainCard(TrainCard card){
+	
+	public void removeTrainCard(TrainCard card) {
 		trainCards.remove(card);
 	}
-
+	
 	public void removeDestinationCard(DestinationCard card) {
 		destinationCards.remove(card);
 	}
-
+	
 	public List<CommandHistoryEntry> getGameHistory() {
 		return history.getCommandHistory();
 	}
-
-	public void addTrainCards(List<TrainCard> cards){
+	
+	public void addTrainCards(List<TrainCard> cards) {
 		trainCards.addAll(cards);
 	}
-
-	public void addDestinationCards(List<DestinationCard> cards){
+	
+	public void addDestinationCards(List<DestinationCard> cards) {
 		destinationCards.addAll(cards);
 	}
-
-	public void addDestinationCard(DestinationCard card){
+	
+	public void addDestinationCard(DestinationCard card) {
 		destinationCards.add(card);
 	}
-
-	public void addTrainCard(TrainCard card){
+	
+	public void addTrainCard(TrainCard card) {
 		trainCards.add(card);
 	}
-
+	
 	public int getLastReadCommandIndex() {
 		return history.getLastReadCommandIndex();
 	}
-
+	
 	public void addMessage(Message message) {
 		// no-op
 	}
-
+	
 	public HistoryManager getHistoryManager() {
 		return history;
 	}
@@ -126,4 +133,22 @@ public class ModelRoot extends Observable {
 		setChanged();
 		notifyObservers(ModelFacade.HISTORY_UPDATE);
 	}
+	
+	@Override
+	public void update(Observable observable, Object o) {
+		setChanged();
+		notifyObservers(o);
+	}
+	
+//	public void setScore(Player player, int score){
+//		this.getGame().getPlayer(player).setScore(score);
+//		this.setChanged();
+//		this.notifyObservers(ModelFacade.SCORE_UPDATE);
+//	}
+//
+//	public void setTurn(int turn){
+//		this.getGame().setTurn(turn);
+//		this.setChanged();
+//		this.notifyObservers(ModelFacade.PLAYER_TURN_UPDATE);
+//	}
 }

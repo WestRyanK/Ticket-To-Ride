@@ -1,15 +1,6 @@
 apply plugin: 'java'
 
 
-task copyResources(type: Copy) {
-    from('src/main/resources/')
-    into('build/classes/main/')
-}
-
-
-//compileJava.dependsOn("copyResources")
-//build.finalizedBy(copyResources)
-build.dependsOn copyResources
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')

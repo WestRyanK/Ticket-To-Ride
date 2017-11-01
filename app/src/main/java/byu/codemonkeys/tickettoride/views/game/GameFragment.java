@@ -70,10 +70,10 @@ public class GameFragment extends Fragment implements GameContract.View{
 				.commit();
 		framePlayerStats = (FrameLayout) view.findViewById(R.id.game_framePlayerStats);
 		PlayersStatsFragment statsFragment = new PlayersStatsFragment();
-		statsFragment.setPresenters(new PlayerStatsPresenter(statsFragment,
-															 activity,
-															 activity,
-															 ModelFacade.getInstance()));
+		statsFragment.setPresenter(new PlayerStatsPresenter(statsFragment,
+															activity,
+															activity,
+															ModelFacade.getInstance()));
 		activity.getSupportFragmentManager()
 				.beginTransaction()
 				.replace(R.id.game_framePlayerStats, statsFragment)

@@ -17,5 +17,6 @@ public interface PlayerStatsContract {
 	
 	interface Presenters {
 		
+		void loadPlayerStats();
 	}
 }

@@ -1,5 +1,13 @@
 apply plugin: 'java'
 
+task copyResources(type: Copy) {
+    from('../shared/src/main/resources/')
+    into('../shared/build/classes/main/')
+}
+
+
+compileJava.dependsOn("copyResources")
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':shared')

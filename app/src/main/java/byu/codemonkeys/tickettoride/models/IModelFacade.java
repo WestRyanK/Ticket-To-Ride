@@ -1,6 +1,7 @@
 package byu.codemonkeys.tickettoride.models;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Observer;
 
 import byu.codemonkeys.tickettoride.async.ICallback;
@@ -92,6 +93,7 @@ public interface IModelFacade {
 	
 	void selectDestinationCardsAsync(List<DestinationCard> cards, ICallback selectDestinationCardsCallback);
 	
+	void beginGame(Map<UserBase, Integer> numDestinationCards);
 	//TODO: add claimed route, waiting on map
 
 	List<CommandHistoryEntry> getGameHistory();

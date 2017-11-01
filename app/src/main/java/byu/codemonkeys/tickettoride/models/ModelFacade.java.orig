@@ -36,13 +36,19 @@ public class ModelFacade implements IModelFacade {
 	public static final String PENDING_GAMES_UPDATE = "PendingGamesUpdate";
 	public static final String PENDING_GAME_UPDATE = "PendingGameUpdate";
 	public static final String PLAYER_STATS_UPDATE = "PlayerStatsUpdate";
-	public static final String HISTORY_UPDATE = "HistoryUpdate";
+<<<<<<< HEAD
 	public static final String SCORE_UPDATE = "ScoreUpdate";
 	public static final String COLOR_UPDATE = "ColorUpdate";
 	public static final String PLAYER_TRAINS_UPDATE = "NumTrainsUpdate";
 	public static final String PLAYER_TRAIN_CARDS_UPDATE = "NumTrainCardsUpdate";
 	public static final String PLAYER_DESTINATION_CARDS_UPDATE = "NumDestinationCardsUpdate";
+	
+||||||| merged common ancestors
+	
+=======
+	public static final String HISTORY_UPDATE = "HistoryUpdate";
 
+>>>>>>> master
 	private ModelFacade() {
 	}
 	

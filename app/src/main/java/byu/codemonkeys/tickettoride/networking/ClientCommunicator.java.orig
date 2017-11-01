@@ -27,7 +27,13 @@ public class ClientCommunicator {
 	private int port;
 	
 	private ClientCommunicator() {
+<<<<<<< HEAD
 		host = "10.24.203.84";
+||||||| merged common ancestors
+		host = "192.168.1.13";
+=======
+		host = "10.24.199.238";
+>>>>>>> master
 		port = 8080;
 		serializer = new Serializer();
 	}
