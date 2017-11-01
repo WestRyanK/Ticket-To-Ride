@@ -1,32 +1,32 @@
 package byu.codemonkeys.tickettoride.shared.model;
 
 public abstract class Player extends UserBase {
-    public enum Type {
-        Self,
-        Opponent
+    public static class Type {
+        public static final String Self = "self";
+        public static final String Opponent = "opponent";
     }
 
-    protected Type type;
+    protected String type;
     protected int score;
     protected PlayerColor color;
     protected int numTrainCards;
     protected int numDestinationCards;
     protected int numTrains;
 
-    protected Player(String userName, Type type) {
+    protected Player(String userName, String type) {
         super(userName);
         this.type = type;
         this.numTrains = ActiveGame.MAX_TRAINS;
     }
 
-    protected Player(String userName, Type type, PlayerColor color) {
+    protected Player(String userName, String type, PlayerColor color) {
         super(userName);
         this.type = type;
         this.color = color;
         this.numTrains = ActiveGame.MAX_TRAINS;
     }
 
-    public Type getType() {
+    public String getType() {
         return type;
     }
 
