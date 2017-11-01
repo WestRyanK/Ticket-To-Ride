@@ -17,9 +17,13 @@ public class SetupGameCommandData extends CommandData {
      * Constructs a new SetupGameCommand.
      * @param game an ActiveGame for the intended Client.
      */
-    protected SetupGameCommandData(ActiveGame game) {
+    public SetupGameCommandData(ActiveGame game) {
         super(CommandType.SETUP_GAME);
         this.game = game;
+    }
+
+    public ActiveGame getGame() {
+        return game;
     }
 
     /**

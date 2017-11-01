@@ -15,16 +15,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import byu.codemonkeys.tickettoride.commands.SendMessageCommand;
+import byu.codemonkeys.tickettoride.commands.SetupGameCommand;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
 import byu.codemonkeys.tickettoride.shared.commands.CommandType;
+import byu.codemonkeys.tickettoride.shared.model.IDeck;
+import byu.codemonkeys.tickettoride.shared.model.Opponent;
+import byu.codemonkeys.tickettoride.shared.model.Player;
+import byu.codemonkeys.tickettoride.shared.model.Self;
 import byu.codemonkeys.tickettoride.shared.results.HistoryResult;
 
 public class HistoryDeserializer {
     private static final RuntimeTypeAdapterFactory<CommandData> typeFactory = RuntimeTypeAdapterFactory
             .of(CommandData.class, "commandType")
-            .registerSubtype(SendMessageCommand.class, CommandType.SEND_MESSAGE);
+            .registerSubtype(SendMessageCommand.class, CommandType.SEND_MESSAGE)
+            .registerSubtype(SetupGameCommand.class, CommandType.SETUP_GAME);
 
-    private static final Gson gson = new GsonBuilder().registerTypeAdapterFactory(typeFactory).create();
+    private static final RuntimeTypeAdapterFactory<Player> playerTypeFactory =
+            RuntimeTypeAdapterFactory.of(Player.class, "type")
+            .registerSubtype(Self.class, Player.Type.Self)
+            .registerSubtype(Opponent.class, Player.Type.Opponent);
+
+    private static final Gson gson = new GsonBuilder()
+            .registerTypeAdapterFactory(typeFactory)
+            .registerTypeAdapterFactory(playerTypeFactory)
+            .registerTypeAdapter(IDeck.class, new IDeckInstanceCreator())
+            .create();
 
     public static List<CommandData> deserialize(String json) {
         Type listType = new TypeToken<List<CommandData>>(){}.getType();

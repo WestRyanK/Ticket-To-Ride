@@ -1,8 +1,9 @@
 package byu.codemonkeys.tickettoride.shared.results;
 
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
-import java.util.List;
 
+import java.util.ArrayList;
+import java.util.List;
 public class HistoryResult extends Result {
     private List<CommandData> history;
 
