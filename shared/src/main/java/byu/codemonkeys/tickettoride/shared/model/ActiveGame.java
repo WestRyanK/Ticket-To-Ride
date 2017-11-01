@@ -3,6 +3,8 @@ package byu.codemonkeys.tickettoride.shared.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Observable;
+import java.util.Observer;
 
 import byu.codemonkeys.tickettoride.shared.model.cards.Deck;
 import byu.codemonkeys.tickettoride.shared.model.cards.IDeck;
@@ -13,8 +15,12 @@ import byu.codemonkeys.tickettoride.shared.model.map.GameMap;
  * need any of the fields of GameBase except gameID. What we might want to do is move all the other
  * fields of GameBase to a shared PendingGame class.
  */
-public class ActiveGame extends GameBase {
+public class ActiveGame extends GameBase implements Observer{
 	public static final int MAX_TRAINS = 45;
+		public static final String MAP_UPDATE = "MapUpdate";
+		public static final String TURN_UPDATE = "TurnUpdate";
+		public static final String PLAYERS_UPDATE = "PlayersUpdate";
+		public static final String DECK_UPDATE = "DeckUpdate";
 	
 	protected GameMap map;
 	protected int turn;
@@ -26,6 +32,22 @@ public class ActiveGame extends GameBase {
 		turn = 0;
 		this.players = new ArrayList<>();
 		deck = new Deck();
+		
+		// Copy GameBase fields
+		this.gameID = game.getID();
+		this.gameName = game.getName();
+		this.gameOwner = game.getOwner();
+		this.gameUsers = game.getUsers();
+		this.started = true;
+	}
+	
+	public ActiveGame(ActiveGame game) {
+		map = new GameMap();
+		turn = 0;
+		deck = game.getDeck();
+		for (Player player : game.getPlayers()) {
+			this.players.add(Player.copyPlayer(player));
+		}
 		
 		// Copy GameBase fields
 		this.gameID = game.getID();
@@ -58,7 +80,13 @@ public class ActiveGame extends GameBase {
 	}
 	
 	public void setMap(GameMap map) {
+				if (this.map != null && this.observesChildren())
+					this.map.deleteObserver(this);
 		this.map = map;
+				if (this.map != null && this.observesChildren())
+					this.map.addObserver(this);
+				setChanged();
+				notifyObservers(MAP_UPDATE);
 	}
 	
 	public int getTurn() {
@@ -67,6 +95,8 @@ public class ActiveGame extends GameBase {
 	
 	public void setTurn(int turn) {
 		this.turn = turn;
+				setChanged();
+				notifyObservers(TURN_UPDATE);
 	}
 	
 	public List<Player> getPlayers() {
@@ -85,7 +115,20 @@ public class ActiveGame extends GameBase {
 	}
 	
 	public void setPlayers(List<Player> players) {
+				if (this.players != null && this.observesChildren()) {
+					for (Player player : this.players) {
+						player.deleteObserver(this);
+					}
+				}
 		this.players = players;
+				if (this.players != null && this.observesChildren()) {
+					for (Player player : this.players) {
+						player.addObserver(this);
+						player.setObservesChildren(true);
+					}
+				}
+				setChanged();
+				notifyObservers(PLAYERS_UPDATE);
 	}
 	
 	public IDeck getDeck() {
@@ -94,5 +137,14 @@ public class ActiveGame extends GameBase {
 	
 	public void setDeck(IDeck deck) {
 		this.deck = deck;
+				setChanged();
+				notifyObservers(DECK_UPDATE);
 	}
+
+		@Override
+		public void update(Observable o, Object arg) {
+			setChanged();
+			notifyObservers(o);
+
+		}
 }

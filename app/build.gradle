@@ -1,5 +1,14 @@
 apply plugin: 'com.android.application'
 
+task deleteResources(type: Delete) {
+    delete fileTree('../shared/build/classes/main/') {
+        include '*.json'
+    }
+}
+
+build.dependsOn deleteResources
+
+
 android {
     compileSdkVersion 25
     buildToolsVersion "26.0.1"

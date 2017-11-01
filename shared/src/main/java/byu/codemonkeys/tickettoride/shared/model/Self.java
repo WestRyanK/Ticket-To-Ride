@@ -1,5 +1,7 @@
 package byu.codemonkeys.tickettoride.shared.model;
 
+import com.sun.media.jfxmedia.events.PlayerStateEvent;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -41,6 +43,13 @@ public class Self extends Player {
 		this.hand = hand;
 		this.destinations = destinations;
 	}
+	
+	public Self(Player player){
+		super(player.userName, Type.Self);
+		Self playerSelf = (Self) player;
+		this.hand = playerSelf.hand;
+		this.destinations = playerSelf.destinations;
+	}
 
     public Set<DestinationCard> getSelecting() {
         return selecting;
@@ -53,6 +62,8 @@ public class Self extends Player {
     public void select(DestinationCard card) {
         selecting.remove(card);
         destinations.add(card);
+//		setChanged();
+//		notifyObservers(PLAYER_DESTINATION_CARDS_UPDATE);
     }
 
 	@Override
@@ -62,6 +73,8 @@ public class Self extends Player {
 		}
 
 		hand.put(card.getCardColor(), hand.get(card.getCardColor()) + 1);
+//		setChanged();
+//		notifyObservers(PLAYER_TRAIN_CARDS_UPDATE);
 	}
 
 	public void giveDestinationCards(Set<DestinationCard> cards) {

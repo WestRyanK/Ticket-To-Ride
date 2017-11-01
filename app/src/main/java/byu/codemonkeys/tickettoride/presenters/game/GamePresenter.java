@@ -36,7 +36,7 @@ public class GamePresenter extends PresenterBase implements GameContract.Present
 	
 	@Override
 	public void stopPolling() {
-		GamePoller.getInstance().startPolling();
+		GamePoller.getInstance().stopPolling();
 	}
 	
 	@Override

@@ -91,6 +91,7 @@ public interface IModelFacade {
 	
 	void selectDestinationCardsAsync(List<DestinationCard> cards, ICallback selectDestinationCardsCallback);
 	
+	void beginGame();
 	//TODO: add claimed route, waiting on map
 
 	List<Message> getMessages();

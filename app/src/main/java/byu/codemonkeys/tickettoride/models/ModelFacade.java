@@ -31,9 +31,15 @@ public class ModelFacade implements IModelFacade {
 	private ITask asyncTask;
 	
 	public static final String GAME_UPDATE = "GameUpdate";
+	public static final String PLAYER_TURN_UPDATE = "PlayerTurnUpdate";
 	public static final String PENDING_GAMES_UPDATE = "PendingGamesUpdate";
 	public static final String PENDING_GAME_UPDATE = "PendingGameUpdate";
 	public static final String PLAYER_STATS_UPDATE = "PlayerStatsUpdate";
+	public static final String SCORE_UPDATE = "ScoreUpdate";
+	public static final String COLOR_UPDATE = "ColorUpdate";
+	public static final String PLAYER_TRAINS_UPDATE = "NumTrainsUpdate";
+	public static final String PLAYER_TRAIN_CARDS_UPDATE = "NumTrainCardsUpdate";
+	public static final String PLAYER_DESTINATION_CARDS_UPDATE = "NumDestinationCardsUpdate";
 	
 	private ModelFacade() {
 	}
@@ -335,6 +341,10 @@ public class ModelFacade implements IModelFacade {
 		
 		this.asyncTask.executeTask(selectDestinationCardsCommand, selectDestinationCardsCallback);
 	}
+	
+	@Override
+	public void beginGame() {
+	}
 	//TODO: add claimed route, waiting on map
 	
 	public List<Message> getMessages() {
@@ -344,4 +354,5 @@ public class ModelFacade implements IModelFacade {
 	public List<CommandHistoryEntry> getGameHistory() {
 		return models.getGameHistory();
 	}
+	
 }

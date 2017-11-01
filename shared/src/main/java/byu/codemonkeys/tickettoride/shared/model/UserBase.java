@@ -1,7 +1,9 @@
 package byu.codemonkeys.tickettoride.shared.model;
 
 
-public class UserBase {
+import java.util.Observable;
+
+public class UserBase extends ObservableExt{
 	protected String userName;
 	public static final int MAX_USERNAME_LENGTH = 12;
 	public static final int MIN_USERNAME_LENGTH = 6;
