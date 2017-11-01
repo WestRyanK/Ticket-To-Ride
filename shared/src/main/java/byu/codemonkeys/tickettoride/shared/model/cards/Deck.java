@@ -1,5 +1,6 @@
 package byu.codemonkeys.tickettoride.shared.model.cards;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -11,7 +12,9 @@ public class Deck implements IDeck {
     protected int numHidden;
     protected int numDestinationCards;
 
-    public Deck() {}
+    public Deck() {
+        this.revealed = new ArrayList<>();
+    }
 
     public Deck(IDeck deck) {
         this.revealed = deck.getRevealed();

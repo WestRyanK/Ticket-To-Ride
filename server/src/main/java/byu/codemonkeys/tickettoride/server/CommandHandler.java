@@ -83,6 +83,8 @@ class CommandHandler implements HttpHandler {
                 return serializer.deserialize(requestBody, SendMessageCommand.class);
             case CommandType.UPDATE_HISTORY:
                 return serializer.deserialize(requestBody, UpdateHistoryCommand.class);
+            case CommandType.CHOOSE_DESTINATION_CARDS:
+                return serializer.deserialize(requestBody, ChooseDestinationCardsCommand.class);
             default:
                 throw new InvalidCommandException();
         }

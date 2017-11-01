@@ -72,6 +72,16 @@ public class ActiveGame extends GameBase {
         return players;
     }
 
+    public Player getPlayer(UserBase user) {
+        for (Player player : players) {
+            if (user.equals(player)) {
+                return player;
+            }
+        }
+
+        return null;
+    }
+
     public void setPlayers(List<Player> players) {
         this.players = players;
     }

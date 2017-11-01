@@ -19,6 +19,8 @@ import static byu.codemonkeys.tickettoride.shared.model.Player.Type.Opponent;
 public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.ActiveGame {
     private static int STARTING_CARDS = 4;
 
+    private boolean begun;
+
     public ActiveGame(PendingGame pendingGame) {
         super(pendingGame);
 
@@ -111,5 +113,13 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
         clientGame.setDeck(new byu.codemonkeys.tickettoride.shared.model.cards.Deck(this.getDeck()));
 
         return clientGame;
+    }
+
+    public boolean isBegun() {
+        return begun;
+    }
+
+    public void begin() {
+        begun = true;
     }
 }
