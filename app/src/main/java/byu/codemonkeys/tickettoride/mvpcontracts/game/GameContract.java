@@ -10,8 +10,8 @@ public interface GameContract {
 	}
 	
 	interface Presenter {
-		void startPoller();
+		void startPolling();
 		
-		void stopPoller();
+		void stopPolling();
 	}
 }

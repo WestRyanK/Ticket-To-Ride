@@ -26,7 +26,7 @@ public interface IModelFacade {
 	
 	void addObserver(Observer observer);
 	
-	UserBase getUser() throws UnauthorizedException;
+	UserBase getUser();
 	
 	LoginResult login(String username, String password);
 	
@@ -84,10 +84,14 @@ public interface IModelFacade {
 
 	// User actions
 	Result sendMessage(Message message);
+	void sendMessageAsync(Message message, ICallback sendMessageCallback);
 	List<TrainCard> drawTrainCards();
 	List<DestinationCard> drawDestinationCards();
 	void selectTrainCards(List<TrainCard> cards);
 	void selectDestinationCards(List<DestinationCard> cards);
+	
+	void selectDestinationCardsAsync(List<DestinationCard> cards, ICallback selectDestinationCardsCallback);
+	
 	//TODO: add claimed route, waiting on map
 
 	List<Message> getMessages();

@@ -27,7 +27,7 @@ public class ClientCommunicator {
 	private int port;
 	
 	private ClientCommunicator() {
-		host = "192.168.1.31";
+		host = "192.168.1.13";
 		port = 8080;
 		serializer = new Serializer();
 	}
@@ -149,7 +149,7 @@ public class ClientCommunicator {
 			return new StartGameResult(e.getMessage());
 		}
 	}
-
+	
 	public HistoryResult sendUpdateHistory(UpdateHistoryCommandData request) {
 		try {
 			String json = getString(getURL(CommandType.UPDATE_HISTORY), request);
@@ -159,36 +159,38 @@ public class ClientCommunicator {
 			return new HistoryResult(e.getMessage());
 		}
 	}
-
-    public DestinationCardResult sendDrawDestinationCards(DrawDestinationCardsCommandData request) {
-        try {
-            return serializer.deserialize(getString(getURL(CommandType.DRAW_DESTINATION_CARDS), request),
-                    DestinationCardResult.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new DestinationCardResult(e.getMessage());
-        }
-    }
-
-    public DestinationCardResult sendChooseDestinationCards(ChooseDestinationCardsCommandData request) {
-        try {
-            return serializer.deserialize(getString(getURL(CommandType.CHOOSE_DESTINATION_CARDS), request),
-                    DestinationCardResult.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new DestinationCardResult(e.getMessage());
-        }
-    }
-
-    public Result sendSendMessage(SendMessageCommandData request) {
-        try {
-            return serializer.deserialize(getString(getURL(CommandType.SEND_MESSAGE), request),
-                    Result.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new Result(e.getMessage());
-        }
-    }
+	
+	public DestinationCardResult sendDrawDestinationCards(DrawDestinationCardsCommandData request) {
+		try {
+			return serializer.deserialize(getString(getURL(CommandType.DRAW_DESTINATION_CARDS),
+													request), DestinationCardResult.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new DestinationCardResult(e.getMessage());
+		}
+	}
+	
+	public DestinationCardResult sendChooseDestinationCards(ChooseDestinationCardsCommandData request) {
+		try {
+			String string = getString(getURL(CommandType.CHOOSE_DESTINATION_CARDS), request);
+			DestinationCardResult result = serializer.deserialize(string,
+																  DestinationCardResult.class);
+			return result;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new DestinationCardResult(e.getMessage());
+		}
+	}
+	
+	public Result sendSendMessage(SendMessageCommandData request) {
+		try {
+			return serializer.deserialize(getString(getURL(CommandType.SEND_MESSAGE), request),
+										  Result.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new Result(e.getMessage());
+		}
+	}
 	
 	/**
 	 * Constructs a full HTTP URL String to the specified path.
@@ -247,9 +249,14 @@ public class ClientCommunicator {
 			out.close();
 			
 			return out.toByteArray();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+
 		} finally {
 			connection.disconnect();
 		}
+		return null;
 	}
 	
 	public String getHost() {

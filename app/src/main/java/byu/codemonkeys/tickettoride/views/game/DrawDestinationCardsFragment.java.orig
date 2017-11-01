@@ -15,6 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import byu.codemonkeys.tickettoride.R;
+<<<<<<< HEAD
+||||||| merged common ancestors
+import byu.codemonkeys.tickettoride.models.DestinationCard;
+=======
+import byu.codemonkeys.tickettoride.models.cards.DestinationCard;
+>>>>>>> master
 import byu.codemonkeys.tickettoride.mvpcontracts.game.DrawDestinationCardsContract;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.views.OnRecyclerItemClickListener;
@@ -104,12 +110,6 @@ public class DrawDestinationCardsFragment extends Fragment implements DrawDestin
 	public void setCards(List<DestinationCard> cards) {
 		this.destinationCardsAdapter.updateData(cards);
 		
-	}
-	
-	@Override
-	public void onResume() {
-		super.onResume();
-		presenter.loadDestinationCards();
 	}
 	
 	@Override

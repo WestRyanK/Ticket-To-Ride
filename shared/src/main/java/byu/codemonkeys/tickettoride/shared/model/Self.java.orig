@@ -15,11 +15,6 @@ import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
  */
 public class Self extends Player {
 	private Map<CardType, Integer> hand;
-	
-	public Set<DestinationCard> getDestinations() {
-		return destinations;
-	}
-	
 	private Set<DestinationCard> destinations;
 	private Set<DestinationCard> selecting;
 

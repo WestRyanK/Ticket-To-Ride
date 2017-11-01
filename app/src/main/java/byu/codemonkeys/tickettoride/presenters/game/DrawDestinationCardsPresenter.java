@@ -1,11 +1,19 @@
 package byu.codemonkeys.tickettoride.presenters.game;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import byu.codemonkeys.tickettoride.async.ICallback;
 import byu.codemonkeys.tickettoride.models.IModelFacade;
+import byu.codemonkeys.tickettoride.models.ModelRoot;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.DrawDestinationCardsContract;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
 import byu.codemonkeys.tickettoride.presenters.PresenterEnum;
+import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
+import byu.codemonkeys.tickettoride.shared.results.Result;
 
 /**
  * Created by Ryan on 10/21/2017.
@@ -24,6 +32,32 @@ public class DrawDestinationCardsPresenter extends PresenterBase implements Draw
 	
 	@Override
 	public void acceptSelectedCards() {
-		navigator.navigateBack(PresenterEnum.Game);
+		ICallback selectDestinationCardsCallback = new ICallback() {
+			@Override
+			public void callback(Result result) {
+				if (result.isSuccessful()) {
+					navigator.navigateBack(PresenterEnum.Game);
+				} else {
+					messageDisplayer.displayMessage(result.getErrorMessage());
+				}
+			}
+		};
+		if (canAccept()) {
+			this.modelFacade.selectDestinationCardsAsync(this.view.getSelectedCards(),
+														 selectDestinationCardsCallback);
+		}
+	}
+	
+	@Override
+	public void loadDestinationCards() {
+		Set<DestinationCard> cards = ModelRoot.getInstance().getGame().getSelf().getSelecting();
+		List<DestinationCard> cardList = new ArrayList<>();
+		cardList.addAll(cards);
+		this.view.setCards(cardList);
+	}
+	
+	@Override
+	public boolean canAccept() {
+		return this.view.getSelectedCards().size() >= 2;
 	}
 }
