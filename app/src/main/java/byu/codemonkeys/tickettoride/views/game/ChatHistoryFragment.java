@@ -52,7 +52,13 @@ public class ChatHistoryFragment extends Fragment implements ChatHistoryContract
 		setEventListeners();
 		return view;
 	}
-	
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		presenter.loadHistory();
+	}
+
 	private void setEventListeners() {
 		this.textViewBack.setOnClickListener(new View.OnClickListener() {
 			@Override

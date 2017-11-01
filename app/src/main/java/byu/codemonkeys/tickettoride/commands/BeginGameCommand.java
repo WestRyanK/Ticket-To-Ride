@@ -14,4 +14,9 @@ public class BeginGameCommand extends BeginGameCommandData implements IClientCom
     public void execute() {
 
     }
+
+    @Override
+    public String toString() {
+        return "[GAME STARTED]";
+    }
 }
