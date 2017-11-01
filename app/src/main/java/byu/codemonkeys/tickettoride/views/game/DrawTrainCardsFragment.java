@@ -42,6 +42,12 @@ public class DrawTrainCardsFragment extends Fragment implements DrawTrainCardsCo
 		setClickListeners();
 		return view;
 	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		presenter.loadCards();
+	}
 	
 	private void setClickListeners() {
 		this.textViewBack.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +93,7 @@ public class DrawTrainCardsFragment extends Fragment implements DrawTrainCardsCo
 	@Override
 	public void setFaceUpCards(List<TrainCard> cards) {
 		if (cards.size() != this.cards.size())
-			throw new IllegalArgumentException("Wrong number of cards!");
+			throw new IllegalArgumentException("Wrong number of cards! Expected: " + this.cards.size() + "Actual: " + cards.size());
 		
 		for (int i = 0; i < this.cards.size(); i++) {
 			

@@ -20,7 +20,8 @@ public interface DrawTrainCardsContract {
 		void drawDeckCard();
 		
 		void drawFaceUpCard(int cardIndex);
-		
+
+		void loadCards();
 	}
 }
 
