@@ -7,7 +7,7 @@ import byu.codemonkeys.tickettoride.shared.commands.BeginGameCommandData;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
 
 public class BeginGameCommand extends BeginGameCommandData implements IClientCommand {
-    public BeginGameCommand(Map<UserBase, Integer> numDestinationCards){
+    public BeginGameCommand(Map<String, Integer> numDestinationCards){
         super(numDestinationCards);
     }
 
