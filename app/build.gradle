@@ -11,14 +11,19 @@ task deleteResources(type: Delete) {
 //    into('../shared/build/classes/main/')
 //}
 
-//gradle.buildFinished {
-////    task copyResources(type: Copy){
-////        from('shared/src/main/resources/')
-////        into('shared/build/classes/main/')
-////    }
-////    myPrint
-//    println "#################"
-//}
+gradle.buildFinished {
+//    task copyResources(type: Copy){
+//        from('shared/src/main/resources/')
+//        into('shared/build/classes/main/')
+//    }
+//    myPrint
+
+//    print System.getProperty("user.dir")
+    new File('shared/build/classes/main/cities.json') << new File('shared/src/main/resources/cities.json').bytes
+    new File('shared/build/classes/main/destination_card_markers.json') << new File('shared/src/main/resources/destination_card_markers.json').bytes
+    new File('shared/build/classes/main/destination_cards.json') << new File('shared/src/main/resources/destination_cards.json').bytes
+    new File('shared/build/classes/main/routes.json') << new File('shared/src/main/resources/routes.json').bytes
+}
 preBuild.dependsOn deleteResources
 
 

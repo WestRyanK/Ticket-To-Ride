@@ -32,10 +32,6 @@ public class PlayerStatsPresenter extends PresenterBase implements PlayerStatsCo
 		if (o == ModelFacade.PLAYER_STATS_UPDATE || o == ModelFacade.GAME_UPDATE || o == ModelFacade.PLAYER_TURN_UPDATE ) {
 			loadPlayerStats();
 		}
-//		if (o == ModelFacade.PLAYER_TURN_UPDATE || o == ModelFacade.GAME_UPDATE) {
-//			int currentTurn = ModelRoot.getInstance().getGame().getTurn();
-//			this.view.setCurrentTurn(currentTurn);
-//		}
 	}
 	
 	@Override
