@@ -15,6 +15,7 @@ import java.util.Map;
 import byu.codemonkeys.tickettoride.R;
 import byu.codemonkeys.tickettoride.models.ModelFacade;
 import byu.codemonkeys.tickettoride.models.ModelRoot;
+import byu.codemonkeys.tickettoride.mvpcontracts.game.MapContract;
 import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
 import byu.codemonkeys.tickettoride.views.viewdata.PointBubblesData;
@@ -24,11 +25,12 @@ import byu.codemonkeys.tickettoride.views.widgets.Viewport;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MapFragment extends Fragment {
+public class MapFragment extends Fragment implements MapContract.View {
 	
 	private Viewport viewport;
 	private MapEdgeWidget pointBubble;
 	private ImageView imageViewMap;
+	private MapContract.Presenter presenter;
 	
 	public MapFragment() {
 		// Required empty public constructor
@@ -69,13 +71,14 @@ public class MapFragment extends Fragment {
 			pointBubble.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					Player self = ModelRoot.getInstance().getGame().getSelf();
-					pointBubble.setClaimedColor(self.getColor());
-					self.setScore(self.getScore() + 1);
-					self.setNumTrains(self.getNumTrains() - 1);
+
 				}
 			});
 		}
+	}
+
+	public void setPresenter(MapContract.Presenter presenter) {
+		this.presenter = presenter;
 	}
 	
 	private void setupViewport() {

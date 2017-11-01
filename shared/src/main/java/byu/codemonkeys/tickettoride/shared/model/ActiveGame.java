@@ -68,6 +68,10 @@ public class ActiveGame extends GameBase {
 	public void setTurn(int turn) {
 		this.turn = turn;
 	}
+
+	public void nextTurn() {
+		this.turn = (turn + 1) % players.size();
+	}
 	
 	public List<Player> getPlayers() {
 		return players;

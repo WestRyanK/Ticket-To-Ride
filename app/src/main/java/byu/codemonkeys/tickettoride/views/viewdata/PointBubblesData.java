@@ -25,19 +25,19 @@ public class PointBubblesData {
 		//		bubblesMap.put(index++, new PointBubbleData()); //
 		
 		// Western Air Temple	Northern Water Tribe
-		bubblesMap.put(index++, new PointBubbleData(0.380616413f, 0.198675497f, 0, 1, 17));
+		bubblesMap.put(index++, new PointBubbleData(0.380616413f, 0.198675497f, 1, 1, 17));
 		// Battlefield of 100 Year War	Northern Water Tribe
-		bubblesMap.put(index++, new PointBubbleData(0.412179725f, 0.229240958f, 0, 16, 17));
+		bubblesMap.put(index++, new PointBubbleData(0.412179725f, 0.229240958f, 1, 16, 17));
 		// Pohuai Stronghold	Northern Water Tribe
-		bubblesMap.put(index++, new PointBubbleData(0.479019681f, 0.211411105f, 0, 25, 17));
+		bubblesMap.put(index++, new PointBubbleData(0.479019681f, 0.211411105f, 1, 25, 17));
 		// Northern Air Temple	Northern Water Tribe
-		bubblesMap.put(index++, new PointBubbleData(0.518009655f, 0.147733062f, 0, 18, 17));
+		bubblesMap.put(index++, new PointBubbleData(0.518009655f, 0.147733062f, 1, 18, 17));
 		// Pohuai Stronghold	Northern Air Temple
-		bubblesMap.put(index++, new PointBubbleData(0.529149647f, 0.211411105f, 0, 25, 18));
+		bubblesMap.put(index++, new PointBubbleData(0.529149647f, 0.211411105f, 1, 25, 18));
 		// Serpent's Pass	Northern Air Temple
-		bubblesMap.put(index++, new PointBubbleData(0.597846268f, 0.254712175f, 0, 31, 18));
+		bubblesMap.put(index++, new PointBubbleData(0.597846268f, 0.254712175f, 1, 31, 18));
 		// Ba Sing Se North	Northern Air Temple
-		bubblesMap.put(index++, new PointBubbleData(0.631266246f, 0.198675497f, 0, 19, 18));
+		bubblesMap.put(index++, new PointBubbleData(0.631266246f, 0.198675497f, 1, 19, 18));
 	}
 	
 	public Map<Integer, PointBubbleData> getAllBubbles() {
