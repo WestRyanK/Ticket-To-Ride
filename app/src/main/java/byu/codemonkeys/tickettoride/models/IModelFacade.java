@@ -84,6 +84,7 @@ public interface IModelFacade {
 
 	// User actions
 	Result sendMessage(Message message);
+	void sendMessageAsync(Message message, ICallback sendMessageCallback);
 	List<TrainCard> drawTrainCards();
 	List<DestinationCard> drawDestinationCards();
 	void selectTrainCards(List<TrainCard> cards);

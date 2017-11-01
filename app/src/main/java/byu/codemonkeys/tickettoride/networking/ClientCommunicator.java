@@ -247,9 +247,14 @@ public class ClientCommunicator {
 			out.close();
 			
 			return out.toByteArray();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+
 		} finally {
 			connection.disconnect();
 		}
+		return null;
 	}
 	
 	public String getHost() {

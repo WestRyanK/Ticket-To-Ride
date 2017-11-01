@@ -291,6 +291,18 @@ public class ModelFacade implements IModelFacade {
 		return serverProxy.sendMessage(models.getSession().getAuthToken(), message);
 	}
 
+	@Override
+	public void sendMessageAsync(final Message message, ICallback sendMessageCallback) {
+		ICommand sendMessageCommand = new ICommand() {
+			@Override
+			public Result execute() {
+				return sendMessage(message);
+			}
+		};
+
+		this.asyncTask.executeTask(sendMessageCommand, sendMessageCallback);
+	}
+
 	//TODO: implement this in a future phase
 	public List<TrainCard> drawTrainCards() {
 		return null;

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 
+import byu.codemonkeys.tickettoride.async.ICallback;
 import byu.codemonkeys.tickettoride.models.IModelFacade;
 import byu.codemonkeys.tickettoride.models.ModelFacade;
 import byu.codemonkeys.tickettoride.models.ModelRoot;
@@ -11,6 +12,7 @@ import byu.codemonkeys.tickettoride.mvpcontracts.game.ChatHistoryContract;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
+import byu.codemonkeys.tickettoride.presenters.PresenterEnum;
 import byu.codemonkeys.tickettoride.shared.model.Message;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 
@@ -33,11 +35,19 @@ public class ChatHistoryPresenter extends PresenterBase implements ChatHistoryCo
 	@Override
 	public void sendMessage(String message) {
 		Message m = new Message(modelFacade.getUser(), message, new Date());
-		Result result = modelFacade.sendMessage(m);
-		if (result.isSuccessful()) {
-			this.view.setCurrentMessage("");
-		} else {
-			messageDisplayer.displayMessage(result.getErrorMessage());
+
+		ICallback sendMessageCallback = new ICallback() {
+			@Override
+			public void callback(Result result) {
+				if (result.isSuccessful()) {
+					view.setCurrentMessage("");
+				} else {
+					messageDisplayer.displayMessage(result.getErrorMessage());
+				}
+			}
+		};
+		if (canSendMessage()) {
+			modelFacade.sendMessageAsync(m, sendMessageCallback);
 		}
 	}
 	
