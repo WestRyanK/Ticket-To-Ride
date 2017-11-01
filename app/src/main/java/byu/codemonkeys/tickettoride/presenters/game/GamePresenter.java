@@ -38,7 +38,7 @@ public class GamePresenter extends PresenterBase implements GameContract.Present
 	@Override
 	public void update(Observable observable, Object o) {
 		if (o == ModelFacade.GAME_UPDATE) {
-			//this.navigator.navigate(PresenterEnum.DrawDestinationCards, true);
+			this.navigator.navigate(PresenterEnum.DrawDestinationCards, true);
 		}
 	}
 }
