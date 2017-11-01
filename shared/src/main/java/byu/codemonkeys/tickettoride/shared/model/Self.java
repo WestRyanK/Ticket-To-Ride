@@ -1,7 +1,5 @@
 package byu.codemonkeys.tickettoride.shared.model;
 
-import com.sun.media.jfxmedia.events.PlayerStateEvent;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;

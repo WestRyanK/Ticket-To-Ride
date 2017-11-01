@@ -1,7 +1,5 @@
 package byu.codemonkeys.tickettoride.shared.model;
 
-import com.sun.org.apache.xerces.internal.xni.parser.XMLDTDContentModelFilter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
