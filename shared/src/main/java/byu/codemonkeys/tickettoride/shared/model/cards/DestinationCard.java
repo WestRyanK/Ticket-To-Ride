@@ -45,23 +45,24 @@ public class DestinationCard {
 		this.pointValue = pointValue;
 		this.id = id;
 	}
-
+	
 	@Override
 	public boolean equals(Object o) {
 		if (o == null) {
 			return false;
 		}
-
+		
 		if (o == this) {
 			return true;
 		}
-
+		
 		if (o.getClass() != this.getClass()) {
 			return false;
 		}
-
+		
 		DestinationCard other = (DestinationCard) o;
-
-		return (destinationA == other.destinationA) && (destinationB == other.destinationB);
+		
+		return this.id == other.id;
+		//		return (destinationA == other.destinationA) && (destinationB == other.destinationB);
 	}
 }

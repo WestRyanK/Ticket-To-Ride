@@ -118,6 +118,12 @@ public class DestinationCardsFragment extends Fragment implements DestinationCar
 	}
 	
 	@Override
+	public void onResume() {
+		super.onResume();
+		presenter.loadDestinationCards();
+	}
+	
+	@Override
 	public void setDestinationCards(List<DestinationCard> cards) {
 		destinationCardsAdapter.updateData(cards);
 		scrollToMiddle();

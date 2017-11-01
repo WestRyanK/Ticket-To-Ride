@@ -19,8 +19,8 @@ public class ModelRoot extends Observable {
 	private ActiveGame game;
 	private HistoryManager history;
 	private ChatManager chat;
-	private List<TrainCard> trainCards;
-	private List<DestinationCard> destinationCards;
+//	private List<TrainCard> trainCards;
+//	private List<DestinationCard> destinationCards;
 
 	
 	private ModelRoot() {
@@ -89,33 +89,33 @@ public class ModelRoot extends Observable {
 		return chat.getMessages();
 	}
 
-	public void removeTrainCard(TrainCard card){
-		trainCards.remove(card);
-	}
-
-	public void removeDestinationCard(DestinationCard card) {
-		destinationCards.remove(card);
-	}
+//	public void removeTrainCard(TrainCard card){
+//		trainCards.remove(card);
+//	}
+//
+//	public void removeDestinationCard(DestinationCard card) {
+//		destinationCards.remove(card);
+//	}
 
 	public List<CommandHistoryEntry> getGameHistory() {
 		return history.getCommandHistory();
 	}
 
-	public void addTrainCards(List<TrainCard> cards){
-		trainCards.addAll(cards);
-	}
+//	public void addTrainCards(List<TrainCard> cards){
+//		trainCards.addAll(cards);
+//	}
+//
+//	public void addDestinationCards(List<DestinationCard> cards){
+//		destinationCards.addAll(cards);
+//	}
+//
+//	public void addDestinationCard(DestinationCard card){
+//		destinationCards.add(card);
+//	}
 
-	public void addDestinationCards(List<DestinationCard> cards){
-		destinationCards.addAll(cards);
-	}
-
-	public void addDestinationCard(DestinationCard card){
-		destinationCards.add(card);
-	}
-
-	public void addTrainCard(TrainCard card){
-		trainCards.add(card);
-	}
+//	public void addTrainCard(TrainCard card){
+//		trainCards.add(card);
+//	}
 
 	public int getLastReadCommandIndex() {
 		return history.getLastReadCommandIndex();

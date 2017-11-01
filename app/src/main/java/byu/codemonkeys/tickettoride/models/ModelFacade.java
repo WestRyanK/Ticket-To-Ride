@@ -315,11 +315,16 @@ public class ModelFacade implements IModelFacade {
 																		  cards.size(),
 																		  cards);
 		//On server success, add the cards to the model
-		
+		if (result.isSuccessful()) {
+			for (DestinationCard card : cards) {
+				ModelRoot.getInstance().getGame().getSelf().select(card);
+			}
+			ModelRoot.getInstance().getGame().getSelf().getSelecting().clear();
+		}
 	}
 	
 	public void selectDestinationCardsAsync(final List<DestinationCard> cards,
-									 ICallback selectDestinationCardsCallback) {
+											ICallback selectDestinationCardsCallback) {
 		ICommand selectDestinationCardsCommand = new ICommand() {
 			@Override
 			public Result execute() {
