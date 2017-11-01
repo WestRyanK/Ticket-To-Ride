@@ -22,5 +22,7 @@ public interface DrawDestinationCardsContract {
 	
 	interface Presenter {
 		void acceptSelectedCards();
+		
+		void loadDestinationCards();
 	}
 }

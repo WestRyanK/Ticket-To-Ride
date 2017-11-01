@@ -13,6 +13,7 @@ import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.presenters.game.ChatHistoryPresenter;
 import byu.codemonkeys.tickettoride.presenters.game.DestinationCardsPresenter;
 import byu.codemonkeys.tickettoride.presenters.game.DrawDestinationCardsPresenter;
+import byu.codemonkeys.tickettoride.presenters.game.GamePresenter;
 import byu.codemonkeys.tickettoride.presenters.game.Phase2TestingPresenter;
 import byu.codemonkeys.tickettoride.presenters.PresenterEnum;
 
@@ -45,6 +46,10 @@ public class GameActivity extends AppCompatActivity implements INavigator, IDisp
 				switch (presenter) {
 					case Game:
 						GameFragment gameFragment = new GameFragment();
+						gameFragment.setPresenter(new GamePresenter(gameFragment,
+																	activity,
+																	activity,
+																	ModelFacade.getInstance()));
 						fragment = gameFragment;
 						break;
 					case Phase2Testing:

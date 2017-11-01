@@ -107,6 +107,12 @@ public class DrawDestinationCardsFragment extends Fragment implements DrawDestin
 	}
 	
 	@Override
+	public void onResume() {
+		super.onResume();
+		presenter.loadDestinationCards();
+	}
+	
+	@Override
 	public void setCanContinue(boolean canContinue) {
 		this.textViewContinue.setEnabled(canContinue);
 		

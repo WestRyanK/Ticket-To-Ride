@@ -3,6 +3,7 @@ package byu.codemonkeys.tickettoride.views.game;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.FrameLayout;
 
 import byu.codemonkeys.tickettoride.R;
 import byu.codemonkeys.tickettoride.models.ModelFacade;
+import byu.codemonkeys.tickettoride.mvpcontracts.game.GameContract;
 import byu.codemonkeys.tickettoride.presenters.game.DrawTrainCardsPresenter;
 import byu.codemonkeys.tickettoride.presenters.game.GameSidebarPresenter;
 import byu.codemonkeys.tickettoride.presenters.game.PlayerStatsPresenter;
@@ -17,13 +19,19 @@ import byu.codemonkeys.tickettoride.presenters.game.PlayerStatsPresenter;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GameFragment extends Fragment {
+public class GameFragment extends Fragment implements GameContract.View{
 	
 	
 	FrameLayout frameSidebar;
 	FrameLayout framePlayerStats;
 	FrameLayout frameTrainCards;
 	FrameLayout frameMap;
+	
+	public void setPresenter(GameContract.Presenter presenter) {
+		this.presenter = presenter;
+	}
+	
+	GameContract.Presenter presenter;
 	
 	public GameFragment() {
 		// Required empty public constructor
@@ -112,5 +120,18 @@ public class GameFragment extends Fragment {
 			.replace(R.id.game_frameSidebar, fragment)
 			.commit();
 	}
+		@Override
+	public void onResume() {
+		super.onResume();
+		
+		presenter.startPolling();
+		Log.d("GAME", "Resuming game...");
+	}
 	
+	@Override
+	public void onPause() {
+		super.onPause();
+		presenter.stopPolling();
+		Log.d("GAME", "Pausing game...");
+	}
 }

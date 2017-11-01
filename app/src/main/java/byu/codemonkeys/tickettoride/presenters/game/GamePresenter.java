@@ -5,6 +5,7 @@ import java.util.Observer;
 
 import byu.codemonkeys.tickettoride.models.IModelFacade;
 import byu.codemonkeys.tickettoride.models.ModelFacade;
+import byu.codemonkeys.tickettoride.models.ModelRoot;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.GameContract;
@@ -25,15 +26,16 @@ public class GamePresenter extends PresenterBase implements GameContract.Present
 						 IModelFacade modelFacade) {
 		super(navigator, messageDisplayer, modelFacade);
 		this.view = view;
+		this.modelFacade.addObserver(this);
 	}
 	
 	@Override
-	public void startPoller() {
+	public void startPolling() {
 		GamePoller.getInstance().startPolling();
 	}
 	
 	@Override
-	public void stopPoller() {
+	public void stopPolling() {
 		GamePoller.getInstance().startPolling();
 	}
 	

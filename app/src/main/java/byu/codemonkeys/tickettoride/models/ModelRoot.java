@@ -58,7 +58,7 @@ public class ModelRoot extends Observable {
 	public void setPendingGame(GameBase game) {
 		pendingGame = game;
 		setChanged();
-		notifyObservers(ModelFacade.GAME_UPDATE);
+		notifyObservers(ModelFacade.PENDING_GAME_UPDATE);
 	}
 	
 	public void setPendingGames(List<GameBase> games) {
@@ -78,7 +78,7 @@ public class ModelRoot extends Observable {
 	public void setGame(ActiveGame game) {
 		this.game = game;
 		setChanged();
-		notifyObservers(ModelFacade.PENDING_GAME_UPDATE);
+		notifyObservers(ModelFacade.GAME_UPDATE);
 	}
 	
 	public ActiveGame getGame() {

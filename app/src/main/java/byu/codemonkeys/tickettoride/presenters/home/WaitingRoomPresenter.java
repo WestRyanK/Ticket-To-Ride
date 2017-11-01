@@ -115,6 +115,7 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 			try {
 				if (modelFacade.getPendingGame().isStarted()) {
 					stopPolling();
+					
 					this.navigator.navigate(PresenterEnum.Game, false);
 				} else {
 					this.loadWaitingPlayers();
