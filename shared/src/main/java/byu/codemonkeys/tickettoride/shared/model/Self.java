@@ -3,6 +3,9 @@ package byu.codemonkeys.tickettoride.shared.model;
 import java.util.Map;
 import java.util.Set;
 
+import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
+import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
+
 /**
  * This class is especially incomplete.
  */

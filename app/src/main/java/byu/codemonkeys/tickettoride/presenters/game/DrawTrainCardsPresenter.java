@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Random;
 
 import byu.codemonkeys.tickettoride.models.IModelFacade;
-import byu.codemonkeys.tickettoride.models.TrainCard;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.DrawTrainCardsContract;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
-import byu.codemonkeys.tickettoride.shared.model.CardType;
+import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
+import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 
 /**
  * Created by Ryan on 10/17/2017.

@@ -3,7 +3,7 @@ package byu.codemonkeys.tickettoride.networking;
 import java.util.List;
 
 import byu.codemonkeys.tickettoride.shared.IServer;
-import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
+import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.results.*;
 import byu.codemonkeys.tickettoride.shared.commands.*;
 import byu.codemonkeys.tickettoride.shared.model.Message;

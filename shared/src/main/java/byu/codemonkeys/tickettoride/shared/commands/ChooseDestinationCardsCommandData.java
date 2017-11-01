@@ -1,8 +1,8 @@
 package byu.codemonkeys.tickettoride.shared.commands;
 
-import byu.codemonkeys.tickettoride.shared.model.DestinationCard;
-import java.util.ArrayList;
 import java.util.List;
+
+import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 
 /**
  * The client sends a ChooseDestinationCardsCommand to the server to indicate which destination

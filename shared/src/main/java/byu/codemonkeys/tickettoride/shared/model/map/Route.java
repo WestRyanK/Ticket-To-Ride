@@ -3,7 +3,7 @@ package byu.codemonkeys.tickettoride.shared.model.map;
 
 import java.util.Objects;
 
-import byu.codemonkeys.tickettoride.shared.model.CardType;
+import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
 
 public class Route {

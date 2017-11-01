@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import byu.codemonkeys.tickettoride.models.DestinationCard;
+import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.views.OnRecyclerItemClickListener;
 import byu.codemonkeys.tickettoride.views.widgets.DestinationCardWidget;
 

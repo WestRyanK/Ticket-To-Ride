@@ -1,4 +1,4 @@
-package byu.codemonkeys.tickettoride.shared.model;
+package byu.codemonkeys.tickettoride.shared.model.cards;
 
 /**
  * Created by Ryan on 10/28/2017.

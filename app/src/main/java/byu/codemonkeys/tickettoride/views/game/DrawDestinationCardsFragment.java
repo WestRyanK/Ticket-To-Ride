@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import byu.codemonkeys.tickettoride.R;
-import byu.codemonkeys.tickettoride.models.DestinationCard;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.DrawDestinationCardsContract;
+import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.views.OnRecyclerItemClickListener;
 import byu.codemonkeys.tickettoride.views.widgets.HorizontalSpaceItemDecoration;
 

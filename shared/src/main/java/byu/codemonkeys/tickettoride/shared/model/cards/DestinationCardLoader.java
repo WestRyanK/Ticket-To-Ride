@@ -1,4 +1,4 @@
-package byu.codemonkeys.tickettoride.shared.model.map;
+package byu.codemonkeys.tickettoride.shared.model.cards;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -9,18 +9,20 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
+import byu.codemonkeys.tickettoride.shared.model.map.City;
+import byu.codemonkeys.tickettoride.shared.model.map.GameMap;
+import byu.codemonkeys.tickettoride.shared.model.map.Route;
 
 /**
  * Created by Ryan on 10/30/2017.
  */
 
 
-public class GameMapLoader {
+public class DestinationCardLoader {
 	private static ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 	
 	
-	public static GameMap loadGameMapFromResources() {
+	public static GameMap loadDestinationCardsFromResources() {
 		List<City> cities = loadCitiesFromResource();
 		List<Route> routes = loadRoutesFromResource(cities);
 		GameMap map = new GameMap(cities, routes);
