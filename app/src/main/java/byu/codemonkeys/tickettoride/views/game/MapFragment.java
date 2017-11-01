@@ -71,7 +71,7 @@ public class MapFragment extends Fragment implements MapContract.View {
 			pointBubble.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-
+					presenter.claimRoute(pointBubble);
 				}
 			});
 		}
