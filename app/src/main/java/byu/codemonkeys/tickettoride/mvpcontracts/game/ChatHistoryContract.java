@@ -23,6 +23,8 @@ public interface ChatHistoryContract {
 		void navigateBack();
 		
 		boolean canSendMessage();
+
+		void loadHistory();
 		
 	}
 }

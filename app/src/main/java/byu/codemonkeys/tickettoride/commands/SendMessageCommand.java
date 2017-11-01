@@ -16,4 +16,9 @@ public class SendMessageCommand extends SendMessageCommandData implements IClien
     public void execute() {
         ModelRoot.getInstance().addMessage(message);
     }
+
+    @Override
+    public String toString() {
+        return message.toString();
+    }
 }

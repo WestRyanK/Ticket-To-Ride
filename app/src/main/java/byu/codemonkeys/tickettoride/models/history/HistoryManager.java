@@ -11,10 +11,12 @@ import byu.codemonkeys.tickettoride.shared.commands.UpdateHistoryCommandData;
 public class HistoryManager {
     private List<CommandHistoryEntry> commandHistory;
     private int lastReadCommandIndex;
+    private int nextCommandForHistory;
 
     public HistoryManager() {
         commandHistory = new LinkedList<>();
         lastReadCommandIndex = UpdateHistoryCommandData.NO_COMMANDS_SEEN_INDEX;
+        nextCommandForHistory = 0;
     }
 
     public int getLastReadCommandIndex() {
@@ -23,21 +25,19 @@ public class HistoryManager {
 
     public void addHistory(List<CommandData> commands) {
         for (CommandData command : commands) {
-            if (shouldRecord(command)) {
-                commandHistory.add(new CommandHistoryEntry(command));
-            }
+            commandHistory.add(new CommandHistoryEntry(command));
             lastReadCommandIndex = command.getQueuedPosition();
         }
     }
 
     public List<CommandHistoryEntry> getCommandHistory() {
-        return getCommandHistory();
+        nextCommandForHistory = commandHistory.size();
+        return commandHistory;
     }
 
-    private boolean shouldRecord(CommandData command) {
-        if (command instanceof SendMessageCommand) {
-            return false;
-        }
-        return true;
+    public List<CommandHistoryEntry> getLatestCommandHistory() {
+        List<CommandHistoryEntry> latest = commandHistory.subList(nextCommandForHistory, commandHistory.size());
+        nextCommandForHistory = commandHistory.size();
+        return latest;
     }
 }
