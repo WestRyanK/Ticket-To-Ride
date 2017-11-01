@@ -25,7 +25,9 @@ public class TrainCardsPresenter extends PresenterBase implements TrainCardsCont
 
     @Override
     public void loadHand() {
-        this.view.setHand(ModelRoot.getInstance().getGame().getSelf().getHand());
+        if (ModelRoot.getInstance().getGame() != null) {
+            this.view.setHand(ModelRoot.getInstance().getGame().getSelf().getHand());
+        }
     }
 
     @Override
