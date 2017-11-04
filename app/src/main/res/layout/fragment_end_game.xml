@@ -1,0 +1,198 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             android:background="@drawable/paper_background"
+                                             tools:context="byu.codemonkeys.tickettoride.views.game.EndGameFragment">
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/endGame_textViewLobby"
+        style="@style/AvatarTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="10dp"
+        android:text="@string/lobby"
+        android:textSize="@dimen/title2_size"
+        app:layout_constraintBaseline_toBaselineOf="@+id/endGame_textViewTitle"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/endGame_textViewTitle"
+        style="@style/AvatarTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:textSize="@dimen/title_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="You Won!"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/endGame_guideline0"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.19" />
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/endGame_textViewName"
+        style="@style/AvatarTextStyle"
+        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:textSize="@dimen/title4_size"
+        android:gravity="right"
+        app:layout_constraintBottom_toTopOf="@+id/endGame_imageViewUnderline"
+        app:layout_constraintRight_toLeftOf="@+id/endGame_guideline0"
+        android:text="@string/players" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/endGameStats_guideline1"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.29" />
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/endGame_textViewTotalScore"
+        style="@style/AvatarTextStyle"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/title4_size"
+        android:text="@string/score"
+        android:layout_width="50dp"
+        android:gravity="right"
+        app:layout_constraintBottom_toTopOf="@+id/endGame_imageViewUnderline"
+        app:layout_constraintRight_toLeftOf="@id/endGameStats_guideline1" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/endGame_guideline2"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.418" />
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/endGame_textViewPointsFromClaimedRoutes"
+        style="@style/AvatarTextStyle"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/title4_size"
+        android:layout_width="80dp"
+        android:gravity="right"
+        app:layout_constraintBottom_toTopOf="@+id/endGame_imageViewUnderline"
+        app:layout_constraintRight_toLeftOf="@+id/endGame_guideline2"
+        android:text="@string/claimedRoutes"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/endGame_guideline3"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.56" />
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/endGame_textViewPointsFromLongestRoute"
+        style="@style/AvatarTextStyle"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/title4_size"
+        android:text="@string/longestRoute"
+        android:layout_width="80dp"
+        android:gravity="right"
+        app:layout_constraintBottom_toTopOf="@+id/endGame_imageViewUnderline"
+        app:layout_constraintRight_toLeftOf="@+id/endGame_guideline3" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/endGame_guideline4"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/endGame_textViewPointsFromCompletedDestinations"
+        style="@style/AvatarTextStyle"
+        android:textSize="@dimen/title4_size"
+        android:layout_height="wrap_content"
+        android:text="@string/completedDestinations"
+        android:layout_width="120dp"
+        android:gravity="right"
+        app:layout_constraintBottom_toTopOf="@+id/endGame_imageViewUnderline"
+        app:layout_constraintRight_toLeftOf="@+id/endGame_guideline4" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/endGame_guideline5"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.97" />
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/endGame_textViewPenaltiesFromUnreachedDestinations"
+        style="@style/AvatarTextStyle"
+        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:textSize="@dimen/title4_size"
+        android:gravity="right"
+        app:layout_constraintBottom_toTopOf="@+id/endGame_imageViewUnderline"
+        android:text="@string/unreachedDestinations"
+        app:layout_constraintRight_toLeftOf="@+id/endGame_guideline5" />
+
+    <Space
+        android:id="@+id/endGame_spaceHeader"
+        android:layout_width="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/endGame_textViewTitle"
+        android:layout_height="40dp"/>
+    <ImageView
+        android:id="@+id/endGame_imageViewUnderline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/endGame_spaceHeader"
+        android:src="@drawable/ic_underline" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/endGame_imageViewUnderline"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="?attr/selectableItemBackgroundBorderless" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <byu.codemonkeys.tickettoride.views.widgets.EndGamePlayerStatsWidget
+                android:id="@+id/endGame_endGameStats0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <byu.codemonkeys.tickettoride.views.widgets.EndGamePlayerStatsWidget
+                android:id="@+id/endGame_endGameStats1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <byu.codemonkeys.tickettoride.views.widgets.EndGamePlayerStatsWidget
+                android:id="@+id/endGame_endGameStats2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <byu.codemonkeys.tickettoride.views.widgets.EndGamePlayerStatsWidget
+                android:id="@+id/endGame_endGameStats3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <byu.codemonkeys.tickettoride.views.widgets.EndGamePlayerStatsWidget
+                android:id="@+id/endGame_endGameStats4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.constraint.ConstraintLayout>

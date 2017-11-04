@@ -42,4 +42,10 @@
     <string name="drawDestinationCards">Select at least 2 destination cards</string>
     <string name="chatHistory">Messages</string>
     <string name="enterMessage">Enter a message...</string>
+    <string name="lobby">Lobby</string>
+    <string name="claimedRoutes">Claimed Routes</string>
+    <string name="score">Score</string>
+    <string name="longestRoute">Longest Route</string>
+    <string name="completedDestinations">Completed Destinations</string>
+    <string name="unreachedDestinations">Unreached Destinations</string>
 </resources>

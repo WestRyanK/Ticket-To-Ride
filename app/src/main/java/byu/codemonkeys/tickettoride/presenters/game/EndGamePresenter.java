@@ -45,7 +45,7 @@ public class EndGamePresenter extends PresenterBase implements EndGameContract.P
 		Random rand = new Random();
 		
 		endGamePlayerStats.add(new EndGamePlayerStats("westryank",
-													  PlayerColor.Blue,
+													  PlayerColor.Green,
 													  rand.nextInt(120),
 													  rand.nextInt(100),
 													  rand.nextInt(30),
@@ -88,12 +88,12 @@ public class EndGamePresenter extends PresenterBase implements EndGameContract.P
 		Collections.sort(endGamePlayerStats, new Comparator<EndGamePlayerStats>() {
 			@Override
 			public int compare(EndGamePlayerStats statsA, EndGamePlayerStats statsB) {
-				return statsA.getTotalScore() - statsB.getTotalScore();
+				return -Integer.compare(statsA.getTotalScore(), statsB.getTotalScore());
 			}
 		});
 		
 		EndGamePlayerStats winner = endGamePlayerStats.get(0);
-		this.view.setIsWinner(modelFacade.getUser().getUsername().equals(winner.getUserName()));
+		this.view.setIsWinner(modelFacade.getUser().getUsername().equals(winner.getUsername()));
 		this.view.setEndGameStats(endGamePlayerStats);
 	}
 }

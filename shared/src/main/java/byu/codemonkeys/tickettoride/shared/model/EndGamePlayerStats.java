@@ -10,7 +10,7 @@ public class EndGamePlayerStats {
 	//region UserName Property
 	private final String userName;
 	
-	public String getUserName() {
+	public String getUsername() {
 		return userName;
 	}
 	

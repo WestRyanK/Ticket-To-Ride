@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:id="@+id/trainCard_background"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             tools:context="byu.codemonkeys.tickettoride.views.game.TrainCardsFragment">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/endGameStats_guideline0"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.19"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/endGameStats_textViewName"
+        style="@style/AvatarTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/title2_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/endGameStats_guideline0"
+        tools:text="dcorey3"/>
+
+    <ImageView
+        android:id="@+id/endGameStats_imageViewColor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/endGameStats_textViewName"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/endGameStats_guideline0"
+        tools:src="@drawable/stroke_red"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/endGameStats_guideline1"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.29"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/endGameStats_textViewPlayerTotalScore"
+        style="@style/AvatarTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/title2_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/endGameStats_guideline1"
+        tools:text="115"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/endGameStats_guideline2"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.41"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/endGameStats_textViewPointsFromClaimedRoutes"
+        style="@style/AvatarTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/title2_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/endGameStats_guideline2"
+        tools:text="100"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/endGameStats_guideline3"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.56"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/endGameStats_textViewPointsFromLongestRoute"
+        style="@style/AvatarTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/title2_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/endGameStats_guideline3"
+        tools:text="10"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/endGameStats_guideline4"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/endGameStats_textViewPointsFromCompletedDestinations"
+        style="@style/AvatarTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/title2_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/endGameStats_guideline4"
+        tools:text="12"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/endGameStats_guideline5"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.97"/>
+
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+        android:id="@+id/endGameStats_textViewPenaltiesFromUnreachedDestinations"
+        style="@style/AvatarTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/title2_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/endGameStats_guideline5"
+        tools:text="-10"/>
+
+
+</android.support.constraint.ConstraintLayout>

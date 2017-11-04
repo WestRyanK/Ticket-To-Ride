@@ -4,6 +4,7 @@
     <dimen name="title_size">34sp</dimen>
     <dimen name="default_margin">16dp</dimen>
     <dimen name="title2_size">24sp</dimen>
+    <dimen name="title4_size">18dp</dimen>
     <dimen name="lobbyOwnerOffset">150dp</dimen>
     <dimen name="lobbyPlayersOffset">304dp</dimen>
     <dimen name="title3_size">12sp</dimen>
