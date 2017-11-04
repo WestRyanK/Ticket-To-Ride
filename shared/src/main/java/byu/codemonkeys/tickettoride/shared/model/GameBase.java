@@ -11,7 +11,7 @@ public class GameBase extends ObservableExt{
     protected List<UserBase> gameUsers;
     protected boolean started;
 	
-	public static int MIN_PLAYERS = 2;
+	public static int MIN_PLAYERS = 1;
 	public static int MAX_PLAYERS = 5;
 	public static int MIN_GAME_NAME_LENGTH = 6;
 	public static int MAX_GAME_NAME_LENGTH = 12;
