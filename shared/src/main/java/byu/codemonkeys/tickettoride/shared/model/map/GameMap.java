@@ -14,8 +14,8 @@ public class GameMap extends Observable {
 	public static final String ROUTE_UPDATE = "RouteUpdate";
 	
 	public GameMap() {
-		//GameMap map = GameMapLoader.getInstance().loadGameMapFromResources();
-		//init(map.cities, map.routes);
+		GameMap map = GameMapLoader.getInstance().loadGameMapFromResources();
+		init(map.cities, map.routes);
 	}
 	
 	public static void main(String[] args) {
