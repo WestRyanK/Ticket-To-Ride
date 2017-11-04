@@ -38,10 +38,4 @@ public class GameSidebarPresenter extends PresenterBase implements GameSidebarCo
 	public void navigateChatHistory() {
 		this.navigator.navigate(PresenterEnum.ChatHistory, true);
 	}
-	
-	@Override
-	public void navigatePhase2Testing() {
-		this.navigator.navigate(PresenterEnum.Phase2Testing, true);
-		
-	}
 }

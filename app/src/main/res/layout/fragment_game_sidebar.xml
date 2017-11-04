@@ -5,16 +5,6 @@
               android:background="@drawable/paper_background"
               android:orientation="vertical"
               tools:context="byu.codemonkeys.tickettoride.views.game.GameSidebarFragment">
-    <!--android:background="@color/darkGray"-->
-
-    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
-        android:id="@+id/gameSideBar_textViewPhase2Testing"
-        style="@style/AvatarTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|center_horizontal"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:text="@string/phase2Testing"/>
 
     <ImageButton
         android:id="@+id/gameSideBar_imageButtonDestinationCards"

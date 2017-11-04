@@ -10,8 +10,6 @@ import byu.codemonkeys.tickettoride.shared.model.UserBase;
 
 
 public class PendingGame extends GameBase {
-    private static int MIN_PLAYERS = 2;
-    private static int MAX_PLAYERS = 5;
     
     public PendingGame(String gameID, String gameName, User owner) {
         this.gameName = gameName;
