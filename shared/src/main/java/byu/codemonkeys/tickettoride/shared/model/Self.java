@@ -3,7 +3,6 @@ package byu.codemonkeys.tickettoride.shared.model;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,11 +11,18 @@ import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 
 /**
- * A Player with all the information a user has about herself.
+ * A Player with all the information a user has about themself.
  */
 public class Self extends Player {
+	/**
+	 * Represents all of the train cards that the player has in their hand.
+	 */
 	private Map<CardType, Integer> hand;
 	
+	/**
+	 * Returns a set of the destination cards that the Player
+	 * @return
+	 */
 	public Set<DestinationCard> getDestinations() {
 		return destinations;
 	}

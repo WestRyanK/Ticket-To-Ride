@@ -37,8 +37,6 @@ public interface IModelFacade {
 	
 	void registerAsync(String username, String password, ICallback registerCallback);
 	
-	void logout() throws UnauthorizedException;
-	
 	List<GameBase> getPendingGames() throws UnauthorizedException;
 	
 	PendingGameResult createGame(String gameName);
@@ -70,18 +68,6 @@ public interface IModelFacade {
 
 	//This will be where one can find player color, score number of train cards, and number of destination cards
 	List<Player> getPlayerInfo();
-
-	//Here for the sake of the demonstration, just in case we need them, although these should already be covered in the user actions
-	void addTrainCard(TrainCard card); //should this be a list of cards?
-	void addTrainCards(List<TrainCard> cards);
-	void removeTrainCard(TrainCard card); //also this
-
-	void addDestinationCard(DestinationCard card);
-	void addDestinationCards(List<DestinationCard> cards);
-	void removeDestinationCard(DestinationCard card);
-
-	int getDestinationCardDeckSize();
-	int getTrainCardDeckSize();
 
 	// User actions
 	Result sendMessage(Message message);

@@ -14,7 +14,6 @@ import byu.codemonkeys.tickettoride.presenters.game.ChatHistoryPresenter;
 import byu.codemonkeys.tickettoride.presenters.game.DestinationCardsPresenter;
 import byu.codemonkeys.tickettoride.presenters.game.DrawDestinationCardsPresenter;
 import byu.codemonkeys.tickettoride.presenters.game.GamePresenter;
-import byu.codemonkeys.tickettoride.presenters.game.Phase2TestingPresenter;
 import byu.codemonkeys.tickettoride.presenters.PresenterEnum;
 
 public class GameActivity extends AppCompatActivity implements INavigator, IDisplaysMessages {
