@@ -89,32 +89,8 @@ public class ModelRoot extends Observable implements Observer {
 		return this.game;
 	}
 	
-	public void removeTrainCard(TrainCard card) {
-		trainCards.remove(card);
-	}
-	
-	public void removeDestinationCard(DestinationCard card) {
-		destinationCards.remove(card);
-	}
-	
 	public List<CommandHistoryEntry> getGameHistory() {
 		return history.getCommandHistory();
-	}
-	
-	public void addTrainCards(List<TrainCard> cards) {
-		trainCards.addAll(cards);
-	}
-	
-	public void addDestinationCards(List<DestinationCard> cards) {
-		destinationCards.addAll(cards);
-	}
-	
-	public void addDestinationCard(DestinationCard card) {
-		destinationCards.add(card);
-	}
-	
-	public void addTrainCard(TrainCard card) {
-		trainCards.add(card);
 	}
 	
 	public int getLastReadCommandIndex() {
@@ -128,7 +104,7 @@ public class ModelRoot extends Observable implements Observer {
 	public HistoryManager getHistoryManager() {
 		return history;
 	}
-
+	
 	public void historyUpdated() {
 		setChanged();
 		notifyObservers(ModelFacade.HISTORY_UPDATE);

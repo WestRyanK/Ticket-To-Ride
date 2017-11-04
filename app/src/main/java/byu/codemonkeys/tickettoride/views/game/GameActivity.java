@@ -51,14 +51,6 @@ public class GameActivity extends AppCompatActivity implements INavigator, IDisp
 																	ModelFacade.getInstance()));
 						fragment = gameFragment;
 						break;
-					case Phase2Testing:
-						Phase2TestingFragment testingFragment = new Phase2TestingFragment();
-						testingFragment.setPresenter(new Phase2TestingPresenter(testingFragment,
-																				activity,
-																				activity,
-																				ModelFacade.getInstance()));
-						fragment = testingFragment;
-						break;
 					case DrawTrainCards:
 						GameFragment gameFrag = (GameFragment) getSupportFragmentManager().findFragmentByTag(
 								PresenterEnum.Game.name());

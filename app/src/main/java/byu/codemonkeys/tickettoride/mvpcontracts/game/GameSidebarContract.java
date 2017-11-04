@@ -15,7 +15,5 @@ public interface GameSidebarContract {
 		void navigateDrawTrainCards();
 		
 		void navigateChatHistory();
-		
-		void navigatePhase2Testing();
 	}
 }

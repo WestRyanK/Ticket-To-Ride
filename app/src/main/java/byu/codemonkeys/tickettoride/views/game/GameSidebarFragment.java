@@ -20,7 +20,6 @@ public class GameSidebarFragment extends Fragment implements GameSidebarContract
 	private ImageButton imageButtonDrawTrainCards;
 	private ImageButton imageButtonDestinationCards;
 	private ImageButton imageButtonChatHistory;
-	private TextView textViewPhase2Testing;
 	private GameSidebarContract.Presenter presenter;
 	
 	public GameSidebarFragment() {
@@ -43,7 +42,6 @@ public class GameSidebarFragment extends Fragment implements GameSidebarContract
 		imageButtonDrawTrainCards = (ImageButton) view.findViewById(R.id.gameSideBar_imageButtonDrawTrainCards);
 		imageButtonDestinationCards = (ImageButton) view.findViewById(R.id.gameSideBar_imageButtonDestinationCards);
 		imageButtonChatHistory = (ImageButton) view.findViewById(R.id.gameSideBar_imageButtonChatHistory);
-		textViewPhase2Testing = (TextView) view.findViewById(R.id.gameSideBar_textViewPhase2Testing);
 	}
 	
 	private void setHandlers(View view) {
@@ -65,13 +63,6 @@ public class GameSidebarFragment extends Fragment implements GameSidebarContract
 			@Override
 			public void onClick(View view) {
 				presenter.navigateChatHistory();
-			}
-		});
-		textViewPhase2Testing.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				presenter.navigatePhase2Testing();
-				
 			}
 		});
 	}
