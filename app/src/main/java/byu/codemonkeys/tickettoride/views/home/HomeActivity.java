@@ -24,6 +24,7 @@ import byu.codemonkeys.tickettoride.views.game.GameActivity;
 
 public class HomeActivity extends AppCompatActivity implements INavigator, IDisplaysMessages {
 	
+	public static final String PARAM_PRESENTER = "ParamPresenter";
 	private FrameLayout fragmentContainer;
 	
 	@Override
@@ -34,7 +35,10 @@ public class HomeActivity extends AppCompatActivity implements INavigator, IDisp
 		this.fragmentContainer = (FrameLayout) this.findViewById(R.id.main_fragmentContainer);
 		
 		((ModelFacade) ModelFacade.getInstance()).setAsyncTask(new AndroidTask());
-		navigate(PresenterEnum.Login, false);
+		
+		int enumIndex = getIntent().getIntExtra(PARAM_PRESENTER, PresenterEnum.Login.ordinal());
+		PresenterEnum presenter = PresenterEnum.values()[enumIndex];
+		navigate(presenter, false);
 	}
 	
 	// region INavigator Implementation

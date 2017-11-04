@@ -1,5 +1,6 @@
 package byu.codemonkeys.tickettoride.views.game;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +14,10 @@ import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.presenters.game.ChatHistoryPresenter;
 import byu.codemonkeys.tickettoride.presenters.game.DestinationCardsPresenter;
 import byu.codemonkeys.tickettoride.presenters.game.DrawDestinationCardsPresenter;
+import byu.codemonkeys.tickettoride.presenters.game.EndGamePresenter;
 import byu.codemonkeys.tickettoride.presenters.game.GamePresenter;
 import byu.codemonkeys.tickettoride.presenters.PresenterEnum;
+import byu.codemonkeys.tickettoride.views.home.HomeActivity;
 
 public class GameActivity extends AppCompatActivity implements INavigator, IDisplaysMessages {
 	
@@ -84,6 +87,20 @@ public class GameActivity extends AppCompatActivity implements INavigator, IDisp
 								ModelFacade.getInstance()));
 						fragment = chatHistoryFragment;
 						break;
+					case EndGame:
+						EndGameFragment endGameFragment = new EndGameFragment();
+						endGameFragment.setPresenter(new EndGamePresenter(
+								endGameFragment,
+								activity,
+								activity,
+								ModelFacade.getInstance()));
+						fragment = endGameFragment;
+						break;
+					case Lobby:
+						Intent intent = new Intent(GameActivity.this, HomeActivity.class);
+						intent.putExtra(HomeActivity.PARAM_PRESENTER, PresenterEnum.Lobby.ordinal());
+						startActivity(intent);
+						
 					default:
 						fragment = null;
 				}

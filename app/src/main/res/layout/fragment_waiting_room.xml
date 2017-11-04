@@ -42,7 +42,7 @@
             android:id="@+id/testing_imageViewUnderline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/testing_textViewTitle"
+            android:layout_below="@id/waitingRoom_header"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="-15dp"
