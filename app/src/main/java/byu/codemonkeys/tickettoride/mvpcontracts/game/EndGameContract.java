@@ -12,7 +12,7 @@ public interface EndGameContract {
 	interface View{
 		void setEndGameStats(List<EndGamePlayerStats> endGameStats);
 		
-		void setIsWinner(boolean isWinner);
+		void setWinner(String winner);
 	}
 	interface Presenter{
 		void navigateLobby();

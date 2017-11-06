@@ -97,16 +97,12 @@ public class EndGameFragment extends Fragment implements EndGameContract.View {
 	}
 	
 	@Override
-	public void setIsWinner(final boolean isWinner) {
+	public void setWinner(final String winner) {
 		if (getActivity() != null) {
 			getActivity().runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					if (isWinner) {
-						textViewTitle.setText("You Won!");
-					} else {
-						textViewTitle.setText("You Lost...");
-					}
+					textViewTitle.setText(String.format("%s is the winner!", winner));
 				}
 			});
 		}
