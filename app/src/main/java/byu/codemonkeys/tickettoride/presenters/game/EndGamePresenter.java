@@ -46,7 +46,6 @@ public class EndGamePresenter extends PresenterBase implements EndGameContract.P
 		
 		endGamePlayerStats.add(new EndGamePlayerStats("westryank",
 													  PlayerColor.Green,
-													  rand.nextInt(120),
 													  rand.nextInt(100),
 													  rand.nextInt(30),
 													  rand.nextInt(20),
@@ -54,7 +53,6 @@ public class EndGamePresenter extends PresenterBase implements EndGameContract.P
 		
 		endGamePlayerStats.add(new EndGamePlayerStats("dcorey3",
 													  PlayerColor.Red,
-													  rand.nextInt(120),
 													  rand.nextInt(100),
 													  rand.nextInt(30),
 													  rand.nextInt(20),
@@ -62,7 +60,6 @@ public class EndGamePresenter extends PresenterBase implements EndGameContract.P
 		
 		endGamePlayerStats.add(new EndGamePlayerStats("jacobeastly",
 													  PlayerColor.Blue,
-													  rand.nextInt(120),
 													  rand.nextInt(100),
 													  rand.nextInt(30),
 													  rand.nextInt(20),
@@ -70,7 +67,6 @@ public class EndGamePresenter extends PresenterBase implements EndGameContract.P
 		
 		endGamePlayerStats.add(new EndGamePlayerStats("richMeg",
 													  PlayerColor.Yellow,
-													  rand.nextInt(120),
 													  rand.nextInt(100),
 													  rand.nextInt(30),
 													  rand.nextInt(20),
@@ -78,7 +74,6 @@ public class EndGamePresenter extends PresenterBase implements EndGameContract.P
 		
 		endGamePlayerStats.add(new EndGamePlayerStats("aaaaaangy",
 													  PlayerColor.Black,
-													  rand.nextInt(120),
 													  rand.nextInt(100),
 													  rand.nextInt(30),
 													  rand.nextInt(20),
@@ -93,7 +88,7 @@ public class EndGamePresenter extends PresenterBase implements EndGameContract.P
 		});
 		
 		EndGamePlayerStats winner = endGamePlayerStats.get(0);
-		this.view.setIsWinner(modelFacade.getUser().getUsername().equals(winner.getUsername()));
+		this.view.setWinner(winner.getUsername());
 		this.view.setEndGameStats(endGamePlayerStats);
 	}
 }

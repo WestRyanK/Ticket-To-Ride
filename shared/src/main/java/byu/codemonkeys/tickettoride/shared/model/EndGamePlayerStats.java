@@ -56,17 +56,14 @@ public class EndGamePlayerStats {
 	
 	//endregion
 	//region TotalScore Property
-	private final int totalScore;
-	
 	public int getTotalScore() {
-		return totalScore;
+		return this.pointsFromClaimedRoutes + this.pointsFromLongestRoute + this.pointsFromCompletedDestinations + this.penaltiesFromUnreachedDestinations;
 	}
 	//endregion
 	// endregion
 	
 	public EndGamePlayerStats(String userName,
 							  PlayerColor playerColor,
-							  int totalScore,
 							  int pointsFromLongestRoute,
 							  int pointsFromClaimedRoutes,
 							  int pointsFromCompletedDestinations,
@@ -77,6 +74,5 @@ public class EndGamePlayerStats {
 		this.pointsFromClaimedRoutes = pointsFromClaimedRoutes;
 		this.pointsFromCompletedDestinations = pointsFromCompletedDestinations;
 		this.penaltiesFromUnreachedDestinations = penaltiesFromUnreachedDestinations;
-		this.totalScore = totalScore;
 	}
 }
