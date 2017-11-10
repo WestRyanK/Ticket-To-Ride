@@ -24,14 +24,6 @@ import byu.codemonkeys.tickettoride.views.OnRecyclerItemClickListener;
  * create an instance of this fragment.
  */
 public class LobbyFragment extends Fragment implements LobbyContract.View {
-	// TODO: Rename parameter arguments, choose names that match
-	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-	//	private static final String ARG_PARAM1 = "param1";
-	//	private static final String ARG_PARAM2 = "param2";
-	
-	// TODO: Rename and change types of parameters
-	//	private String mParam1;
-	//	private String mParam2;
 	private LobbyContract.Presenter presenter;
 	private FloatingActionButton fabCreateGame;
 	private RecyclerView recyclerPendingGames;
@@ -43,31 +35,10 @@ public class LobbyFragment extends Fragment implements LobbyContract.View {
 		// Required empty public constructor
 	}
 	
-	/**
-	 * Use this factory method to create a new instance of
-	 * this fragment using the provided parameters.
-	 * <p>
-	 * //	 * @param param1 Parameter 1.
-	 * //	 * @param param2 Parameter 2.
-	 *
-	 * @return A new instance of fragment LobbyFragment.
-	 */
-	// TODO: Rename and change types and number of parameters
-	public static LobbyFragment newInstance() {
-		LobbyFragment fragment = new LobbyFragment();
-		Bundle args = new Bundle();
-		//		args.putString(ARG_PARAM1, param1);
-		//		args.putString(ARG_PARAM2, param2);
-		fragment.setArguments(args);
-		return fragment;
-	}
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getArguments() != null) {
-			//			mParam1 = getArguments().getString(ARG_PARAM1);
-			//			mParam2 = getArguments().getString(ARG_PARAM2);
 		}
 	}
 	
@@ -116,29 +87,20 @@ public class LobbyFragment extends Fragment implements LobbyContract.View {
 	@Override
 	public void setPendingGames(final List<GameBase> pendingGames) {
 		
-		Log.d("LOBBY", "SetPendingGames");
-		getActivity().runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				Log.d("LOBBY", "SetPendingGames Run");
-				if (pendingGamesAdapter == null) {
-					pendingGamesAdapter = new PendingGamesRecyclerAdapter(pendingGames,
-																		  new OnRecyclerItemClickListener<GameBase>() {
-																			  @Override
-																			  public void onItemClick(
-																					  GameBase game) {
-																				  presenter.joinGame(
-																						  game);
-																			  }
-																		  });
-					recyclerPendingGames.setAdapter(pendingGamesAdapter);
-				} else
-				{
-					recyclerPendingGames.setAdapter(pendingGamesAdapter);
-					pendingGamesAdapter.updateData(pendingGames);
-				}
-			}
-		});
+		if (pendingGamesAdapter == null) {
+			pendingGamesAdapter = new PendingGamesRecyclerAdapter(pendingGames,
+																  new OnRecyclerItemClickListener<GameBase>() {
+																	  @Override
+																	  public void onItemClick(
+																			  GameBase game) {
+																		  presenter.joinGame(game);
+																	  }
+																  });
+			recyclerPendingGames.setAdapter(pendingGamesAdapter);
+		} else {
+			recyclerPendingGames.setAdapter(pendingGamesAdapter);
+			pendingGamesAdapter.updateData(pendingGames);
+		}
 	}
 	
 	public void setPresenter(LobbyContract.Presenter presenter) {

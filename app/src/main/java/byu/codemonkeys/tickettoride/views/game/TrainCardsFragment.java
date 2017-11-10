@@ -66,13 +66,8 @@ public class TrainCardsFragment extends Fragment implements TrainCardsContract.V
 	
 	@Override
 	public void setHand(final Map<CardType, Integer> hand) {
-		getActivity().runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				for (Map.Entry<CardType, Integer> entry : hand.entrySet()) {
-					trainCardWidgets.get(entry.getKey()).setCount(entry.getValue());
-				}
-			}
-		});
+		for (Map.Entry<CardType, Integer> entry : hand.entrySet()) {
+			trainCardWidgets.get(entry.getKey()).setCount(entry.getValue());
+		}
 	}
 }

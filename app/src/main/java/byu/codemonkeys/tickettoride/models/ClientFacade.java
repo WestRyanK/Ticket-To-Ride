@@ -2,16 +2,22 @@ package byu.codemonkeys.tickettoride.models;
 
 import java.util.List;
 
+import byu.codemonkeys.tickettoride.async.ITask;
+import byu.codemonkeys.tickettoride.async.MainThreadTask;
+import byu.codemonkeys.tickettoride.async.ICallback;
 import byu.codemonkeys.tickettoride.commands.IClientCommand;
 import byu.codemonkeys.tickettoride.networking.ServerProxy;
 import byu.codemonkeys.tickettoride.shared.IClient;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
+import byu.codemonkeys.tickettoride.shared.commands.ICommand;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
 import byu.codemonkeys.tickettoride.shared.results.HistoryResult;
+import byu.codemonkeys.tickettoride.shared.results.Result;
 
 public class ClientFacade implements IClient {
 	private static ClientFacade instance;
+	private static ITask mainThreadTask;
 	
 	private ClientFacade() {
 	}
@@ -23,47 +29,64 @@ public class ClientFacade implements IClient {
 		return instance;
 	}
 	
-	@Override
-	public void updatePendingGames() throws Exception {
-		ModelRoot modelRoot = ModelRoot.getInstance();
-		String authToken = modelRoot.getSession().getAuthToken();
-		PendingGamesResult result = ServerProxy.getInstance().getPendingGames(authToken);
-		if (result.getErrorMessage() == null) {
-			modelRoot.setPendingGames(result.getGames());
-		} else {
-			throw new Exception(result.getErrorMessage());
-		}
+	public static void setMainThreadTask(ITask mainThreadTask) {
+		ClientFacade.mainThreadTask = mainThreadTask;
 	}
 	
 	@Override
-	public void updatePendingGame() throws Exception {
-		ModelRoot modelRoot = ModelRoot.getInstance();
+	public void updatePendingGames() {
+		final ModelRoot modelRoot = ModelRoot.getInstance();
 		String authToken = modelRoot.getSession().getAuthToken();
-		PendingGameResult result = ServerProxy.getInstance().getPendingGame(authToken);
-//		if (result.getErrorMessage() == null) {
-			modelRoot.setPendingGame(result.getGame());
-//		} else {
-//			throw new Exception(result.getErrorMessage());
-//		}
+		final PendingGamesResult result = ServerProxy.getInstance().getPendingGames(authToken);
+		ICommand setPendingGamesCommand = new ICommand() {
+			@Override
+			public Result execute() {
+				modelRoot.setPendingGames(result.getGames());
+				return null;
+			}
+		};
+		this.mainThreadTask.executeTask(setPendingGamesCommand, null);
 	}
-
+	
 	@Override
-	public void updateGame() throws Exception {
-		ModelRoot modelRoot = ModelRoot.getInstance();
+	public void updatePendingGame() {
+		final ModelRoot modelRoot = ModelRoot.getInstance();
+		String authToken = modelRoot.getSession().getAuthToken();
+		final PendingGameResult result = ServerProxy.getInstance().getPendingGame(authToken);
+		ICommand setPendingGameCommand = new ICommand() {
+			@Override
+			public Result execute() {
+				modelRoot.setPendingGame(result.getGame());
+				return null;
+			}
+		};
+		this.mainThreadTask.executeTask(setPendingGameCommand, null);
+	}
+	
+	@Override
+	public void updateGame() {
+		final ModelRoot modelRoot = ModelRoot.getInstance();
 		String authToken = modelRoot.getSession().getAuthToken();
 		int lastReadCommandIndex = modelRoot.getLastReadCommandIndex();
-
-		HistoryResult result = ServerProxy.getInstance().updateHistory(authToken, lastReadCommandIndex);
-		List<CommandData> commands = result.getHistory();
-
-		if (commands.size() > 0){
-			executeCommands(commands);
-			modelRoot.getHistoryManager().addHistory(commands);
-			modelRoot.historyUpdated();
-		}
+		final HistoryResult result = ServerProxy.getInstance().updateHistory(authToken, lastReadCommandIndex);
+		
+		ICommand executeHistoryCommand = new ICommand() {
+			@Override
+			public Result execute() {
+				List<CommandData> commands = result.getHistory();
+				
+				if (commands.size() > 0){
+					executeCommands(commands);
+					modelRoot.getHistoryManager().addHistory(commands);
+					modelRoot.historyUpdated();
+				}
+				return null;
+			}
+		};
+		this.mainThreadTask.executeTask(executeHistoryCommand, null);
 	}
-
-    private void executeCommands(List<CommandData> commands) {
+	
+	private void executeCommands(List<CommandData> commands) {
 		for(CommandData command: commands){
 			if(command instanceof IClientCommand){
 				((IClientCommand) command).execute();
