@@ -101,7 +101,24 @@ public class ServerProxy implements IServer {
         data.setAuthToken(authToken);
         return communicator.sendSendMessage(data);
     }
-
+    
+    @Override
+    public DrawFaceUpTrainCardResult drawFaceUpTrainCard(int faceUpCardIndex, String authToken) {
+        DrawFaceUpTrainCardCommandData data = new DrawFaceUpTrainCardCommandData(faceUpCardIndex);
+        
+        data.setAuthToken(authToken);
+        DrawFaceUpTrainCardResult result = communicator.sendDrawFaceUpTrainCard(data);
+        return result;
+    }
+    
+    @Override
+    public DrawDeckTrainCardResult drawDeckTrainCard(String authToken) {
+        DrawDeckTrainCardCommandData data = new DrawDeckTrainCardCommandData();
+        data.setAuthToken(authToken);
+        DrawDeckTrainCardResult result = communicator.sendDrawDeckTrainCard(data);
+        return result;
+    }
+    
     @Override
     public PendingGamesResult cancelGame(String authToken) {
         CancelGameCommandData data = new CancelGameCommandData();

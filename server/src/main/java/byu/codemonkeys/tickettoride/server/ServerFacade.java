@@ -26,6 +26,8 @@ import byu.codemonkeys.tickettoride.shared.model.Self;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
+import byu.codemonkeys.tickettoride.shared.results.DrawDeckTrainCardResult;
+import byu.codemonkeys.tickettoride.shared.results.DrawFaceUpTrainCardResult;
 import byu.codemonkeys.tickettoride.shared.results.HistoryResult;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
@@ -314,6 +316,16 @@ public class ServerFacade implements IServer {
 		}
 		game.broadcastCommand(messageCommand);
 		return Result.success();
+	}
+	
+	@Override
+	public DrawFaceUpTrainCardResult drawFaceUpTrainCard(int faceUpCardIndex, String authToken) {
+		return null;
+	}
+	
+	@Override
+	public DrawDeckTrainCardResult drawDeckTrainCard(String authToken) {
+		return null;
 	}
 	
 	public Result chooseDestinationCards(String authToken, List<DestinationCard> cards) {

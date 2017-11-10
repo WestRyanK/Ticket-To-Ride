@@ -12,6 +12,8 @@ import byu.codemonkeys.tickettoride.shared.model.*;
 import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
+import byu.codemonkeys.tickettoride.shared.results.DrawDeckTrainCardResult;
+import byu.codemonkeys.tickettoride.shared.results.DrawFaceUpTrainCardResult;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
@@ -72,9 +74,15 @@ public interface IModelFacade {
 	// User actions
 	Result sendMessage(Message message);
 	void sendMessageAsync(Message message, ICallback sendMessageCallback);
-	List<TrainCard> drawTrainCards();
-	List<DestinationCard> drawDestinationCards();
-	void selectTrainCards(List<TrainCard> cards);
+	
+	DrawFaceUpTrainCardResult drawFaceUpTrainCard(int faceUpCardIndex);
+	
+	void drawFaceUpTrainCardAsync(int faceUpCardIndex, ICallback drawFaceUpTrainCardCallback);
+	
+	DrawDeckTrainCardResult drawDeckTrainCard();
+	
+	void drawDeckTrainCardAsync(ICallback drawDeckTrainCardCallback);
+	
 	void selectDestinationCards(List<DestinationCard> cards);
 	
 	void selectDestinationCardsAsync(List<DestinationCard> cards, ICallback selectDestinationCardsCallback);
@@ -83,5 +91,4 @@ public interface IModelFacade {
 	//TODO: add claimed route, waiting on map
 
 	List<CommandHistoryEntry> getGameHistory();
-
 }

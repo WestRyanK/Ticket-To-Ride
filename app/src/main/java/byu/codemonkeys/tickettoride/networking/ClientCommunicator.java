@@ -192,6 +192,29 @@ public class ClientCommunicator {
 		}
 	}
 	
+	public DrawFaceUpTrainCardResult sendDrawFaceUpTrainCard(DrawFaceUpTrainCardCommandData request) {
+		try {
+			String string = getString(getURL(CommandType.DRAW_FACEUP_TRAIN_CARD), request);
+			DrawFaceUpTrainCardResult result = serializer.deserialize(string,
+																  DrawFaceUpTrainCardResult.class);
+			return result;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new DrawFaceUpTrainCardResult(e.getMessage());
+		}
+	}
+	
+	public DrawDeckTrainCardResult sendDrawDeckTrainCard(DrawDeckTrainCardCommandData request) {
+		try {
+			String string = getString(getURL(CommandType.DRAW_DECK_TRAIN_CARD), request);
+			DrawDeckTrainCardResult result = serializer.deserialize(string,
+																	  DrawDeckTrainCardResult.class);
+			return result;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new DrawDeckTrainCardResult(e.getMessage());
+		}
+	}
 	/**
 	 * Constructs a full HTTP URL String to the specified path.
 	 *
@@ -286,4 +309,5 @@ public class ClientCommunicator {
 			return false;
 		}
 	}
+	
 }
