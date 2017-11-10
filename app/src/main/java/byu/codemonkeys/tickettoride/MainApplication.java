@@ -1,8 +1,12 @@
 package byu.codemonkeys.tickettoride;
 
 import android.app.Application;
+import android.os.Handler;
+import android.os.Looper;
 
 import byu.codemonkeys.tickettoride.async.AndroidTask;
+import byu.codemonkeys.tickettoride.async.MainThreadTask;
+import byu.codemonkeys.tickettoride.models.ClientFacade;
 import byu.codemonkeys.tickettoride.models.ModelFacade;
 
 /**
@@ -15,6 +19,8 @@ public class MainApplication extends Application {
 		super.onCreate();
 		
 		((ModelFacade) ModelFacade.getInstance()).setAsyncTask(new AndroidTask());
-		getApplicationContext()
+		Handler handler = new Handler(Looper.getMainLooper());
+		ClientFacade.getInstance().setMainThreadTask(new MainThreadTask(handler));
+		
 	}
 }

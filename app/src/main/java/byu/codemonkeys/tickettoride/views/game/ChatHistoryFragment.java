@@ -121,36 +121,26 @@ public class ChatHistoryFragment extends Fragment implements ChatHistoryContract
 	// region ChatHistoryContract.View Implementation
 	@Override
 	public void clearMessages() {
-		getActivity().runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				if (messagesAdapter == null) {
-					List<String> messages = new ArrayList<>();
-					messagesAdapter = new MessagesRecyclerAdapter(messages);
-					recyclerMessages.setAdapter(messagesAdapter);
-				} else {
-					messagesAdapter.updateData(new ArrayList<String>());
-				}
-			}
-		});
+		if (messagesAdapter == null) {
+			List<String> messages = new ArrayList<>();
+			messagesAdapter = new MessagesRecyclerAdapter(messages);
+			recyclerMessages.setAdapter(messagesAdapter);
+		} else {
+			messagesAdapter.updateData(new ArrayList<String>());
+		}
 	}
 	
 	@Override
 	public void addMessage(final String message) {
-		getActivity().runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				if (messagesAdapter == null) {
-					List<String> messages = new ArrayList<>();
-					messages.add(message);
-					messagesAdapter = new MessagesRecyclerAdapter(messages);
-					recyclerMessages.setAdapter(messagesAdapter);
-				} else {
-					messagesAdapter.appendData(message);
-				}
-				recyclerMessages.scrollToPosition(messagesAdapter.getItemCount() - 1);
-			}
-		});
+		if (messagesAdapter == null) {
+			List<String> messages = new ArrayList<>();
+			messages.add(message);
+			messagesAdapter = new MessagesRecyclerAdapter(messages);
+			recyclerMessages.setAdapter(messagesAdapter);
+		} else {
+			messagesAdapter.appendData(message);
+		}
+		recyclerMessages.scrollToPosition(messagesAdapter.getItemCount() - 1);
 	}
 	
 	@Override
@@ -165,12 +155,7 @@ public class ChatHistoryFragment extends Fragment implements ChatHistoryContract
 	
 	@Override
 	public void setCurrentMessage(final String message) {
-		getActivity().runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				editTextMessage.setText(message);
-			}
-		});
+		editTextMessage.setText(message);
 	}
 	
 	public void setPresenter(ChatHistoryContract.Presenter presenter) {

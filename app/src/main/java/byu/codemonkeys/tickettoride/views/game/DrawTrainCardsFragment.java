@@ -94,64 +94,54 @@ public class DrawTrainCardsFragment extends Fragment implements DrawTrainCardsCo
 	
 	@Override
 	public void setFaceUpCards(final List<TrainCard> faceUpCards) {
-		getActivity().runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				if (cards.size() != cards.size())
-					throw new IllegalArgumentException("Wrong number of cards! Expected: " +
-															   cards.size() +
-															   "Actual: " +
-															   cards.size());
-				
-				for (int i = 0; i < cards.size(); i++) {
-					
-					int drawableID = -1;
-					switch (faceUpCards.get(i).getCardColor()) {
-						case Red:
-							drawableID = R.drawable.card_red;
-							break;
-						case Orange:
-							drawableID = R.drawable.card_orange;
-							break;
-						case Yellow:
-							drawableID = R.drawable.card_yellow;
-							break;
-						case Green:
-							drawableID = R.drawable.card_green;
-							break;
-						case Blue:
-							drawableID = R.drawable.card_blue;
-							break;
-						case Purple:
-							drawableID = R.drawable.card_purple;
-							break;
-						case Black:
-							drawableID = R.drawable.card_black;
-							break;
-						case White:
-							drawableID = R.drawable.card_white;
-							break;
-						case Wild:
-							drawableID = R.drawable.card_wild;
-							break;
-					}
-					Drawable drawable = null;
-					if (drawableID != -1) {
-						drawable = getResources().getDrawable(drawableID);
-					}
-					cards.get(i).setCardDrawable(drawable);
-				}
+		if (cards.size() != cards.size())
+			throw new IllegalArgumentException("Wrong number of cards! Expected: " +
+													   cards.size() +
+													   "Actual: " +
+													   cards.size());
+		
+		for (int i = 0; i < cards.size(); i++) {
+			
+			int drawableID = -1;
+			switch (faceUpCards.get(i).getCardColor()) {
+				case Red:
+					drawableID = R.drawable.card_red;
+					break;
+				case Orange:
+					drawableID = R.drawable.card_orange;
+					break;
+				case Yellow:
+					drawableID = R.drawable.card_yellow;
+					break;
+				case Green:
+					drawableID = R.drawable.card_green;
+					break;
+				case Blue:
+					drawableID = R.drawable.card_blue;
+					break;
+				case Purple:
+					drawableID = R.drawable.card_purple;
+					break;
+				case Black:
+					drawableID = R.drawable.card_black;
+					break;
+				case White:
+					drawableID = R.drawable.card_white;
+					break;
+				case Wild:
+					drawableID = R.drawable.card_wild;
+					break;
 			}
-		});
+			Drawable drawable = null;
+			if (drawableID != -1) {
+				drawable = getResources().getDrawable(drawableID);
+			}
+			cards.get(i).setCardDrawable(drawable);
+		}
 	}
-
+	
 	@Override
 	public void setNumHidden(final int cardCount) {
-		getActivity().runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				cardDeck.setCount(cardCount);
-			}
-		});
+		cardDeck.setCount(cardCount);
 	}
 }

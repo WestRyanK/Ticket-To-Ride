@@ -44,79 +44,72 @@ public class HomeActivity extends AppCompatActivity implements INavigator, IDisp
 	@Override
 	public void navigate(final PresenterEnum presenter, final boolean allowBack) {
 		final HomeActivity activity = this;
-		runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				Fragment fragment;
-				switch (presenter) {
-					case Login:
-						LoginFragment loginFragment = LoginFragment.newInstance();
-						loginFragment.setPresenter(new LoginPresenter(loginFragment,
-																	  activity,
-																	  activity,
-																	  ModelFacade.getInstance()));
-						fragment = loginFragment;
-						break;
-					case Register:
-						RegisterFragment registerFragment = RegisterFragment.newInstance();
-						registerFragment.setPresenter(new RegisterPresenter(registerFragment,
-																			activity,
-																			activity,
-																			ModelFacade.getInstance()));
-						fragment = registerFragment;
-						break;
-					case ConnectionSettings:
-						ConnectionSettingsFragment connectionSettingsFragment = ConnectionSettingsFragment
-								.newInstance();
-						connectionSettingsFragment.setPresenter(new ConnectionSettingsPresenter(
-								connectionSettingsFragment,
-								activity,
-								activity,
-								ModelFacade.getInstance()));
-						fragment = connectionSettingsFragment;
-						break;
-					case CreateGame:
-						CreateGameFragment createGameFragment = CreateGameFragment.newInstance();
-						createGameFragment.setPresenter(new CreateGamePresenter(createGameFragment,
-																				activity,
-																				activity,
-																				ModelFacade.getInstance()));
-						fragment = createGameFragment;
-						break;
-					case Lobby:
-						LobbyFragment lobbyFragment = LobbyFragment.newInstance();
-						lobbyFragment.setPresenter(new LobbyPresenter(lobbyFragment,
-																	  activity,
-																	  activity,
-																	  ModelFacade.getInstance()));
-						fragment = lobbyFragment;
-						break;
-					case WaitingRoom:
-						WaitingRoomFragment waitingRoomFragment = WaitingRoomFragment.newInstance();
-						waitingRoomFragment.setPresenter(new WaitingRoomPresenter(
-								waitingRoomFragment,
-								activity,
-								activity,
-								ModelFacade.getInstance()));
-						fragment = waitingRoomFragment;
-						break;
-					case Game:
-						Intent intent = new Intent(HomeActivity.this, GameActivity.class);
-						startActivity(intent);
-					default:
-						fragment = null;
-				}
-				if (fragment != null) {
-					FragmentTransaction transaction = getSupportFragmentManager().beginTransaction()
-																				 .replace(R.id.main_fragmentContainer,
-																						  fragment);
-					if (allowBack)
-						transaction.addToBackStack(null);
-					transaction.commit();
-				}
-				
-			}
-		});
+		Fragment fragment;
+		switch (presenter) {
+			case Login:
+				LoginFragment loginFragment = new LoginFragment();
+				loginFragment.setPresenter(new LoginPresenter(loginFragment,
+															  activity,
+															  activity,
+															  ModelFacade.getInstance()));
+				fragment = loginFragment;
+				break;
+			case Register:
+				RegisterFragment registerFragment = new RegisterFragment();
+				registerFragment.setPresenter(new RegisterPresenter(registerFragment,
+																	activity,
+																	activity,
+																	ModelFacade.getInstance()));
+				fragment = registerFragment;
+				break;
+			case ConnectionSettings:
+				ConnectionSettingsFragment connectionSettingsFragment = new ConnectionSettingsFragment();
+				connectionSettingsFragment.setPresenter(new ConnectionSettingsPresenter(
+						connectionSettingsFragment,
+						activity,
+						activity,
+						ModelFacade.getInstance()));
+				fragment = connectionSettingsFragment;
+				break;
+			case CreateGame:
+				CreateGameFragment createGameFragment = new CreateGameFragment();
+				createGameFragment.setPresenter(new CreateGamePresenter(createGameFragment,
+																		activity,
+																		activity,
+																		ModelFacade.getInstance()));
+				fragment = createGameFragment;
+				break;
+			case Lobby:
+				LobbyFragment lobbyFragment = new LobbyFragment();
+				lobbyFragment.setPresenter(new LobbyPresenter(lobbyFragment,
+															  activity,
+															  activity,
+															  ModelFacade.getInstance()));
+				fragment = lobbyFragment;
+				break;
+			case WaitingRoom:
+				WaitingRoomFragment waitingRoomFragment = WaitingRoomFragment.newInstance();
+				waitingRoomFragment.setPresenter(new WaitingRoomPresenter(waitingRoomFragment,
+																		  activity,
+																		  activity,
+																		  ModelFacade.getInstance()));
+				fragment = waitingRoomFragment;
+				break;
+			case Game:
+				Intent intent = new Intent(HomeActivity.this, GameActivity.class);
+				startActivity(intent);
+			default:
+				fragment = null;
+		}
+		if (fragment != null) {
+			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction()
+																		 .replace(R.id.main_fragmentContainer,
+																				  fragment);
+			if (allowBack)
+				transaction.addToBackStack(null);
+			transaction.commit();
+		}
+		
 	}
 	
 	@Override
@@ -126,26 +119,16 @@ public class HomeActivity extends AppCompatActivity implements INavigator, IDisp
 	
 	@Override
 	public void navigateBack(final PresenterEnum presenter) {
-		runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				if (presenter == null)
-					getSupportFragmentManager().popBackStack();
-				else
-					getSupportFragmentManager().popBackStack(presenter.name(), 0);
-			}
-		});
+		if (presenter == null)
+			getSupportFragmentManager().popBackStack();
+		else
+			getSupportFragmentManager().popBackStack(presenter.name(), 0);
 	}
 	// endregion
 	
 	// region IDisplaysMessages Implementation @Override
 	public void displayMessage(final String error) {
-		runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
-			}
-		});
+		Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
 	}
 	// endregion
 }
