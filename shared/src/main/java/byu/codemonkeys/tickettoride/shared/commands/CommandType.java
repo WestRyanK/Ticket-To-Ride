@@ -17,4 +17,6 @@ public class CommandType {
 	public static final String DRAW_DESTINATION_CARDS = "drawDestinationCards";
 	public static final String SETUP_GAME = "setupGame";
 	public static final String BEGIN_GAME = "beginGame";
+	public static final String DRAW_FACEUP_TRAIN_CARD = "drawFaceUpTrainCard";
+	public static final String DRAW_DECK_TRAIN_CARD = "drawDeckTrainCard";
 }

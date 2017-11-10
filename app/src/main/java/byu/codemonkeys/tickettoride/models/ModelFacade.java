@@ -18,6 +18,8 @@ import byu.codemonkeys.tickettoride.shared.model.*;
 import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
+import byu.codemonkeys.tickettoride.shared.results.DrawDeckTrainCardResult;
+import byu.codemonkeys.tickettoride.shared.results.DrawFaceUpTrainCardResult;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
@@ -88,6 +90,7 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Returns the singleton instance of the ModelFacade
+	 *
 	 * @return singleton instance of the ModelFacade
 	 * {@post instance != null}
 	 */
@@ -100,9 +103,10 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Adds an observer to observe the modelRoot
+	 *
 	 * @param observer The observer which will listen for changes on the ModelRoot
-	 * {@pre observer != null}
-	 * {@post models.obs.size() > 0}   the list of observers on the root isn't empty
+	 *                 {@pre observer != null}
+	 *                 {@post models.obs.size() > 0}   the list of observers on the root isn't empty
 	 */
 	@Override
 	public void addObserver(Observer observer) {
@@ -111,6 +115,7 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Returns the current user of the app.
+	 *
 	 * @return The current user of the app.
 	 * {@post the current user is unchanged}
 	 */
@@ -121,6 +126,7 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Tries to log a user into the system.
+	 *
 	 * @param username The username of the user to log in
 	 * @param password The password of the user to log in
 	 * @return A result specifying whether the login was successful.
@@ -140,13 +146,14 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Tries to log a user into the system asynchronously
-	 * @param username The username of the user to log in
-	 * @param password The password of the user to log in
+	 *
+	 * @param username      The username of the user to log in
+	 * @param password      The password of the user to log in
 	 * @param loginCallback The method to call after trying to log in
-	 * {@pre username != null}
-	 * {@pre password != null}
-	 * {@pre loginCallback != null}
-	 * {@post if valid user, getUser() != null}
+	 *                      {@pre username != null}
+	 *                      {@pre password != null}
+	 *                      {@pre loginCallback != null}
+	 *                      {@post if valid user, getUser() != null}
 	 */
 	@Override
 	public void loginAsync(final String username,
@@ -164,6 +171,7 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Tries to register a user for the system.
+	 *
 	 * @param username The username of the user to log in
 	 * @param password The password of the user to log in
 	 * @return A result specifying whether the registration was successful.
@@ -184,14 +192,15 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Tries to register a user for the system.
-	 * @param username The username of the user to register
-	 * @param password The password of the user to register
+	 *
+	 * @param username         The username of the user to register
+	 * @param password         The password of the user to register
 	 * @param registerCallback The method to call after trying to register
-	 * {@pre username != null}
-	 * {@pre password != null}
-	 * {@pre loginCallback != null}
-	 * {@pre registerCallback != null}
-	 * {@post if user doesn't exist and username and password are valid, getUser() != null}
+	 *                         {@pre username != null}
+	 *                         {@pre password != null}
+	 *                         {@pre loginCallback != null}
+	 *                         {@pre registerCallback != null}
+	 *                         {@post if user doesn't exist and username and password are valid, getUser() != null}
 	 */
 	@Override
 	public void registerAsync(final String username,
@@ -209,9 +218,10 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Returns a list of pending games
+	 *
 	 * @return A list of pending games
 	 * @throws UnauthorizedException Thrown if the user is unauthorized
-	 * {@post The list of pending games is unchanged}
+	 *                               {@post The list of pending games is unchanged}
 	 */
 	@Override
 	public List<GameBase> getPendingGames() throws UnauthorizedException {
@@ -224,6 +234,7 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Attempts to create a new game
+	 *
 	 * @param gameName The name of the new game to create
 	 * @return A PendingGameResult that reports whether creation was successful
 	 * {@pre gameName != null}
@@ -242,11 +253,12 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Attempts to create a new game
-	 * @param gameName The name of the new game to create
+	 *
+	 * @param gameName           The name of the new game to create
 	 * @param createGameCallback The method to call after trying to create a game
-	 * {@pre gameName != null}
-	 * {@pre gameName is not empty}
-	 * {@post If successful, models.pendingGame != null}
+	 *                           {@pre gameName != null}
+	 *                           {@pre gameName is not empty}
+	 *                           {@post If successful, models.pendingGame != null}
 	 */
 	@Override
 	public void createGameAsync(final String gameName, ICallback createGameCallback) {
@@ -262,10 +274,11 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Gets the pending game which the user is waiting to start
+	 *
 	 * @return The pending game which the user is waiting to start
-	 * @throws UnauthorizedException Thrown if the user does not have permission to get information. AKA when not logged in
+	 * @throws UnauthorizedException  Thrown if the user does not have permission to get information. AKA when not logged in
 	 * @throws NoPendingGameException Thrown if there is no pending game.
-	 * {@post models.pendingGame is unchanged}
+	 *                                {@post models.pendingGame is unchanged}
 	 */
 	@Override
 	public GameBase getPendingGame() throws UnauthorizedException, NoPendingGameException {
@@ -280,6 +293,7 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Attempts to join a pending game
+	 *
 	 * @param game The game to join
 	 * @return A Result specifying whether joining was successful
 	 * {@pre game != null}
@@ -298,11 +312,12 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Attempts to join a pending game
-	 * @param game The game to join
+	 *
+	 * @param game                    The game to join
 	 * @param joinPendingGameCallback The callback to run after attempting to join game
-	 * {@pre game != null}
-	 * {@pre joinPendingGameCallback != null}
-	 * {@post if successful, models.pendingGame != null}
+	 *                                {@pre game != null}
+	 *                                {@pre joinPendingGameCallback != null}
+	 *                                {@post if successful, models.pendingGame != null}
 	 */
 	@Override
 	public void joinPendingGameAsync(final GameBase game, ICallback joinPendingGameCallback) {
@@ -318,6 +333,7 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Attempts to leave the current pending game.
+	 *
 	 * @return A result specifying whether the game was left.
 	 * {@post if successful, models.pendingGame == null}
 	 */
@@ -334,9 +350,10 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Attempts to leave the current pending game.
+	 *
 	 * @param leavePendingGameCallback Callback to run after attempting to leave PendingGame
-	 * {@pre leavePendingGameCallback != null}
-	 * {@post if successful, models.pendingGame == null}
+	 *                                 {@pre leavePendingGameCallback != null}
+	 *                                 {@post if successful, models.pendingGame == null}
 	 */
 	@Override
 	public void leavePendingGameAsync(ICallback leavePendingGameCallback) {
@@ -352,6 +369,7 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Attempts to start current pending game
+	 *
 	 * @return A Result specifying whether the game was successfully started
 	 * {@post models.pendingGame.isStarted == true}
 	 */
@@ -362,9 +380,10 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Attempts to start current pending game
+	 *
 	 * @param startGameCallback Callback to run after starting a game
-	 * {@post models.pendingGame.isStarted == true}
-	 * {@pre startGameCallback != null}
+	 *                          {@post models.pendingGame.isStarted == true}
+	 *                          {@pre startGameCallback != null}
 	 */
 	@Override
 	public void startGameAsync(ICallback startGameCallback) {
@@ -380,10 +399,11 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Attempts to cancel the current pending game
-	 * @throws UnauthorizedException Thrown if the user is not logged in
+	 *
+	 * @throws UnauthorizedException  Thrown if the user is not logged in
 	 * @throws NoPendingGameException Thrown if there is, in fact, no actual pending game
-	 * {@post if successful models.pendingGame == null}
-	 * {@post models.pendingGames is up to date}
+	 *                                {@post if successful models.pendingGame == null}
+	 *                                {@post models.pendingGames is up to date}
 	 */
 	@Override
 	public void cancelGame() throws UnauthorizedException, NoPendingGameException {
@@ -400,6 +420,7 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Gets the session of the currently logged in user
+	 *
 	 * @return The session of the currently logged in user
 	 * {@post models.session is not changed}
 	 */
@@ -410,13 +431,14 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Changes the connection settings to the server
+	 *
 	 * @param host The host's IP address
 	 * @param port The host's port
-	 * {@pre host != null}
-	 * {@pre host is not empty}
-	 * {@pre port > 0 && port < 65535}
-	 * {@post communicator.host = host}
-	 * {@post communicator.port = port}
+	 *             {@pre host != null}
+	 *             {@pre host is not empty}
+	 *             {@pre port > 0 && port < 65535}
+	 *             {@post communicator.host = host}
+	 *             {@post communicator.port = port}
 	 */
 	@Override
 	public void changeConnectionConfiguration(String host, int port) {
@@ -425,9 +447,10 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Sets the implementation of ITask that the model facade should use in order to execute async calls
+	 *
 	 * @param asyncTask The instance of ITask that the modelFacade should use to execute async calls
-	 * {@pre asyncTask != null}
-	 * {@post this.asyncTask = asyncTask}
+	 *                  {@pre asyncTask != null}
+	 *                  {@post this.asyncTask = asyncTask}
 	 */
 	public void setAsyncTask(ITask asyncTask) {
 		this.asyncTask = asyncTask;
@@ -435,6 +458,7 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Gets the player who's turn it currently is
+	 *
 	 * @return The player who's turn it currently is
 	 * {@post models.activeGame is not changed}
 	 * {@pre models.activeGame != null, aka we're actually in a game}
@@ -446,6 +470,7 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Gets all the players in the current game
+	 *
 	 * @return The players in the current game
 	 * {@pre models.activeGame != null}
 	 * {@post models.activeGame is not changed}
@@ -460,6 +485,7 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Broadcasts a chat message to all the players
+	 *
 	 * @param message The message to broadcast to players
 	 * @return A result specifying whether the message was successfully sent
 	 * {@pre message != null}
@@ -472,14 +498,14 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Broadcasts a chat message to all the players asynchronously
-	 * @param message The message to broadcast to players
+	 *
+	 * @param message             The message to broadcast to players
 	 * @param sendMessageCallback A callback to run after broadcasting message
-	 * {@pre message != null}
-	 * {@pre message is not empty}
-	 * {@pre sendMessageCallback != null}
-	 * {@pre models.activeGame != null, aka we're actually in a game}
+	 *                            {@pre message != null}
+	 *                            {@pre message is not empty}
+	 *                            {@pre sendMessageCallback != null}
+	 *                            {@pre models.activeGame != null, aka we're actually in a game}
 	 */
-	@Override
 	public void sendMessageAsync(final Message message, ICallback sendMessageCallback) {
 		ICommand sendMessageCommand = new ICommand() {
 			@Override
@@ -491,52 +517,53 @@ public class ModelFacade implements IModelFacade {
 		this.asyncTask.executeTask(sendMessageCommand, sendMessageCallback);
 	}
 	
+	@Override
+	public DrawFaceUpTrainCardResult drawFaceUpTrainCard(int faceUpCardIndex) {
+		return serverProxy.drawFaceUpTrainCard(faceUpCardIndex, models.getSession().getAuthToken());
+	}
+	
+	@Override
+	public void drawFaceUpTrainCardAsync(final int faceUpCardIndex,
+										 ICallback drawFaceUpTrainCardCallback) {
+		ICommand drawFaceUpTrainCardCommand = new ICommand() {
+			@Override
+			public Result execute() {
+				return drawFaceUpTrainCard(faceUpCardIndex);
+			}
+		};
+		
+		this.asyncTask.executeTask(drawFaceUpTrainCardCommand, drawFaceUpTrainCardCallback);
+	}
+	
+	@Override
+	public DrawDeckTrainCardResult drawDeckTrainCard() {
+		return serverProxy.drawDeckTrainCard(models.getSession().getAuthToken());
+	}
+	
+	@Override
+	public void drawDeckTrainCardAsync(ICallback drawDeckTrainCardCallback) {
+		ICommand drawDeckTrainCardCommand = new ICommand() {
+			@Override
+			public Result execute() {
+				return drawDeckTrainCard();
+			}
+		};
+		
+		this.asyncTask.executeTask(drawDeckTrainCardCommand, drawDeckTrainCardCallback);
+	}
+	
 	//TODO: implement this in a future phase
-	
-	/**
-	 * Attempts to draw a train card from either face up cards or the deck (needs to be implemented in next phase)
-	 * @return A list of train cards that were drawn? I'm assuming that's what the return is?
-	 * {@pre models.activeGame != null, aka we're actually in a game}
-	 * {@post player has cards added to hand}
-	 * {@pre it's your turn}
-	 */
-	public List<TrainCard> drawTrainCards() {
-		return null;
-	}
-	
-	/**
-	 * Attempts to draw destination cards from the deck (needs implementation in next phase)
-	 * @return A list of destination cards to choose from.
-	 * {@pre models.activeGame != null, aka we're actually in a game}
-	 * {@pre it's your turn}
-	 */
-	public List<DestinationCard> drawDestinationCards() {
-		DestinationCardResult result = serverProxy.drawDestinationCards(models.getSession()
-																			  .getAuthToken());
-		return result.getDestinationCards();
-	}
-	
-	//TODO: implement this in a future phase
-	
-	/**
-	 * Attempts to draw a train card from either face up cards or the deck (needs to be implemented in next phase)
-	 * @return A list of train cards that were drawn? I'm assuming that's what the return is?
-	 * {@pre models.activeGame != null, aka we're actually in a game}
-	 * {@pre it's your turn}
-	 * {@post player has cards added to hand}
-	 */
-	public void selectTrainCards(List<TrainCard> cards) {
-	}
 	
 	/**
 	 * Tells the server which destination cards of the three given were kept
+	 *
 	 * @param cards A list of destination cards that the user selected
-	 * {@pre cards != null}
-	 * {@pre cards.size() <= 3}
-	 * {@pre cards.size() > 0}
-	 * {@post player has cards added to hand}
-	 * {@pre models.activeGame != null, aka we're actually in a game}
-	 * {@pre it's your turn}
+	 *              {@pre cards != null}
+	 *              {@pre cards.size() <= 3}
+	 *              {@pre cards.size() > 0}
+	 *              {@post player has cards added to hand}
+	 *              {@pre models.activeGame != null, aka we're actually in a game}
+	 *              {@pre it's your turn}
 	 */
 	public void selectDestinationCards(List<DestinationCard> cards) {
 		//Make server call
@@ -555,15 +582,16 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Tells the server which destination cards of the three given were kept, run asynchronously
-	 * @param cards A list of destination cards that the user selected
+	 *
+	 * @param cards                          A list of destination cards that the user selected
 	 * @param selectDestinationCardsCallback The callback to run after telling server
-	 * {@pre selectDestinationCardsCallback != null}
-	 * {@pre cards != null}
-	 * {@pre cards.size() <= 3}
-	 * {@pre cards.size() > 0}
-	 * {@post player has cards added to hand}
-	 * {@pre models.activeGame != null, aka we're actually in a game}
-	 * {@pre it's your turn}
+	 *                                       {@pre selectDestinationCardsCallback != null}
+	 *                                       {@pre cards != null}
+	 *                                       {@pre cards.size() <= 3}
+	 *                                       {@pre cards.size() > 0}
+	 *                                       {@post player has cards added to hand}
+	 *                                       {@pre models.activeGame != null, aka we're actually in a game}
+	 *                                       {@pre it's your turn}
 	 */
 	public void selectDestinationCardsAsync(final List<DestinationCard> cards,
 											ICallback selectDestinationCardsCallback) {
@@ -580,11 +608,12 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Sets up the game further after all players have selected destination cards
+	 *
 	 * @param numDestinationCards a map specifying how many cards each player selected
-	 * {@pre numDestinationCards != null}
-	 * {@pre numDestinationCards has an entry for each player's username}
-	 * {@pre each entry has a value between 2 and 3}
-	 * {@post the number of destination cards each player has is set to their value in the map}
+	 *                            {@pre numDestinationCards != null}
+	 *                            {@pre numDestinationCards has an entry for each player's username}
+	 *                            {@pre each entry has a value between 2 and 3}
+	 *                            {@post the number of destination cards each player has is set to their value in the map}
 	 */
 	@Override
 	public void beginGame(Map<String, Integer> numDestinationCards) {
@@ -599,6 +628,7 @@ public class ModelFacade implements IModelFacade {
 	
 	/**
 	 * Returns the history of the game up to this point
+	 *
 	 * @return The history of the game up to this point
 	 * {@post nothing in the models is changed}
 	 */

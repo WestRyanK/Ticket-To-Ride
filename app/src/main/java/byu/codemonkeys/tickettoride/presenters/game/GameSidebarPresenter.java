@@ -31,8 +31,8 @@ public class GameSidebarPresenter extends PresenterBase implements GameSidebarCo
 	
 	@Override
 	public void navigateDrawTrainCards() {
-		this.navigator.navigate(PresenterEnum.EndGame, true);
-//		this.navigator.navigate(PresenterEnum.DrawTrainCards, true);
+//		this.navigator.navigate(PresenterEnum.EndGame, true);
+		this.navigator.navigate(PresenterEnum.DrawTrainCards, true);
 	}
 	
 	@Override
