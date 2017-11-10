@@ -34,7 +34,6 @@ public class HomeActivity extends AppCompatActivity implements INavigator, IDisp
 		
 		this.fragmentContainer = (FrameLayout) this.findViewById(R.id.main_fragmentContainer);
 		
-		((ModelFacade) ModelFacade.getInstance()).setAsyncTask(new AndroidTask());
 		
 		int enumIndex = getIntent().getIntExtra(PARAM_PRESENTER, PresenterEnum.Login.ordinal());
 		PresenterEnum presenter = PresenterEnum.values()[enumIndex];
