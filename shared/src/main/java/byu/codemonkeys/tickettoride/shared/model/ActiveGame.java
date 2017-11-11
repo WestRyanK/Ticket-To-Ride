@@ -10,6 +10,8 @@ import byu.codemonkeys.tickettoride.shared.model.cards.Deck;
 import byu.codemonkeys.tickettoride.shared.model.cards.IDeck;
 import byu.codemonkeys.tickettoride.shared.model.map.GameMap;
 
+import static sun.audio.AudioPlayer.player;
+
 /**
  * We need to decide whether ActiveGame should extend GameBase. As it stands, ActiveGame doesn't
  * need any of the fields of GameBase except gameID. What we might want to do is move all the other
@@ -84,6 +86,10 @@ public class ActiveGame extends GameBase implements Observer {
 			this.map.addObserver(this);
 		setChanged();
 		notifyObservers(MAP_UPDATE);
+	}
+
+	public boolean isPlayersTurn(String username) {
+		return players.get(turn).getUsername().equals(username);
 	}
 	
 	public int getTurn() {

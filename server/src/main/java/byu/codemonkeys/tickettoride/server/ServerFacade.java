@@ -25,6 +25,7 @@ import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.Self;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
+import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
 import byu.codemonkeys.tickettoride.shared.results.DrawDeckTrainCardResult;
 import byu.codemonkeys.tickettoride.shared.results.DrawFaceUpTrainCardResult;
@@ -325,7 +326,37 @@ public class ServerFacade implements IServer {
 	
 	@Override
 	public DrawDeckTrainCardResult drawDeckTrainCard(String authToken) {
-		return null;
+		ServerSession session = rootModel.getSession(authToken);
+
+		if (session == null) {
+			return new DrawDeckTrainCardResult("Not Authorized");
+		}
+
+		ActiveGame game = rootModel.getActiveGame(session.getGameID());
+
+		if (game == null) {
+			return new DrawDeckTrainCardResult("You are not part of an active game");
+		}
+
+		User user = session.getUser();
+
+		if (!game.isPlayersTurn(user.getUsername())) {
+			return new DrawDeckTrainCardResult("It is not your turn");
+		}
+
+		TrainCard card = game.getDeck().drawTrainCard();
+
+		if (card == null) {
+			return new DrawDeckTrainCardResult("The deck is empty");
+		}
+
+		Self player = (Self) game.getPlayer(user);
+
+		player.addTrainCard(card);
+
+		// TODO: broadcast DrewTrainCardCommand
+
+		return new DrawDeckTrainCardResult();
 	}
 	
 	public Result chooseDestinationCards(String authToken, List<DestinationCard> cards) {
