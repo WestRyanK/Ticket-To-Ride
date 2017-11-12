@@ -519,7 +519,15 @@ public class ModelFacade implements IModelFacade {
 	
 	@Override
 	public DrawFaceUpTrainCardResult drawFaceUpTrainCard(int faceUpCardIndex) {
-		return serverProxy.drawFaceUpTrainCard(faceUpCardIndex, models.getSession().getAuthToken());
+		DrawFaceUpTrainCardResult result = serverProxy.drawFaceUpTrainCard(faceUpCardIndex,
+																		   models.getSession()
+																				 .getAuthToken());
+		if (result.isSuccessful()) {
+			TrainCard card = result.getDrawnCard();
+			models.getGame().getSelf().addTrainCard(card);
+		}
+		
+		return result;
 	}
 	
 	@Override
@@ -536,20 +544,28 @@ public class ModelFacade implements IModelFacade {
 	}
 	
 	@Override
-	public DrawDeckTrainCardResult drawDeckTrainCard() {
-		return serverProxy.drawDeckTrainCard(models.getSession().getAuthToken());
-	}
-	
-	@Override
-	public void drawDeckTrainCardAsync(ICallback drawDeckTrainCardCallback) {
+	public void drawDeckTrainCardAsync(final ICallback drawDeckTrainCardCallback) {
 		ICommand drawDeckTrainCardCommand = new ICommand() {
 			@Override
 			public Result execute() {
-				return drawDeckTrainCard();
+				return serverProxy.drawDeckTrainCard(models.getSession().getAuthToken());
 			}
 		};
 		
-		this.asyncTask.executeTask(drawDeckTrainCardCommand, drawDeckTrainCardCallback);
+		ICallback callback = new ICallback() {
+			@Override
+			public void callback(Result result) {
+				if (result.isSuccessful()) {
+					DrawDeckTrainCardResult drawResult = (DrawDeckTrainCardResult) result;
+					TrainCard card = drawResult.getDrawnCard();
+					models.getGame().getSelf().addTrainCard(card);
+					drawDeckTrainCardCallback.callback(result);
+				}
+				
+			}
+		};
+		
+		this.asyncTask.executeTask(drawDeckTrainCardCommand, callback);
 	}
 	
 	//TODO: implement this in a future phase

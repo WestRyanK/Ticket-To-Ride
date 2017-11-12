@@ -30,11 +30,9 @@ public class PendingGamesPoller extends Poller {
 		TimerTask task = new TimerTask() {
 			@Override
 			public void run() {
-				Log.d("POLLER!", "Polled!");
 				try {
 					c.updatePendingGames();
 				} catch (Exception e) {
-					//TODO(compy-386): handle this error?
 					System.out.println(e.getMessage());
 				}
 			}

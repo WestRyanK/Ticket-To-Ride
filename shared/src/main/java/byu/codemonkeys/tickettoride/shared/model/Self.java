@@ -84,8 +84,8 @@ public class Self extends Player {
 		}
 
 		hand.put(card.getCardColor(), hand.get(card.getCardColor()) + 1);
-//		setChanged();
-//		notifyObservers(PLAYER_TRAIN_CARDS_UPDATE);
+		setChanged();
+		notifyObservers(PLAYER_TRAIN_CARDS_UPDATE);
 	}
 
 	public void setHand(Collection<TrainCard> cards) {

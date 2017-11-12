@@ -79,8 +79,6 @@ public interface IModelFacade {
 	
 	void drawFaceUpTrainCardAsync(int faceUpCardIndex, ICallback drawFaceUpTrainCardCallback);
 	
-	DrawDeckTrainCardResult drawDeckTrainCard();
-	
 	void drawDeckTrainCardAsync(ICallback drawDeckTrainCardCallback);
 	
 	void selectDestinationCards(List<DestinationCard> cards);

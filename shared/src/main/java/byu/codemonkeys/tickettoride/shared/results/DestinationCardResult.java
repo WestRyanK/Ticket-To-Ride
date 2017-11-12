@@ -8,7 +8,7 @@ import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 
 public class DestinationCardResult extends Result {
 
-    private List<DestinationCard> cards;
+    private final List<DestinationCard> cards;
 
     public DestinationCardResult(List<DestinationCard> cards) {
         super();
@@ -23,6 +23,7 @@ public class DestinationCardResult extends Result {
 
     public DestinationCardResult(String errorMessage) {
         super(errorMessage);
+        this.cards = null;
     }
 
     public List<DestinationCard> getDestinationCards() {

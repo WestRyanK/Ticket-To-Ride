@@ -356,7 +356,7 @@ public class ServerFacade implements IServer {
 
 		// TODO: broadcast DrewTrainCardCommand
 
-		return new DrawDeckTrainCardResult();
+		return new DrawDeckTrainCardResult(card);
 	}
 	
 	public Result chooseDestinationCards(String authToken, List<DestinationCard> cards) {
