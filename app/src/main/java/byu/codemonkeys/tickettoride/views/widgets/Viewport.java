@@ -5,9 +5,11 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.AbsoluteLayout;
 
 /**
@@ -282,4 +284,42 @@ public class Viewport extends AbsoluteLayout {
 		this.previousPoint = new PointF(x, y);
 	}
 	// endregion
+	
+	public void fillViewport() {
+		int childCount = this.getChildCount();
+		float minX = Float.MAX_VALUE;
+		float minY = Float.MAX_VALUE;
+		float maxX = Float.MIN_VALUE;
+		float maxY = Float.MIN_VALUE;
+		
+		for (int i = 0; i < childCount; i++) {
+			View v = this.getChildAt(i);
+			if (v.getX() < minX)
+				minX = v.getX();
+			if (v.getY() < minY)
+				minY = v.getY();
+			if (v.getX() + v.getWidth() > maxX)
+				maxX = v.getX() + v.getWidth();
+			if (v.getY() + v.getHeight() > maxY)
+				maxY = v.getY() + v.getHeight();
+		}
+		float width = maxX - minX;
+		float height = maxY - minY;
+		float zoomX = this.getWidth() / width;
+		float zoomY = this.getHeight() / height;
+		this.zoomFactor = Math.max(zoomX, zoomY);
+		
+		maxX *= this.zoomFactor;
+		maxY *= this.zoomFactor;
+		minX *= this.zoomFactor;
+		minY *= this.zoomFactor;
+		
+		width = maxX - minX;
+		height = maxY - minY;
+		
+		this.offsetX = -(this.getWidth() - width) / 2.0f;
+		this.offsetY = -(this.getHeight() - height) / 2.0f;
+		this.updateTransformationMatrix();
+		this.invalidate();
+	}
 }

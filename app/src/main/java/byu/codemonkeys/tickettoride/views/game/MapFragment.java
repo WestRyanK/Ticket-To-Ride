@@ -2,21 +2,20 @@ package byu.codemonkeys.tickettoride.views.game;
 
 
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import java.util.Map;
 
 import byu.codemonkeys.tickettoride.R;
-import byu.codemonkeys.tickettoride.models.ModelFacade;
-import byu.codemonkeys.tickettoride.models.ModelRoot;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.MapContract;
-import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
 import byu.codemonkeys.tickettoride.views.viewdata.PointBubblesData;
 import byu.codemonkeys.tickettoride.views.widgets.MapEdgeWidget;
@@ -46,7 +45,27 @@ public class MapFragment extends Fragment implements MapContract.View {
 		getViews(view);
 		setupViewport();
 		setupMap();
+		setListenFirstMeasure();
 		return view;
+	}
+	
+	private void setListenFirstMeasure() {
+		viewport.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+			
+			@Override
+			public void onGlobalLayout() {
+				
+				// Removing layout listener to avoid multiple calls
+				if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+					viewport.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+				}
+				else {
+					viewport.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+				}
+				
+				viewport.fillViewport();
+			}
+		});
 	}
 	
 	private void setupMap() {
@@ -76,7 +95,7 @@ public class MapFragment extends Fragment implements MapContract.View {
 			});
 		}
 	}
-
+	
 	public void setPresenter(MapContract.Presenter presenter) {
 		this.presenter = presenter;
 	}

@@ -9,11 +9,12 @@
         android:id="@+id/game_frameMap"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/game_spaceTrainCards"
+        app:layout_constraintLeft_toRightOf="@+id/game_framePlayerStats"
+        app:layout_constraintRight_toLeftOf="@+id/game_frameSidebar"
         app:layout_constraintTop_toTopOf="parent"
         tools:background="@color/darkGray"/>
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
 
     <FrameLayout
         android:id="@+id/game_framePlayerStats"
@@ -35,6 +36,13 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:background="#FF88FF88"/>
 
+    <Space
+        android:id="@+id/game_spaceTrainCards"
+        android:layout_width="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/game_framePlayerStats"
+        app:layout_constraintRight_toLeftOf="@id/game_frameSidebar"
+        android:layout_height="30dp"/>
     <FrameLayout
         android:id="@+id/game_frameTrainCards"
         android:layout_width="0dp"
