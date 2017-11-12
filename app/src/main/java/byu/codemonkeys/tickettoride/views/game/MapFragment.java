@@ -50,22 +50,22 @@ public class MapFragment extends Fragment implements MapContract.View {
 	}
 	
 	private void setListenFirstMeasure() {
-		viewport.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+		viewport.getViewTreeObserver()
+				.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 			
-			@Override
-			public void onGlobalLayout() {
+					@Override
+					public void onGlobalLayout() {
 				
-				// Removing layout listener to avoid multiple calls
-				if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-					viewport.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-				}
-				else {
-					viewport.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-				}
+						// Removing layout listener to avoid multiple calls
+						if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+							viewport.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+						} else {
+							viewport.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+						}
 				
-				viewport.fillViewport();
-			}
-		});
+						viewport.fillViewport();
+					}
+				});
 	}
 	
 	private void setupMap() {
@@ -104,6 +104,7 @@ public class MapFragment extends Fragment implements MapContract.View {
 		this.viewport.setMaxZoom(2.0f);
 		this.viewport.setMinZoom(0.25f);
 		this.viewport.setZoomFactor(0.35f);
+		this.viewport.setKeepOverContent(true);
 		
 	}
 	

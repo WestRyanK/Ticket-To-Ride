@@ -4,8 +4,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.PointF;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -82,9 +83,21 @@ public class Viewport extends AbsoluteLayout {
 	public void setOffsetY(float offsetY) {
 		this.offsetY = offsetY;
 	}
-	// endregion
-	// endregion
 	
+	// endregion
+	//region KeepOverContent Property
+	private boolean keepOverContent;
+	
+	public boolean isKeepOverContent() {
+		return keepOverContent;
+	}
+	
+	public void setKeepOverContent(boolean keepOverContent) {
+		this.keepOverContent = keepOverContent;
+	}
+	
+	//endregion
+	// endregion
 	private static final float ZOOM_INCREMENT = 0.1f;
 	private PointF previousPoint = new PointF();
 	private float previousPinchDistance;
@@ -231,9 +244,32 @@ public class Viewport extends AbsoluteLayout {
 		if (this.zoomFactor < minZoom)
 			zoomFactor = minZoom;
 		
+		float offsetChangeX = -(float) (prevScale - zoomFactor) * imageCoords.x;
+		float offsetChangeY = -(float) (prevScale - zoomFactor) * imageCoords.y;
+		
+		if (this.keepOverContent) {
+			RectF bounds = getContentExtents();
+			bounds.left *= this.zoomFactor;
+			bounds.right *= this.zoomFactor;
+			bounds.top *= this.zoomFactor;
+			bounds.bottom *= this.zoomFactor;
+			if (bounds.width() < this.getWidth() || bounds.height() < this.getHeight()) {
+				bounds = getContentExtents();
+				float zoomX = this.getWidth() / bounds.width();
+				float zoomY = this.getHeight() / bounds.height();
+				this.zoomFactor = Math.max(zoomX, zoomY);
+				
+				offsetChangeX = -(float) (prevScale - zoomFactor) * imageCoords.x;
+				offsetChangeY = -(float) (prevScale - zoomFactor) * imageCoords.y;
+			}
+			
+			PointF correctedOffset = getKeepOverContentOffset(offsetChangeX, offsetChangeY);
+			offsetChangeX = correctedOffset.x;
+			offsetChangeY = correctedOffset.y;
+		}
 		// Offset the image so that the current point on the image under the mouse doesn't move.
-		this.offsetX -= (prevScale - zoomFactor) * imageCoords.x;
-		this.offsetY -= (prevScale - zoomFactor) * imageCoords.y;
+		this.offsetX += offsetChangeX;
+		this.offsetY += offsetChangeY;
 		
 		// Draw the viewport (the paint function makes sure the image is within the viewport)
 		updateTransformationMatrix();
@@ -266,11 +302,18 @@ public class Viewport extends AbsoluteLayout {
 	
 	// region Panning
 	private void pan(float x, float y, int pointerId) {
-		//		if (this.previousPointerID != pointerId)
-		//			updatePreviousPointer(x, y, pointerId);
+		float offsetChangeX = previousPoint.x - x;
+		float offsetChangeY = previousPoint.y - y;
+		
+		if (this.keepOverContent) {
+			PointF correctedOffset = getKeepOverContentOffset(offsetChangeX, offsetChangeY);
+			offsetChangeX = correctedOffset.x;
+			offsetChangeY = correctedOffset.y;
+		}
+		
 		// Pans the viewport
-		this.offsetX += previousPoint.x - x;
-		this.offsetY += previousPoint.y - y;
+		this.offsetX += offsetChangeX;
+		this.offsetY += offsetChangeY;
 		
 		previousPoint = new PointF(x, y);
 		
@@ -285,7 +328,43 @@ public class Viewport extends AbsoluteLayout {
 	}
 	// endregion
 	
-	public void fillViewport() {
+	private PointF getKeepOverContentOffset(float offsetX, float offsetY) {
+		// See how the bounds of the content if the offset were applied
+		RectF bounds = getContentExtents();
+		bounds.left *= this.zoomFactor;
+		bounds.right *= this.zoomFactor;
+		bounds.top *= this.zoomFactor;
+		bounds.bottom *= this.zoomFactor;
+		
+		bounds.left -= this.offsetX;
+		bounds.right -= this.offsetX;
+		bounds.top -= this.offsetY;
+		bounds.bottom -= this.offsetY;
+		
+		RectF offsetBounds = new RectF(bounds.left, bounds.top, bounds.right, bounds.bottom);
+		offsetBounds.left -= offsetX;
+		offsetBounds.right -= offsetX;
+		offsetBounds.top -= offsetY;
+		offsetBounds.bottom -= offsetY;
+		
+		
+		boolean contentCoversLeft = offsetBounds.left <= 0;
+		boolean contentCoversTop = offsetBounds.top <= 0;
+		boolean contentCoversRight = offsetBounds.right >= this.getWidth();
+		boolean contentCoversBottom = offsetBounds.bottom >= this.getHeight();
+		if (!contentCoversLeft)
+			offsetX = bounds.left;
+		if (!contentCoversRight)
+			offsetX = bounds.right - this.getWidth();
+		if (!contentCoversTop)
+			offsetY = bounds.top;
+		if (!contentCoversBottom)
+			offsetY = bounds.bottom - this.getHeight();
+		
+		return new PointF(offsetX, offsetY);
+	}
+	
+	private RectF getContentExtents() {
 		int childCount = this.getChildCount();
 		float minX = Float.MAX_VALUE;
 		float minY = Float.MAX_VALUE;
@@ -303,22 +382,23 @@ public class Viewport extends AbsoluteLayout {
 			if (v.getY() + v.getHeight() > maxY)
 				maxY = v.getY() + v.getHeight();
 		}
-		float width = maxX - minX;
-		float height = maxY - minY;
-		float zoomX = this.getWidth() / width;
-		float zoomY = this.getHeight() / height;
+		
+		return new RectF(minX, minY, maxX, maxY);
+	}
+	
+	public void fillViewport() {
+		RectF contentExtents = getContentExtents();
+		float zoomX = this.getWidth() / contentExtents.width();
+		float zoomY = this.getHeight() / contentExtents.height();
 		this.zoomFactor = Math.max(zoomX, zoomY);
 		
-		maxX *= this.zoomFactor;
-		maxY *= this.zoomFactor;
-		minX *= this.zoomFactor;
-		minY *= this.zoomFactor;
+		contentExtents.set(contentExtents.left * this.zoomFactor,
+						   contentExtents.top * this.zoomFactor,
+						   contentExtents.right * this.zoomFactor,
+						   contentExtents.bottom * this.zoomFactor);
 		
-		width = maxX - minX;
-		height = maxY - minY;
-		
-		this.offsetX = -(this.getWidth() - width) / 2.0f;
-		this.offsetY = -(this.getHeight() - height) / 2.0f;
+		this.offsetX = -(this.getWidth() - contentExtents.width()) / 2.0f;
+		this.offsetY = -(this.getHeight() - contentExtents.height()) / 2.0f;
 		this.updateTransformationMatrix();
 		this.invalidate();
 	}
