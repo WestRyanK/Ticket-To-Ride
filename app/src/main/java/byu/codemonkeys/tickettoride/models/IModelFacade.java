@@ -75,8 +75,6 @@ public interface IModelFacade {
 	Result sendMessage(Message message);
 	void sendMessageAsync(Message message, ICallback sendMessageCallback);
 	
-	DrawFaceUpTrainCardResult drawFaceUpTrainCard(int faceUpCardIndex);
-	
 	void drawFaceUpTrainCardAsync(int faceUpCardIndex, ICallback drawFaceUpTrainCardCallback);
 	
 	void drawDeckTrainCardAsync(ICallback drawDeckTrainCardCallback);
