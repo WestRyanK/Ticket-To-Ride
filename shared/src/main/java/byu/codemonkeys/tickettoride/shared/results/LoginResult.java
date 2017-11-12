@@ -3,7 +3,7 @@ package byu.codemonkeys.tickettoride.shared.results;
 import byu.codemonkeys.tickettoride.shared.model.Session;
 
 public class LoginResult extends Result {
-	private Session userSession;
+	private final Session userSession;
 	
 	public LoginResult(Session userSession) {
 		super();
@@ -12,6 +12,7 @@ public class LoginResult extends Result {
 
 	public LoginResult(String errorMessage) {
 		super(errorMessage);
+		this.userSession = null;
 	}
 
 	public Session getUserSession() {

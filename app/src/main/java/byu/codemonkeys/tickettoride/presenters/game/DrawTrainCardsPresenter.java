@@ -36,30 +36,15 @@ public class DrawTrainCardsPresenter extends PresenterBase implements DrawTrainC
 	
 	@Override
 	public void drawDeckCard() {
-		ICallback drawDeckCardCallback = new ICallback() {
-			@Override
-			public void callback(Result result) {
-				// TODO: Implement this body
-				
-			}
-		};
-		
 		// TODO: Add CanDrawDeckTrainCard method.
-		modelFacade.drawDeckTrainCardAsync(drawDeckCardCallback);
+		modelFacade.drawDeckTrainCardAsync(null);
 	}
 	
 	@Override
 	public void drawFaceUpCard(int cardIndex) {
-		ICallback drawFaceUpCardCallback = new ICallback() {
-			@Override
-			public void callback(Result result) {
-				// TODO: Implement this body
-				
-			}
-		};
 		
 		// TODO: Add CanDrawFaceUpTrainCard method.
-		modelFacade.drawFaceUpTrainCardAsync(cardIndex, drawFaceUpCardCallback);
+		modelFacade.drawFaceUpTrainCardAsync(cardIndex, null);
 	}
 	
 	@Override
