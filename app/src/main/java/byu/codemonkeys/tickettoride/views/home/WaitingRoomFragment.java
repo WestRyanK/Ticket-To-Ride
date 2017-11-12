@@ -139,7 +139,6 @@ public class WaitingRoomFragment extends Fragment implements WaitingRoomContract
 	
 	@Override
 	public void setWaitingUsers(final List<UserBase> users) {
-		Log.d("WR", "Update waiting users");
 		thisActivity.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {

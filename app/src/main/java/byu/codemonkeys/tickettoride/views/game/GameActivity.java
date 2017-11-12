@@ -12,6 +12,7 @@ import byu.codemonkeys.tickettoride.models.ModelFacade;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.presenters.game.ChatHistoryPresenter;
+import byu.codemonkeys.tickettoride.presenters.game.CutScenePresenter;
 import byu.codemonkeys.tickettoride.presenters.game.DestinationCardsPresenter;
 import byu.codemonkeys.tickettoride.presenters.game.DrawDestinationCardsPresenter;
 import byu.codemonkeys.tickettoride.presenters.game.EndGamePresenter;
@@ -29,7 +30,7 @@ public class GameActivity extends AppCompatActivity implements INavigator, IDisp
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
 		
-		navigate(PresenterEnum.Game, true);
+		navigate(PresenterEnum.CutScene, true);
 	}
 	
 	@Override
@@ -50,6 +51,14 @@ public class GameActivity extends AppCompatActivity implements INavigator, IDisp
 															activity,
 															ModelFacade.getInstance()));
 				fragment = gameFragment;
+				break;
+			case CutScene:
+				CutSceneFragment cutSceneFragment = new CutSceneFragment();
+				cutSceneFragment.setPresenter(new CutScenePresenter(cutSceneFragment,
+																	activity,
+																	activity,
+																	ModelFacade.getInstance()));
+				fragment = cutSceneFragment;
 				break;
 			case DrawTrainCards:
 				GameFragment gameFrag = (GameFragment) getSupportFragmentManager().findFragmentByTag(

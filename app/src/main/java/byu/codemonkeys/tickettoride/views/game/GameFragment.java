@@ -27,8 +27,6 @@ import byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget;
  * A simple {@link Fragment} subclass.
  */
 public class GameFragment extends Fragment implements GameContract.View{
-	
-	
 	FrameLayout frameSidebar;
 	FrameLayout framePlayerStats;
 	FrameLayout frameTrainCards;
@@ -133,7 +131,6 @@ public class GameFragment extends Fragment implements GameContract.View{
 		super.onResume();
 		
 		presenter.startPolling();
-		Log.d("GAME", "Resuming game...");
 	}
 	
 	@Override

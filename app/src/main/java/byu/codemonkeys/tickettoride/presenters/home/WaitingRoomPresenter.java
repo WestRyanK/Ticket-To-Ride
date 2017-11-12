@@ -41,7 +41,6 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 				@Override
 				public void callback(Result result) {
 					if (result.isSuccessful()) {
-						messageDisplayer.displayMessage("Game Started");
 					} else {
 						messageDisplayer.displayMessage(result.getErrorMessage());
 					}
