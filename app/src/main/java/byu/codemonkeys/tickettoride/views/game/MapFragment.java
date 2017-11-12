@@ -30,11 +30,14 @@ public class MapFragment extends Fragment implements MapContract.View {
 	private MapEdgeWidget pointBubble;
 	private ImageView imageViewMap;
 	private MapContract.Presenter presenter;
+//	private Bundle viewportState;
+	private static final String VIEWPORT_ARG_ZOOM = "VIEWPORT_ARG_ZOOM";
+	private static final String VIEWPORT_ARG_OFFSETX = "VIEWPORT_ARG_OFFSETX";
+	private static final String VIEWPORT_ARG_OFFSETY = "VIEWPORT_ARG_OFFSETY";
 	
 	public MapFragment() {
 		// Required empty public constructor
 	}
-	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -103,9 +106,27 @@ public class MapFragment extends Fragment implements MapContract.View {
 	private void setupViewport() {
 		this.viewport.setMaxZoom(2.0f);
 		this.viewport.setMinZoom(0.25f);
-		this.viewport.setZoomFactor(0.35f);
 		this.viewport.setKeepOverContent(true);
 		
+//		if (this.viewportState != null) {
+//			float zoom = this.viewportState.getFloat(VIEWPORT_ARG_ZOOM, 0);
+//			float offsetX = this.viewportState.getFloat(VIEWPORT_ARG_OFFSETX, 0);
+//			float offsetY = this.viewportState.getFloat(VIEWPORT_ARG_OFFSETY, 0);
+//			if (zoom != 0) {
+//				this.viewport.setZoomFactor(zoom);
+//				this.viewport.setOffsetX(offsetX);
+//				this.viewport.setOffsetY(offsetY);
+//			}
+//		}
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+//		this.viewportState = new Bundle();
+//		this.viewportState.putFloat(VIEWPORT_ARG_ZOOM, this.viewport.getZoomFactor());
+//		this.viewportState.putFloat(VIEWPORT_ARG_OFFSETX, this.viewport.getOffsetX());
+//		this.viewportState.putFloat(VIEWPORT_ARG_OFFSETY, this.viewport.getOffsetY());
 	}
 	
 	private void getViews(View view) {
