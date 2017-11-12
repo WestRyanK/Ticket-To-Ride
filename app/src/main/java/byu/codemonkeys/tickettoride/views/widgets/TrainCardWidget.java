@@ -24,23 +24,31 @@ public class TrainCardWidget extends View implements OnClickListener, OnFocusCha
 	
 	private static final String TAG = "TRAIN_CARD";
 	private Rect clipBounds = new Rect();
-	//	private TextView textViewCount;
-	//	private RelativeLayout layoutBackground;
-	//	private ImageView imageViewCard;
 	
 	private static Typeface levibrush;
-	private static Paint textPaint;
+	private static Paint textFillPaint;
+	private static Paint textStrokePaint;
 	
 	{
 		levibrush = Typeface.createFromAsset(getContext().getAssets(),
 											 //				, "levibrush.ttf");
 											 "fonts/levibrush.ttf");
-		textPaint = new Paint();
-		textPaint.setColor(Color.parseColor("#FFFFFF"));
-		textPaint.setTypeface(levibrush);
-		textPaint.setTextSize(100);
-		textPaint.setTextAlign(Paint.Align.CENTER);
-		textPaint.setAntiAlias(true);
+		textFillPaint = new Paint();
+		textFillPaint.setColor(Color.parseColor("#FFFFFF"));
+		textFillPaint.setTypeface(levibrush);
+		textFillPaint.setTextSize(100);
+		textFillPaint.setTextAlign(Paint.Align.RIGHT);
+		textFillPaint.setAntiAlias(true);
+		
+		textStrokePaint = new Paint();
+		textStrokePaint.setColor(Color.parseColor("#FFFFFF"));
+		textStrokePaint.setTypeface(levibrush);
+		textStrokePaint.setTextSize(100);
+		textStrokePaint.setTextAlign(Paint.Align.RIGHT);
+		textStrokePaint.setAntiAlias(true);
+		textStrokePaint.setStyle(Paint.Style.STROKE);
+		textStrokePaint.setStrokeWidth(3);
+		textStrokePaint.setColor(Color.BLACK);
 	}
 	
 	// region Public Properties
@@ -89,10 +97,11 @@ public class TrainCardWidget extends View implements OnClickListener, OnFocusCha
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		final float countXRatio = 0.25f;
+		final float countXRatio = 1.25f;
 		final float countYRatio = 0.85f;
 		final float fontSizeRatio = 0.5f;
-		textPaint.setTextSize(fontSizeRatio * this.getHeight());
+		textFillPaint.setTextSize(fontSizeRatio * this.getHeight());
+		textStrokePaint.setTextSize(fontSizeRatio * this.getHeight());
 		
 		if (this.cardDrawable != null) {
 			canvas.getClipBounds(clipBounds);
@@ -104,7 +113,11 @@ public class TrainCardWidget extends View implements OnClickListener, OnFocusCha
 			canvas.drawText(String.valueOf(this.count),
 							countXRatio * this.getHeight(),
 							countYRatio * this.getHeight(),
-							textPaint);
+							textStrokePaint);
+			canvas.drawText(String.valueOf(this.count),
+							countXRatio * this.getHeight(),
+							countYRatio * this.getHeight(),
+							textFillPaint);
 		}
 	}
 	
