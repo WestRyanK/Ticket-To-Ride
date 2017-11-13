@@ -291,9 +291,9 @@ public class ServerFacade implements IServer {
 	}
 	
 	@Override
-	public DestinationCardResult chooseDestinationCards(String authToken,
-														int numSelected,
-														List<DestinationCard> selected) {
+	public DestinationCardResult chooseInitialDestinationCards(String authToken,
+															   int numSelected,
+															   List<DestinationCard> selected) {
 		Result result = chooseDestinationCards(authToken, selected);
 		
 		if (result.isSuccessful()) {

@@ -1,6 +1,7 @@
 package byu.codemonkeys.tickettoride.presenters.home;
 
 import byu.codemonkeys.tickettoride.models.IModelFacade;
+import byu.codemonkeys.tickettoride.mvpcontracts.IMediaPlayer;
 import byu.codemonkeys.tickettoride.mvpcontracts.home.ConnectionSettingsContract;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
@@ -18,8 +19,9 @@ public class ConnectionSettingsPresenter extends PresenterBase implements Connec
 	public ConnectionSettingsPresenter(ConnectionSettingsContract.View view,
 									   INavigator navigator,
 									   IDisplaysMessages messageDisplayer,
-									   IModelFacade modelFacade) {
-		super(navigator, messageDisplayer, modelFacade);
+									   IModelFacade modelFacade,
+									   IMediaPlayer mediaPlayer) {
+		super(navigator, messageDisplayer, modelFacade, mediaPlayer);
 		this.view = view;
 	}
 	

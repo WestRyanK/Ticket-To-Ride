@@ -2,6 +2,7 @@ package byu.codemonkeys.tickettoride.presenters.game;
 
 import byu.codemonkeys.tickettoride.models.IModelFacade;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
+import byu.codemonkeys.tickettoride.mvpcontracts.IMediaPlayer;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.CutScenes;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
@@ -19,15 +20,16 @@ public class CutScenePresenter extends PresenterBase implements CutSceneContract
 	public CutScenePresenter(CutSceneContract.View view,
 							 INavigator navigator,
 							 IDisplaysMessages messageDisplayer,
-							 IModelFacade modelFacade) {
-		super(navigator, messageDisplayer, modelFacade);
+							 IModelFacade modelFacade,
+							 IMediaPlayer mediaPlayer) {
+		super(navigator, messageDisplayer, modelFacade, mediaPlayer);
 		this.view = view;
 	}
 	
 	@Override
 	public void cutSceneEnd() {
-		this.navigator.navigate(PresenterEnum.Game, true);
-//		this.navigator.navigateBack();
+		//		this.navigator.navigate(PresenterEnum.Game, true);
+		this.navigator.navigateBack();
 	}
 	
 	@Override

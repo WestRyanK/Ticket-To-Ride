@@ -27,7 +27,7 @@ public class ClientCommunicator {
 	private int port;
 	
 	private ClientCommunicator() {
-		host = "192.168.1.9";
+		host = "10.24.203.147";
 		port = 8080;
 		serializer = new Serializer();
 	}
@@ -170,7 +170,7 @@ public class ClientCommunicator {
 		}
 	}
 	
-	public DestinationCardResult sendChooseDestinationCards(ChooseDestinationCardsCommandData request) {
+	public DestinationCardResult sendChooseInitialDestinationCards(ChooseDestinationCardsCommandData request) {
 		try {
 			String string = getString(getURL(CommandType.CHOOSE_DESTINATION_CARDS), request);
 			DestinationCardResult result = serializer.deserialize(string,
