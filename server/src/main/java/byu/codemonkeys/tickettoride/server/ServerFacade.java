@@ -24,6 +24,8 @@ import byu.codemonkeys.tickettoride.shared.model.Message;
 import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.Self;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
+import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
+import byu.codemonkeys.tickettoride.shared.model.cards.Deck;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
@@ -321,7 +323,47 @@ public class ServerFacade implements IServer {
 	
 	@Override
 	public DrawFaceUpTrainCardResult drawFaceUpTrainCard(int faceUpCardIndex, String authToken) {
-		return null;
+		if (faceUpCardIndex < 0 || faceUpCardIndex >= Deck.NUM_REVEALED) {
+			return new DrawFaceUpTrainCardResult("Invalid Index");
+		}
+
+		ServerSession session = rootModel.getSession(authToken);
+
+		if (session == null) {
+			return new DrawFaceUpTrainCardResult("Not Authorized");
+		}
+
+		ActiveGame game = rootModel.getActiveGame(session.getGameID());
+
+		if (game == null) {
+			return new DrawFaceUpTrainCardResult("You are not part of an active game");
+		}
+
+		User user = session.getUser();
+
+		if (!game.isPlayersTurn(user.getUsername())) {
+			return new DrawFaceUpTrainCardResult("It is not your turn");
+		}
+
+		TrainCard card = game.getDeck().getRevealed().get(faceUpCardIndex);
+
+		if (card == null) {
+			return new DrawFaceUpTrainCardResult("There is no card at position "
+					+ faceUpCardIndex);
+		}
+
+		TrainCard replacement = game.getDeck().drawTrainCard();
+
+		game.getDeck().getRevealed().set(faceUpCardIndex, replacement);
+
+		// TODO: Broadcast DrewFaceUpTrainCardCommand
+		// TODO: Create turn state to limit the next actions the current player may perform
+
+		if (card.getCardColor() == CardType.Wild) {
+			game.nextTurn();
+		}
+
+		return new DrawFaceUpTrainCardResult(replacement);
 	}
 	
 	@Override

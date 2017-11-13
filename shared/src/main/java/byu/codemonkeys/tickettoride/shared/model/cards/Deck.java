@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class Deck implements IDeck {
     // The maximum number of revealed drawable cards
-    private static int NUM_REVEALED = 5;
+    public static int NUM_REVEALED = 5;
 
     protected String type = "deck";
 
