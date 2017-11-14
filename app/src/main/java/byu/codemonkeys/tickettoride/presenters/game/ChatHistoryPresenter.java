@@ -8,6 +8,7 @@ import byu.codemonkeys.tickettoride.models.IModelFacade;
 import byu.codemonkeys.tickettoride.models.ModelFacade;
 import byu.codemonkeys.tickettoride.models.ModelRoot;
 import byu.codemonkeys.tickettoride.models.history.CommandHistoryEntry;
+import byu.codemonkeys.tickettoride.mvpcontracts.IMediaPlayer;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.ChatHistoryContract;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
@@ -22,8 +23,9 @@ public class ChatHistoryPresenter extends PresenterBase implements ChatHistoryCo
 	public ChatHistoryPresenter(ChatHistoryContract.View view,
 								INavigator navigator,
 								IDisplaysMessages messageDisplayer,
-								IModelFacade modelFacade) {
-		super(navigator, messageDisplayer, modelFacade);
+								IModelFacade modelFacade,
+								IMediaPlayer mediaPlayer) {
+		super(navigator, messageDisplayer, modelFacade, mediaPlayer);
 		this.view = view;
 		modelFacade.addObserver(this);
 	}

@@ -27,8 +27,6 @@ import byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget;
  * A simple {@link Fragment} subclass.
  */
 public class GameFragment extends Fragment implements GameContract.View{
-	
-	
 	FrameLayout frameSidebar;
 	FrameLayout framePlayerStats;
 	FrameLayout frameTrainCards;
@@ -63,7 +61,7 @@ public class GameFragment extends Fragment implements GameContract.View{
 		sidebarFragment.setPresenter(new GameSidebarPresenter(sidebarFragment,
 															  activity,
 															  activity,
-															  ModelFacade.getInstance()));
+															  ModelFacade.getInstance(), activity));
 		activity.getSupportFragmentManager()
 				.beginTransaction()
 				.replace(R.id.game_frameSidebar, sidebarFragment)
@@ -73,7 +71,7 @@ public class GameFragment extends Fragment implements GameContract.View{
 		statsFragment.setPresenter(new PlayerStatsPresenter(statsFragment,
 															activity,
 															activity,
-															ModelFacade.getInstance()));
+															ModelFacade.getInstance(), activity));
 		activity.getSupportFragmentManager()
 				.beginTransaction()
 				.replace(R.id.game_framePlayerStats, statsFragment)
@@ -83,7 +81,7 @@ public class GameFragment extends Fragment implements GameContract.View{
 		trainCardsFragment.setPresenter(new TrainCardsPresenter(trainCardsFragment,
 																		activity,
 																		activity,
-																		ModelFacade.getInstance()));
+																		ModelFacade.getInstance(), activity));
 		activity.getSupportFragmentManager()
 				.beginTransaction()
 				.replace(R.id.game_frameTrainCards, trainCardsFragment)
@@ -93,7 +91,7 @@ public class GameFragment extends Fragment implements GameContract.View{
 		mapFragment.setPresenter(new MapPresenter(mapFragment,
 															  activity,
 															  activity,
-															  ModelFacade.getInstance()));
+															  ModelFacade.getInstance(), activity));
 		activity.getSupportFragmentManager()
 				.beginTransaction()
 				.replace(R.id.game_frameMap, mapFragment)
@@ -108,7 +106,7 @@ public class GameFragment extends Fragment implements GameContract.View{
 		fragment.setPresenter(new DrawTrainCardsPresenter(fragment,
 														  activity,
 														  activity,
-														  ModelFacade.getInstance()));
+														  ModelFacade.getInstance(), activity));
 		this.getFragmentManager()
 			.beginTransaction()
 			.replace(R.id.game_frameSidebar, fragment)
@@ -121,7 +119,7 @@ public class GameFragment extends Fragment implements GameContract.View{
 		fragment.setPresenter(new GameSidebarPresenter(fragment,
 													   activity,
 													   activity,
-													   ModelFacade.getInstance()));
+													   ModelFacade.getInstance(), activity));
 		this.getFragmentManager()
 			.beginTransaction()
 			.replace(R.id.game_frameSidebar, fragment)
@@ -133,7 +131,6 @@ public class GameFragment extends Fragment implements GameContract.View{
 		super.onResume();
 		
 		presenter.startPolling();
-		Log.d("GAME", "Resuming game...");
 	}
 	
 	@Override

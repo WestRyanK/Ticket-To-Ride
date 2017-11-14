@@ -132,9 +132,9 @@ public interface IServer {
      * @return a {@link DestinationCardResult} containing the selected destination cards or an error
 	 * message.
      */
-	DestinationCardResult chooseDestinationCards(String authToken,
-												 int numSelected,
-												 List<DestinationCard> selected);
+	DestinationCardResult chooseInitialDestinationCards(String authToken,
+														int numSelected,
+														List<DestinationCard> selected);
 
 	/**
 	 * Sends a chat message from the authenticated player to the game associated with the

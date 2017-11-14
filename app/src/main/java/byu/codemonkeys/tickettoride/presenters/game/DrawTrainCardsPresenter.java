@@ -8,6 +8,7 @@ import byu.codemonkeys.tickettoride.models.IModelFacade;
 import byu.codemonkeys.tickettoride.models.ModelFacade;
 import byu.codemonkeys.tickettoride.models.ModelRoot;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
+import byu.codemonkeys.tickettoride.mvpcontracts.IMediaPlayer;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.DrawTrainCardsContract;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
@@ -24,8 +25,9 @@ public class DrawTrainCardsPresenter extends PresenterBase implements DrawTrainC
 	public DrawTrainCardsPresenter(DrawTrainCardsContract.View view,
 								   INavigator navigator,
 								   IDisplaysMessages messageDisplayer,
-								   IModelFacade modelFacade) {
-		super(navigator, messageDisplayer, modelFacade);
+								   IModelFacade modelFacade,
+								   IMediaPlayer mediaPlayer) {
+		super(navigator, messageDisplayer, modelFacade, mediaPlayer);
 		this.view = view;
 	}
 	

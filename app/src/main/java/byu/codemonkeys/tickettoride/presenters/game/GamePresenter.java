@@ -7,11 +7,15 @@ import byu.codemonkeys.tickettoride.models.IModelFacade;
 import byu.codemonkeys.tickettoride.models.ModelFacade;
 import byu.codemonkeys.tickettoride.models.ModelRoot;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
+import byu.codemonkeys.tickettoride.mvpcontracts.IMediaPlayer;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
+import byu.codemonkeys.tickettoride.mvpcontracts.game.CutScenes;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.GameContract;
+import byu.codemonkeys.tickettoride.mvpcontracts.game.Sounds;
 import byu.codemonkeys.tickettoride.networking.GamePoller;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
 import byu.codemonkeys.tickettoride.presenters.PresenterEnum;
+import byu.codemonkeys.tickettoride.shared.model.ActiveGame;
 
 public class GamePresenter extends PresenterBase implements GameContract.Presenter, Observer {
 	private GameContract.View view;
@@ -19,10 +23,12 @@ public class GamePresenter extends PresenterBase implements GameContract.Present
 	public GamePresenter(GameContract.View view,
 						 INavigator navigator,
 						 IDisplaysMessages messageDisplayer,
-						 IModelFacade modelFacade) {
-		super(navigator, messageDisplayer, modelFacade);
+						 IModelFacade modelFacade,
+						 IMediaPlayer mediaPlayer) {
+		super(navigator, messageDisplayer, modelFacade, mediaPlayer);
 		this.view = view;
 		this.modelFacade.addObserver(this);
+		this.mediaPlayer.playSound(Sounds.gameSoundtrack, true);
 	}
 	
 	@Override
@@ -32,13 +38,16 @@ public class GamePresenter extends PresenterBase implements GameContract.Present
 	
 	@Override
 	public void stopPolling() {
-//		GamePoller.getInstance().stopPolling();
+		//		GamePoller.getInstance().stopPolling();
 	}
 	
 	@Override
 	public void update(Observable observable, Object o) {
 		if (o == ModelFacade.GAME_UPDATE) {
 			this.navigator.navigate(PresenterEnum.DrawDestinationCards, true);
+		}
+		if (o == ActiveGame.STARTED_UPDATE) {
+			this.mediaPlayer.playCutScene(CutScenes.openingSequence);
 		}
 	}
 }

@@ -2,21 +2,20 @@ package byu.codemonkeys.tickettoride.views.game;
 
 
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import java.util.Map;
 
 import byu.codemonkeys.tickettoride.R;
-import byu.codemonkeys.tickettoride.models.ModelFacade;
-import byu.codemonkeys.tickettoride.models.ModelRoot;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.MapContract;
-import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
 import byu.codemonkeys.tickettoride.views.viewdata.PointBubblesData;
 import byu.codemonkeys.tickettoride.views.widgets.MapEdgeWidget;
@@ -31,11 +30,14 @@ public class MapFragment extends Fragment implements MapContract.View {
 	private MapEdgeWidget pointBubble;
 	private ImageView imageViewMap;
 	private MapContract.Presenter presenter;
+//	private Bundle viewportState;
+	private static final String VIEWPORT_ARG_ZOOM = "VIEWPORT_ARG_ZOOM";
+	private static final String VIEWPORT_ARG_OFFSETX = "VIEWPORT_ARG_OFFSETX";
+	private static final String VIEWPORT_ARG_OFFSETY = "VIEWPORT_ARG_OFFSETY";
 	
 	public MapFragment() {
 		// Required empty public constructor
 	}
-	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -46,7 +48,27 @@ public class MapFragment extends Fragment implements MapContract.View {
 		getViews(view);
 		setupViewport();
 		setupMap();
+		setListenFirstMeasure();
 		return view;
+	}
+	
+	private void setListenFirstMeasure() {
+		viewport.getViewTreeObserver()
+				.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+			
+					@Override
+					public void onGlobalLayout() {
+				
+						// Removing layout listener to avoid multiple calls
+						if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+							viewport.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+						} else {
+							viewport.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+						}
+				
+						viewport.fillViewport();
+					}
+				});
 	}
 	
 	private void setupMap() {
@@ -76,7 +98,7 @@ public class MapFragment extends Fragment implements MapContract.View {
 			});
 		}
 	}
-
+	
 	public void setPresenter(MapContract.Presenter presenter) {
 		this.presenter = presenter;
 	}
@@ -84,8 +106,27 @@ public class MapFragment extends Fragment implements MapContract.View {
 	private void setupViewport() {
 		this.viewport.setMaxZoom(2.0f);
 		this.viewport.setMinZoom(0.25f);
-		this.viewport.setZoomFactor(0.35f);
+		this.viewport.setKeepOverContent(true);
 		
+//		if (this.viewportState != null) {
+//			float zoom = this.viewportState.getFloat(VIEWPORT_ARG_ZOOM, 0);
+//			float offsetX = this.viewportState.getFloat(VIEWPORT_ARG_OFFSETX, 0);
+//			float offsetY = this.viewportState.getFloat(VIEWPORT_ARG_OFFSETY, 0);
+//			if (zoom != 0) {
+//				this.viewport.setZoomFactor(zoom);
+//				this.viewport.setOffsetX(offsetX);
+//				this.viewport.setOffsetY(offsetY);
+//			}
+//		}
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+//		this.viewportState = new Bundle();
+//		this.viewportState.putFloat(VIEWPORT_ARG_ZOOM, this.viewport.getZoomFactor());
+//		this.viewportState.putFloat(VIEWPORT_ARG_OFFSETX, this.viewport.getOffsetX());
+//		this.viewportState.putFloat(VIEWPORT_ARG_OFFSETY, this.viewport.getOffsetY());
 	}
 	
 	private void getViews(View view) {

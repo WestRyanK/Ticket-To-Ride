@@ -44,6 +44,11 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
 
     private CommandManager commandManager;
 
+    @Override
+    public void nextTurn() {
+        turn = (turn + 1) % players.size();
+    }
+
     /**
      * Broadcasts a command to all players in the game
      * @param command to be broadcast
