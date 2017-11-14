@@ -79,9 +79,9 @@ public interface IModelFacade {
 	
 	void drawDeckTrainCardAsync(ICallback drawDeckTrainCardCallback);
 	
-	void selectDestinationCards(List<DestinationCard> cards);
+	void chooseInitialDestinationCards(List<DestinationCard> cards);
 	
-	void selectDestinationCardsAsync(List<DestinationCard> cards, ICallback selectDestinationCardsCallback);
+	void chooseInitialDestinationCardsAsync(List<DestinationCard> cards, ICallback selectDestinationCardsCallback);
 	
 	void beginGame(Map<String, Integer> numDestinationCards);
 	//TODO: add claimed route, waiting on map

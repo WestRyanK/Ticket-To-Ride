@@ -8,6 +8,7 @@ import java.util.Random;
 
 import byu.codemonkeys.tickettoride.models.IModelFacade;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
+import byu.codemonkeys.tickettoride.mvpcontracts.IMediaPlayer;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.EndGameContract;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
@@ -25,8 +26,9 @@ public class EndGamePresenter extends PresenterBase implements EndGameContract.P
 	public EndGamePresenter(EndGameContract.View view,
 							INavigator navigator,
 							IDisplaysMessages messageDisplayer,
-							IModelFacade modelFacade) {
-		super(navigator, messageDisplayer, modelFacade);
+							IModelFacade modelFacade,
+							IMediaPlayer mediaPlayer) {
+		super(navigator, messageDisplayer, modelFacade, mediaPlayer);
 		this.view = view;
 	}
 	

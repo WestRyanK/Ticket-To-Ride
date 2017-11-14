@@ -571,8 +571,6 @@ public class ModelFacade implements IModelFacade {
 		this.asyncTask.executeTask(drawDeckTrainCardCommand, callback);
 	}
 	
-	//TODO: implement this in a future phase
-	
 	/**
 	 * Tells the server which destination cards of the three given were kept
 	 *
@@ -584,17 +582,18 @@ public class ModelFacade implements IModelFacade {
 	 *              {@pre models.activeGame != null, aka we're actually in a game}
 	 *              {@pre it's your turn}
 	 */
-	public void selectDestinationCards(List<DestinationCard> cards) {
+	public void chooseInitialDestinationCards(List<DestinationCard> cards) {
 		//Make server call
-		DestinationCardResult result = serverProxy.chooseDestinationCards(models.getSession()
-																				.getAuthToken(),
-																		  cards.size(),
-																		  cards);
+		DestinationCardResult result = serverProxy.chooseInitialDestinationCards(models.getSession()
+																					   .getAuthToken(),
+																				 cards.size(),
+																				 cards);
 		//On server success, add the cards to the model
 		if (result.isSuccessful()) {
 			for (DestinationCard card : cards) {
 				ModelRoot.getInstance().getGame().getSelf().select(card);
 			}
+			ModelRoot.getInstance().getGame().setStarted(true);
 			ModelRoot.getInstance().getGame().getSelf().getSelecting().clear();
 		}
 	}
@@ -603,7 +602,7 @@ public class ModelFacade implements IModelFacade {
 	 * Tells the server which destination cards of the three given were kept, run asynchronously
 	 *
 	 * @param cards                          A list of destination cards that the user selected
-	 * @param selectDestinationCardsCallback The callback to run after telling server
+	 * @param chooseInitialDestinationCardsCallback The callback to run after telling server
 	 *                                       {@pre selectDestinationCardsCallback != null}
 	 *                                       {@pre cards != null}
 	 *                                       {@pre cards.size() <= 3}
@@ -612,18 +611,19 @@ public class ModelFacade implements IModelFacade {
 	 *                                       {@pre models.activeGame != null, aka we're actually in a game}
 	 *                                       {@pre it's your turn}
 	 */
-	public void selectDestinationCardsAsync(final List<DestinationCard> cards,
-											ICallback selectDestinationCardsCallback) {
+	public void chooseInitialDestinationCardsAsync(final List<DestinationCard> cards,
+											ICallback chooseInitialDestinationCardsCallback) {
 		ICommand selectDestinationCardsCommand = new ICommand() {
 			@Override
 			public Result execute() {
-				selectDestinationCards(cards);
+				chooseInitialDestinationCards(cards);
 				return new Result();
 			}
 		};
 		
-		this.asyncTask.executeTask(selectDestinationCardsCommand, selectDestinationCardsCallback);
+		this.asyncTask.executeTask(selectDestinationCardsCommand, chooseInitialDestinationCardsCallback);
 	}
+	
 	
 	/**
 	 * Sets up the game further after all players have selected destination cards

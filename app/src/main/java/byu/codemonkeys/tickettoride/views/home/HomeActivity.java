@@ -51,7 +51,7 @@ public class HomeActivity extends AppCompatActivity implements INavigator, IDisp
 				loginFragment.setPresenter(new LoginPresenter(loginFragment,
 															  activity,
 															  activity,
-															  ModelFacade.getInstance()));
+															  ModelFacade.getInstance(), null));
 				fragment = loginFragment;
 				break;
 			case Register:
@@ -59,7 +59,7 @@ public class HomeActivity extends AppCompatActivity implements INavigator, IDisp
 				registerFragment.setPresenter(new RegisterPresenter(registerFragment,
 																	activity,
 																	activity,
-																	ModelFacade.getInstance()));
+																	ModelFacade.getInstance(), null));
 				fragment = registerFragment;
 				break;
 			case ConnectionSettings:
@@ -68,7 +68,7 @@ public class HomeActivity extends AppCompatActivity implements INavigator, IDisp
 						connectionSettingsFragment,
 						activity,
 						activity,
-						ModelFacade.getInstance()));
+						ModelFacade.getInstance(), null));
 				fragment = connectionSettingsFragment;
 				break;
 			case CreateGame:
@@ -76,7 +76,7 @@ public class HomeActivity extends AppCompatActivity implements INavigator, IDisp
 				createGameFragment.setPresenter(new CreateGamePresenter(createGameFragment,
 																		activity,
 																		activity,
-																		ModelFacade.getInstance()));
+																		ModelFacade.getInstance(), null));
 				fragment = createGameFragment;
 				break;
 			case Lobby:
@@ -84,7 +84,7 @@ public class HomeActivity extends AppCompatActivity implements INavigator, IDisp
 				lobbyFragment.setPresenter(new LobbyPresenter(lobbyFragment,
 															  activity,
 															  activity,
-															  ModelFacade.getInstance()));
+															  ModelFacade.getInstance(), null));
 				fragment = lobbyFragment;
 				break;
 			case WaitingRoom:
@@ -92,7 +92,7 @@ public class HomeActivity extends AppCompatActivity implements INavigator, IDisp
 				waitingRoomFragment.setPresenter(new WaitingRoomPresenter(waitingRoomFragment,
 																		  activity,
 																		  activity,
-																		  ModelFacade.getInstance()));
+																		  ModelFacade.getInstance(), null));
 				fragment = waitingRoomFragment;
 				break;
 			case Game:

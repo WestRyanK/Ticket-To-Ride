@@ -2,6 +2,7 @@ package byu.codemonkeys.tickettoride.presenters.home;
 
 import byu.codemonkeys.tickettoride.async.ICallback;
 import byu.codemonkeys.tickettoride.models.IModelFacade;
+import byu.codemonkeys.tickettoride.mvpcontracts.IMediaPlayer;
 import byu.codemonkeys.tickettoride.mvpcontracts.home.CreateGameContract;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
@@ -21,8 +22,9 @@ public class CreateGamePresenter extends PresenterBase implements CreateGameCont
 	public CreateGamePresenter(CreateGameContract.View view,
 							   INavigator navigator,
 							   IDisplaysMessages messageDisplayer,
-							   IModelFacade modelFacade) {
-		super(navigator, messageDisplayer, modelFacade);
+							   IModelFacade modelFacade,
+							   IMediaPlayer mediaPlayer) {
+		super(navigator, messageDisplayer, modelFacade, mediaPlayer);
 		this.view = view;
 	}
 	
