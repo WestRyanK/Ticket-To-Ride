@@ -16,6 +16,8 @@ import byu.codemonkeys.tickettoride.presenters.PresenterEnum;
 public class CutScenePresenter extends PresenterBase implements CutSceneContract.Presenter {
 	
 	private CutSceneContract.View view;
+	private boolean wasSoundPlaying;
+	private static final boolean isSkipCutScene = false;
 	
 	public CutScenePresenter(CutSceneContract.View view,
 							 INavigator navigator,
@@ -29,16 +31,21 @@ public class CutScenePresenter extends PresenterBase implements CutSceneContract
 	@Override
 	public void cutSceneEnd() {
 		//		this.navigator.navigate(PresenterEnum.Game, true);
+		if (this.wasSoundPlaying) {
+			this.mediaPlayer.playSound();
+		}
 		this.navigator.navigateBack();
 	}
 	
 	@Override
 	public void initCutScene() {
+		this.wasSoundPlaying = this.mediaPlayer.isSoundPlaying();
+		this.mediaPlayer.pauseSound();
 		this.view.playCutScene(CutScenes.openingSequence);
 	}
 	
 	@Override
 	public boolean isSkipCutScene() {
-		return false;
+		return isSkipCutScene;
 	}
 }

@@ -212,14 +212,33 @@ public class GameActivity extends AppCompatActivity implements INavigator, IDisp
 	}
 	
 	@Override
+	public void playSound() {
+		if (this.mediaPlayer != null)
+			this.mediaPlayer.seekTo(0);
+			this.mediaPlayer.start();
+	}
+	
+	@Override
 	public void stopSound() {
 		this.mediaPlayer.stop();
-		this.mediaPlayer.release();
+	}
+	
+	@Override
+	public void pauseSound() {
+		if (this.mediaPlayer != null && this.mediaPlayer.isPlaying())
+			this.mediaPlayer.pause();
+	}
+	
+	@Override
+	public boolean isSoundPlaying() {
+		if (this.mediaPlayer != null)
+			return this.mediaPlayer.isPlaying();
+		else
+			return false;
 	}
 	
 	@Override
 	public void playCutScene(CutScenes cutScene) {
-		this.mediaPlayer.pause();
 		this.navigate(PresenterEnum.CutScene, true);
 	}
 	// endregion

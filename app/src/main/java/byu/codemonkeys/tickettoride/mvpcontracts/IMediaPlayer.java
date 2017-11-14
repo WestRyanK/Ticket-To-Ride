@@ -10,7 +10,13 @@ import byu.codemonkeys.tickettoride.mvpcontracts.game.Sounds;
 public interface IMediaPlayer {
 	void playSound(Sounds sound, boolean loop);
 	
+	void playSound();
+	
 	void stopSound();
+	
+	void pauseSound();
+	
+	boolean isSoundPlaying();
 	
 	void playCutScene(CutScenes cutScene);
 }
