@@ -13,6 +13,8 @@ public interface DestinationCardsContract {
 	interface View {
 		
 		void setDestinationCards(List<DestinationCard> cards);
+		
+		void setDestinationCardsInDeckCount(int cardsInDeckCount);
 	}
 	
 	interface Presenter {

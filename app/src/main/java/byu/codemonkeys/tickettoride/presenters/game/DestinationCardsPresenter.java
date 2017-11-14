@@ -46,5 +46,13 @@ public class DestinationCardsPresenter extends PresenterBase implements Destinat
 		List<DestinationCard> cardList = new ArrayList<>();
 		cardList.addAll(cards);
 		this.view.setDestinationCards(cardList);
+		
+		int numDestinationCards = ModelRoot.getInstance()
+										   .getGame()
+										   .getDeck()
+										   .getNumDestinationCards();
+		this.view.setDestinationCardsInDeckCount(numDestinationCards);
 	}
+	
+	
 }
