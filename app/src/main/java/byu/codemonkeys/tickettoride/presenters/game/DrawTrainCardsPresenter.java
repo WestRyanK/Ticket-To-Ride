@@ -38,15 +38,20 @@ public class DrawTrainCardsPresenter extends PresenterBase implements DrawTrainC
 	
 	@Override
 	public void drawDeckCard() {
-		// TODO: Add CanDrawDeckTrainCard method.
-		modelFacade.drawDeckTrainCardAsync(null);
+		if (ModelRoot.getInstance().getGame().getTurn().canDrawTrainCard()) {
+			modelFacade.drawDeckTrainCardAsync(null);
+		}
+		messageDisplayer.displayMessage("Cannot draw Train Card at this time");
 	}
 	
 	@Override
 	public void drawFaceUpCard(int cardIndex) {
-		
-		// TODO: Add CanDrawFaceUpTrainCard method.
-		modelFacade.drawFaceUpTrainCardAsync(cardIndex, null);
+
+		if (ModelRoot.getInstance().getGame().getTurn().canDrawTrainCard()) {
+			//TODO: check if the face up card is a wild card and call canDrawWildTrainCard if it is
+			modelFacade.drawFaceUpTrainCardAsync(cardIndex, null);
+		}
+		messageDisplayer.displayMessage("Cannot draw Train Card at this time");
 	}
 	
 	@Override

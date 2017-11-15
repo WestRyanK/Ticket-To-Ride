@@ -12,6 +12,7 @@ import byu.codemonkeys.tickettoride.presenters.PresenterBase;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.MapContract;
 import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
+import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
 import byu.codemonkeys.tickettoride.views.widgets.MapEdgeWidget;
 
 
@@ -30,8 +31,8 @@ public class MapPresenter extends PresenterBase implements MapContract.Presenter
     @Override
     public void claimRoute(MapEdgeWidget pointBubble) {
         if (pointBubble.getClaimedColor().equals(PlayerColor.None)) {
-            int turn = ModelRoot.getInstance().getGame().getTurn();
-            Player self = ModelRoot.getInstance().getGame().getPlayers().get(turn);
+            Turn turn = ModelRoot.getInstance().getGame().getTurn();
+            Player self = ModelRoot.getInstance().getGame().getPlayers().get(turn.getPlayerIndex());
             pointBubble.setClaimedColor(self.getColor());
             self.setScore(self.getScore() + pointBubble.getPoints());
             self.setNumTrains(self.getNumTrains() - pointBubble.getPoints());
