@@ -46,7 +46,7 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
 
     @Override
     public void nextTurn() {
-        turn = (turn + 1) % players.size();
+        turn = turn.getNextTurn();
     }
 
     /**
