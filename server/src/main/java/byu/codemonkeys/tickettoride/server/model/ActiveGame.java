@@ -13,6 +13,8 @@ import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
 import byu.codemonkeys.tickettoride.shared.model.Self;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
+import byu.codemonkeys.tickettoride.shared.model.turns.ActiveTurn;
+import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
 
 import static byu.codemonkeys.tickettoride.shared.model.Player.Type.Opponent;
 
@@ -38,6 +40,21 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
         }
 
         setDeck(new Deck());
+
+        this.turn = new ActiveTurn(0);
+
+        Turn turn = this.turn;
+
+        // During development, we sometimes start a game with one player.
+        if (this.players.size() < 2) {
+            turn.setNextTurn(turn);
+        }
+
+        for (int i = 1; i < this.players.size(); ++i) {
+            Turn nextTurn = new ActiveTurn(i);
+            turn.setNextTurn(nextTurn);
+            turn = nextTurn;
+        }
 
         deal();
     }
