@@ -12,6 +12,7 @@ import byu.codemonkeys.tickettoride.mvpcontracts.IMediaPlayer;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.DrawTrainCardsContract;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
+import byu.codemonkeys.tickettoride.shared.model.cards.Deck;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 
 /**
@@ -64,7 +65,7 @@ public class DrawTrainCardsPresenter extends PresenterBase implements DrawTrainC
 	
 	@Override
 	public void update(Observable observable, Object o) {
-		if (o == ModelFacade.GAME_UPDATE) {
+		if (o == ModelFacade.GAME_UPDATE || o == Deck.DECK_TRAIN_CARDS_UPDATE || o == Deck.REVEALED_TRAIN_CARDS_UPDATE) {
 			loadCards();
 		}
 	}

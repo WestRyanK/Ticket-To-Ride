@@ -13,8 +13,6 @@ import byu.codemonkeys.tickettoride.shared.model.turns.ActiveTurn;
 import byu.codemonkeys.tickettoride.shared.model.turns.OtherTurn;
 import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
 
-import static sun.audio.AudioPlayer.player;
-
 /**
  * We need to decide whether ActiveGame should extend GameBase. As it stands, ActiveGame doesn't
  * need any of the fields of GameBase except gameID. What we might want to do is move all the other
@@ -144,6 +142,17 @@ public class ActiveGame extends GameBase implements Observer {
 		for (Player player : players) {
 			//            if (user.equals(player)) {
 			if (user.userName.equals(player.userName)) {
+				return player;
+			}
+		}
+		
+		return null;
+	}
+	
+	public Player getPlayer(String username) {
+		for (Player player : players) {
+			//            if (user.equals(player)) {
+			if (player.getUsername().equals(username)) {
 				return player;
 			}
 		}

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class Deck implements IDeck {
+import byu.codemonkeys.tickettoride.shared.model.ObservableExt;
+
+public class Deck extends ObservableExt implements IDeck {
     // The maximum number of revealed drawable cards
     public static int NUM_REVEALED = 5;
 
@@ -13,6 +15,9 @@ public class Deck implements IDeck {
     protected List<TrainCard> revealed;
     protected int numHidden;
     protected int numDestinationCards;
+    public static final String REVEALED_TRAIN_CARDS_UPDATE = "RevealedTrainCardsUpdate";
+    public static final String DECK_TRAIN_CARDS_UPDATE = "DeckTrainCardsUpdate";
+    public static final String DESTINATION_CARDS_UPDATE = "DestinationCardsUpdate";
 
     public Deck() {
         this.revealed = new ArrayList<>();
@@ -27,7 +32,14 @@ public class Deck implements IDeck {
     public List<TrainCard> getRevealed() {
         return revealed;
     }
-
+    
+    @Override
+    public void setRevealed(List<TrainCard> revealed) {
+        this.revealed = revealed;
+        this.setChanged();
+        this.notifyObservers(REVEALED_TRAIN_CARDS_UPDATE);
+    }
+    
     public int getNumHidden() {
         return numHidden;
     }
