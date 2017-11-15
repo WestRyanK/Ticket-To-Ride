@@ -1,6 +1,8 @@
 package byu.codemonkeys.tickettoride.shared.model.turns;
 
 
+import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
+
 public class OtherTurn extends Turn {
 
     public OtherTurn() {
@@ -29,6 +31,15 @@ public class OtherTurn extends Turn {
     @Override
     public boolean canDrawWildTrainCard() {
         return false;
+    }
+
+    @Override
+    public void drawFaceUpTrainCard(TrainCard card) {
+
+    }
+
+    @Override public void drawDeckTrainCard() {
+
     }
 
     @Override
