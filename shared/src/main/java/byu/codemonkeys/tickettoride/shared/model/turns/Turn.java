@@ -13,6 +13,10 @@ public abstract class Turn {
     public abstract void finished();
     public abstract void reset();
 
+    public Turn() {
+        // Empty Default constructor necessary for deserialization
+    }
+
     public Turn(int playerIndex) {
         this.playerIndex = playerIndex;
     }

@@ -3,6 +3,10 @@ package byu.codemonkeys.tickettoride.shared.model.turns;
 
 public class OtherTurn extends Turn {
 
+    public OtherTurn() {
+        // Empty Default constructor necessary for deserialization
+    }
+
     public OtherTurn(int playerIndex) {
         super(playerIndex);
     }

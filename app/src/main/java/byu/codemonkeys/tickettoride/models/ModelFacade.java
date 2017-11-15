@@ -18,6 +18,7 @@ import byu.codemonkeys.tickettoride.shared.model.*;
 import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
+import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
 import byu.codemonkeys.tickettoride.shared.results.DrawDeckTrainCardResult;
 import byu.codemonkeys.tickettoride.shared.results.DrawFaceUpTrainCardResult;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
@@ -464,8 +465,8 @@ public class ModelFacade implements IModelFacade {
 	 * {@pre models.activeGame != null, aka we're actually in a game}
 	 */
 	public Player playerTurn() {
-		int turn = models.getGame().getTurn();
-		return models.getGame().getPlayers().get(turn);
+		Turn turn = models.getGame().getTurn();
+		return models.getGame().getPlayers().get(turn.getPlayerIndex());
 	}
 	
 	/**

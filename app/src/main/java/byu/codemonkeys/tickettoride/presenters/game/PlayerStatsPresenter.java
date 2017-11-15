@@ -43,7 +43,7 @@ public class PlayerStatsPresenter extends PresenterBase implements PlayerStatsCo
 	public void loadPlayerStats() {
 		if (ModelRoot.getInstance().getGame() != null) {
 			this.view.setPlayerStats(this.modelFacade.getPlayerInfo());
-			int currentTurn = ModelRoot.getInstance().getGame().getTurn();
+			int currentTurn = ModelRoot.getInstance().getGame().getTurn().getPlayerIndex();
 			this.view.setCurrentTurn(currentTurn);
 		}
 	}

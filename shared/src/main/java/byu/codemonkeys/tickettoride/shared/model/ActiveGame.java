@@ -28,7 +28,7 @@ public class ActiveGame extends GameBase implements Observer {
 	public static final String DECK_UPDATE = "DeckUpdate";
 	
 	protected GameMap map;
-	protected Turn turn;
+	protected transient Turn turn;
 	protected List<Player> players;
 	protected IDeck deck;
 	
