@@ -28,6 +28,7 @@ import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
 import byu.codemonkeys.tickettoride.shared.model.cards.Deck;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
+import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
 import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
 import byu.codemonkeys.tickettoride.shared.results.DrawDeckTrainCardResult;
 import byu.codemonkeys.tickettoride.shared.results.DrawFaceUpTrainCardResult;
@@ -345,21 +346,38 @@ public class ServerFacade implements IServer {
 			return new DrawFaceUpTrainCardResult("It is not your turn");
 		}
 
+		Turn turn = game.getTurn();
+
+		if (!turn.canDrawTrainCard()) {
+			return new DrawFaceUpTrainCardResult("You cannot draw a train card");
+		}
+
 		TrainCard card = game.getDeck().getRevealed().get(faceUpCardIndex);
+
+		if (!turn.canDrawWildTrainCard() && card.getCardColor() == CardType.Wild) {
+			return new DrawFaceUpTrainCardResult("You cannot draw a wild card");
+		}
 
 		if (card == null) {
 			return new DrawFaceUpTrainCardResult("There is no card at position "
 					+ faceUpCardIndex);
 		}
 
+		Self player = (Self) game.getPlayer(user);
+
+		player.addTrainCard(card);
+
+		turn.drawFaceUpTrainCard(card);
+
 		TrainCard replacement = game.getDeck().drawTrainCard();
 
 		game.getDeck().getRevealed().set(faceUpCardIndex, replacement);
 
 		// TODO: Broadcast DrewFaceUpTrainCardCommand
-		// TODO: Create turn state to limit the next actions the current player may perform
 
-		if (card.getCardColor() == CardType.Wild) {
+		// This is a hacky way to determine the turn is finished. We should replace it with a proper
+		// state.
+		if (!turn.canDrawTrainCard()) {
 			game.nextTurn();
 		}
 
@@ -386,6 +404,12 @@ public class ServerFacade implements IServer {
 			return new DrawDeckTrainCardResult("It is not your turn");
 		}
 
+		Turn turn = game.getTurn();
+
+		if (!turn.canDrawTrainCard()) {
+			return new DrawDeckTrainCardResult("You cannot draw a train card");
+		}
+
 		TrainCard card = game.getDeck().drawTrainCard();
 
 		if (card == null) {
@@ -395,6 +419,14 @@ public class ServerFacade implements IServer {
 		Self player = (Self) game.getPlayer(user);
 
 		player.addTrainCard(card);
+
+		turn.drawDeckTrainCard();
+
+		// This is a hacky way to determine the turn is finished. We should replace it with a proper
+		// state.
+		if (!turn.canDrawTrainCard()) {
+			game.nextTurn();
+		}
 
 		// TODO: broadcast DrewTrainCardCommand
 

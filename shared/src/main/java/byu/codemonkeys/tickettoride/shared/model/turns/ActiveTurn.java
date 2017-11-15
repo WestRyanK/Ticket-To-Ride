@@ -1,6 +1,9 @@
 package byu.codemonkeys.tickettoride.shared.model.turns;
 
 
+import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
+import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
+
 public class ActiveTurn extends Turn {
     private boolean isLimited;
     private boolean isFinished;
@@ -32,6 +35,33 @@ public class ActiveTurn extends Turn {
     @Override
     public boolean canDrawWildTrainCard() {
         return !isLimited && !isFinished;
+    }
+
+    @Override
+    public void drawFaceUpTrainCard(TrainCard card) {
+        CardType color = card.getCardColor();
+
+        if (color == CardType.Wild) {
+            finished();
+            return;
+        }
+
+        if (isLimited) {
+            finished();
+            return;
+        }
+
+        limit();
+    }
+
+    @Override
+    public void drawDeckTrainCard() {
+        if (isLimited) {
+            finished();
+            return;
+        }
+
+        limit();
     }
 
     @Override
