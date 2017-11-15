@@ -1,6 +1,8 @@
 package byu.codemonkeys.tickettoride.shared.model.turns;
 
 
+import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
+
 public abstract class Turn {
     protected int playerIndex;
     protected Turn next;
@@ -9,6 +11,8 @@ public abstract class Turn {
     public abstract boolean canDrawDestinationCards();
     public abstract boolean canClaimRoute();
     public abstract boolean canDrawWildTrainCard();
+    public abstract void drawFaceUpTrainCard(TrainCard card);
+    public abstract void drawDeckTrainCard();
     public abstract void limit();
     public abstract void finished();
     public abstract void reset();
