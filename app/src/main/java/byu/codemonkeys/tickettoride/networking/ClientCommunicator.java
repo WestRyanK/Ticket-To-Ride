@@ -196,7 +196,7 @@ public class ClientCommunicator {
 		try {
 			String string = getString(getURL(CommandType.DRAW_FACEUP_TRAIN_CARD), request);
 			DrawFaceUpTrainCardResult result = serializer.deserialize(string,
-																  DrawFaceUpTrainCardResult.class);
+																	  DrawFaceUpTrainCardResult.class);
 			return result;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -208,13 +208,14 @@ public class ClientCommunicator {
 		try {
 			String string = getString(getURL(CommandType.DRAW_DECK_TRAIN_CARD), request);
 			DrawDeckTrainCardResult result = serializer.deserialize(string,
-																	  DrawDeckTrainCardResult.class);
+																	DrawDeckTrainCardResult.class);
 			return result;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return new DrawDeckTrainCardResult(e.getMessage());
 		}
 	}
+	
 	/**
 	 * Constructs a full HTTP URL String to the specified path.
 	 *
@@ -234,7 +235,8 @@ public class ClientCommunicator {
 	 * @throws IOException
 	 */
 	private String getString(String url, Object request) throws IOException {
-		return new String(getBytes(url, request));
+		byte[] bytes = getBytes(url, request);
+		return new String(bytes);
 	}
 	
 	/**
@@ -251,6 +253,7 @@ public class ClientCommunicator {
 		// TODO: Dynamically set these values.
 		connection.setDoOutput(true);
 		connection.setRequestMethod("GET");
+		connection.setConnectTimeout(5000);
 		
 		try {
 			OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
@@ -275,11 +278,11 @@ public class ClientCommunicator {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-
+			throw e;
+//			return serializer.serialize(Result.failed(e.getMessage())).getBytes();
 		} finally {
 			connection.disconnect();
 		}
-		return null;
 	}
 	
 	public String getHost() {
