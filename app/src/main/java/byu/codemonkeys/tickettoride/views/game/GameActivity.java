@@ -16,6 +16,7 @@ import byu.codemonkeys.tickettoride.models.ModelFacade;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.IMediaPlayer;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
+import byu.codemonkeys.tickettoride.mvpcontracts.game.CutSceneContract;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.CutScenes;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.Sounds;
 import byu.codemonkeys.tickettoride.presenters.game.ChatHistoryPresenter;
@@ -89,15 +90,6 @@ public class GameActivity extends AppCompatActivity implements INavigator, IDisp
 															ModelFacade.getInstance(),
 															activity));
 				fragment = gameFragment;
-				break;
-			case CutScene:
-				CutSceneFragment cutSceneFragment = new CutSceneFragment();
-				cutSceneFragment.setPresenter(new CutScenePresenter(cutSceneFragment,
-																	activity,
-																	activity,
-																	ModelFacade.getInstance(),
-																	activity));
-				fragment = cutSceneFragment;
 				break;
 			case DrawTrainCards:
 				GameFragment gameFrag = (GameFragment) getSupportFragmentManager().findFragmentByTag(
@@ -215,7 +207,7 @@ public class GameActivity extends AppCompatActivity implements INavigator, IDisp
 	public void playSound() {
 		if (this.mediaPlayer != null)
 			this.mediaPlayer.seekTo(0);
-			this.mediaPlayer.start();
+		this.mediaPlayer.start();
 	}
 	
 	@Override
@@ -239,7 +231,19 @@ public class GameActivity extends AppCompatActivity implements INavigator, IDisp
 	
 	@Override
 	public void playCutScene(CutScenes cutScene) {
-		this.navigate(PresenterEnum.CutScene, true);
+		CutSceneFragment cutSceneFragment = CutSceneFragment.newInstance(cutScene);
+		cutSceneFragment.setPresenter(new CutScenePresenter(cutSceneFragment,
+															this,
+															this,
+															ModelFacade.getInstance(),
+															this));
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction()
+																	 .replace(R.id.gameActivity_fragmentContainer,
+																			  cutSceneFragment,
+																			  PresenterEnum.CutScene
+																					  .name());
+		transaction.addToBackStack(PresenterEnum.CutScene.name());
+		transaction.commit();
 	}
 	// endregion
 }

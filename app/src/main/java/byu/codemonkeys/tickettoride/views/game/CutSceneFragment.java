@@ -24,11 +24,19 @@ public class CutSceneFragment extends Fragment implements CutSceneContract.View 
 	private MediaPlayer cutScenePlayer;
 	private VideoView videoView;
 	private CutSceneContract.Presenter presenter;
+	public static final String PARAM_CUT_SCENE = "ParamCutScene";
 	
 	public CutSceneFragment() {
 		// Required empty public constructor
 	}
 	
+	public static CutSceneFragment newInstance(CutScenes scene){
+		CutSceneFragment fragment = new CutSceneFragment();
+		Bundle args = new Bundle();
+		args.putInt(PARAM_CUT_SCENE, scene.ordinal());
+		fragment.setArguments(args);
+		return fragment;
+	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -36,6 +44,8 @@ public class CutSceneFragment extends Fragment implements CutSceneContract.View 
 							 Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.fragment_cut_scene, container, false);
+		
+		
 		this.videoView = (VideoView) view.findViewById(R.id.cutScene_videoView);
 		this.videoView.setOnTouchListener(new View.OnTouchListener() {
 			@Override
@@ -64,7 +74,14 @@ public class CutSceneFragment extends Fragment implements CutSceneContract.View 
 	public void onResume() {
 		super.onResume();
 		if (!presenter.isSkipCutScene()) {
-			presenter.initCutScene();
+			Bundle args = getArguments();
+			CutScenes scene = CutScenes.openingSequence;
+			if (args != null){
+				int sceneIndex = args.getInt(PARAM_CUT_SCENE, CutScenes.openingSequence.ordinal());
+				scene = CutScenes.values()[sceneIndex];
+			}
+			
+			presenter.initCutScene(scene);
 		} else {
 			presenter.cutSceneEnd();
 		}
@@ -89,6 +106,12 @@ public class CutSceneFragment extends Fragment implements CutSceneContract.View 
 		switch (cutScene) {
 			case openingSequence:
 				cutSceneResID = R.raw.opening_sequence;
+				break;
+			case iLikeTrains:
+				cutSceneResID = R.raw.i_like_trains;
+				break;
+			case cheering:
+				cutSceneResID = R.raw.cheering;
 				break;
 			default:
 				cutSceneResID = -1;
