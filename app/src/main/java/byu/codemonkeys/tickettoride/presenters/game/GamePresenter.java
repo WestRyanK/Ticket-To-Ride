@@ -49,5 +49,15 @@ public class GamePresenter extends PresenterBase implements GameContract.Present
 		if (o == ActiveGame.STARTED_UPDATE) {
 			this.mediaPlayer.playCutScene(CutScenes.openingSequence);
 		}
+		
+		// TODO: Flesh this out when we get to the end game
+//		if (o == ActiveGame.END_GAME) {
+//			if (ModelRoot.getInstance().getUser().getUsername().equals(winner.getUsername())) {
+//				this.mediaPlayer.playCutScene(CutScenes.cheering);
+//			} else {
+//				this.mediaPlayer.playCutScene(CutScenes.iLikeTrains);
+//			}
+//			this.navigator.navigate(PresenterEnum.EndGame, false);
+//		}
 	}
 }

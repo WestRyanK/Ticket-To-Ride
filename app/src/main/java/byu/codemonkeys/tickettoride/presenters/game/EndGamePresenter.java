@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Random;
 
 import byu.codemonkeys.tickettoride.models.IModelFacade;
+import byu.codemonkeys.tickettoride.models.ModelRoot;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.IMediaPlayer;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
+import byu.codemonkeys.tickettoride.mvpcontracts.game.CutScenes;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.EndGameContract;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
 import byu.codemonkeys.tickettoride.presenters.PresenterEnum;
@@ -74,7 +76,7 @@ public class EndGamePresenter extends PresenterBase implements EndGameContract.P
 													  rand.nextInt(20),
 													  -rand.nextInt(40)));
 		
-		endGamePlayerStats.add(new EndGamePlayerStats("aaaaaangy",
+		endGamePlayerStats.add(new EndGamePlayerStats("codemonkey",
 													  PlayerColor.Black,
 													  rand.nextInt(100),
 													  rand.nextInt(30),
