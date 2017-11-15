@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.VideoView;
@@ -36,6 +37,13 @@ public class CutSceneFragment extends Fragment implements CutSceneContract.View 
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.fragment_cut_scene, container, false);
 		this.videoView = (VideoView) view.findViewById(R.id.cutScene_videoView);
+		this.videoView.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View view, MotionEvent motionEvent) {
+				presenter.cutSceneEnd();
+				return false;
+			}
+		});
 		this.videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 			@Override
 			public void onCompletion(MediaPlayer mediaPlayer) {
