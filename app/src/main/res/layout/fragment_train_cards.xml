@@ -5,15 +5,6 @@
               android:layout_height="match_parent"
               tools:context="byu.codemonkeys.tickettoride.views.game.TrainCardsFragment">
 
-    <!--<LinearLayout-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:gravity="top|left"-->
-    <!--android:orientation="horizontal">-->
-
-
-    <!--android:layout_width="60dp"-->
-    <!--android:layout_height="42dp"-->
     <byu.codemonkeys.tickettoride.views.widgets.TrainCardWidget
         android:id="@+id/card_wild"
         android:layout_width="0dp"
@@ -86,4 +77,3 @@
         app:cardDrawable="@drawable/card_white"
         app:showCount="true"/>
 </LinearLayout>
-    <!--</RelativeLayout>-->

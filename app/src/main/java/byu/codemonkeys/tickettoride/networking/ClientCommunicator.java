@@ -27,7 +27,7 @@ public class ClientCommunicator {
 	private int port;
 	
 	private ClientCommunicator() {
-		host = "192.168.1.101";
+		host = "192.168.1.6";
 		port = 8080;
 		serializer = new Serializer();
 	}
@@ -170,7 +170,7 @@ public class ClientCommunicator {
 		}
 	}
 	
-	public DestinationCardResult sendChooseDestinationCards(ChooseDestinationCardsCommandData request) {
+	public DestinationCardResult sendChooseInitialDestinationCards(ChooseDestinationCardsCommandData request) {
 		try {
 			String string = getString(getURL(CommandType.CHOOSE_DESTINATION_CARDS), request);
 			DestinationCardResult result = serializer.deserialize(string,
@@ -189,6 +189,30 @@ public class ClientCommunicator {
 		} catch (IOException e) {
 			e.printStackTrace();
 			return new Result(e.getMessage());
+		}
+	}
+	
+	public DrawFaceUpTrainCardResult sendDrawFaceUpTrainCard(DrawFaceUpTrainCardCommandData request) {
+		try {
+			String string = getString(getURL(CommandType.DRAW_FACEUP_TRAIN_CARD), request);
+			DrawFaceUpTrainCardResult result = serializer.deserialize(string,
+																	  DrawFaceUpTrainCardResult.class);
+			return result;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new DrawFaceUpTrainCardResult(e.getMessage());
+		}
+	}
+	
+	public DrawDeckTrainCardResult sendDrawDeckTrainCard(DrawDeckTrainCardCommandData request) {
+		try {
+			String string = getString(getURL(CommandType.DRAW_DECK_TRAIN_CARD), request);
+			DrawDeckTrainCardResult result = serializer.deserialize(string,
+																	DrawDeckTrainCardResult.class);
+			return result;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new DrawDeckTrainCardResult(e.getMessage());
 		}
 	}
 	
@@ -211,7 +235,8 @@ public class ClientCommunicator {
 	 * @throws IOException
 	 */
 	private String getString(String url, Object request) throws IOException {
-		return new String(getBytes(url, request));
+		byte[] bytes = getBytes(url, request);
+		return new String(bytes);
 	}
 	
 	/**
@@ -228,6 +253,7 @@ public class ClientCommunicator {
 		// TODO: Dynamically set these values.
 		connection.setDoOutput(true);
 		connection.setRequestMethod("GET");
+		connection.setConnectTimeout(5000);
 		
 		try {
 			OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
@@ -252,11 +278,11 @@ public class ClientCommunicator {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-
+			throw e;
+//			return serializer.serialize(Result.failed(e.getMessage())).getBytes();
 		} finally {
 			connection.disconnect();
 		}
-		return null;
 	}
 	
 	public String getHost() {
@@ -286,4 +312,5 @@ public class ClientCommunicator {
 			return false;
 		}
 	}
+	
 }

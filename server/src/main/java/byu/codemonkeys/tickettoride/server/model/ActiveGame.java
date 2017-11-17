@@ -13,6 +13,8 @@ import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
 import byu.codemonkeys.tickettoride.shared.model.Self;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
+import byu.codemonkeys.tickettoride.shared.model.turns.ActiveTurn;
+import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
 
 import static byu.codemonkeys.tickettoride.shared.model.Player.Type.Opponent;
 
@@ -39,10 +41,27 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
 
         setDeck(new Deck());
 
+        this.turn = new ActiveTurn(0);
+
+        Turn tempTurn = this.turn;
+
+        for (int i = 1; i < this.players.size(); ++i) {
+            Turn nextTurn = new ActiveTurn(i);
+            tempTurn.setNextTurn(nextTurn);
+            tempTurn = nextTurn;
+        }
+
+        tempTurn.setNextTurn(this.turn);
+
         deal();
     }
 
     private CommandManager commandManager;
+
+    @Override
+    public void nextTurn() {
+        turn = turn.getNextTurn();
+    }
 
     /**
      * Broadcasts a command to all players in the game

@@ -6,6 +6,7 @@ import java.util.Set;
 
 import byu.codemonkeys.tickettoride.models.IModelFacade;
 import byu.codemonkeys.tickettoride.models.ModelRoot;
+import byu.codemonkeys.tickettoride.mvpcontracts.IMediaPlayer;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.DestinationCardsContract;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
@@ -23,8 +24,9 @@ public class DestinationCardsPresenter extends PresenterBase implements Destinat
 	public DestinationCardsPresenter(DestinationCardsContract.View view,
 									 INavigator navigator,
 									 IDisplaysMessages messageDisplayer,
-									 IModelFacade modelFacade) {
-		super(navigator, messageDisplayer, modelFacade);
+									 IModelFacade modelFacade,
+									 IMediaPlayer mediaPlayer) {
+		super(navigator, messageDisplayer, modelFacade, mediaPlayer);
 		this.view = view;
 	}
 	
@@ -44,5 +46,13 @@ public class DestinationCardsPresenter extends PresenterBase implements Destinat
 		List<DestinationCard> cardList = new ArrayList<>();
 		cardList.addAll(cards);
 		this.view.setDestinationCards(cardList);
+		
+		int numDestinationCards = ModelRoot.getInstance()
+										   .getGame()
+										   .getDeck()
+										   .getNumDestinationCards();
+		this.view.setDestinationCardsInDeckCount(numDestinationCards);
 	}
+	
+	
 }

@@ -12,8 +12,10 @@ import java.net.HttpURLConnection;
 import byu.codemonkeys.tickettoride.server.commands.*;
 import byu.codemonkeys.tickettoride.shared.Serializer;
 import byu.codemonkeys.tickettoride.shared.commands.CommandType;
+import byu.codemonkeys.tickettoride.shared.commands.DrawDeckTrainCardCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.ICommand;
 import byu.codemonkeys.tickettoride.server.exceptions.InvalidCommandException;
+import byu.codemonkeys.tickettoride.shared.results.DrawDeckTrainCardResult;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 
 class CommandHandler implements HttpHandler {
@@ -85,6 +87,10 @@ class CommandHandler implements HttpHandler {
                 return serializer.deserialize(requestBody, UpdateHistoryCommand.class);
             case CommandType.CHOOSE_DESTINATION_CARDS:
                 return serializer.deserialize(requestBody, ChooseDestinationCardsCommand.class);
+            case CommandType.DRAW_DECK_TRAIN_CARD:
+                return serializer.deserialize(requestBody, DrawDeckTrainCardCommand.class);
+            case CommandType.DRAW_FACEUP_TRAIN_CARD:
+                return serializer.deserialize(requestBody, DrawFaceUpTrainCardCommand.class);
             default:
                 throw new InvalidCommandException();
         }

@@ -59,10 +59,9 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
         this.numDestinationCards = destinations.size();
     }
 
-    // TODO: handle the draw pile being depleted.
     /**
      * Take the top card from the face-down draw pile.
-     * @return the drawn card.
+     * @return the drawn card or null if the pile is empty.
      */
     @Override
     public TrainCard drawTrainCard() {

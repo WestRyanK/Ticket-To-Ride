@@ -65,47 +65,31 @@ public class EndGameFragment extends Fragment implements EndGameContract.View {
 	
 	@Override
 	public void setEndGameStats(final List<EndGamePlayerStats> endGameStats) {
-		if (getActivity() != null) {
-			getActivity().runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					if (endGameStats.size() > endGamePlayerStatsWidgets.size())
-						throw new IllegalArgumentException("More stats than the game can handle!");
-					
-					for (int i = 0; i < endGamePlayerStatsWidgets.size(); i++) {
-						EndGamePlayerStatsWidget widget = endGamePlayerStatsWidgets.get(i);
-						if (i < endGameStats.size()) {
-							widget.setVisibility(View.VISIBLE);
-							widget.setPlayerColor(endGameStats.get(i).getPlayerColor());
-							widget.setPlayerName(endGameStats.get(i).getUsername());
-							widget.setPlayerTotalScore(endGameStats.get(i).getTotalScore());
-							widget.setPointsFromClaimedRoutes(endGameStats.get(i)
-																		  .getPointsFromClaimedRoutes());
-							widget.setPointsFromCompletedDestinations(endGameStats.get(i)
-																				  .getPointsFromCompletedDestinations());
-							widget.setPointsFromLongestRoute(endGameStats.get(i)
-																		 .getPointsFromLongestRoute());
-							widget.setPenaltiesFromUnreachedDestinations(endGameStats.get(i)
-																					 .getPenaltiesFromUnreachedDestinations());
-						} else {
-							widget.setVisibility(View.GONE);
-						}
-					}
-				}
-			});
+		if (endGameStats.size() > endGamePlayerStatsWidgets.size())
+			throw new IllegalArgumentException("More stats than the game can handle!");
+		
+		for (int i = 0; i < endGamePlayerStatsWidgets.size(); i++) {
+			EndGamePlayerStatsWidget widget = endGamePlayerStatsWidgets.get(i);
+			if (i < endGameStats.size()) {
+				widget.setVisibility(View.VISIBLE);
+				widget.setPlayerColor(endGameStats.get(i).getPlayerColor());
+				widget.setPlayerName(endGameStats.get(i).getUsername());
+				widget.setPlayerTotalScore(endGameStats.get(i).getTotalScore());
+				widget.setPointsFromClaimedRoutes(endGameStats.get(i).getPointsFromClaimedRoutes());
+				widget.setPointsFromCompletedDestinations(endGameStats.get(i)
+																	  .getPointsFromCompletedDestinations());
+				widget.setPointsFromLongestRoute(endGameStats.get(i).getPointsFromLongestRoute());
+				widget.setPenaltiesFromUnreachedDestinations(endGameStats.get(i)
+																		 .getPenaltiesFromUnreachedDestinations());
+			} else {
+				widget.setVisibility(View.GONE);
+			}
 		}
 	}
 	
 	@Override
 	public void setWinner(final String winner) {
-		if (getActivity() != null) {
-			getActivity().runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					textViewTitle.setText(String.format("%s is the winner!", winner));
-				}
-			});
-		}
+		textViewTitle.setText(String.format("%s is the winner!", winner));
 	}
 	
 	@Override

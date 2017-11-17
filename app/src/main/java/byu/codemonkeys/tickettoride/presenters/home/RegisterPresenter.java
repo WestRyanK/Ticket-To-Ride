@@ -3,6 +3,7 @@ package byu.codemonkeys.tickettoride.presenters.home;
 import byu.codemonkeys.tickettoride.async.ICallback;
 import byu.codemonkeys.tickettoride.models.IModelFacade;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
+import byu.codemonkeys.tickettoride.mvpcontracts.IMediaPlayer;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.mvpcontracts.home.RegisterContract;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
@@ -21,8 +22,9 @@ public class RegisterPresenter extends PresenterBase implements RegisterContract
 	public RegisterPresenter(RegisterContract.View view,
 							 INavigator navigator,
 							 IDisplaysMessages messageDisplayer,
-							 IModelFacade modelFacade) {
-		super(navigator, messageDisplayer, modelFacade);
+							 IModelFacade modelFacade,
+							 IMediaPlayer mediaPlayer) {
+		super(navigator, messageDisplayer, modelFacade, mediaPlayer);
 		this.view = view;
 	}
 	
@@ -61,8 +63,8 @@ public class RegisterPresenter extends PresenterBase implements RegisterContract
 	
 	@Override
 	public void setDefaults() {
-		this.view.setUsername("");
-		this.view.setPassword("");
+		this.view.setUsername("codemonkey");
+		this.view.setPassword("password");
 		
 	}
 }

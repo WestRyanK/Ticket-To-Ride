@@ -1,10 +1,12 @@
 package byu.codemonkeys.tickettoride.shared;
 
+import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
+import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
+
 public interface IClient {
-
-	void updatePendingGames() throws Exception;
+	void updatePendingGames();
 	
-	void updatePendingGame() throws Exception;
-
-	void updateGame() throws Exception;
+	void updatePendingGame();
+	
+	void updateGame();
 }

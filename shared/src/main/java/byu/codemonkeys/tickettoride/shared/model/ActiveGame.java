@@ -9,6 +9,11 @@ import java.util.Observer;
 import byu.codemonkeys.tickettoride.shared.model.cards.Deck;
 import byu.codemonkeys.tickettoride.shared.model.cards.IDeck;
 import byu.codemonkeys.tickettoride.shared.model.map.GameMap;
+import byu.codemonkeys.tickettoride.shared.model.turns.ActiveTurn;
+import byu.codemonkeys.tickettoride.shared.model.turns.OtherTurn;
+import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
+
+import static sun.audio.AudioPlayer.player;
 
 /**
  * We need to decide whether ActiveGame should extend GameBase. As it stands, ActiveGame doesn't
@@ -23,13 +28,12 @@ public class ActiveGame extends GameBase implements Observer {
 	public static final String DECK_UPDATE = "DeckUpdate";
 	
 	protected GameMap map;
-	protected int turn;
+	protected transient Turn turn;
 	protected List<Player> players;
 	protected IDeck deck;
 	
 	public ActiveGame(GameBase game) {
 		map = new GameMap();
-		turn = 0;
 		this.players = new ArrayList<>();
 		deck = new Deck();
 		
@@ -39,6 +43,32 @@ public class ActiveGame extends GameBase implements Observer {
 		this.gameOwner = game.getOwner();
 		this.gameUsers = game.getUsers();
 		this.started = true;
+	}
+
+	public void setUpTurns() {
+		Turn firstTurn;
+
+		if (players.get(0) instanceof Self) {
+			firstTurn = new ActiveTurn(0);
+		} else {
+			firstTurn = new OtherTurn(0);
+		}
+
+		Turn temp = firstTurn;
+		Turn nextTurn;
+
+		for (int i = 1; i < players.size(); i++) {
+			if (players.get(i) instanceof Self) {
+				nextTurn = new ActiveTurn(i);
+			} else {
+				nextTurn = new OtherTurn(i);
+			}
+			temp.setNextTurn(nextTurn);
+			temp = temp.getNextTurn();
+		}
+
+		temp.setNextTurn(firstTurn);
+		turn = firstTurn;
 	}
 	
 	public static ActiveGame copyActiveGame(ActiveGame game) {
@@ -85,19 +115,23 @@ public class ActiveGame extends GameBase implements Observer {
 		setChanged();
 		notifyObservers(MAP_UPDATE);
 	}
+
+	public boolean isPlayersTurn(String username) {
+		return players.get(turn.getPlayerIndex()).getUsername().equals(username);
+	}
 	
-	public int getTurn() {
+	public Turn getTurn() {
 		return turn;
 	}
 	
-	public void setTurn(int turn) {
+	public void setTurn(Turn turn) {
 		this.turn = turn;
 		setChanged();
 		notifyObservers(TURN_UPDATE);
 	}
 	
 	public void nextTurn() {
-		this.turn = (turn + 1) % players.size();
+		turn = turn.getNextTurn();
 		setChanged();
 		notifyObservers(TURN_UPDATE);
 	}

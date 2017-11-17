@@ -9,7 +9,7 @@ import byu.codemonkeys.tickettoride.shared.model.GameBase;
  */
 
 public class PendingGamesResult extends Result {
-    private List<GameBase> games;
+    private final List<GameBase> games;
 	
 	public PendingGamesResult(List<GameBase> games) {
         super();
@@ -18,6 +18,7 @@ public class PendingGamesResult extends Result {
 
 	public PendingGamesResult(String errorMessage) {
         super(errorMessage);
+        this.games = null;
     }
 
     public List<GameBase> getGames() {

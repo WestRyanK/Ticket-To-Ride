@@ -12,6 +12,7 @@ public class SetupGameCommand extends SetupGameCommandData implements IClientCom
     @Override
     public void execute() {
 		ActiveGame activeGame = ActiveGame.copyActiveGame(game);
+		activeGame.setUpTurns();
         ModelRoot.getInstance().setGame(activeGame);
     }
 

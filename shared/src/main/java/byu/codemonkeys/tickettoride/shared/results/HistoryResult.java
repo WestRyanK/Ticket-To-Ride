@@ -5,7 +5,7 @@ import byu.codemonkeys.tickettoride.shared.commands.CommandData;
 import java.util.ArrayList;
 import java.util.List;
 public class HistoryResult extends Result {
-    private List<CommandData> history;
+    private final List<CommandData> history;
 
     public HistoryResult(List<CommandData> history) {
         super();
@@ -14,6 +14,7 @@ public class HistoryResult extends Result {
 
     public HistoryResult(String errorMessage) {
         super(errorMessage);
+        this.history = null;
     }
     public List<CommandData> getHistory(){
         return this.history;

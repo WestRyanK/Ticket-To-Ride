@@ -3,6 +3,7 @@ package byu.codemonkeys.tickettoride.presenters.home;
 import byu.codemonkeys.tickettoride.models.IModelFacade;
 import byu.codemonkeys.tickettoride.async.ICallback;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
+import byu.codemonkeys.tickettoride.mvpcontracts.IMediaPlayer;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.mvpcontracts.home.LoginContract;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
@@ -21,8 +22,9 @@ public class LoginPresenter extends PresenterBase implements LoginContract.Prese
 	public LoginPresenter(LoginContract.View view,
 						  INavigator navigator,
 						  IDisplaysMessages messageDisplayer,
-						  IModelFacade modelFacade) {
-		super(navigator, messageDisplayer, modelFacade);
+						  IModelFacade modelFacade,
+						  IMediaPlayer mediaPlayer) {
+		super(navigator, messageDisplayer, modelFacade, mediaPlayer);
 		this.view = view;
 	}
 	
@@ -63,7 +65,7 @@ public class LoginPresenter extends PresenterBase implements LoginContract.Prese
 	
 	@Override
 	public void setDefaults() {
-		this.view.setUsername("westryank");
+		this.view.setUsername("codemonkey");
 		this.view.setPassword("password");
 //		this.view.setUsername("");
 //		this.view.setPassword("");

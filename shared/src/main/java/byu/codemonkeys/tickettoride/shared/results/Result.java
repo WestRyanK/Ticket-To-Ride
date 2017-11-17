@@ -1,8 +1,8 @@
 package byu.codemonkeys.tickettoride.shared.results;
 
 public class Result {
-	private boolean successful;
-	private String errorMessage;
+	private final boolean successful;
+	private final String errorMessage;
 	
 	public boolean isSuccessful() {
 		return successful;

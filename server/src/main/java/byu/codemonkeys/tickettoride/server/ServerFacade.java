@@ -27,8 +27,14 @@ import byu.codemonkeys.tickettoride.shared.model.Message;
 import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.Self;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
+import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
+import byu.codemonkeys.tickettoride.shared.model.cards.Deck;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
+import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
+import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
 import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
+import byu.codemonkeys.tickettoride.shared.results.DrawDeckTrainCardResult;
+import byu.codemonkeys.tickettoride.shared.results.DrawFaceUpTrainCardResult;
 import byu.codemonkeys.tickettoride.shared.results.HistoryResult;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
@@ -320,9 +326,9 @@ public class ServerFacade implements IServer {
 	}
 	
 	@Override
-	public DestinationCardResult chooseDestinationCards(String authToken,
-														int numSelected,
-														List<DestinationCard> selected) {
+	public DestinationCardResult chooseInitialDestinationCards(String authToken,
+															   int numSelected,
+															   List<DestinationCard> selected) {
 		Result result = chooseDestinationCards(authToken, selected);
 		
 		if (result.isSuccessful()) {
@@ -346,6 +352,117 @@ public class ServerFacade implements IServer {
 		}
 		game.broadcastCommand(messageCommand);
 		return Result.success();
+	}
+	
+	@Override
+	public DrawFaceUpTrainCardResult drawFaceUpTrainCard(int faceUpCardIndex, String authToken) {
+		if (faceUpCardIndex < 0 || faceUpCardIndex >= Deck.NUM_REVEALED) {
+			return new DrawFaceUpTrainCardResult("Invalid Index");
+		}
+
+		ServerSession session = rootModel.getSession(authToken);
+
+		if (session == null) {
+			return new DrawFaceUpTrainCardResult("Not Authorized");
+		}
+
+		ActiveGame game = rootModel.getActiveGame(session.getGameID());
+
+		if (game == null) {
+			return new DrawFaceUpTrainCardResult("You are not part of an active game");
+		}
+
+		User user = session.getUser();
+
+		if (!game.isPlayersTurn(user.getUsername())) {
+			return new DrawFaceUpTrainCardResult("It is not your turn");
+		}
+
+		Turn turn = game.getTurn();
+
+		if (!turn.canDrawTrainCard()) {
+			return new DrawFaceUpTrainCardResult("You cannot draw a train card");
+		}
+
+		TrainCard card = game.getDeck().getRevealed().get(faceUpCardIndex);
+
+		if (!turn.canDrawWildTrainCard() && card.getCardColor() == CardType.Wild) {
+			return new DrawFaceUpTrainCardResult("You cannot draw a wild card");
+		}
+
+		if (card == null) {
+			return new DrawFaceUpTrainCardResult("There is no card at position "
+					+ faceUpCardIndex);
+		}
+
+		Self player = (Self) game.getPlayer(user);
+
+		player.addTrainCard(card);
+
+		turn.drawFaceUpTrainCard(card);
+
+		TrainCard replacement = game.getDeck().drawTrainCard();
+
+		game.getDeck().getRevealed().set(faceUpCardIndex, replacement);
+
+		// TODO: Broadcast DrewFaceUpTrainCardCommand
+
+		// This is a hacky way to determine the turn is finished. We should replace it with a proper
+		// state.
+		if (!turn.canDrawTrainCard()) {
+			game.nextTurn();
+		}
+
+		return new DrawFaceUpTrainCardResult(replacement);
+	}
+	
+	@Override
+	public DrawDeckTrainCardResult drawDeckTrainCard(String authToken) {
+		ServerSession session = rootModel.getSession(authToken);
+
+		if (session == null) {
+			return new DrawDeckTrainCardResult("Not Authorized");
+		}
+
+		ActiveGame game = rootModel.getActiveGame(session.getGameID());
+
+		if (game == null) {
+			return new DrawDeckTrainCardResult("You are not part of an active game");
+		}
+
+		User user = session.getUser();
+
+		if (!game.isPlayersTurn(user.getUsername())) {
+			return new DrawDeckTrainCardResult("It is not your turn");
+		}
+
+		Turn turn = game.getTurn();
+
+		if (!turn.canDrawTrainCard()) {
+			return new DrawDeckTrainCardResult("You cannot draw a train card");
+		}
+
+		TrainCard card = game.getDeck().drawTrainCard();
+
+		if (card == null) {
+			return new DrawDeckTrainCardResult("The deck is empty");
+		}
+
+		Self player = (Self) game.getPlayer(user);
+
+		player.addTrainCard(card);
+
+		turn.drawDeckTrainCard();
+
+		// This is a hacky way to determine the turn is finished. We should replace it with a proper
+		// state.
+		if (!turn.canDrawTrainCard()) {
+			game.nextTurn();
+		}
+
+		// TODO: broadcast DrewTrainCardCommand
+
+		return new DrawDeckTrainCardResult(card);
 	}
 	
 	public Result chooseDestinationCards(String authToken, List<DestinationCard> cards) {
