@@ -21,4 +21,5 @@ public class CommandType {
 	public static final String DRAW_DECK_TRAIN_CARD = "drawDeckTrainCard";
 	public static final String DREW_FACEUP_TRAIN_CARD = "drewFaceUpTrainCard";
 	public static final String DREW_DECK_TRAIN_CARD = "drewDeckTrainCard";
+	public static final String END_TURN = "endTurn";
 }
