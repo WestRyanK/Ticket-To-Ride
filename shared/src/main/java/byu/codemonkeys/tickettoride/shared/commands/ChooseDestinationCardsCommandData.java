@@ -21,6 +21,11 @@ public class ChooseDestinationCardsCommandData extends CommandData {
         this.selected = selected;
     }
 
+    public ChooseDestinationCardsCommandData(String userName){
+        super(CommandType.CHOOSE_DESTINATION_CARDS);
+        this.userName = userName;
+    }
+    protected String userName;
     protected int numSelected;
     protected List<DestinationCard> selected;
 }

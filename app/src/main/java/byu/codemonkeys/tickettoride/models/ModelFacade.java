@@ -503,17 +503,27 @@ public class ModelFacade implements IModelFacade {
 	public List<TrainCard> drawTrainCards() {
 		return null;
 	}
-	
+
+	//TODO(compy-386): change documentation to fit return type and such
 	/**
 	 * Attempts to draw destination cards from the deck (needs implementation in next phase)
 	 * @return A list of destination cards to choose from.
 	 * {@pre models.activeGame != null, aka we're actually in a game}
 	 * {@pre it's your turn}
 	 */
-	public List<DestinationCard> drawDestinationCards() {
-		DestinationCardResult result = serverProxy.drawDestinationCards(models.getSession()
-																			  .getAuthToken());
-		return result.getDestinationCards();
+	public DestinationCardResult drawDestinationCards() {
+		return serverProxy.drawDestinationCards(models.getSession().getAuthToken());
+	}
+
+	public void drawDestinationCardsAsync(ICallback drawDestinationCardsCallback){
+		ICommand drawDestinationCardsCommand = new ICommand() {
+			@Override
+			public Result execute() {
+				return drawDestinationCards();
+			}
+		};
+
+		this.asyncTask.executeTask(drawDestinationCardsCommand, drawDestinationCardsCallback);
 	}
 	
 	//TODO: implement this in a future phase

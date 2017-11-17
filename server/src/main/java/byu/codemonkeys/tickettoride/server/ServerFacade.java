@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import byu.codemonkeys.tickettoride.server.commands.DrawDestinationCardsCommand;
 import byu.codemonkeys.tickettoride.server.exceptions.AlreadyExistsException;
 import byu.codemonkeys.tickettoride.server.exceptions.EmptyGameException;
 import byu.codemonkeys.tickettoride.server.exceptions.FullGameException;
@@ -17,6 +19,7 @@ import byu.codemonkeys.tickettoride.server.model.User;
 import byu.codemonkeys.tickettoride.shared.IServer;
 import byu.codemonkeys.tickettoride.shared.commands.BeginGameCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
+import byu.codemonkeys.tickettoride.shared.commands.DrawDestinationCardsCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SendMessageCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SetupGameCommandData;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
@@ -284,7 +287,36 @@ public class ServerFacade implements IServer {
 	
 	@Override
 	public DestinationCardResult drawDestinationCards(String authToken) {
-		return null;
+		ServerSession session = rootModel.getSession(authToken);
+		if(session == null) {
+			return new DestinationCardResult("Authentication Error");
+		}
+		String gameID = session.getGameID();
+		ActiveGame game = rootModel.getActiveGame(gameID);
+		if (game == null) {
+			return new DestinationCardResult("Player is not part of an active game");
+		}
+
+		User user = session.getUser();
+		Player player = game.getPlayer(user);
+		if (player == null) {
+			return new DestinationCardResult("Could not find the user in the game. This is a server error");
+		}
+
+		Self self = (Self) player;
+		if (player == null) {
+			return new DestinationCardResult("Could not find the user in the game. This is a server error");
+		}
+
+		Set<DestinationCard> cards = game.getDeck().drawDestinationCards();
+		((Self) player).giveDestinationCards(cards);
+
+		List<DestinationCard> cardsList = (List<DestinationCard>) cards;
+		DestinationCardResult result = new DestinationCardResult(cardsList);
+
+		game.broadcastCommand(new DrawDestinationCardsCommandData(player.getUsername()));
+
+		return result;
 	}
 	
 	@Override
@@ -362,6 +394,10 @@ public class ServerFacade implements IServer {
 		}
 		
 		self.getSelecting().clear();
+
+		if(game.isBegun()){
+			game.broadcastCommand(new DrawDestinationCardsCommandData(player.getUsername()));
+		}
 		
 		beginGame(game);
 		
