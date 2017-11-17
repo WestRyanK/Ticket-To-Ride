@@ -17,6 +17,8 @@ import byu.codemonkeys.tickettoride.server.model.User;
 import byu.codemonkeys.tickettoride.shared.IServer;
 import byu.codemonkeys.tickettoride.shared.commands.BeginGameCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
+import byu.codemonkeys.tickettoride.shared.commands.DrewDeckTrainCardCommandData;
+import byu.codemonkeys.tickettoride.shared.commands.DrewFaceUpTrainCardCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SendMessageCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SetupGameCommandData;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
@@ -373,10 +375,13 @@ public class ServerFacade implements IServer {
 
 		game.getDeck().getRevealed().set(faceUpCardIndex, replacement);
 
-		// TODO: Broadcast DrewFaceUpTrainCardCommand
+		game.broadcastCommand(new DrewFaceUpTrainCardCommandData(
+				player.getUsername(),
+				faceUpCardIndex,
+				replacement
+		));
 
-		// This is a hacky way to determine the turn is finished. We should replace it with a proper
-		// state.
+		// TODO: Replace this with a less hacky check
 		if (!turn.canDrawTrainCard()) {
 			game.nextTurn();
 		}
@@ -422,13 +427,12 @@ public class ServerFacade implements IServer {
 
 		turn.drawDeckTrainCard();
 
-		// This is a hacky way to determine the turn is finished. We should replace it with a proper
-		// state.
+		game.broadcastCommand(new DrewDeckTrainCardCommandData(player.getUsername()));
+
+		// TODO: Replace this with a less hacky check
 		if (!turn.canDrawTrainCard()) {
 			game.nextTurn();
 		}
-
-		// TODO: broadcast DrewTrainCardCommand
 
 		return new DrawDeckTrainCardResult(card);
 	}
