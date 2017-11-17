@@ -1,17 +1,16 @@
 package byu.codemonkeys.tickettoride.commands;
 
 import byu.codemonkeys.tickettoride.models.ModelRoot;
-import byu.codemonkeys.tickettoride.shared.commands.ChooseDestinationCardsCommandData;
+import byu.codemonkeys.tickettoride.shared.commands.EndTurnCommandData;
 
 /**
  * Created by meganrich on 11/17/17.
  */
 
-public class ChooseDestinationCardsCommand extends ChooseDestinationCardsCommandData implements IClientCommand {
-    public ChooseDestinationCardsCommand(String userName) {
+public class EndTurnCommand extends EndTurnCommandData implements IClientCommand {
+    public EndTurnCommand(String userName){
         super(userName);
     }
-
     @Override
     public void execute(){
         ModelRoot.getInstance().getGame().nextTurn();
@@ -19,6 +18,6 @@ public class ChooseDestinationCardsCommand extends ChooseDestinationCardsCommand
 
     @Override
     public String toString(){
-        return userName + " chose a few destination cards.";
+        return userName + " could not make a move.";
     }
 }

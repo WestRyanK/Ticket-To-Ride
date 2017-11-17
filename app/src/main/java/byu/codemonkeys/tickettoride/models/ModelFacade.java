@@ -1,5 +1,7 @@
 package byu.codemonkeys.tickettoride.models;
 
+import android.graphics.PorterDuff;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -540,6 +542,7 @@ public class ModelFacade implements IModelFacade {
 		};
 
 		this.asyncTask.executeTask(drawDestinationCardsCommand, drawDestinationCardsCallback);
+
 	}
 
 	@Override

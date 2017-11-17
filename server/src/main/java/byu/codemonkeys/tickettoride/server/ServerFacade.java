@@ -18,6 +18,7 @@ import byu.codemonkeys.tickettoride.server.model.ServerSession;
 import byu.codemonkeys.tickettoride.server.model.User;
 import byu.codemonkeys.tickettoride.shared.IServer;
 import byu.codemonkeys.tickettoride.shared.commands.BeginGameCommandData;
+import byu.codemonkeys.tickettoride.shared.commands.ChooseDestinationCardsCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
 import byu.codemonkeys.tickettoride.shared.commands.DrawDestinationCardsCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SendMessageCommandData;
@@ -513,7 +514,9 @@ public class ServerFacade implements IServer {
 		self.getSelecting().clear();
 
 		if(game.isBegun()){
-			game.broadcastCommand(new DrawDestinationCardsCommandData(player.getUsername()));
+			game.broadcastCommand(new ChooseDestinationCardsCommandData(player.getUsername()));
+			//TODO(compy-386): uh am I updating the turn correctly?
+			game.nextTurn();
 		}
 		
 		beginGame(game);
