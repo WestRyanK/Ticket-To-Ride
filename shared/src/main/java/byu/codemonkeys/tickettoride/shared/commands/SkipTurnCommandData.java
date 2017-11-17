@@ -1,9 +1,9 @@
 package byu.codemonkeys.tickettoride.shared.commands;
 
-public class EndTurnCommandData extends CommandData {
+public class SkipTurnCommandData extends CommandData {
     private String username;
 
-    public EndTurnCommandData(String username) {
+    public SkipTurnCommandData(String username) {
         super(CommandType.END_TURN);
         this.username = username;
     }
