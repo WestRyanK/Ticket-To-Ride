@@ -10,7 +10,7 @@ import byu.codemonkeys.tickettoride.shared.results.Result;
 
 public class ChooseDestinationCardsCommand extends ChooseDestinationCardsCommandData implements ICommand {
     public ChooseDestinationCardsCommand(List<DestinationCard> selected) {
-        super(selected.size(), selected);
+        super(selected);
     }
 
     @Override

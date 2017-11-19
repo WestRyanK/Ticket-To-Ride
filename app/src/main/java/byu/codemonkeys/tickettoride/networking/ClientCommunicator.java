@@ -164,8 +164,8 @@ public class ClientCommunicator {
 	
 	public DestinationCardResult sendDrawDestinationCards(DrawDestinationCardsCommandData request) {
 		try {
-			return serializer.deserialize(getString(getURL(CommandType.DRAW_DESTINATION_CARDS),
-													request), DestinationCardResult.class);
+			String string = getString(getURL(CommandType.DRAW_DESTINATION_CARDS), request);
+			return serializer.deserialize(string, DestinationCardResult.class);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return new DestinationCardResult(e.getMessage());
@@ -281,7 +281,7 @@ public class ClientCommunicator {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 			throw e;
-//			return serializer.serialize(Result.failed(e.getMessage())).getBytes();
+			//			return serializer.serialize(Result.failed(e.getMessage())).getBytes();
 		} finally {
 			connection.disconnect();
 		}

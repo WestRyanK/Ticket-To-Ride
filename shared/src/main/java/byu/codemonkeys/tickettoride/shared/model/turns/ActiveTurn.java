@@ -4,6 +4,8 @@ package byu.codemonkeys.tickettoride.shared.model.turns;
 import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
 import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 
+//TODO(compy-386): turn this into an inner class of ActiveGame? that way it has access to all deck methods and info for checking validity
+
 public class ActiveTurn extends Turn {
     private boolean isLimited;
     private boolean isFinished;

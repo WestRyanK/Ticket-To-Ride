@@ -7,7 +7,6 @@ import java.util.Queue;
 
 import byu.codemonkeys.tickettoride.server.broadcast.CommandManager;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
-import byu.codemonkeys.tickettoride.shared.model.GameBase;
 import byu.codemonkeys.tickettoride.shared.model.Opponent;
 import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
@@ -15,8 +14,6 @@ import byu.codemonkeys.tickettoride.shared.model.Self;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
 import byu.codemonkeys.tickettoride.shared.model.turns.ActiveTurn;
 import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
-
-import static byu.codemonkeys.tickettoride.shared.model.Player.Type.Opponent;
 
 public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.ActiveGame {
     private static int STARTING_CARDS = 4;

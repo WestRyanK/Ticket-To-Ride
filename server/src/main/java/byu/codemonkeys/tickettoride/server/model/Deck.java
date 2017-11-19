@@ -1,6 +1,7 @@
 package byu.codemonkeys.tickettoride.server.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -112,7 +113,9 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
 
     private void loadFromResource() {
         List<DestinationCard> destinations = DestinationCardLoader.getInstance().loadDestinationCardsFromResources();
-
+    
+        Collections.shuffle(destinations);
+		
         for (DestinationCard destination : destinations) {
             this.destinations.add(destination);
         }
