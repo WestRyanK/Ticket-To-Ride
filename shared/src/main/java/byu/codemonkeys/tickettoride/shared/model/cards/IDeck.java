@@ -7,15 +7,17 @@ import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 
 public interface IDeck {
-    TrainCard drawTrainCard();
-
-    Set<DestinationCard> drawDestinationCards();
-
-    List<TrainCard> getRevealed();
-    
-    void setRevealed(List<TrainCard> revealed);
-
-    int getNumHidden();
-
-    int getNumDestinationCards();
+	TrainCard drawTrainCard();
+	
+	Set<DestinationCard> drawDestinationCards();
+	
+	List<TrainCard> getRevealed();
+	
+	void setRevealed(List<TrainCard> revealed);
+	
+	int getNumHidden();
+	
+	void setNumHidden(int count);
+	
+	int getNumDestinationCards();
 }

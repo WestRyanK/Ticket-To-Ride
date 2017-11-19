@@ -40,19 +40,37 @@ public class DrawTrainCardsPresenter extends PresenterBase implements DrawTrainC
 	@Override
 	public void drawDeckCard() {
 		if (ModelRoot.getInstance().getGame().getTurn().canDrawTrainCard()) {
-			modelFacade.drawDeckTrainCardAsync(null);
+			ICallback drawDeckCardCallback = new ICallback() {
+				@Override
+				public void callback(Result result) {
+					if (!result.isSuccessful())
+						messageDisplayer.displayMessage(result.getErrorMessage());
+				}
+			};
+			modelFacade.drawDeckTrainCardAsync(drawDeckCardCallback);
+		} else
+		{
+			messageDisplayer.displayMessage("Cannot draw Train Card at this time");
 		}
-		messageDisplayer.displayMessage("Cannot draw Train Card at this time");
+		
 	}
 	
 	@Override
 	public void drawFaceUpCard(int cardIndex) {
-
+		
 		if (ModelRoot.getInstance().getGame().getTurn().canDrawTrainCard()) {
 			//TODO: check if the face up card is a wild card and call canDrawWildTrainCard if it is
-			modelFacade.drawFaceUpTrainCardAsync(cardIndex, null);
+			ICallback drawFaceUpCardCallback = new ICallback() {
+				@Override
+				public void callback(Result result) {
+					if (!result.isSuccessful())
+						messageDisplayer.displayMessage(result.getErrorMessage());
+				}
+			};
+			modelFacade.drawFaceUpTrainCardAsync(cardIndex, drawFaceUpCardCallback);
+		} else {
+			messageDisplayer.displayMessage("Cannot draw Train Card at this time");
 		}
-		messageDisplayer.displayMessage("Cannot draw Train Card at this time");
 	}
 	
 	@Override
@@ -65,7 +83,9 @@ public class DrawTrainCardsPresenter extends PresenterBase implements DrawTrainC
 	
 	@Override
 	public void update(Observable observable, Object o) {
-		if (o == ModelFacade.GAME_UPDATE || o == Deck.DECK_TRAIN_CARDS_UPDATE || o == Deck.REVEALED_TRAIN_CARDS_UPDATE) {
+		if (o == ModelFacade.GAME_UPDATE ||
+				o == Deck.DECK_TRAIN_CARDS_UPDATE ||
+				o == Deck.REVEALED_TRAIN_CARDS_UPDATE) {
 			loadCards();
 		}
 	}

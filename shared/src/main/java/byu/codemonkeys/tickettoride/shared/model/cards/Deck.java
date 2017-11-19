@@ -43,7 +43,12 @@ public class Deck extends ObservableExt implements IDeck {
     public int getNumHidden() {
         return numHidden;
     }
-
+    
+    @Override
+    public void setNumHidden(int count) {
+		this.numHidden = count;
+    }
+    
     public int getNumDestinationCards() {
         return numDestinationCards;
     }

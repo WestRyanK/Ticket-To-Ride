@@ -536,10 +536,9 @@ public class ModelFacade implements IModelFacade {
 					DrawFaceUpTrainCardResult drawResult = (DrawFaceUpTrainCardResult) result;
 					TrainCard card = drawResult.getDrawnCard();
 					models.getGame().getSelf().addTrainCard(card);
-					if (drawFaceUpTrainCardCallback != null)
-						drawFaceUpTrainCardCallback.callback(result);
 				}
-				
+				if (drawFaceUpTrainCardCallback != null)
+					drawFaceUpTrainCardCallback.callback(result);
 			}
 		};
 		
@@ -562,10 +561,9 @@ public class ModelFacade implements IModelFacade {
 					DrawDeckTrainCardResult drawResult = (DrawDeckTrainCardResult) result;
 					TrainCard card = drawResult.getDrawnCard();
 					models.getGame().getSelf().addTrainCard(card);
-					if (drawDeckTrainCardCallback != null)
-						drawDeckTrainCardCallback.callback(result);
 				}
-				
+				if (drawDeckTrainCardCallback != null)
+					drawDeckTrainCardCallback.callback(result);
 			}
 		};
 		
