@@ -42,19 +42,19 @@ public class ActiveGame extends GameBase implements Observer {
 		this.gameUsers = game.getUsers();
 		this.started = true;
 	}
-
+	
 	public void setUpTurns() {
 		Turn firstTurn;
-
+		
 		if (players.get(0) instanceof Self) {
 			firstTurn = new ActiveTurn(0);
 		} else {
 			firstTurn = new OtherTurn(0);
 		}
-
+		
 		Turn temp = firstTurn;
 		Turn nextTurn;
-
+		
 		for (int i = 1; i < players.size(); i++) {
 			if (players.get(i) instanceof Self) {
 				nextTurn = new ActiveTurn(i);
@@ -64,7 +64,7 @@ public class ActiveGame extends GameBase implements Observer {
 			temp.setNextTurn(nextTurn);
 			temp = temp.getNextTurn();
 		}
-
+		
 		temp.setNextTurn(firstTurn);
 		turn = firstTurn;
 	}
@@ -72,7 +72,7 @@ public class ActiveGame extends GameBase implements Observer {
 	public static ActiveGame copyActiveGame(ActiveGame game) {
 		ActiveGame activeGame = new ActiveGame(game);
 		activeGame.setObservesChildren(true);
-		activeGame.deck = game.getDeck();
+		activeGame.setDeck(game.getDeck());
 		List<Player> players = new ArrayList<>();
 		for (Player player : game.getPlayers()) {
 			players.add(Player.copyPlayer(player));
@@ -113,7 +113,7 @@ public class ActiveGame extends GameBase implements Observer {
 		setChanged();
 		notifyObservers(MAP_UPDATE);
 	}
-
+	
 	public boolean isPlayersTurn(String username) {
 		return players.get(turn.getPlayerIndex()).getUsername().equals(username);
 	}
@@ -182,7 +182,11 @@ public class ActiveGame extends GameBase implements Observer {
 	}
 	
 	public void setDeck(IDeck deck) {
+		if (this.deck != null && this.observesChildren())
+			((Deck) this.deck).deleteObserver(this);
 		this.deck = deck;
+		if (this.deck != null && this.observesChildren())
+			((Deck) this.deck).addObserver(this);
 		setChanged();
 		notifyObservers(DECK_UPDATE);
 	}

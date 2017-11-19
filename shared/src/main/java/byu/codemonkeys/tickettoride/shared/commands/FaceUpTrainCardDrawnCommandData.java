@@ -15,7 +15,7 @@ public class FaceUpTrainCardDrawnCommandData extends CommandData {
 	
 	protected final List<TrainCard> newFaceUpCards;
 	
-	protected FaceUpTrainCardDrawnCommandData(String username,
+	public FaceUpTrainCardDrawnCommandData(String username,
 											  int drawnCardIndex,
 											  List<TrainCard> newFaceUpCards) {
 		super(CommandType.FACEUP_TRAIN_CARD_DRAWN);

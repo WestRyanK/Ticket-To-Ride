@@ -11,9 +11,9 @@ public interface IDeck {
 	
 	Set<DestinationCard> drawDestinationCards();
 	
-	List<TrainCard> getRevealed();
+	List<TrainCard> getFaceUp();
 	
-	void setRevealed(List<TrainCard> revealed);
+	void setFaceUp(List<TrainCard> revealed);
 	
 	int getNumHidden();
 	

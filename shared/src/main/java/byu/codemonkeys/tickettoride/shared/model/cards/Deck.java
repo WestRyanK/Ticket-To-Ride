@@ -15,7 +15,7 @@ public class Deck extends ObservableExt implements IDeck {
     protected List<TrainCard> revealed;
     protected int numHidden;
     protected int numDestinationCards;
-    public static final String REVEALED_TRAIN_CARDS_UPDATE = "RevealedTrainCardsUpdate";
+    public static final String FACEUP_TRAIN_CARDS_UPDATE = "FaceUpTrainCardsUpdate";
     public static final String DECK_TRAIN_CARDS_UPDATE = "DeckTrainCardsUpdate";
     public static final String DESTINATION_CARDS_UPDATE = "DestinationCardsUpdate";
 
@@ -24,20 +24,20 @@ public class Deck extends ObservableExt implements IDeck {
     }
 
     public Deck(IDeck deck) {
-        this.revealed = deck.getRevealed();
+        this.revealed = deck.getFaceUp();
         this.numHidden = deck.getNumHidden();
         this.numDestinationCards = deck.getNumDestinationCards();
     }
 
-    public List<TrainCard> getRevealed() {
+    public List<TrainCard> getFaceUp() {
         return revealed;
     }
     
     @Override
-    public void setRevealed(List<TrainCard> revealed) {
+    public void setFaceUp(List<TrainCard> revealed) {
         this.revealed = revealed;
         this.setChanged();
-        this.notifyObservers(REVEALED_TRAIN_CARDS_UPDATE);
+        this.notifyObservers(FACEUP_TRAIN_CARDS_UPDATE);
     }
     
     public int getNumHidden() {

@@ -8,7 +8,7 @@ public class DeckTrainCardDrawnCommandData extends CommandData {
 	
 	protected final String username;
 	
-	protected DeckTrainCardDrawnCommandData(String username) {
+	public DeckTrainCardDrawnCommandData(String username) {
 		super(CommandType.DECK_TRAIN_CARD_DRAWN);
 		this.username = username;
 	}
