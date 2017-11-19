@@ -15,4 +15,8 @@ public class TrainCard {
 		this.cardColor = cardColor;
 	}
 	
+	@Override
+	public String toString() {
+		return cardColor.name();
+	}
 }

@@ -31,3 +31,6 @@ build/
 
 #NDK
 obj/
+
+# Merge conflict backups
+.orig

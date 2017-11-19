@@ -13,8 +13,9 @@ public class ServerCommunicator {
 
     public static void main(String[] args) {
         if (args.length < MIN_ARGUMENTS) {
-            System.out.println("USAGE: java ServerCommunicator <port>");
-            return;
+//            System.out.println("USAGE: java ServerCommunicator <port>");
+//            return;
+			args = new String[] { "8080"};
         }
 
         int port;

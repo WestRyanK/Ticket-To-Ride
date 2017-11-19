@@ -108,7 +108,8 @@ public class WaitingRoomFragment extends Fragment implements WaitingRoomContract
 			}
 		});
 		
-		presenter.setDefaults();
+		if (presenter != null)
+			presenter.setDefaults();
 		return view;
 	}
 	

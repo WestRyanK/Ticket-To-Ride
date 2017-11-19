@@ -55,7 +55,7 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
 
         loadFromResource();
 
-        this.numHidden = hidden.size();
+        this.trainCardsDeckCount = hidden.size();
         this.numDestinationCards = destinations.size();
     }
 
@@ -101,12 +101,12 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
     }
 
     @Override
-    public int getNumHidden() {
+    public int getTrainCardsDeckCount() {
         return hidden.size();
     }
 
     @Override
-    public int getNumDestinationCards() {
+    public int getDestinationCardsCount() {
         return destinations.size();
     }
 

@@ -50,7 +50,7 @@ public class DestinationCardsPresenter extends PresenterBase implements Destinat
 		int numDestinationCards = ModelRoot.getInstance()
 										   .getGame()
 										   .getDeck()
-										   .getNumDestinationCards();
+										   .getDestinationCardsCount();
 		this.view.setDestinationCardsInDeckCount(numDestinationCards);
 	}
 	
