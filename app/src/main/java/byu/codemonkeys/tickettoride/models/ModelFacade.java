@@ -3,6 +3,7 @@ package byu.codemonkeys.tickettoride.models;
 import android.graphics.PorterDuff;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Observer;
@@ -154,7 +155,7 @@ public class ModelFacade implements IModelFacade {
 			@Override
 			public void callback(Result result) {
 				if (result.isSuccessful()) {
-					models.setSession(((LoginResult)result).getUserSession());
+					models.setSession(((LoginResult) result).getUserSession());
 					models.setUser(new UserBase(username));
 				}
 				loginCallback.callback(result);
@@ -191,7 +192,7 @@ public class ModelFacade implements IModelFacade {
 			@Override
 			public void callback(Result result) {
 				if (result.isSuccessful()) {
-					models.setSession(((LoginResult)result).getUserSession());
+					models.setSession(((LoginResult) result).getUserSession());
 					models.setUser(new UserBase(username));
 				}
 				registerCallback.callback(result);
@@ -230,8 +231,8 @@ public class ModelFacade implements IModelFacade {
 		ICommand createGameCommand = new ICommand() {
 			@Override
 			public Result execute() {
-				PendingGameResult result = serverProxy.createGame(models.getSession().getAuthToken(),
-																  gameName);
+				PendingGameResult result = serverProxy.createGame(models.getSession()
+																		.getAuthToken(), gameName);
 				return result;
 			}
 		};
@@ -240,7 +241,7 @@ public class ModelFacade implements IModelFacade {
 			@Override
 			public void callback(Result result) {
 				if (result.isSuccessful()) {
-					models.setPendingGame(((PendingGameResult)result).getGame());
+					models.setPendingGame(((PendingGameResult) result).getGame());
 				}
 				
 				createGameCallback.callback(result);
@@ -460,32 +461,34 @@ public class ModelFacade implements IModelFacade {
 		
 		this.asyncTask.executeTask(sendMessageCommand, sendMessageCallback);
 	}
-
-	//TODO(compy-386): change documentation to fit return type and such
-	/**
-	 * Attempts to draw destination cards from the deck (needs implementation in next phase)
-	 * @return A list of destination cards to choose from.
-	 * {@pre models.activeGame != null, aka we're actually in a game}
-	 * {@pre it's your turn}
-	 */
+	
 	@Override
-	public DestinationCardResult drawDestinationCards() {
-		return serverProxy.drawDestinationCards(models.getSession().getAuthToken());
-	}
-
-	@Override
-	public void drawDestinationCardsAsync(ICallback drawDestinationCardsCallback) {
+	public void drawDestinationCardsAsync(final ICallback drawDestinationCardsCallback) {
 		ICommand drawDestinationCardsCommand = new ICommand() {
 			@Override
 			public Result execute() {
-				return drawDestinationCards();
+				Result result = serverProxy.drawDestinationCards(models.getSession().getAuthToken());
+				return result;
 			}
 		};
-
-		this.asyncTask.executeTask(drawDestinationCardsCommand, drawDestinationCardsCallback);
-
+		
+		ICallback callback = new ICallback() {
+			@Override
+			public void callback(Result result) {
+				if (result.isSuccessful()) {
+					DestinationCardResult dcResult = (DestinationCardResult) result;
+					ModelRoot.getInstance()
+							 .getGame()
+							 .getSelf()
+							 .giveDestinationCards(new HashSet<>(dcResult.getDestinationCards()));
+				}
+				drawDestinationCardsCallback.callback(result);
+			}
+		};
+		this.asyncTask.executeTask(drawDestinationCardsCommand, callback);
+		
 	}
-
+	
 	@Override
 	public void drawFaceUpTrainCardAsync(final int faceUpCardIndex,
 										 final ICallback drawFaceUpTrainCardCallback) {
@@ -598,7 +601,8 @@ public class ModelFacade implements IModelFacade {
 				opponent.setNumDestinationCards(entry.getValue());
 			}
 		}
-		models.getGame().setMinAllowedDestinationCardsDrawn(ActiveGame.SUBSEQUENT_MIN_ALLOWED_DESTINATION_CARDS_DRAWN);
+		models.getGame()
+			  .setMinAllowedDestinationCardsDrawn(ActiveGame.SUBSEQUENT_MIN_ALLOWED_DESTINATION_CARDS_DRAWN);
 	}
 	
 	/**

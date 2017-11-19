@@ -63,8 +63,6 @@ public interface IModelFacade {
 	// User actions
 	void sendMessageAsync(Message message, ICallback sendMessageCallback);
 
-	//TODO(compy-386): changed from list of DestinationCard(s) to DestinationCardResult
-	DestinationCardResult drawDestinationCards();
 	void drawDestinationCardsAsync(ICallback drawDestinationCardsCallback);
 
 	//void chooseDestinationCards(List<DestinationCard> cards);

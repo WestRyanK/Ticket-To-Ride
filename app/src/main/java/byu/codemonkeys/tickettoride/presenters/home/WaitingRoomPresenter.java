@@ -50,6 +50,10 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 			};
 			modelFacade.startGameAsync(startGameCallback);
 		}
+		else
+		{
+			messageDisplayer.displayMessage("There are not enough players to start the game");
+		}
 	}
 	
 	@Override

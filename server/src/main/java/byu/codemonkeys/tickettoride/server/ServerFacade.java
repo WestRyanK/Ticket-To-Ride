@@ -319,7 +319,7 @@ public class ServerFacade implements IServer {
 		Set<DestinationCard> cards = game.getDeck().drawDestinationCards();
 		((Self) player).giveDestinationCards(cards);
 
-		List<DestinationCard> cardsList = (List<DestinationCard>) cards;
+		List<DestinationCard> cardsList = new ArrayList<>(cards);
 		DestinationCardResult result = new DestinationCardResult(cardsList);
 
 		game.broadcastCommand(new DrawDestinationCardsCommandData(player.getUsername()));
