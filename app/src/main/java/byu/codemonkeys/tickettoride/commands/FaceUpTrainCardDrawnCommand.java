@@ -15,9 +15,9 @@ import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 public class FaceUpTrainCardDrawnCommand extends FaceUpTrainCardDrawnCommandData implements IClientCommand {
 	
 	protected FaceUpTrainCardDrawnCommand(String username,
-										  int drawnCardIndex,
-										  List<TrainCard> newFaceUpCards) {
-		super(username, drawnCardIndex, newFaceUpCards);
+										  TrainCard drawnCard,
+										  List<TrainCard> newFaceUpCards, int playerTrainCardCount) {
+		super(username, drawnCard, newFaceUpCards, playerTrainCardCount);
 	}
 	
 	@Override
@@ -25,11 +25,14 @@ public class FaceUpTrainCardDrawnCommand extends FaceUpTrainCardDrawnCommandData
 		Player player = ModelRoot.getInstance().getGame().getPlayer(this.username);
 		if (player.getClass() == Opponent.class) {
 			Opponent opponent = (Opponent) player;
-			opponent.setNumTrains(opponent.getNumTrainCards() + 1);
+			opponent.setNumTrainCards(this.playerTrainCardsCount);
 		}
 		
-		ModelRoot.getInstance().getGame().getDeck().setFaceUp(newFaceUpCards);
+		ModelRoot.getInstance().getGame().getDeck().setFaceUpTrainCards(newFaceUpCards);
 	}
 	
-	// TODO: Add toString
+	@Override
+	public String toString() {
+		return String.format("[%1$s drew a %2$s card]", this.username, this.drawnCard);
+	}
 }

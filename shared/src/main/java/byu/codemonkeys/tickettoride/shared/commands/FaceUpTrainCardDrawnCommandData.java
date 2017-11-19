@@ -11,16 +11,20 @@ import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 public class FaceUpTrainCardDrawnCommandData extends CommandData {
 	protected final String username;
 	
-	protected final int drawnCardIndex;
+	protected final TrainCard drawnCard;
 	
 	protected final List<TrainCard> newFaceUpCards;
 	
+	protected final int playerTrainCardsCount;
+	
 	public FaceUpTrainCardDrawnCommandData(String username,
-											  int drawnCardIndex,
-											  List<TrainCard> newFaceUpCards) {
+										   TrainCard drawnCard,
+										   List<TrainCard> newFaceUpCards,
+										   int playerTrainCardsCount) {
 		super(CommandType.FACEUP_TRAIN_CARD_DRAWN);
 		this.username = username;
-		this.drawnCardIndex = drawnCardIndex;
+		this.drawnCard= drawnCard;
 		this.newFaceUpCards = newFaceUpCards;
+		this.playerTrainCardsCount = playerTrainCardsCount;
 	}
 }

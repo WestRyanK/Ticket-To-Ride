@@ -77,8 +77,8 @@ public class DrawTrainCardsPresenter extends PresenterBase implements DrawTrainC
 	@Override
 	public void loadCards() {
 		if (ModelRoot.getInstance().getGame() != null) {
-			this.view.setFaceUpCards(ModelRoot.getInstance().getGame().getDeck().getFaceUp());
-			this.view.setNumHidden(ModelRoot.getInstance().getGame().getDeck().getNumHidden());
+			this.view.setFaceUpCards(ModelRoot.getInstance().getGame().getDeck().getFaceUpTrainCards());
+			this.view.setNumHidden(ModelRoot.getInstance().getGame().getDeck().getTrainCardsDeckCount());
 		}
 	}
 	

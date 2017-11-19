@@ -11,8 +11,8 @@ import byu.codemonkeys.tickettoride.shared.model.Player;
 
 public class DeckTrainCardDrawnCommand extends DeckTrainCardDrawnCommandData implements IClientCommand {
 	
-	protected DeckTrainCardDrawnCommand(String username) {
-		super(username);
+	protected DeckTrainCardDrawnCommand(String username, int trainCardsInDeckCount, int playerTrainCardsCount) {
+		super(username, trainCardsInDeckCount, playerTrainCardsCount);
 	}
 	
 	@Override
@@ -20,13 +20,14 @@ public class DeckTrainCardDrawnCommand extends DeckTrainCardDrawnCommandData imp
 		Player player = ModelRoot.getInstance().getGame().getPlayer(this.username);
 		if (player.getClass() == Opponent.class) {
 			Opponent opponent = (Opponent) player;
-			opponent.setNumTrains(opponent.getNumTrainCards() + 1);
+			opponent.setNumTrainCards(this.playerTrainCardsCount);
 		}
 		
-		int numHidden = ModelRoot.getInstance().getGame().getDeck().getNumHidden();
-		 ModelRoot.getInstance().getGame().getDeck().setNumHidden(numHidden - 1);
-		
+		ModelRoot.getInstance().getGame().getDeck().setTrainCardsDeckCount(trainCardsInDeckCount);
 	}
 	
-	// TODO: Add toString
+	@Override
+	public String toString() {
+		return String.format("[%1$s drew a train card from the deck]", this.username);
+	}
 }
