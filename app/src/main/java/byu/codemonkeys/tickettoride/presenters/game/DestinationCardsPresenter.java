@@ -37,7 +37,10 @@ public class DestinationCardsPresenter extends PresenterBase implements Destinat
 	
 	@Override
 	public void navigateDrawDestinationCards() {
-		this.navigator.navigate(PresenterEnum.DrawDestinationCards, true);
+		if (ModelRoot.getInstance().getGame().getDeck().getDestinationCardsCount() > 0)
+			this.navigator.navigate(PresenterEnum.DrawDestinationCards, true);
+		else
+			messageDisplayer.displayMessage("There are no destination cards left to draw!");
 	}
 	
 	@Override
@@ -53,6 +56,4 @@ public class DestinationCardsPresenter extends PresenterBase implements Destinat
 										   .getDestinationCardsCount();
 		this.view.setDestinationCardsInDeckCount(numDestinationCards);
 	}
-	
-	
 }

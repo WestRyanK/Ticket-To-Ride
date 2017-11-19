@@ -17,6 +17,8 @@ public interface DrawDestinationCardsContract {
 		
 		void setCards(List<DestinationCard> cards);
 		
+		void setMinCardsCount(int minCardsCount);
+		
 		void setCanContinue(boolean canContinue);
 	}
 	

@@ -21,6 +21,7 @@ import byu.codemonkeys.tickettoride.shared.commands.BeginGameCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.ChooseDestinationCardsCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
 import byu.codemonkeys.tickettoride.shared.commands.DeckTrainCardDrawnCommandData;
+import byu.codemonkeys.tickettoride.shared.commands.DrawDestinationCardsCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.FaceUpTrainCardDrawnCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SendMessageCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SetupGameCommandData;

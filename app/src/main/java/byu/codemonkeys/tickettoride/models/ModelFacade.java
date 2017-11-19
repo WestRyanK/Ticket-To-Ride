@@ -598,6 +598,7 @@ public class ModelFacade implements IModelFacade {
 				opponent.setNumDestinationCards(entry.getValue());
 			}
 		}
+		models.getGame().setMinAllowedDestinationCardsDrawn(ActiveGame.SUBSEQUENT_MIN_ALLOWED_DESTINATION_CARDS_DRAWN);
 	}
 	
 	/**

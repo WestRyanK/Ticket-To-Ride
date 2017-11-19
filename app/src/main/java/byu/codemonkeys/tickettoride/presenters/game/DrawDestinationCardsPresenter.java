@@ -56,6 +56,7 @@ public class DrawDestinationCardsPresenter extends PresenterBase implements Draw
 		List<DestinationCard> cardList = new ArrayList<>();
 		cardList.addAll(cards);
 		this.view.setCards(cardList);
+		this.view.setMinCardsCount(ModelRoot.getInstance().getGame().getMinAllowedDestinationCardsDrawn());
 	}
 	
 	@Override
