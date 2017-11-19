@@ -17,4 +17,10 @@ public class Opponent extends Player {
 		setChanged();
 		notifyObservers(Player.PLAYER_DESTINATION_CARDS_UPDATE);
 	}
+	
+	public void setNumTrainCards(int numTrainCards){
+		this.numTrainCards = numTrainCards;
+		setChanged();
+		notifyObservers(Player.PLAYER_TRAIN_CARDS_UPDATE);
+	}
 }

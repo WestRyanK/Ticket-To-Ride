@@ -377,8 +377,9 @@ public class ServerFacade implements IServer {
 		game.broadcastCommand(new FaceUpTrainCardDrawnCommandData(
 				player.getUsername(),
 				card,
-				game.getDeck().getFaceUpTrainCards()// I return the list of all the face up cards because all of them could change if there are 3 or more wilds
-		));
+				game.getDeck().getFaceUpTrainCards(),
+				// I return the list of all the face up cards because all of them could change if there are 3 or more wilds
+				player.getNumTrainCards()));
 
 		// TODO: Replace this with a less hacky check
 		if (!turn.canDrawTrainCard()) {
@@ -426,7 +427,8 @@ public class ServerFacade implements IServer {
 
 		turn.drawDeckTrainCard();
 
-		game.broadcastCommand(new DeckTrainCardDrawnCommandData(player.getUsername(), game.getDeck().getTrainCardsDeckCount()));
+		game.broadcastCommand(new DeckTrainCardDrawnCommandData(player.getUsername(), game.getDeck().getTrainCardsDeckCount(),
+																player.getNumTrainCards()));
 
 		// TODO: Replace this with a less hacky check
 		if (!turn.canDrawTrainCard()) {

@@ -16,8 +16,8 @@ public class FaceUpTrainCardDrawnCommand extends FaceUpTrainCardDrawnCommandData
 	
 	protected FaceUpTrainCardDrawnCommand(String username,
 										  TrainCard drawnCard,
-										  List<TrainCard> newFaceUpCards) {
-		super(username, drawnCard, newFaceUpCards);
+										  List<TrainCard> newFaceUpCards, int playerTrainCardCount) {
+		super(username, drawnCard, newFaceUpCards, playerTrainCardCount);
 	}
 	
 	@Override
@@ -25,7 +25,7 @@ public class FaceUpTrainCardDrawnCommand extends FaceUpTrainCardDrawnCommandData
 		Player player = ModelRoot.getInstance().getGame().getPlayer(this.username);
 		if (player.getClass() == Opponent.class) {
 			Opponent opponent = (Opponent) player;
-			opponent.setNumTrains(opponent.getNumTrainCards() + 1);
+			opponent.setNumTrainCards(this.playerTrainCardsCount);
 		}
 		
 		ModelRoot.getInstance().getGame().getDeck().setFaceUpTrainCards(newFaceUpCards);
