@@ -12,6 +12,7 @@ import byu.codemonkeys.tickettoride.mvpcontracts.IMediaPlayer;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.DrawTrainCardsContract;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
+import byu.codemonkeys.tickettoride.shared.model.cards.Deck;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 
 /**
@@ -29,6 +30,7 @@ public class DrawTrainCardsPresenter extends PresenterBase implements DrawTrainC
 								   IMediaPlayer mediaPlayer) {
 		super(navigator, messageDisplayer, modelFacade, mediaPlayer);
 		this.view = view;
+		modelFacade.addObserver(this);
 	}
 	
 	@Override
@@ -39,32 +41,52 @@ public class DrawTrainCardsPresenter extends PresenterBase implements DrawTrainC
 	@Override
 	public void drawDeckCard() {
 		if (ModelRoot.getInstance().getGame().getTurn().canDrawTrainCard()) {
-			modelFacade.drawDeckTrainCardAsync(null);
+			ICallback drawDeckCardCallback = new ICallback() {
+				@Override
+				public void callback(Result result) {
+					if (!result.isSuccessful())
+						messageDisplayer.displayMessage(result.getErrorMessage());
+				}
+			};
+			modelFacade.drawDeckTrainCardAsync(drawDeckCardCallback);
+		} else
+		{
+			messageDisplayer.displayMessage("Cannot draw Train Card at this time");
 		}
-		messageDisplayer.displayMessage("Cannot draw Train Card at this time");
+		
 	}
 	
 	@Override
 	public void drawFaceUpCard(int cardIndex) {
-
+		
 		if (ModelRoot.getInstance().getGame().getTurn().canDrawTrainCard()) {
 			//TODO: check if the face up card is a wild card and call canDrawWildTrainCard if it is
-			modelFacade.drawFaceUpTrainCardAsync(cardIndex, null);
+			ICallback drawFaceUpCardCallback = new ICallback() {
+				@Override
+				public void callback(Result result) {
+					if (!result.isSuccessful())
+						messageDisplayer.displayMessage(result.getErrorMessage());
+				}
+			};
+			modelFacade.drawFaceUpTrainCardAsync(cardIndex, drawFaceUpCardCallback);
+		} else {
+			messageDisplayer.displayMessage("Cannot draw Train Card at this time");
 		}
-		messageDisplayer.displayMessage("Cannot draw Train Card at this time");
 	}
 	
 	@Override
 	public void loadCards() {
 		if (ModelRoot.getInstance().getGame() != null) {
-			this.view.setFaceUpCards(ModelRoot.getInstance().getGame().getDeck().getRevealed());
+			this.view.setFaceUpCards(ModelRoot.getInstance().getGame().getDeck().getFaceUp());
 			this.view.setNumHidden(ModelRoot.getInstance().getGame().getDeck().getNumHidden());
 		}
 	}
 	
 	@Override
 	public void update(Observable observable, Object o) {
-		if (o == ModelFacade.GAME_UPDATE) {
+		if (o == ModelFacade.GAME_UPDATE ||
+				o == Deck.DECK_TRAIN_CARDS_UPDATE ||
+				o == Deck.FACEUP_TRAIN_CARDS_UPDATE) {
 			loadCards();
 		}
 	}

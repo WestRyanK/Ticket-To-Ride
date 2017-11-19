@@ -14,5 +14,21 @@ dependencies {
     compile 'junit:junit:4.12'
 }
 
+jar{
+    manifest{
+        attributes "Main-Class" : "byu.codemonkeys.tickettoride.server.ServerCommunicator"
+        attributes "Class-Path" : "gson-2.8.1.jar shared.jar"
+    }
+}
+//task deleteJar(type: Delete){
+//    delete 'libs/shared.jar'
+//}
+//
+//task createJar(type: Copy){
+//    from('../shared/build/libs')
+//    into('libs/')
+//    include('shared.jar')
+//}
+//createJar.dependsOn(deleteJar, build)
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"

@@ -17,15 +17,14 @@ import byu.codemonkeys.tickettoride.server.model.User;
 import byu.codemonkeys.tickettoride.shared.IServer;
 import byu.codemonkeys.tickettoride.shared.commands.BeginGameCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
-import byu.codemonkeys.tickettoride.shared.commands.DrewDeckTrainCardCommandData;
-import byu.codemonkeys.tickettoride.shared.commands.DrewFaceUpTrainCardCommandData;
+import byu.codemonkeys.tickettoride.shared.commands.DeckTrainCardDrawnCommandData;
+import byu.codemonkeys.tickettoride.shared.commands.FaceUpTrainCardDrawnCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SendMessageCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SetupGameCommandData;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
 import byu.codemonkeys.tickettoride.shared.model.Message;
 import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.Self;
-import byu.codemonkeys.tickettoride.shared.model.UserBase;
 import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
 import byu.codemonkeys.tickettoride.shared.model.cards.Deck;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
@@ -354,7 +353,7 @@ public class ServerFacade implements IServer {
 			return new DrawFaceUpTrainCardResult("You cannot draw a train card");
 		}
 
-		TrainCard card = game.getDeck().getRevealed().get(faceUpCardIndex);
+		TrainCard card = game.getDeck().getFaceUp().get(faceUpCardIndex);
 
 		if (!turn.canDrawWildTrainCard() && card.getCardColor() == CardType.Wild) {
 			return new DrawFaceUpTrainCardResult("You cannot draw a wild card");
@@ -373,12 +372,12 @@ public class ServerFacade implements IServer {
 
 		TrainCard replacement = game.getDeck().drawTrainCard();
 
-		game.getDeck().getRevealed().set(faceUpCardIndex, replacement);
+		game.getDeck().getFaceUp().set(faceUpCardIndex, replacement);
 
-		game.broadcastCommand(new DrewFaceUpTrainCardCommandData(
+		game.broadcastCommand(new FaceUpTrainCardDrawnCommandData(
 				player.getUsername(),
 				faceUpCardIndex,
-				replacement
+				game.getDeck().getFaceUp() // I return the list of all the face up cards because all of them could change if there are 3 or more wilds
 		));
 
 		// TODO: Replace this with a less hacky check
@@ -386,7 +385,7 @@ public class ServerFacade implements IServer {
 			game.nextTurn();
 		}
 
-		return new DrawFaceUpTrainCardResult(replacement);
+		return new DrawFaceUpTrainCardResult(card);
 	}
 	
 	@Override
@@ -427,7 +426,7 @@ public class ServerFacade implements IServer {
 
 		turn.drawDeckTrainCard();
 
-		game.broadcastCommand(new DrewDeckTrainCardCommandData(player.getUsername()));
+		game.broadcastCommand(new DeckTrainCardDrawnCommandData(player.getUsername()));
 
 		// TODO: Replace this with a less hacky check
 		if (!turn.canDrawTrainCard()) {

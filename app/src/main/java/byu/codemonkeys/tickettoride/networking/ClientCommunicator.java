@@ -25,10 +25,12 @@ public class ClientCommunicator {
 	
 	private String host;
 	private int port;
+	private static final String DEFAULT_HOST = "192.168.1.12";
+	private static final int DEFAULT_PORT = 8080;
 	
 	private ClientCommunicator() {
-		host = "192.168.1.6";
-		port = 8080;
+		host = DEFAULT_HOST;
+		port = DEFAULT_PORT;
 		serializer = new Serializer();
 	}
 	
