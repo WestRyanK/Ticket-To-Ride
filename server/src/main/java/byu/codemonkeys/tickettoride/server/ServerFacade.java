@@ -21,6 +21,7 @@ import byu.codemonkeys.tickettoride.shared.commands.BeginGameCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.ChooseDestinationCardsCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
 import byu.codemonkeys.tickettoride.shared.commands.DeckTrainCardDrawnCommandData;
+import byu.codemonkeys.tickettoride.shared.commands.DestinationCardsChosenCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.DrawDestinationCardsCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.FaceUpTrainCardDrawnCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SendMessageCommandData;
@@ -287,16 +288,19 @@ public class ServerFacade implements IServer {
 	@Override
 	public HistoryResult updateHistory(String authToken, int lastSeenCommandIndex) {
 		ServerSession session = rootModel.getSession(authToken);
-		ActiveGame game = rootModel.getActiveGame(session.getGameID());
-		List<CommandData> history = game.getGameHistory(session.getUser().getUsername(),
-														lastSeenCommandIndex);
-		return new HistoryResult(history);
+		if (session != null) {
+			ActiveGame game = rootModel.getActiveGame(session.getGameID());
+			List<CommandData> history = game.getGameHistory(session.getUser().getUsername(),
+															lastSeenCommandIndex);
+			return new HistoryResult(history);
+		} else
+			return new HistoryResult("Session is null?");
 	}
 	
 	@Override
 	public DestinationCardResult drawDestinationCards(String authToken) {
 		ServerSession session = rootModel.getSession(authToken);
-		if(session == null) {
+		if (session == null) {
 			return new DestinationCardResult("Authentication Error");
 		}
 		String gameID = session.getGameID();
@@ -304,41 +308,43 @@ public class ServerFacade implements IServer {
 		if (game == null) {
 			return new DestinationCardResult("Player is not part of an active game");
 		}
-
+		
 		User user = session.getUser();
 		Player player = game.getPlayer(user);
 		if (player == null) {
-			return new DestinationCardResult("Could not find the user in the game. This is a server error");
+			return new DestinationCardResult(
+					"Could not find the user in the game. This is a server error");
 		}
-
+		
 		Self self = (Self) player;
 		if (player == null) {
-			return new DestinationCardResult("Could not find the user in the game. This is a server error");
+			return new DestinationCardResult(
+					"Could not find the user in the game. This is a server error");
 		}
-
+		
 		Set<DestinationCard> cards = game.getDeck().drawDestinationCards();
 		((Self) player).giveDestinationCards(cards);
-
+		
 		List<DestinationCard> cardsList = new ArrayList<>(cards);
 		DestinationCardResult result = new DestinationCardResult(cardsList);
-
+		
 		game.broadcastCommand(new DrawDestinationCardsCommandData(player.getUsername()));
-
+		
 		return result;
 	}
 	
-	@Override
-	public DestinationCardResult chooseInitialDestinationCards(String authToken,
-															   int numSelected,
-															   List<DestinationCard> selected) {
-		Result result = chooseDestinationCards(authToken, selected);
-		
-		if (result.isSuccessful()) {
-			return new DestinationCardResult(selected);
-		}
-		
-		return new DestinationCardResult(result.getErrorMessage());
-	}
+	//	@Override
+	//	public DestinationCardResult chooseInitialDestinationCards(String authToken,
+	//															   int numSelected,
+	//															   List<DestinationCard> selected) {
+	//		Result result = chooseDestinationCards(authToken, selected);
+	//
+	//		if (result.isSuccessful()) {
+	//			return new DestinationCardResult(selected);
+	//		}
+	//
+	//		return new DestinationCardResult(result.getErrorMessage());
+	//	}
 	
 	@Override
 	public Result sendMessage(String authToken, Message message) {
@@ -361,121 +367,124 @@ public class ServerFacade implements IServer {
 		if (faceUpCardIndex < 0 || faceUpCardIndex >= Deck.NUM_REVEALED) {
 			return new DrawFaceUpTrainCardResult("Invalid Index");
 		}
-
+		
 		ServerSession session = rootModel.getSession(authToken);
-
+		
 		if (session == null) {
 			return new DrawFaceUpTrainCardResult("Not Authorized");
 		}
-
+		
 		ActiveGame game = rootModel.getActiveGame(session.getGameID());
-
+		
 		if (game == null) {
 			return new DrawFaceUpTrainCardResult("You are not part of an active game");
 		}
-
+		
 		User user = session.getUser();
-
+		
 		if (!game.isPlayersTurn(user.getUsername())) {
 			return new DrawFaceUpTrainCardResult("It is not your turn");
 		}
-
+		
 		Turn turn = game.getTurn();
-
+		
 		if (!turn.canDrawTrainCard()) {
 			return new DrawFaceUpTrainCardResult("You cannot draw a train card");
 		}
-
+		
 		TrainCard card = game.getDeck().getFaceUpTrainCards().get(faceUpCardIndex);
-
+		
 		if (!turn.canDrawWildTrainCard() && card.getCardColor() == CardType.Wild) {
 			return new DrawFaceUpTrainCardResult("You cannot draw a wild card");
 		}
-
+		
 		if (card == null) {
-			return new DrawFaceUpTrainCardResult("There is no card at position "
-					+ faceUpCardIndex);
+			return new DrawFaceUpTrainCardResult("There is no card at position " + faceUpCardIndex);
 		}
-
+		
 		Self player = (Self) game.getPlayer(user);
-
+		
 		player.addTrainCard(card);
-
+		
 		turn.drawFaceUpTrainCard(card);
-
+		
 		TrainCard replacement = game.getDeck().drawTrainCard();
-
+		
 		game.getDeck().getFaceUpTrainCards().set(faceUpCardIndex, replacement);
-
-		game.broadcastCommand(new FaceUpTrainCardDrawnCommandData(
-				player.getUsername(),
-				card,
-				game.getDeck().getFaceUpTrainCards(),
-				// I return the list of all the face up cards because all of them could change if there are 3 or more wilds
-				player.getNumTrainCards()));
-
+		
+		game.broadcastCommand(new FaceUpTrainCardDrawnCommandData(player.getUsername(),
+																  card,
+																  game.getDeck()
+																	  .getFaceUpTrainCards(),
+																  // I return the list of all the face up cards because all of them could change if there are 3 or more wilds
+																  player.getNumTrainCards()));
+		
 		// TODO: Replace this with a less hacky check
 		if (!turn.canDrawTrainCard()) {
 			game.nextTurn();
 		}
-
+		
 		return new DrawFaceUpTrainCardResult(card);
 	}
 	
 	@Override
 	public DrawDeckTrainCardResult drawDeckTrainCard(String authToken) {
 		ServerSession session = rootModel.getSession(authToken);
-
+		
 		if (session == null) {
 			return new DrawDeckTrainCardResult("Not Authorized");
 		}
-
+		
 		ActiveGame game = rootModel.getActiveGame(session.getGameID());
-
+		
 		if (game == null) {
 			return new DrawDeckTrainCardResult("You are not part of an active game");
 		}
-
+		
 		User user = session.getUser();
-
+		
 		if (!game.isPlayersTurn(user.getUsername())) {
 			return new DrawDeckTrainCardResult("It is not your turn");
 		}
-
+		
 		Turn turn = game.getTurn();
-
+		
 		if (!turn.canDrawTrainCard()) {
 			return new DrawDeckTrainCardResult("You cannot draw a train card");
 		}
-
+		
 		TrainCard card = game.getDeck().drawTrainCard();
-
+		
 		if (card == null) {
 			return new DrawDeckTrainCardResult("The deck is empty");
 		}
-
+		
 		Self player = (Self) game.getPlayer(user);
-
+		
 		player.addTrainCard(card);
-
+		
 		turn.drawDeckTrainCard();
-
-		game.broadcastCommand(new DeckTrainCardDrawnCommandData(player.getUsername(), game.getDeck().getTrainCardsDeckCount(),
+		
+		game.broadcastCommand(new DeckTrainCardDrawnCommandData(player.getUsername(),
+																game.getDeck()
+																	.getTrainCardsDeckCount(),
 																player.getNumTrainCards()));
-
+		
 		// TODO: Replace this with a less hacky check
 		if (!turn.canDrawTrainCard()) {
 			game.nextTurn();
 		}
-
+		
 		return new DrawDeckTrainCardResult(card);
 	}
 	
-	public Result chooseDestinationCards(String authToken, List<DestinationCard> cards) {
+	@Override
+	public DestinationCardResult chooseDestinationCards(String authToken,
+														List<DestinationCard> cards) {
 		ServerSession session = rootModel.getSession(authToken);
 		
 		if (session == null) {
-			return Result.failed("Authentication Error");
+			return new DestinationCardResult("Authentication Error");
 		}
 		
 		String gameID = session.getGameID();
@@ -483,7 +492,7 @@ public class ServerFacade implements IServer {
 		ActiveGame game = rootModel.getActiveGame(gameID);
 		
 		if (game == null) {
-			return Result.failed("Player is not part of an active game");
+			return new DestinationCardResult("Player is not part of an active game");
 		}
 		
 		User user = session.getUser();
@@ -491,15 +500,16 @@ public class ServerFacade implements IServer {
 		Player player = game.getPlayer(user);
 		
 		if (player == null) {
-			return Result.failed("Could not find the user in the game. This is a server error");
+			return new DestinationCardResult(
+					"Could not find the user in the game. This is a server error");
 		}
 		
 		Self self = (Self) player;
 		
 		boolean containsAll = true;
-		for (DestinationCard card : cards){
+		for (DestinationCard card : cards) {
 			boolean contains = false;
-			for (DestinationCard selectingCard : self.getSelecting()){
+			for (DestinationCard selectingCard : self.getSelecting()) {
 				if (selectingCard.getId() == card.getId())
 					contains = true;
 			}
@@ -507,9 +517,8 @@ public class ServerFacade implements IServer {
 				containsAll = false;
 		}
 		
-//		if (!self.getSelecting().containsAll(cards)) {
-		if (!containsAll){
-			return Result.failed("You tried to select a card you haven't drawn.");
+		if (!containsAll) {
+			return new DestinationCardResult("You tried to select a card you haven't drawn.");
 		}
 		
 		for (DestinationCard card : cards) {
@@ -517,16 +526,20 @@ public class ServerFacade implements IServer {
 		}
 		
 		self.getSelecting().clear();
-
-		if(game.isBegun()){
-			game.broadcastCommand(new ChooseDestinationCardsCommandData(player.getUsername()));
+		
+		if (game.isBegun()) {
+			game.broadcastCommand(new DestinationCardsChosenCommandData(player.getUsername(),
+																		cards.size(),
+																		game.getDeck()
+																			.getDestinationCardsCount(),
+																		player.getNumDestinationCards()));
 			//TODO(compy-386): uh am I updating the turn correctly?
 			game.nextTurn();
 		}
 		
 		beginGame(game);
 		
-		return Result.success();
+		return new DestinationCardResult(cards);
 	}
 	
 	private void beginGame(ActiveGame game) {

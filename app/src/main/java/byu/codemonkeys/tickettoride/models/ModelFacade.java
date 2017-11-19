@@ -467,7 +467,8 @@ public class ModelFacade implements IModelFacade {
 		ICommand drawDestinationCardsCommand = new ICommand() {
 			@Override
 			public Result execute() {
-				Result result = serverProxy.drawDestinationCards(models.getSession().getAuthToken());
+				Result result = serverProxy.drawDestinationCards(models.getSession()
+																	   .getAuthToken());
 				return result;
 			}
 		};
@@ -559,10 +560,9 @@ public class ModelFacade implements IModelFacade {
 		ICommand selectDestinationCardsCommand = new ICommand() {
 			@Override
 			public Result execute() {
-				DestinationCardResult result = serverProxy.chooseInitialDestinationCards(models.getSession()
-																							   .getAuthToken(),
-																						 cards.size(),
-																						 cards);
+				DestinationCardResult result = serverProxy.chooseDestinationCards(models.getSession()
+																						.getAuthToken(),
+																				  cards);
 				return result;
 			}
 		};
@@ -574,7 +574,6 @@ public class ModelFacade implements IModelFacade {
 					for (DestinationCard card : cards) {
 						ModelRoot.getInstance().getGame().getSelf().select(card);
 					}
-					ModelRoot.getInstance().getGame().setStarted(true);
 					ModelRoot.getInstance().getGame().getSelf().getSelecting().clear();
 				}
 				chooseInitialDestinationCardsCallback.callback(result);
@@ -601,6 +600,8 @@ public class ModelFacade implements IModelFacade {
 				opponent.setNumDestinationCards(entry.getValue());
 			}
 		}
+		
+		ModelRoot.getInstance().getGame().setStarted(true);
 		models.getGame()
 			  .setMinAllowedDestinationCardsDrawn(ActiveGame.SUBSEQUENT_MIN_ALLOWED_DESTINATION_CARDS_DRAWN);
 	}

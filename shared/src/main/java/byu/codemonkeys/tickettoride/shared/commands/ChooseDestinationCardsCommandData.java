@@ -11,13 +11,10 @@ import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 public class ChooseDestinationCardsCommandData extends CommandData {
     /**
      * Constructs a new ChooseDestinationCardsCommandData
-     * @param numSelected the number of destination cards the player selected. This might be used
-     *                    in a future phase or it might be removed.
      * @param selected the destination cards the player selected.
      */
-    public ChooseDestinationCardsCommandData(int numSelected, List<DestinationCard> selected) {
+    public ChooseDestinationCardsCommandData( List<DestinationCard> selected) {
         super(CommandType.CHOOSE_DESTINATION_CARDS);
-        this.numSelected = numSelected;
         this.selected = selected;
     }
 
@@ -26,6 +23,5 @@ public class ChooseDestinationCardsCommandData extends CommandData {
         this.userName = userName;
     }
     protected String userName;
-    protected int numSelected;
     protected List<DestinationCard> selected;
 }

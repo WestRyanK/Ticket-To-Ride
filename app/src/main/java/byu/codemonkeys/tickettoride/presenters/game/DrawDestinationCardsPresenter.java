@@ -2,6 +2,8 @@ package byu.codemonkeys.tickettoride.presenters.game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Set;
 
 import byu.codemonkeys.tickettoride.async.ICallback;
@@ -13,6 +15,8 @@ import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
 import byu.codemonkeys.tickettoride.presenters.PresenterEnum;
+import byu.codemonkeys.tickettoride.shared.model.ActiveGame;
+import byu.codemonkeys.tickettoride.shared.model.cards.Deck;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 
@@ -20,7 +24,7 @@ import byu.codemonkeys.tickettoride.shared.results.Result;
  * Created by Ryan on 10/21/2017.
  */
 
-public class DrawDestinationCardsPresenter extends PresenterBase implements DrawDestinationCardsContract.Presenter {
+public class DrawDestinationCardsPresenter extends PresenterBase implements DrawDestinationCardsContract.Presenter, Observer {
 	DrawDestinationCardsContract.View view;
 	
 	public DrawDestinationCardsPresenter(DrawDestinationCardsContract.View view,
@@ -30,6 +34,7 @@ public class DrawDestinationCardsPresenter extends PresenterBase implements Draw
 										 IMediaPlayer mediaPlayer) {
 		super(navigator, messageDisplayer, modelFacade, mediaPlayer);
 		this.view = view;
+		modelFacade.addObserver(this);
 	}
 	
 	@Override
@@ -56,11 +61,21 @@ public class DrawDestinationCardsPresenter extends PresenterBase implements Draw
 		List<DestinationCard> cardList = new ArrayList<>();
 		cardList.addAll(cards);
 		this.view.setCards(cardList);
-		this.view.setMinCardsCount(ModelRoot.getInstance().getGame().getMinAllowedDestinationCardsDrawn());
+		this.view.setMinCardsCount(ModelRoot.getInstance()
+											.getGame()
+											.getMinAllowedDestinationCardsDrawn());
 	}
 	
 	@Override
 	public boolean canAccept() {
-		return this.view.getSelectedCards().size() >= 2;
+		return this.view.getSelectedCards().size() >=
+				ModelRoot.getInstance().getGame().getMinAllowedDestinationCardsDrawn();
+	}
+	
+	@Override
+	public void update(Observable observable, Object o) {
+		if (o == Deck.DESTINATION_CARDS_UPDATE) {
+			this.loadDestinationCards();
+		}
 	}
 }
