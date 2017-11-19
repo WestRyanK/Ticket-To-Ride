@@ -11,13 +11,13 @@ public interface IDeck {
 	
 	Set<DestinationCard> drawDestinationCards();
 	
-	List<TrainCard> getFaceUp();
+	List<TrainCard> getFaceUpTrainCards();
 	
-	void setFaceUp(List<TrainCard> revealed);
+	void setFaceUpTrainCards(List<TrainCard> revealed);
 	
-	int getNumHidden();
+	int getTrainCardsDeckCount();
 	
-	void setNumHidden(int count);
+	void setTrainCardsDeckCount(int count);
 	
-	int getNumDestinationCards();
+	int getDestinationCardsCount();
 }

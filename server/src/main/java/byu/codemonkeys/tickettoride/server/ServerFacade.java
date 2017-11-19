@@ -353,7 +353,7 @@ public class ServerFacade implements IServer {
 			return new DrawFaceUpTrainCardResult("You cannot draw a train card");
 		}
 
-		TrainCard card = game.getDeck().getFaceUp().get(faceUpCardIndex);
+		TrainCard card = game.getDeck().getFaceUpTrainCards().get(faceUpCardIndex);
 
 		if (!turn.canDrawWildTrainCard() && card.getCardColor() == CardType.Wild) {
 			return new DrawFaceUpTrainCardResult("You cannot draw a wild card");
@@ -372,12 +372,12 @@ public class ServerFacade implements IServer {
 
 		TrainCard replacement = game.getDeck().drawTrainCard();
 
-		game.getDeck().getFaceUp().set(faceUpCardIndex, replacement);
+		game.getDeck().getFaceUpTrainCards().set(faceUpCardIndex, replacement);
 
 		game.broadcastCommand(new FaceUpTrainCardDrawnCommandData(
 				player.getUsername(),
-				faceUpCardIndex,
-				game.getDeck().getFaceUp() // I return the list of all the face up cards because all of them could change if there are 3 or more wilds
+				card,
+				game.getDeck().getFaceUpTrainCards()// I return the list of all the face up cards because all of them could change if there are 3 or more wilds
 		));
 
 		// TODO: Replace this with a less hacky check
@@ -426,7 +426,7 @@ public class ServerFacade implements IServer {
 
 		turn.drawDeckTrainCard();
 
-		game.broadcastCommand(new DeckTrainCardDrawnCommandData(player.getUsername()));
+		game.broadcastCommand(new DeckTrainCardDrawnCommandData(player.getUsername(), game.getDeck().getTrainCardsDeckCount()));
 
 		// TODO: Replace this with a less hacky check
 		if (!turn.canDrawTrainCard()) {
