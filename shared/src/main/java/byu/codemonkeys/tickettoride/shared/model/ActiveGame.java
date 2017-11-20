@@ -122,6 +122,10 @@ public class ActiveGame extends GameBase implements Observer {
 	public boolean isPlayersTurn(String username) {
 		return players.get(turn.getPlayerIndex()).getUsername().equals(username);
 	}
+
+	public Player getCurrentPlayer() {
+		return players.get(turn.getPlayerIndex());
+	}
 	
 	public Turn getTurn() {
 		return turn;
