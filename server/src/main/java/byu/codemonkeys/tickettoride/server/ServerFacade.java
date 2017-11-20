@@ -498,75 +498,7 @@ public class ServerFacade implements IServer {
 
 		User user = session.getUser();
 
-		Player player = game.getPlayer(user);
-		if (player == null) {
-			return new ClaimRouteResult("Could not find the user in the game. This is a server error");
-		}
-
-		Self self = (Self) player;
-
-		if (!game.isPlayersTurn(self.getUsername())) {
-			return new ClaimRouteResult("Can only claim routes during your turn");
-		}
-
-		Map<CardType, Integer> hand = self.getHand();
-		Route route = game.getMap().getRoute(routeID);
-		if (route == null) {
-			return new ClaimRouteResult("No such route");
-		}
-
-		if (route.isClaimed()) {
-			return new ClaimRouteResult("Route is already claimed!");
-		}
-
-		if (!route.getRouteType().equals(CardType.Wild)) {
-			cardType = route.getRouteType();
-		}
-
-		int cardsNeeded = route.getLength();
-		int numNormalCards = 0;
-		int numWildCards = 0;
-
-		if (hand.get(cardType) >= cardsNeeded) {
-			numNormalCards = cardsNeeded;
-		}
-		else {
-			numNormalCards = hand.get(cardType);
-			cardsNeeded -= numNormalCards;
-
-			if (hand.get(CardType.Wild) < cardsNeeded) {
-				return new ClaimRouteResult("Insufficient cards to claim route");
-			}
-
-			numWildCards = cardsNeeded;
-		}
-
-		if (self.getNumTrains() < route.getLength()) {
-			return new ClaimRouteResult("Insufficient trains to claim route");
-		}
-
-		//TODO: Check if a route is a parallel route
-
-		if (route.claim(self)) {
-			self.setNumTrains(self.getNumTrainCards() - route.getLength());
-			//TODO: Check if numTrains <= 2 and send lastTurnCommand if that is the case
-
-			hand.put(cardType, hand.get(cardType) - numNormalCards);
-			hand.put(CardType.Wild, hand.get(CardType.Wild) - numWildCards);
-
-			Map<CardType, Integer> cardsRemoved = new HashMap<>();
-			cardsRemoved.put(cardType, numNormalCards);
-			cardsRemoved.put(CardType.Wild, numWildCards);
-
-			game.getDeck().discard(cardsRemoved);
-
-			RouteClaimedCommandData claimedCommand = new RouteClaimedCommandData(routeID, route.getLength(), self);
-			game.broadcastCommandExclusive(claimedCommand, self);
-			game.nextTurn();
-			return new ClaimRouteResult(cardsRemoved, route.getLength());
-		}
-
-		return new ClaimRouteResult("Error claiming route");
+		return game.claimRoute(routeID, user, cardType);
 	}
 	
 	@Override
