@@ -136,11 +136,6 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
         }
 
         return false;
-    private boolean isActionPossible() {
-        if (deck.getTrainCardsDeckCount() > 0) return true;
-        if (deck.getDestinationCardsCount() > 0) return true;
-        if (deck.getFaceUpTrainCards().size() > 0) return true;
-        return canClaimRoute();
     }
 
     /**
