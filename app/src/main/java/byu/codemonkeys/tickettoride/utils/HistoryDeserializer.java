@@ -17,6 +17,8 @@ import java.util.List;
 
 import byu.codemonkeys.tickettoride.commands.BeginGameCommand;
 import byu.codemonkeys.tickettoride.commands.DeckTrainCardDrawnCommand;
+import byu.codemonkeys.tickettoride.commands.DestinationCardsChosenCommand;
+import byu.codemonkeys.tickettoride.commands.DestinationCardsDrawnCommand;
 import byu.codemonkeys.tickettoride.commands.FaceUpTrainCardDrawnCommand;
 import byu.codemonkeys.tickettoride.commands.RouteClaimedCommand;
 import byu.codemonkeys.tickettoride.commands.NextTurnCommand;
@@ -41,6 +43,8 @@ public class HistoryDeserializer {
             .registerSubtype(BeginGameCommand.class, CommandType.BEGIN_GAME)
             .registerSubtype(FaceUpTrainCardDrawnCommand.class, CommandType.FACEUP_TRAIN_CARD_DRAWN)
             .registerSubtype(DeckTrainCardDrawnCommand.class, CommandType.DECK_TRAIN_CARD_DRAWN)
+            .registerSubtype(DestinationCardsChosenCommand.class, CommandType.DESTINATION_CARDS_CHOSEN)
+            .registerSubtype(DestinationCardsDrawnCommand.class, CommandType.DESTINATION_CARDS_DRAWN)
             .registerSubtype(SkipTurnCommand.class, CommandType.SKIP_TURN)
             .registerSubtype(RouteClaimedCommand.class, CommandType.ROUTE_CLAIMED)
             .registerSubtype(NextTurnCommand.class, CommandType.NEXT_TURN);

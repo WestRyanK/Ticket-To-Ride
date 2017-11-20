@@ -12,10 +12,8 @@ import java.net.HttpURLConnection;
 import byu.codemonkeys.tickettoride.server.commands.*;
 import byu.codemonkeys.tickettoride.shared.Serializer;
 import byu.codemonkeys.tickettoride.shared.commands.CommandType;
-import byu.codemonkeys.tickettoride.shared.commands.DrawDeckTrainCardCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.ICommand;
 import byu.codemonkeys.tickettoride.server.exceptions.InvalidCommandException;
-import byu.codemonkeys.tickettoride.shared.results.DrawDeckTrainCardResult;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 
 class CommandHandler implements HttpHandler {
