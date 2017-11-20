@@ -44,9 +44,9 @@ deploy:
   - ssh-add -l
   - ssh west.ryan.k@104.155.184.125
   # Copy files to google cloud server using blowfish encryption for speed
-  - scp -c blowfish ./server/build/libs/server.jar west.ryan.k@104.155.184.125:~
-  - scp -c blowfish ./shared/build/libs/shared.jar west.ryan.k@104.155.184.125:~
+  - scp ./server/build/libs/server.jar west.ryan.k@104.155.184.125:~
+  - scp ./shared/build/libs/shared.jar west.ryan.k@104.155.184.125:~
   # we don't need to copy this since it'll never change
-  #- scp -c blowfish ./shared/build/libs/gson-2.8.1.jar west.ryan.k@104.155.184.125:~
+  #- scp ./shared/build/libs/gson-2.8.1.jar west.ryan.k@104.155.184.125:~
   - ssh west.ryan.k@104.155.184.125
   - java -jar ~/server.jar
