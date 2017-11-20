@@ -1,17 +1,11 @@
 package byu.codemonkeys.tickettoride.networking;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 import byu.codemonkeys.tickettoride.shared.Serializer;
 import byu.codemonkeys.tickettoride.shared.commands.*;
@@ -25,7 +19,7 @@ public class ClientCommunicator {
 	
 	private String host;
 	private int port;
-	private static final String DEFAULT_HOST = "192.168.1.12";
+	private static final String DEFAULT_HOST = "10.24.222.148";
 	private static final int DEFAULT_PORT = 8080;
 	
 	private ClientCommunicator() {

@@ -11,10 +11,10 @@ import byu.codemonkeys.tickettoride.shared.model.Player;
 
 public class DestinationCardsChosenCommand extends DestinationCardsChosenCommandData implements IClientCommand {
 	public DestinationCardsChosenCommand(String username,
-										 int cardsDrawnCount,
+										 int cardsChosenCount,
 										 int destinationCardsInDeckCount,
 										 int playersDestinationCardCount) {
-		super(username, cardsDrawnCount, destinationCardsInDeckCount, playersDestinationCardCount);
+		super(username, cardsChosenCount, destinationCardsInDeckCount, playersDestinationCardCount);
 	}
 	
 	@Override
@@ -24,7 +24,6 @@ public class DestinationCardsChosenCommand extends DestinationCardsChosenCommand
 			Opponent opponent = (Opponent) player;
 			opponent.setNumDestinationCards(this.playersDestinationCardCount);
 		}
-		
 		ModelRoot.getInstance().getGame().getDeck().setDestinationCardsCount(this.destinationCardsInDeckCount);
 	}
 	
@@ -32,6 +31,6 @@ public class DestinationCardsChosenCommand extends DestinationCardsChosenCommand
 	public String toString() {
 		return String.format("[$s chose $d destination cards]",
 							 this.username,
-							 this.cardsDrawnCount);
+							 this.cardsChosenCount);
 	}
 }

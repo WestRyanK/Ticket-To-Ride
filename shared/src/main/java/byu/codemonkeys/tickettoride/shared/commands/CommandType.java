@@ -14,7 +14,7 @@ public class CommandType {
 	public static final String UPDATE_HISTORY = "updateHistory";
 	public static final String SEND_MESSAGE = "sendMessage";
 	public static final String CHOOSE_DESTINATION_CARDS = "chooseDestinationCards";
-	public static final String DRAW_DESTINATION_CARDS = "drawDestinationCards";
+	public static final String DESTINATION_CARDS_DRAWN = "destinationCardsDrawn";
 	public static final String SETUP_GAME = "setupGame";
 	public static final String BEGIN_GAME = "beginGame";
 	public static final String DRAW_FACEUP_TRAIN_CARD = "drawFaceUpTrainCard";
@@ -24,4 +24,5 @@ public class CommandType {
 	public static final String FACEUP_TRAIN_CARD_DRAWN = "faceupTrainCardDrawn";
 	public static final String DECK_TRAIN_CARD_DRAWN = "deckTrainCardDrawn";
 	public static final String DESTINATION_CARDS_CHOSEN = "destinationCardsChosen";
+	public static final String DRAW_DESTINATION_CARDS = "DrawDestinationCards";
 }

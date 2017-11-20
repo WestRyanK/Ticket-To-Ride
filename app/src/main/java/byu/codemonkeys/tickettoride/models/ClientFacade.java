@@ -91,7 +91,7 @@ public class ClientFacade implements IClient {
 			public Result execute() {
 				List<CommandData> commands = result.getHistory();
 				
-				if (commands.size() > 0){
+				if (commands != null && commands.size() > 0){
 					executeCommands(commands);
 					modelRoot.getHistoryManager().addHistory(commands);
 					modelRoot.historyUpdated();

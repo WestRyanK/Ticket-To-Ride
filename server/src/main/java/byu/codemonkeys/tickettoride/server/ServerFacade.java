@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import byu.codemonkeys.tickettoride.server.commands.DrawDestinationCardsCommand;
 import byu.codemonkeys.tickettoride.server.exceptions.AlreadyExistsException;
 import byu.codemonkeys.tickettoride.server.exceptions.EmptyGameException;
 import byu.codemonkeys.tickettoride.server.exceptions.FullGameException;
@@ -18,11 +17,10 @@ import byu.codemonkeys.tickettoride.server.model.ServerSession;
 import byu.codemonkeys.tickettoride.server.model.User;
 import byu.codemonkeys.tickettoride.shared.IServer;
 import byu.codemonkeys.tickettoride.shared.commands.BeginGameCommandData;
-import byu.codemonkeys.tickettoride.shared.commands.ChooseDestinationCardsCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
 import byu.codemonkeys.tickettoride.shared.commands.DeckTrainCardDrawnCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.DestinationCardsChosenCommandData;
-import byu.codemonkeys.tickettoride.shared.commands.DrawDestinationCardsCommandData;
+import byu.codemonkeys.tickettoride.shared.commands.DestinationCardsDrawnCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.FaceUpTrainCardDrawnCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SendMessageCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SetupGameCommandData;
@@ -328,23 +326,10 @@ public class ServerFacade implements IServer {
 		List<DestinationCard> cardsList = new ArrayList<>(cards);
 		DestinationCardResult result = new DestinationCardResult(cardsList);
 		
-		game.broadcastCommand(new DrawDestinationCardsCommandData(player.getUsername()));
+		game.broadcastCommand(new DestinationCardsDrawnCommandData(player.getUsername(), game.getDeck().getDestinationCardsCount()));
 		
 		return result;
 	}
-	
-	//	@Override
-	//	public DestinationCardResult chooseInitialDestinationCards(String authToken,
-	//															   int numSelected,
-	//															   List<DestinationCard> selected) {
-	//		Result result = chooseDestinationCards(authToken, selected);
-	//
-	//		if (result.isSuccessful()) {
-	//			return new DestinationCardResult(selected);
-	//		}
-	//
-	//		return new DestinationCardResult(result.getErrorMessage());
-	//	}
 	
 	@Override
 	public Result sendMessage(String authToken, Message message) {

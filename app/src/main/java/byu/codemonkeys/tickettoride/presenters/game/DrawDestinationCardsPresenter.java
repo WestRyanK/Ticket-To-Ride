@@ -15,7 +15,6 @@ import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
 import byu.codemonkeys.tickettoride.presenters.PresenterEnum;
-import byu.codemonkeys.tickettoride.shared.model.ActiveGame;
 import byu.codemonkeys.tickettoride.shared.model.cards.Deck;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.results.Result;
@@ -50,8 +49,8 @@ public class DrawDestinationCardsPresenter extends PresenterBase implements Draw
 		};
 		if (canAccept()) {
 			navigator.navigateBack(PresenterEnum.Game);
-			this.modelFacade.chooseInitialDestinationCardsAsync(this.view.getSelectedCards(),
-																selectDestinationCardsCallback);
+			this.modelFacade.chooseDestinationCardsAsync(this.view.getSelectedCards(),
+														 selectDestinationCardsCallback);
 		}
 	}
 	
