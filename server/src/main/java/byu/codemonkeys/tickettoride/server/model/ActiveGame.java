@@ -9,6 +9,7 @@ import java.util.Queue;
 
 import byu.codemonkeys.tickettoride.server.broadcast.CommandManager;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
+import byu.codemonkeys.tickettoride.shared.commands.LastTurnCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.NextTurnCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.RouteClaimedCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SkipTurnCommandData;
@@ -25,8 +26,11 @@ import byu.codemonkeys.tickettoride.shared.results.ClaimRouteResult;
 
 public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.ActiveGame {
     private static int STARTING_CARDS = 4;
+    private static int LAST_TURN_TRAIN_THRESHOLD = 2;
 
     private boolean begun;
+    private boolean finalRound;
+    private int finalRoundTurns;
 
     public ActiveGame(PendingGame pendingGame) {
         super(pendingGame);
@@ -58,6 +62,8 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
 
         tempTurn.setNextTurn(this.turn);
 
+        finalRound = false;
+
         deal();
     }
 
@@ -68,6 +74,15 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
         turn.reset();
 
         turn = turn.getNextTurn();
+
+        if (finalRound) {
+            if (finalRoundTurns > 0) {
+                finalRoundTurns--;
+            }
+            else {
+                //end the game
+            }
+        }
 
         broadcastCommand(new NextTurnCommandData(getCurrentPlayer().getUsername()));
 
@@ -85,9 +100,7 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
         if (deck.getTrainCardsDeckCount() > 0) return true;
         if (deck.getDestinationCardsCount() > 0) return true;
         if (deck.getFaceUpTrainCards().size() > 0) return true;
-        if (canClaimRoute()) return true;
-
-        return false;
+        return canClaimRoute();
     }
 
     /**
@@ -278,7 +291,6 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
 
         if (route.claim(self)) {
             self.setNumTrains(self.getNumTrainCards() - route.getLength());
-            //TODO: Check if numTrains <= 2 and send lastTurnCommand if that is the case
 
             hand.put(cardType, hand.get(cardType) - numNormalCards);
             hand.put(CardType.Wild, hand.get(CardType.Wild) - numWildCards);
@@ -292,9 +304,19 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
             RouteClaimedCommandData claimedCommand = new RouteClaimedCommandData(routeID, route.getLength(), self);
             broadcastCommandExclusive(claimedCommand, self);
             nextTurn();
+
+            if (self.getNumTrainCards() <= LAST_TURN_TRAIN_THRESHOLD) {
+                broadcastCommand(new LastTurnCommandData());
+                initiateFinalRound();
+            }
             return new ClaimRouteResult(cardsRemoved, route.getLength());
         }
 
         return new ClaimRouteResult("Error claiming route");
+    }
+
+    private void initiateFinalRound() {
+        finalRound = true;
+        finalRoundTurns = players.size();
     }
 }

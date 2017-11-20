@@ -28,4 +28,5 @@ public class CommandType {
 	public static final String FACEUP_TRAIN_CARD_DRAWN = "faceupTrainCardDrawn";
 	public static final String DECK_TRAIN_CARD_DRAWN = "deckTrainCardDrawn";
 	public static final String DESTINATION_CARDS_CHOSEN = "destinationCardsChosen";
+	public static final String LAST_TURN = "lastTurn";
 }
