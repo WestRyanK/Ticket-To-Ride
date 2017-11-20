@@ -41,4 +41,4 @@ deploy:
   - mkdir -p ~/.ssh
   - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   - ssh-add -l
-  - ssh 104.155.184.125
+  - ssh west.ryan.k@104.155.184.125
