@@ -26,6 +26,7 @@ import byu.codemonkeys.tickettoride.shared.commands.DrawDestinationCardsCommandD
 import byu.codemonkeys.tickettoride.shared.commands.FaceUpTrainCardDrawnCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SendMessageCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SetupGameCommandData;
+import byu.codemonkeys.tickettoride.shared.commands.SkipTurnCommandData;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
 import byu.codemonkeys.tickettoride.shared.model.Message;
 import byu.codemonkeys.tickettoride.shared.model.Player;
@@ -419,8 +420,10 @@ public class ServerFacade implements IServer {
 																  // I return the list of all the face up cards because all of them could change if there are 3 or more wilds
 																  player.getNumTrainCards()));
 		
-		// TODO: Replace this with a less hacky check
 		if (!turn.canDrawTrainCard()) {
+			game.nextTurn();
+		} else if (!game.isActionPossible()) {
+			game.broadcastCommand(new SkipTurnCommandData(player.getUsername()));
 			game.nextTurn();
 		}
 		
@@ -470,8 +473,10 @@ public class ServerFacade implements IServer {
 																	.getTrainCardsDeckCount(),
 																player.getNumTrainCards()));
 		
-		// TODO: Replace this with a less hacky check
 		if (!turn.canDrawTrainCard()) {
+			game.nextTurn();
+		} else if (!game.isActionPossible()) {
+			game.broadcastCommand(new SkipTurnCommandData(player.getUsername()));
 			game.nextTurn();
 		}
 		

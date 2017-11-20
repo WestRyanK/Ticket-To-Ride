@@ -78,7 +78,7 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
      * Determines whether the current player can take any action.
      * @return there is an action the current player can perform.
      */
-    private boolean isActionPossible() {
+    public boolean isActionPossible() {
         if (deck.getTrainCardsDeckCount() > 0) return true;
         if (deck.getDestinationCardsCount() > 0) return true;
         if (deck.getFaceUpTrainCards().size() > 0) return true;
