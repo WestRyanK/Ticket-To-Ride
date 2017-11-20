@@ -22,6 +22,7 @@ import byu.codemonkeys.tickettoride.commands.RouteClaimedCommand;
 import byu.codemonkeys.tickettoride.commands.NextTurnCommand;
 import byu.codemonkeys.tickettoride.commands.SendMessageCommand;
 import byu.codemonkeys.tickettoride.commands.SetupGameCommand;
+import byu.codemonkeys.tickettoride.commands.SkipTurnCommand;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
 import byu.codemonkeys.tickettoride.shared.commands.CommandType;
 import byu.codemonkeys.tickettoride.shared.commands.NextTurnCommandData;
@@ -40,6 +41,7 @@ public class HistoryDeserializer {
             .registerSubtype(BeginGameCommand.class, CommandType.BEGIN_GAME)
             .registerSubtype(FaceUpTrainCardDrawnCommand.class, CommandType.FACEUP_TRAIN_CARD_DRAWN)
             .registerSubtype(DeckTrainCardDrawnCommand.class, CommandType.DECK_TRAIN_CARD_DRAWN)
+            .registerSubtype(SkipTurnCommand.class, CommandType.SKIP_TURN)
             .registerSubtype(RouteClaimedCommand.class, CommandType.ROUTE_CLAIMED)
             .registerSubtype(NextTurnCommand.class, CommandType.NEXT_TURN);
 

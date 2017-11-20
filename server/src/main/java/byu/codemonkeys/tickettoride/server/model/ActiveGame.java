@@ -19,6 +19,7 @@ import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
 import byu.codemonkeys.tickettoride.shared.model.Self;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
 import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
+import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 import byu.codemonkeys.tickettoride.shared.model.map.Route;
 import byu.codemonkeys.tickettoride.shared.model.turns.ActiveTurn;
 import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
@@ -29,6 +30,7 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
     private static int LAST_TURN_TRAIN_THRESHOLD = 2;
 
     private boolean begun;
+    private Player firstSkippedPlayer;
     private boolean finalRound;
     private int finalRoundTurns;
 
@@ -86,21 +88,54 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
 
         broadcastCommand(new NextTurnCommandData(getCurrentPlayer().getUsername()));
 
-        if (!isActionPossible()) {
-            broadcastCommand(new SkipTurnCommandData(getCurrentPlayer().getUsername()));
-            nextTurn();
+        if (!isActionPossible()) skipTurn();
+        else firstSkippedPlayer = null;
+    }
+
+    public void skipTurn() {
+        if (firstSkippedPlayer == null) {
+            firstSkippedPlayer = getCurrentPlayer();
+        } else if (getCurrentPlayer().getUsername().equals(firstSkippedPlayer.getUsername())) {
+            endGame();
+            return;
         }
+
+        broadcastCommand(new SkipTurnCommandData(getCurrentPlayer().getUsername()));
+
+        nextTurn();
     }
 
     /**
      * Determines whether the current player can take any action.
      * @return there is an action the current player can perform.
      */
-    private boolean isActionPossible() {
-        if (deck.getTrainCardsDeckCount() > 0) return true;
-        if (deck.getDestinationCardsCount() > 0) return true;
-        if (deck.getFaceUpTrainCards().size() > 0) return true;
-        return canClaimRoute();
+    public boolean isActionPossible() {
+        if (deck.getTrainCardsDeckCount() > 0) {
+            return true;
+        }
+        if (deck.getDestinationCardsCount() > 0) {
+            return true;
+        }
+        if (canDrawFaceUpTrainCard()) {
+            return true;
+        }
+//        if (canClaimRoute()) {
+//            return true;
+//        }
+
+        return false;
+    }
+
+    private boolean canDrawFaceUpTrainCard() {
+        for (TrainCard card : deck.getFaceUpTrainCards()) {
+            if (card == null) continue;
+
+            if (card.getCardColor() != CardType.Wild) return true;
+
+            if (turn.canDrawWildTrainCard()) return true;
+        }
+
+        return false;
     }
 
     /**
@@ -239,6 +274,10 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
         begun = true;
     }
 
+    public void endGame() {
+        System.out.println("Game Over");
+    }
+    
     public ClaimRouteResult claimRoute(int routeID, User user, CardType cardType) {
         Player player = getPlayer(user);
         if (player == null) {
