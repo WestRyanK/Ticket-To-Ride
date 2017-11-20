@@ -49,4 +49,4 @@ deploy:
   # we don't need to copy this since it'll never change
   #- scp ./shared/build/libs/gson-2.8.1.jar west.ryan.k@104.155.184.125:~
   - ssh west.ryan.k@104.155.184.125
-  - java -jar ~/server.jar
+  - java -jar /home/west.ryan.k/server.jar
