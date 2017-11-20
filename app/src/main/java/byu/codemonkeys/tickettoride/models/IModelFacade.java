@@ -72,7 +72,7 @@ public interface IModelFacade {
 	void chooseDestinationCardsAsync(List<DestinationCard> cards,
 									 ICallback chooseDestinationCardsCallback);
 	
-	void beginGame(Map<String, Integer> numDestinationCards);
+	void beginGame(Map<String, Integer> numDestinationCards, int destinationCardDeckCount);
 	//TODO: add claimed route, waiting on map
 	
 	List<CommandHistoryEntry> getGameHistory();

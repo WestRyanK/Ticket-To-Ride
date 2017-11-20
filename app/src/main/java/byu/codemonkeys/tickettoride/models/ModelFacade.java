@@ -589,7 +589,7 @@ public class ModelFacade implements IModelFacade {
 	 *                            {@post the number of destination cards each player has is set to their value in the map}
 	 */
 	@Override
-	public void beginGame(Map<String, Integer> numDestinationCards) {
+	public void beginGame(Map<String, Integer> numDestinationCards, int destinationCardDeckCount) {
 		for (Map.Entry<String, Integer> entry : numDestinationCards.entrySet()) {
 			Player player = (Player) models.getGame().getPlayer(new UserBase(entry.getKey()));
 			if (player.getClass() == Opponent.class) {
@@ -599,6 +599,7 @@ public class ModelFacade implements IModelFacade {
 		}
 		
 		ModelRoot.getInstance().getGame().setStarted(true);
+		models.getGame().getDeck().setDestinationCardsCount(destinationCardDeckCount);
 		models.getGame()
 			  .setMinAllowedDestinationCardsDrawn(ActiveGame.SUBSEQUENT_MIN_ALLOWED_DESTINATION_CARDS_DRAWN);
 	}

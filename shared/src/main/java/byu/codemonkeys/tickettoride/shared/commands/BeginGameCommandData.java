@@ -9,14 +9,19 @@ import byu.codemonkeys.tickettoride.shared.model.UserBase;
  * destination cards.
  */
 public class BeginGameCommandData extends CommandData {
-    protected Map<String, Integer> numDestinationCards;
+    protected final Map<String, Integer> numDestinationCards;
+    
+    protected final int destinationCardDeckCount;
 
     /**
      * Constructs a new BeginGameCommandData.
      * @param numDestinationCards the number of initial destination cards each player chose.
+     * @param destinationCardDeckCount
      */
-    public BeginGameCommandData(Map<String, Integer> numDestinationCards) {
+    public BeginGameCommandData(Map<String, Integer> numDestinationCards,
+                                int destinationCardDeckCount) {
         super(CommandType.BEGIN_GAME);
         this.numDestinationCards = numDestinationCards;
+        this.destinationCardDeckCount = destinationCardDeckCount;
     }
 }

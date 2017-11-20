@@ -2,6 +2,7 @@ package byu.codemonkeys.tickettoride.server;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -326,7 +327,9 @@ public class ServerFacade implements IServer {
 		List<DestinationCard> cardsList = new ArrayList<>(cards);
 		DestinationCardResult result = new DestinationCardResult(cardsList);
 		
-		game.broadcastCommand(new DestinationCardsDrawnCommandData(player.getUsername(), game.getDeck().getDestinationCardsCount()));
+		game.broadcastCommand(new DestinationCardsDrawnCommandData(player.getUsername(),
+																   game.getDeck()
+																	   .getDestinationCardsCount()));
 		
 		return result;
 	}
@@ -491,6 +494,7 @@ public class ServerFacade implements IServer {
 		
 		Self self = (Self) player;
 		
+		// Ensure that the user only picks cards from their hand
 		boolean containsAll = true;
 		for (DestinationCard card : cards) {
 			boolean contains = false;
@@ -501,15 +505,28 @@ public class ServerFacade implements IServer {
 			if (contains == false)
 				containsAll = false;
 		}
-		
 		if (!containsAll) {
 			return new DestinationCardResult("You tried to select a card you haven't drawn.");
 		}
 		
+		// Put cards in player's hand
 		for (DestinationCard card : cards) {
 			self.select(card);
 		}
-		
+		// Return unselected cards to deck
+		Set<DestinationCard> drawnCards = self.getSelecting();
+		Set<DestinationCard> returnedCards = new HashSet<>();
+		for (DestinationCard drawnCard : drawnCards) {
+			boolean contains = false;
+			for (DestinationCard chosenCard : cards) {
+				if (drawnCard.getId() == chosenCard.getId())
+					contains = true;
+			}
+			if (!contains)
+				returnedCards.add(drawnCard);
+		}
+		((byu.codemonkeys.tickettoride.server.model.Deck) game.getDeck()).returnDestinationCardsToDeck(
+				returnedCards);
 		self.getSelecting().clear();
 		
 		if (game.isBegun()) {
@@ -518,7 +535,6 @@ public class ServerFacade implements IServer {
 																		game.getDeck()
 																			.getDestinationCardsCount(),
 																		player.getNumDestinationCards()));
-			//TODO(compy-386): uh am I updating the turn correctly?
 			game.nextTurn();
 		}
 		
@@ -548,6 +564,6 @@ public class ServerFacade implements IServer {
 		
 		game.begin();
 		
-		game.broadcastCommand(new BeginGameCommandData(numDestinations));
+		game.broadcastCommand(new BeginGameCommandData(numDestinations, game.getDeck().getDestinationCardsCount()));
 	}
 }
