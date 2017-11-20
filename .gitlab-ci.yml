@@ -14,17 +14,17 @@ cache:
   - .gradle/
 
 stages:
-#  - build+test
+  - build+test
   - deploy
 
-#build+test:
-#  stage: build+test
-#  script:
-#    - ./gradlew assembleDebug
-#    - ./gradlew test
-#  artifacts:
-#    paths:
-#    - app/build/outputs/
+build+test:
+  stage: build+test
+  script:
+    - ./gradlew assembleDebug
+    - ./gradlew test
+  artifacts:
+    paths:
+    - app/build/outputs/
     
 deploy:
   stage: deploy
@@ -35,17 +35,17 @@ deploy:
   - eval $(ssh-agent -s)
   # add ssh key stored in SSH_PRIVATE_KEY variable to the agent store
   - ssh-add <(echo "$SSH_PRIVATE_KEY")
-  #- echo "$SSH_PRIVATE_KEY"
   - ./gradlew jar
   # disable host key checking (NOTE: makes you susceptible to man-in-the-middle attacks)
   # WARNING: use only in docker container, if you use it with shell you will overwrite your user's ssh config
   - mkdir -p ~/.ssh
   - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   - ssh-add -l
-  - ssh west.ryan.k@104.155.184.125
-  # Copy files to google cloud server using blowfish encryption for speed
+  #- ssh west.ryan.k@104.155.184.125
+  # Copy files to google cloud server
   - scp ./server/build/libs/server.jar west.ryan.k@104.155.184.125:~
   - scp ./shared/build/libs/shared.jar west.ryan.k@104.155.184.125:~
   # we don't need to copy this since it'll never change
   #- scp ./shared/build/libs/gson-2.8.1.jar west.ryan.k@104.155.184.125:~
+  # restart the server
   - ssh west.ryan.k@104.155.184.125 "pkill screen && screen -m -d -S ttrs java -jar /home/west.ryan.k/server.jar"
