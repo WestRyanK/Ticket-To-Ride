@@ -25,10 +25,12 @@ public class ClientCommunicator {
 	
 	private String host;
 	private int port;
+	private static final String DEFAULT_HOST = "192.168.1.12";
+	private static final int DEFAULT_PORT = 8080;
 	
 	private ClientCommunicator() {
-		host = "192.168.1.6";
-		port = 8080;
+		host = DEFAULT_HOST;
+		port = DEFAULT_PORT;
 		serializer = new Serializer();
 	}
 	
@@ -162,8 +164,8 @@ public class ClientCommunicator {
 	
 	public DestinationCardResult sendDrawDestinationCards(DrawDestinationCardsCommandData request) {
 		try {
-			return serializer.deserialize(getString(getURL(CommandType.DRAW_DESTINATION_CARDS),
-													request), DestinationCardResult.class);
+			String string = getString(getURL(CommandType.DRAW_DESTINATION_CARDS), request);
+			return serializer.deserialize(string, DestinationCardResult.class);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return new DestinationCardResult(e.getMessage());
@@ -279,7 +281,7 @@ public class ClientCommunicator {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 			throw e;
-//			return serializer.serialize(Result.failed(e.getMessage())).getBytes();
+			//			return serializer.serialize(Result.failed(e.getMessage())).getBytes();
 		} finally {
 			connection.disconnect();
 		}

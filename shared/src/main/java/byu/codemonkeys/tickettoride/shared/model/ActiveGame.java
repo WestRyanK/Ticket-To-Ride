@@ -13,8 +13,6 @@ import byu.codemonkeys.tickettoride.shared.model.turns.ActiveTurn;
 import byu.codemonkeys.tickettoride.shared.model.turns.OtherTurn;
 import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
 
-import static sun.audio.AudioPlayer.player;
-
 /**
  * We need to decide whether ActiveGame should extend GameBase. As it stands, ActiveGame doesn't
  * need any of the fields of GameBase except gameID. What we might want to do is move all the other
@@ -32,31 +30,36 @@ public class ActiveGame extends GameBase implements Observer {
 	protected List<Player> players;
 	protected IDeck deck;
 	
+	protected int minAllowedDestinationCardsDrawn;
+	public static final int INITIAL_MIN_ALLOWED_DESTINATION_CARDS_DRAWN = 2;
+	public static final int SUBSEQUENT_MIN_ALLOWED_DESTINATION_CARDS_DRAWN = 1;
+	
 	public ActiveGame(GameBase game) {
 		map = new GameMap();
 		this.players = new ArrayList<>();
 		deck = new Deck();
 		
 		// Copy GameBase fields
+		this.minAllowedDestinationCardsDrawn = INITIAL_MIN_ALLOWED_DESTINATION_CARDS_DRAWN;
 		this.gameID = game.getID();
 		this.gameName = game.getName();
 		this.gameOwner = game.getOwner();
 		this.gameUsers = game.getUsers();
 		this.started = true;
 	}
-
+	
 	public void setUpTurns() {
 		Turn firstTurn;
-
+		
 		if (players.get(0) instanceof Self) {
 			firstTurn = new ActiveTurn(0);
 		} else {
 			firstTurn = new OtherTurn(0);
 		}
-
+		
 		Turn temp = firstTurn;
 		Turn nextTurn;
-
+		
 		for (int i = 1; i < players.size(); i++) {
 			if (players.get(i) instanceof Self) {
 				nextTurn = new ActiveTurn(i);
@@ -66,7 +69,7 @@ public class ActiveGame extends GameBase implements Observer {
 			temp.setNextTurn(nextTurn);
 			temp = temp.getNextTurn();
 		}
-
+		
 		temp.setNextTurn(firstTurn);
 		turn = firstTurn;
 	}
@@ -74,7 +77,7 @@ public class ActiveGame extends GameBase implements Observer {
 	public static ActiveGame copyActiveGame(ActiveGame game) {
 		ActiveGame activeGame = new ActiveGame(game);
 		activeGame.setObservesChildren(true);
-		activeGame.deck = game.getDeck();
+		activeGame.setDeck(game.getDeck());
 		List<Player> players = new ArrayList<>();
 		for (Player player : game.getPlayers()) {
 			players.add(Player.copyPlayer(player));
@@ -115,7 +118,7 @@ public class ActiveGame extends GameBase implements Observer {
 		setChanged();
 		notifyObservers(MAP_UPDATE);
 	}
-
+	
 	public boolean isPlayersTurn(String username) {
 		return players.get(turn.getPlayerIndex()).getUsername().equals(username);
 	}
@@ -151,6 +154,17 @@ public class ActiveGame extends GameBase implements Observer {
 		return null;
 	}
 	
+	public Player getPlayer(String username) {
+		for (Player player : players) {
+			//            if (user.equals(player)) {
+			if (player.getUsername().equals(username)) {
+				return player;
+			}
+		}
+		
+		return null;
+	}
+	
 	public void setPlayers(List<Player> players) {
 		if (this.players != null && this.observesChildren()) {
 			for (Player player : this.players) {
@@ -173,9 +187,21 @@ public class ActiveGame extends GameBase implements Observer {
 	}
 	
 	public void setDeck(IDeck deck) {
+		if (this.deck != null && this.observesChildren())
+			((Deck) this.deck).deleteObserver(this);
 		this.deck = deck;
+		if (this.deck != null && this.observesChildren())
+			((Deck) this.deck).addObserver(this);
 		setChanged();
 		notifyObservers(DECK_UPDATE);
+	}
+	
+	public int getMinAllowedDestinationCardsDrawn() {
+		return minAllowedDestinationCardsDrawn;
+	}
+	
+	public void setMinAllowedDestinationCardsDrawn(int minAllowedDestinationCardsDrawn) {
+		this.minAllowedDestinationCardsDrawn = minAllowedDestinationCardsDrawn;
 	}
 	
 	@Override

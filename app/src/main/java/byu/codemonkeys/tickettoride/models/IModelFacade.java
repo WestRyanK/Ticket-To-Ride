@@ -19,6 +19,7 @@ import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 import byu.codemonkeys.tickettoride.shared.results.StartGameResult;
+import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
 
 /**
  * Created by Megan on 10/3/2017.
@@ -31,31 +32,19 @@ public interface IModelFacade {
 	
 	UserBase getUser();
 	
-	LoginResult login(String username, String password);
-	
 	void loginAsync(String username, String password, ICallback callback);
-	
-	LoginResult register(String username, String password);
 	
 	void registerAsync(String username, String password, ICallback registerCallback);
 	
 	List<GameBase> getPendingGames() throws UnauthorizedException;
 	
-	PendingGameResult createGame(String gameName);
-	
 	void createGameAsync(String gameName, ICallback createGameCallback);
-	
-	PendingGameResult joinPendingGame(GameBase game);
 	
 	void joinPendingGameAsync(GameBase game, ICallback joinPendingGameCallback);
 	
 	GameBase getPendingGame() throws UnauthorizedException, NoPendingGameException;
 	
-	PendingGamesResult leavePendingGame();
-	
 	void leavePendingGameAsync(ICallback leavePendingGameCallback);
-	
-	StartGameResult startGame();
 	
 	void startGameAsync(ICallback startGameCallback);
 	
@@ -64,27 +53,30 @@ public interface IModelFacade {
 	Session getSession();
 	
 	void changeConnectionConfiguration(String host, int port);
-
+	
 	//The player whose turn it is currently, for the sake of the player to judge when their turn may be coming
 	Player playerTurn();
-
+	
 	//This will be where one can find player color, score number of train cards, and number of destination cards
 	List<Player> getPlayerInfo();
-
+	
 	// User actions
-	Result sendMessage(Message message);
 	void sendMessageAsync(Message message, ICallback sendMessageCallback);
+
+	void drawDestinationCardsAsync(ICallback drawDestinationCardsCallback);
+
+	//void chooseDestinationCards(List<DestinationCard> cards);
+	//void chooseDestinationCardsAsync(List<DestinationCard> cards, ICallback selectDestinationCardsCallback);
 	
 	void drawFaceUpTrainCardAsync(int faceUpCardIndex, ICallback drawFaceUpTrainCardCallback);
 	
 	void drawDeckTrainCardAsync(ICallback drawDeckTrainCardCallback);
 	
-	void chooseInitialDestinationCards(List<DestinationCard> cards);
-	
-	void chooseInitialDestinationCardsAsync(List<DestinationCard> cards, ICallback selectDestinationCardsCallback);
+	void chooseInitialDestinationCardsAsync(List<DestinationCard> cards,
+											ICallback selectDestinationCardsCallback);
 	
 	void beginGame(Map<String, Integer> numDestinationCards);
 	//TODO: add claimed route, waiting on map
-
+	
 	List<CommandHistoryEntry> getGameHistory();
 }

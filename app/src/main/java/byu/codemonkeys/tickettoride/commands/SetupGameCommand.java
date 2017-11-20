@@ -14,6 +14,7 @@ public class SetupGameCommand extends SetupGameCommandData implements IClientCom
 		ActiveGame activeGame = ActiveGame.copyActiveGame(game);
 		activeGame.setUpTurns();
         ModelRoot.getInstance().setGame(activeGame);
+        ModelRoot.getInstance().getGame().setMinAllowedDestinationCardsDrawn(ActiveGame.INITIAL_MIN_ALLOWED_DESTINATION_CARDS_DRAWN);
     }
 
     @Override
