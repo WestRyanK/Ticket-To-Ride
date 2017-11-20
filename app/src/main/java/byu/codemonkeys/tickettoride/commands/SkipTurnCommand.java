@@ -15,12 +15,6 @@ public class SkipTurnCommand extends SkipTurnCommandData implements IClientComma
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("[");
-        sb.append(this.username);
-        sb.append(" cannot perform any actions]");
-
-        return sb.toString();
+        return String.format("[%s could not perform any action]", this.username);
     }
 }
