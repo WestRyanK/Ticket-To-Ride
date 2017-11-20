@@ -100,7 +100,7 @@ public class RootModel implements IRootModel {
         }
 
         if (users.containsKey(username)) {
-            System.out.println(username + "already exists");
+            System.out.println(username + " already exists");
             throw new AlreadyExistsException();
         }
         User user = new User(username, password);
