@@ -3,15 +3,19 @@ package byu.codemonkeys.tickettoride.server.model;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 
 import byu.codemonkeys.tickettoride.server.broadcast.CommandManager;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
+import byu.codemonkeys.tickettoride.shared.commands.SkipTurnCommandData;
 import byu.codemonkeys.tickettoride.shared.model.Opponent;
 import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
 import byu.codemonkeys.tickettoride.shared.model.Self;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
+import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
+import byu.codemonkeys.tickettoride.shared.model.map.Route;
 import byu.codemonkeys.tickettoride.shared.model.turns.ActiveTurn;
 import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
 
@@ -58,6 +62,68 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
     @Override
     public void nextTurn() {
         turn = turn.getNextTurn();
+
+        if (!isActionPossible()) {
+            broadcastCommand(new SkipTurnCommandData(getCurrentPlayer().getUsername()));
+            nextTurn();
+        }
+    }
+
+    /**
+     * Determines whether the current player can take any action.
+     * @return there is an action the current player can perform.
+     */
+    private boolean isActionPossible() {
+        if (deck.getTrainCardsDeckCount() > 0) return true;
+        if (deck.getDestinationCardsCount() > 0) return true;
+        if (deck.getFaceUpTrainCards().size() > 0) return true;
+        if (canClaimRoute()) return true;
+
+        return false;
+    }
+
+    /**
+     * Determines whether the current player can claim a route.
+     * @return there is an unclaimed route that the current player is able to claim.
+     */
+    private boolean canClaimRoute() {
+        List<Route> unclaimed = new ArrayList<>();
+
+        for (Route route : map.getAllRoutes()) {
+            if (!route.isClaimed()) {
+                unclaimed.add(route);
+            }
+        }
+
+        Map<CardType, Integer> hand = ((Self) players.get(turn.getPlayerIndex())).getHand();
+
+        int wilds = hand.containsKey(CardType.Wild) ? hand.get(CardType.Wild) : 0;
+        int maxPlayable = wilds;
+        CardType maxPlayableType;
+
+        for (Map.Entry<CardType, Integer> entry : hand.entrySet()) {
+            int value = entry.getValue();
+
+            if (value > maxPlayable) {
+                CardType key = entry.getKey();
+                maxPlayable = key == CardType.Wild ? value : value + wilds;
+                maxPlayableType = entry.getKey();
+            }
+        }
+
+        if (maxPlayable == 0) return false;
+
+        for (Route route : unclaimed) {
+            CardType routeType = route.getRouteType();
+
+            if (routeType == CardType.Wild) {
+                if (route.getLength() <= maxPlayable) return true;
+            }
+
+            if (hand.get(routeType) + wilds >= route.getLength()) return true;
+        }
+
+        return false;
     }
 
     /**
