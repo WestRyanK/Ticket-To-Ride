@@ -20,4 +20,6 @@ public interface IDeck {
 	void setTrainCardsDeckCount(int count);
 	
 	int getDestinationCardsCount();
+	
+	void setDestinationCardsCount(int count);
 }

@@ -19,6 +19,7 @@ import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 import byu.codemonkeys.tickettoride.shared.results.StartGameResult;
+import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
 
 /**
  * Created by Megan on 10/3/2017.
@@ -61,6 +62,11 @@ public interface IModelFacade {
 	
 	// User actions
 	void sendMessageAsync(Message message, ICallback sendMessageCallback);
+
+	void drawDestinationCardsAsync(ICallback drawDestinationCardsCallback);
+
+	//void chooseDestinationCards(List<DestinationCard> cards);
+	//void chooseDestinationCardsAsync(List<DestinationCard> cards, ICallback selectDestinationCardsCallback);
 	
 	void drawFaceUpTrainCardAsync(int faceUpCardIndex, ICallback drawFaceUpTrainCardCallback);
 	

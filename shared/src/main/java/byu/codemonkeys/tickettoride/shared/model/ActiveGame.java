@@ -30,12 +30,17 @@ public class ActiveGame extends GameBase implements Observer {
 	protected List<Player> players;
 	protected IDeck deck;
 	
+	protected int minAllowedDestinationCardsDrawn;
+	public static final int INITIAL_MIN_ALLOWED_DESTINATION_CARDS_DRAWN = 2;
+	public static final int SUBSEQUENT_MIN_ALLOWED_DESTINATION_CARDS_DRAWN = 1;
+	
 	public ActiveGame(GameBase game) {
 		map = new GameMap();
 		this.players = new ArrayList<>();
 		deck = new Deck();
 		
 		// Copy GameBase fields
+		this.minAllowedDestinationCardsDrawn = INITIAL_MIN_ALLOWED_DESTINATION_CARDS_DRAWN;
 		this.gameID = game.getID();
 		this.gameName = game.getName();
 		this.gameOwner = game.getOwner();
@@ -117,6 +122,10 @@ public class ActiveGame extends GameBase implements Observer {
 	public boolean isPlayersTurn(String username) {
 		return players.get(turn.getPlayerIndex()).getUsername().equals(username);
 	}
+
+	public Player getCurrentPlayer() {
+		return players.get(turn.getPlayerIndex());
+	}
 	
 	public Turn getTurn() {
 		return turn;
@@ -129,6 +138,7 @@ public class ActiveGame extends GameBase implements Observer {
 	}
 	
 	public void nextTurn() {
+		turn.reset();
 		turn = turn.getNextTurn();
 		setChanged();
 		notifyObservers(TURN_UPDATE);
@@ -189,6 +199,14 @@ public class ActiveGame extends GameBase implements Observer {
 			((Deck) this.deck).addObserver(this);
 		setChanged();
 		notifyObservers(DECK_UPDATE);
+	}
+	
+	public int getMinAllowedDestinationCardsDrawn() {
+		return minAllowedDestinationCardsDrawn;
+	}
+	
+	public void setMinAllowedDestinationCardsDrawn(int minAllowedDestinationCardsDrawn) {
+		this.minAllowedDestinationCardsDrawn = minAllowedDestinationCardsDrawn;
 	}
 	
 	@Override
