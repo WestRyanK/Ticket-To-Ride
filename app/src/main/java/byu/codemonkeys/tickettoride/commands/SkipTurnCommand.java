@@ -1,6 +1,5 @@
 package byu.codemonkeys.tickettoride.commands;
 
-import byu.codemonkeys.tickettoride.models.ModelRoot;
 import byu.codemonkeys.tickettoride.shared.commands.SkipTurnCommandData;
 
 public class SkipTurnCommand extends SkipTurnCommandData implements IClientCommand {

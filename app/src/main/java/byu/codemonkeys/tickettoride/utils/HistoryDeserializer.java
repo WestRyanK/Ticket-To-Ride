@@ -41,7 +41,6 @@ public class HistoryDeserializer {
             .registerSubtype(BeginGameCommand.class, CommandType.BEGIN_GAME)
             .registerSubtype(FaceUpTrainCardDrawnCommand.class, CommandType.FACEUP_TRAIN_CARD_DRAWN)
             .registerSubtype(DeckTrainCardDrawnCommand.class, CommandType.DECK_TRAIN_CARD_DRAWN)
-            .registerSubtype(NextTurnCommand.class, CommandType.NEXT_TURN)
             .registerSubtype(SkipTurnCommand.class, CommandType.SKIP_TURN)
             .registerSubtype(RouteClaimedCommand.class, CommandType.ROUTE_CLAIMED)
             .registerSubtype(NextTurnCommand.class, CommandType.NEXT_TURN);
