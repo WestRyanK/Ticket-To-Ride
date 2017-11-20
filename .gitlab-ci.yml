@@ -51,4 +51,4 @@ deploy:
   #- scp ./shared/build/libs/gson-2.8.1.jar west.ryan.k@104.155.184.125:~
   # restart the server
   - ssh west.ryan.k@104.155.184.125 "screen -X -S ttrs kill"
-  - ssh west.ryan.k@104.155.184.125 "screen -m -d -S ttrs java -jar /home/west.ryan.k/server.jar"
+  - ssh west.ryan.k@104.155.184.125 "screen -m -d -S ttrs java -jar /home/west.ryan.k/server.jar" || true
