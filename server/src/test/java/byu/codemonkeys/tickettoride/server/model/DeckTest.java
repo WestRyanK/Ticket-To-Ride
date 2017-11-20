@@ -10,6 +10,6 @@ public class DeckTest {
         Deck deck = new Deck();
 
         // This will fail on GitLab because it depends upon the destination cards data file.
-//        assertEquals(36, deck.getNumDestinationCards());
+//        assertEquals(36, deck.getDestinationCardsCount());
     }
 }

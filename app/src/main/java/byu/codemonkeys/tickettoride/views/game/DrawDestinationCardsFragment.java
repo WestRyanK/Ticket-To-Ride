@@ -24,10 +24,9 @@ import byu.codemonkeys.tickettoride.views.widgets.HorizontalSpaceItemDecoration;
  * A simple {@link Fragment} subclass.
  */
 public class DrawDestinationCardsFragment extends Fragment implements DrawDestinationCardsContract.View {
-	
-	
 	DrawDestinationCardsContract.Presenter presenter;
 	private TextView textViewContinue;
+	private TextView textViewDirections;
 	private RecyclerView recyclerDestinationCards;
 	private LinearLayoutManager layoutManagerDestinationCards;
 	private DestinationCardRecyclerAdapter destinationCardsAdapter;
@@ -52,6 +51,7 @@ public class DrawDestinationCardsFragment extends Fragment implements DrawDestin
 	private void getViews(View view) {
 		recyclerDestinationCards = (RecyclerView) view.findViewById(R.id.drawDestinationCards_recyclerCards);
 		textViewContinue = (TextView) view.findViewById(R.id.drawDestinationCards_textViewContinue);
+		textViewDirections = (TextView) view.findViewById(R.id.drawDestinationCards_textViewDirections);
 	}
 	
 	private void initRecycler(View view) {
@@ -104,6 +104,14 @@ public class DrawDestinationCardsFragment extends Fragment implements DrawDestin
 	public void setCards(List<DestinationCard> cards) {
 		this.destinationCardsAdapter.updateData(cards);
 		
+	}
+	
+	@Override
+	public void setMinCardsCount(int minCardsCount) {
+		String text = String.format("Select at least %1$d destination card", minCardsCount);
+		if (minCardsCount != 1)
+			text += "s";
+		this.textViewDirections.setText(text);
 	}
 	
 	@Override

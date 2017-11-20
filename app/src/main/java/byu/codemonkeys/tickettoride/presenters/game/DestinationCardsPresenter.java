@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import byu.codemonkeys.tickettoride.async.ICallback;
 import byu.codemonkeys.tickettoride.models.IModelFacade;
 import byu.codemonkeys.tickettoride.models.ModelRoot;
 import byu.codemonkeys.tickettoride.mvpcontracts.IMediaPlayer;
@@ -13,6 +14,7 @@ import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
 import byu.codemonkeys.tickettoride.presenters.PresenterEnum;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
+import byu.codemonkeys.tickettoride.shared.results.Result;
 
 /**
  * Created by Ryan on 10/18/2017.
@@ -37,7 +39,21 @@ public class DestinationCardsPresenter extends PresenterBase implements Destinat
 	
 	@Override
 	public void navigateDrawDestinationCards() {
-		this.navigator.navigate(PresenterEnum.DrawDestinationCards, true);
+		if (ModelRoot.getInstance().getGame().getTurn().canDrawDestinationCards()) {
+			if (ModelRoot.getInstance().getGame().getDeck().getDestinationCardsCount() > 0) {
+				ICallback drawDestinationCardsCallback = new ICallback() {
+					@Override
+					public void callback(Result result) {
+						navigator.navigate(PresenterEnum.DrawDestinationCards, true);
+					}
+				};
+				modelFacade.drawDestinationCardsAsync(drawDestinationCardsCallback);
+			} else {
+				messageDisplayer.displayMessage("There are no destination cards left to draw");
+			}
+		} else {
+			messageDisplayer.displayMessage("You can't draw a destination card right now");
+		}
 	}
 	
 	@Override
@@ -50,9 +66,7 @@ public class DestinationCardsPresenter extends PresenterBase implements Destinat
 		int numDestinationCards = ModelRoot.getInstance()
 										   .getGame()
 										   .getDeck()
-										   .getNumDestinationCards();
+										   .getDestinationCardsCount();
 		this.view.setDestinationCardsInDeckCount(numDestinationCards);
 	}
-	
-	
 }
