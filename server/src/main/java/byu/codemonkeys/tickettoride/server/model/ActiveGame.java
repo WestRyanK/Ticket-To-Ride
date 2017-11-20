@@ -8,6 +8,7 @@ import java.util.Queue;
 
 import byu.codemonkeys.tickettoride.server.broadcast.CommandManager;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
+import byu.codemonkeys.tickettoride.shared.commands.NextTurnCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SkipTurnCommandData;
 import byu.codemonkeys.tickettoride.shared.model.Opponent;
 import byu.codemonkeys.tickettoride.shared.model.Player;
@@ -62,6 +63,8 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
     @Override
     public void nextTurn() {
         turn = turn.getNextTurn();
+
+        broadcastCommand(new NextTurnCommandData(getCurrentPlayer().getUsername()));
 
         if (!isActionPossible()) {
             broadcastCommand(new SkipTurnCommandData(getCurrentPlayer().getUsername()));
