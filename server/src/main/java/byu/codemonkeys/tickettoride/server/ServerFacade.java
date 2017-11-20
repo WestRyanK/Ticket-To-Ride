@@ -494,14 +494,20 @@ public class ServerFacade implements IServer {
 			numWildCards = cardsNeeded;
 		}
 
-		hand.put(cardType, hand.get(cardType) - numNormalCards);
-		hand.put(CardType.Wild, hand.get(CardType.Wild) - numWildCards);
+		if (self.getNumTrains() < route.getLength()) {
+			return Result.failed("Insufficient trains to claim route");
+		}
 
-		route.claim(self);
+		if (route.claim(self)) {
+			self.setNumTrains(self.getNumTrainCards() - route.getLength());
 
-		//TODO: Broadcast command
+			hand.put(cardType, hand.get(cardType) - numNormalCards);
+			hand.put(CardType.Wild, hand.get(CardType.Wild) - numWildCards);
+			//TODO: Broadcast command
+			return Result.success();
+		}
 
-		return Result.success();
+		return Result.failed("Error claiming route");
 	}
 
 	public Result chooseDestinationCards(String authToken, List<DestinationCard> cards) {
