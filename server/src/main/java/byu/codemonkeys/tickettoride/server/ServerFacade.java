@@ -505,7 +505,7 @@ public class ServerFacade implements IServer {
 
 		Self self = (Self) player;
 
-		if (!game.getPlayers().get(game.getTurn().getPlayerIndex()).equals(player)) {
+		if (!game.isPlayersTurn(self.getUsername())) {
 			return new ClaimRouteResult("Can only claim routes during your turn");
 		}
 
@@ -549,7 +549,7 @@ public class ServerFacade implements IServer {
 
 		if (route.claim(self)) {
 			self.setNumTrains(self.getNumTrainCards() - route.getLength());
-			//TODO: Check if numTrains <= 2 and send lastTurnCommand is that is the case
+			//TODO: Check if numTrains <= 2 and send lastTurnCommand if that is the case
 
 			hand.put(cardType, hand.get(cardType) - numNormalCards);
 			hand.put(CardType.Wild, hand.get(CardType.Wild) - numWildCards);
