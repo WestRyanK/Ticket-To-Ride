@@ -10,7 +10,7 @@ public class SkipTurnCommand extends SkipTurnCommandData implements IClientComma
 
     @Override
     public void execute() {
-        ModelRoot.getInstance().getGame().nextTurn();
+        // A NextTurnCommand should follow.
     }
 
     @Override
