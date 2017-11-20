@@ -19,9 +19,9 @@ public class NextTurnCommand extends NextTurnCommandData implements IClientComma
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("It is ");
+        sb.append("[It is ");
         sb.append(this.username);
-        sb.append("'s turn");
+        sb.append("'s turn]");
 
         return sb.toString();
     }

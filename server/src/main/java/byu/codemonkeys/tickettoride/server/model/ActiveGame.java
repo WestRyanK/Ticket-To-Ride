@@ -62,6 +62,8 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
 
     @Override
     public void nextTurn() {
+        turn.reset();
+
         turn = turn.getNextTurn();
 
         broadcastCommand(new NextTurnCommandData(getCurrentPlayer().getUsername()));
