@@ -37,6 +37,7 @@ deploy:
   - ssh-add <(echo "$SSH_PRIVATE_KEY")
   #- echo "$SSH_PRIVATE_KEY"
   - ls
+  - ./gradlew jar
   # disable host key checking (NOTE: makes you susceptible to man-in-the-middle attacks)
   # WARNING: use only in docker container, if you use it with shell you will overwrite your user's ssh config
   - mkdir -p ~/.ssh
