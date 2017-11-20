@@ -554,10 +554,16 @@ public class ServerFacade implements IServer {
 			hand.put(cardType, hand.get(cardType) - numNormalCards);
 			hand.put(CardType.Wild, hand.get(CardType.Wild) - numWildCards);
 
-			RouteClaimedCommandData claimedCommand = new RouteClaimedCommandData(routeID, numNormalCards + numWildCards, self);
+			Map<CardType, Integer> cardRemoved = new HashMap<>();
+			cardRemoved.put(cardType, numNormalCards);
+			cardRemoved.put(CardType.Wild, numWildCards);
+
+			//TODO: Shuffle removed cards back into deck or discard pile
+
+			RouteClaimedCommandData claimedCommand = new RouteClaimedCommandData(routeID, route.getLength(), self);
 			game.broadcastCommandExclusive(claimedCommand, self);
-			//TODO: Update the turn
-			return new ClaimRouteResult();
+			game.nextTurn();
+			return new ClaimRouteResult(cardRemoved, route.getLength());
 		}
 
 		return new ClaimRouteResult("Error claiming route");
