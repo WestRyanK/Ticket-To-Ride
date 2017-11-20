@@ -40,7 +40,7 @@ public class HistoryDeserializer {
             .registerSubtype(BeginGameCommand.class, CommandType.BEGIN_GAME)
             .registerSubtype(FaceUpTrainCardDrawnCommand.class, CommandType.FACEUP_TRAIN_CARD_DRAWN)
             .registerSubtype(DeckTrainCardDrawnCommand.class, CommandType.DECK_TRAIN_CARD_DRAWN)
-            .registerSubtype(RouteClaimedCommand.class, CommandType.ROUTE_CLAIMED);
+            .registerSubtype(RouteClaimedCommand.class, CommandType.ROUTE_CLAIMED)
             .registerSubtype(NextTurnCommand.class, CommandType.NEXT_TURN);
 
     private static final RuntimeTypeAdapterFactory<Player> playerTypeFactory =

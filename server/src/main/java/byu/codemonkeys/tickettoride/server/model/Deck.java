@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
@@ -109,6 +110,15 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
     @Override
     public int getDestinationCardsCount() {
         return destinations.size();
+    }
+
+    @Override
+    public void discard(Map<CardType, Integer> toDiscard) {
+        for (Map.Entry<CardType, Integer> entry : toDiscard.entrySet()) {
+            for (int i = 0; i < entry.getValue(); i++) {
+                discarded.add(new TrainCard(entry.getKey()));
+            }
+        }
     }
 
     private void loadFromResource() {
