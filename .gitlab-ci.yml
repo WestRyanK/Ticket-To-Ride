@@ -28,7 +28,6 @@ build+test:
     
 deploy:
   stage: deploy
-  only: master
   script:
   # install ssh-agent
   - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
@@ -49,4 +48,5 @@ deploy:
   # we don't need to copy this since it'll never change
   #- scp ./shared/build/libs/gson-2.8.1.jar west.ryan.k@104.155.184.125:~
   # restart the server
-  - ssh west.ryan.k@104.155.184.125 "pkill screen && screen -m -d -S ttrs java -jar /home/west.ryan.k/server.jar"
+  - ssh west.ryan.k@104.155.184.125 "pkill SCREEN"
+  - ssh west.ryan.k@104.155.184.125 "screen -m -d -S ttrs java -jar /home/west.ryan.k/server.jar"
