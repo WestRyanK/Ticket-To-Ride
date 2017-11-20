@@ -14,17 +14,17 @@ cache:
   - .gradle/
 
 stages:
- # - build+test
+  - build+test
   - deploy
 
-#build+test:
-#  stage: build+test
-#  script:
-#    - ./gradlew assembleDebug
-#    - ./gradlew test
-#  artifacts:
-#    paths:
-#    - app/build/outputs/
+build+test:
+  stage: build+test
+  script:
+    - ./gradlew assembleDebug
+    - ./gradlew test
+  artifacts:
+    paths:
+    - app/build/outputs/
     
 deploy:
   stage: deploy
