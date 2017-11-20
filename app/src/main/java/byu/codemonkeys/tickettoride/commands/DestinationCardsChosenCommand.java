@@ -29,8 +29,8 @@ public class DestinationCardsChosenCommand extends DestinationCardsChosenCommand
 	
 	@Override
 	public String toString() {
-		return String.format("[$s chose $d destination cards]",
+		return String.format("[%1$s chose %2$d destination card%3$s]",
 							 this.username,
-							 this.cardsChosenCount);
+							 this.cardsChosenCount, this.cardsChosenCount == 1 ? "" : "s");
 	}
 }

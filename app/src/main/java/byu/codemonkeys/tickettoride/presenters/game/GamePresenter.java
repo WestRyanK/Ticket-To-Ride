@@ -54,8 +54,12 @@ public class GamePresenter extends PresenterBase implements GameContract.Present
 		}
 		if (o == ModelFacade.HISTORY_UPDATE)
 		{
-			List<CommandHistoryEntry> history = modelFacade.getGameHistory();
-			messageDisplayer.displayMessage(history.get(history.size() - 1).toString());
+//			List<CommandHistoryEntry> history = modelFacade.getGameHistory();
+			List<CommandHistoryEntry> history = modelFacade.getLatestGameHistory();
+			for (CommandHistoryEntry entry : history) {
+				messageDisplayer.displayMessage(entry.toString());
+//				messageDisplayer.displayMessage(history.get(history.size() - 1).toString());
+			}
 		}
 	}
 }

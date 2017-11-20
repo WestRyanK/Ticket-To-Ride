@@ -613,4 +613,7 @@ public class ModelFacade implements IModelFacade {
 		return models.getGameHistory();
 	}
 	
+	public List<CommandHistoryEntry> getLatestGameHistory() {
+		return models.getHistoryManager().getLatestCommandHistory();
+	}
 }

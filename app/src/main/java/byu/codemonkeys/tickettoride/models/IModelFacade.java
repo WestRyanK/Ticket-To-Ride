@@ -62,9 +62,9 @@ public interface IModelFacade {
 	
 	// User actions
 	void sendMessageAsync(Message message, ICallback sendMessageCallback);
-
+	
 	void drawDestinationCardsAsync(ICallback drawDestinationCardsCallback);
-
+	
 	void drawFaceUpTrainCardAsync(int faceUpCardIndex, ICallback drawFaceUpTrainCardCallback);
 	
 	void drawDeckTrainCardAsync(ICallback drawDeckTrainCardCallback);
@@ -76,4 +76,6 @@ public interface IModelFacade {
 	//TODO: add claimed route, waiting on map
 	
 	List<CommandHistoryEntry> getGameHistory();
+	
+	List<CommandHistoryEntry> getLatestGameHistory();
 }
