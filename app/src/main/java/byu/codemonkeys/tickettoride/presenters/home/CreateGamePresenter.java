@@ -59,6 +59,6 @@ public class CreateGamePresenter extends PresenterBase implements CreateGameCont
 	
 	@Override
 	public void setDefaults() {
-		this.view.setGameName("MyGame");
+		this.view.setGameName("MnkyBusiness");
 	}
 }

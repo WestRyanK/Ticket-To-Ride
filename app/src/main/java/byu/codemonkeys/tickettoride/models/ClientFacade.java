@@ -15,10 +15,17 @@ import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
 import byu.codemonkeys.tickettoride.shared.results.HistoryResult;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 
+/**
+ * A set of operations that different pollers will use to update the models in real time.
+ *
+ * {@invariant will be a static Singleton instance, so ClientFacade.getInstance() will return the ClientFacade object}
+ */
+
 public class ClientFacade implements IClient {
 	private static ClientFacade instance;
+
 	private static ITask mainThreadTask;
-	
+
 	private ClientFacade() {
 	}
 	
@@ -32,7 +39,7 @@ public class ClientFacade implements IClient {
 	public static void setMainThreadTask(ITask mainThreadTask) {
 		ClientFacade.mainThreadTask = mainThreadTask;
 	}
-	
+
 	@Override
 	public void updatePendingGames() {
 		final ModelRoot modelRoot = ModelRoot.getInstance();
@@ -47,7 +54,16 @@ public class ClientFacade implements IClient {
 		};
 		this.mainThreadTask.executeTask(setPendingGamesCommand, null);
 	}
-	
+
+	/**
+	 * Gets the user's selected pending game from the server, and updates its information in the ModelRoot
+	 *
+	 * {@pre modelRoot.getSession() != null}
+	 * {@pre modelRoot.getSession().getAuthToken() is a valid auth token}
+	 * {@pre the user has selected a pending game}
+	 * {@post modelRoot will contain the updated game information for the user's selected pending game}
+	 * @exception Exception no auth token, the user has not selected a game, or other server error
+	 */
 	@Override
 	public void updatePendingGame() {
 		final ModelRoot modelRoot = ModelRoot.getInstance();
