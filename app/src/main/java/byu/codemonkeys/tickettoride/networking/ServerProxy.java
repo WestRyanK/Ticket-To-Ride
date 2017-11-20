@@ -3,6 +3,7 @@ package byu.codemonkeys.tickettoride.networking;
 import java.util.List;
 
 import byu.codemonkeys.tickettoride.shared.IServer;
+import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.results.*;
 import byu.codemonkeys.tickettoride.shared.commands.*;
@@ -83,8 +84,7 @@ public class ServerProxy implements IServer {
 	public DestinationCardResult drawDestinationCards(String authToken) {
 		DrawDestinationCardsCommandData data = new DrawDestinationCardsCommandData();
 		data.setAuthToken(authToken);
-		DestinationCardResult result = communicator.sendDrawDestinationCards(data);
-		return result;
+		return communicator.sendDrawDestinationCards(data);
 	}
 	
 	@Override
@@ -92,8 +92,7 @@ public class ServerProxy implements IServer {
 														List<DestinationCard> selected) {
 		ChooseDestinationCardsCommandData data = new ChooseDestinationCardsCommandData(selected);
 		data.setAuthToken(authToken);
-		DestinationCardResult result = communicator.sendChooseInitialDestinationCards(data);
-		return result;
+		return communicator.sendChooseInitialDestinationCards(data);
 	}
 	
 	@Override
@@ -108,18 +107,23 @@ public class ServerProxy implements IServer {
 		DrawFaceUpTrainCardCommandData data = new DrawFaceUpTrainCardCommandData(faceUpCardIndex);
 		
 		data.setAuthToken(authToken);
-		DrawFaceUpTrainCardResult result = communicator.sendDrawFaceUpTrainCard(data);
-		return result;
+		return communicator.sendDrawFaceUpTrainCard(data);
 	}
 	
 	@Override
 	public DrawDeckTrainCardResult drawDeckTrainCard(String authToken) {
 		DrawDeckTrainCardCommandData data = new DrawDeckTrainCardCommandData();
 		data.setAuthToken(authToken);
-		DrawDeckTrainCardResult result = communicator.sendDrawDeckTrainCard(data);
-		return result;
+		return communicator.sendDrawDeckTrainCard(data);
 	}
-	
+
+	@Override
+	public ClaimRouteResult claimRoute(String authToken, int routeID, CardType cardType) {
+		ClaimRouteCommandData data = new ClaimRouteCommandData(routeID, cardType);
+		data.setAuthToken(authToken);
+		return communicator.sendClaimRoute(data);
+	}
+
 	@Override
 	public PendingGamesResult cancelGame(String authToken) {
 		CancelGameCommandData data = new CancelGameCommandData();

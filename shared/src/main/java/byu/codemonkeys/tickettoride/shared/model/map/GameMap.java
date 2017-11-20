@@ -49,6 +49,10 @@ public class GameMap extends Observable {
 		notifyObservers(ROUTE_UPDATE);
 		return routes.get(routeId).claim(user);
 	}
+
+	public Route getRoute(int routeID) {
+		return routes.get(routeID);
+	}
 	
 	// TODO: Change all these authTokens to something the clients and server can both use.
 	public int calculateLongestPathForPlayer(UserBase user) {
