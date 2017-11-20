@@ -69,6 +69,19 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
     }
 
     /**
+     * broadcasts a command to all players except the excludedPlayer
+     * @param command command to be broadcast
+     * @param excludedPlayer player to not send the command to
+     */
+    public void broadcastCommandExclusive(CommandData command, Player excludedPlayer) {
+        for (Player player : players) {
+            if (!player.equals(excludedPlayer)) {
+                commandManager.queueCommandSingleClient(command, player.getUsername());
+            }
+        }
+    }
+
+    /**
      * Sends a command to a specific player
      * @param command command to be executed
      * @param username username of the player to send the command to

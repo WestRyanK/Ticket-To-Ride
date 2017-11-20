@@ -24,6 +24,7 @@ import byu.codemonkeys.tickettoride.shared.commands.DeckTrainCardDrawnCommandDat
 import byu.codemonkeys.tickettoride.shared.commands.DestinationCardsChosenCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.DrawDestinationCardsCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.FaceUpTrainCardDrawnCommandData;
+import byu.codemonkeys.tickettoride.shared.commands.RouteClaimedCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SendMessageCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SetupGameCommandData;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
@@ -543,12 +544,16 @@ public class ServerFacade implements IServer {
 			return Result.failed("Insufficient trains to claim route");
 		}
 
+		//TODO: Check if a route is a parallel route
+
 		if (route.claim(self)) {
 			self.setNumTrains(self.getNumTrainCards() - route.getLength());
 
 			hand.put(cardType, hand.get(cardType) - numNormalCards);
 			hand.put(CardType.Wild, hand.get(CardType.Wild) - numWildCards);
-			//TODO: Broadcast command
+
+			RouteClaimedCommandData claimedCommand = new RouteClaimedCommandData(routeID, numNormalCards + numWildCards, self);
+			game.broadcastCommandExclusive(claimedCommand, self);
 			return Result.success();
 		}
 
