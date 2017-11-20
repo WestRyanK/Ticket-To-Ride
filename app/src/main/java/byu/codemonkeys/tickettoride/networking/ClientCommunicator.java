@@ -217,6 +217,18 @@ public class ClientCommunicator {
 			return new DrawDeckTrainCardResult(e.getMessage());
 		}
 	}
+
+	public ClaimRouteResult sendClaimRoute(ClaimRouteCommandData request) {
+		try {
+			String string = getString(getURL(request.getCommandType()), request);
+			ClaimRouteResult result = serializer.deserialize(string,
+					ClaimRouteResult.class);
+			return result;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new ClaimRouteResult(e.getMessage());
+		}
+	}
 	
 	/**
 	 * Constructs a full HTTP URL String to the specified path.

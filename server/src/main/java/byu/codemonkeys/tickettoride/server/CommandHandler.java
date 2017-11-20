@@ -93,6 +93,8 @@ class CommandHandler implements HttpHandler {
                 return serializer.deserialize(requestBody, DrawDeckTrainCardCommand.class);
             case CommandType.DRAW_FACEUP_TRAIN_CARD:
                 return serializer.deserialize(requestBody, DrawFaceUpTrainCardCommand.class);
+            case CommandType.CLAIM_ROUTE:
+                return serializer.deserialize(requestBody, ClaimRouteCommand.class);
             default:
                 throw new InvalidCommandException(type);
         }

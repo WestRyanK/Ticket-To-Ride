@@ -1,6 +1,7 @@
 package byu.codemonkeys.tickettoride.shared.model.cards;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
@@ -22,4 +23,6 @@ public interface IDeck {
 	int getDestinationCardsCount();
 	
 	void setDestinationCardsCount(int count);
+
+	void discard(Map<CardType, Integer> toDiscard);
 }

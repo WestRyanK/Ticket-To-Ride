@@ -19,9 +19,14 @@ public class CommandType {
 	public static final String BEGIN_GAME = "beginGame";
 	public static final String DRAW_FACEUP_TRAIN_CARD = "drawFaceUpTrainCard";
 	public static final String DRAW_DECK_TRAIN_CARD = "drawDeckTrainCard";
+	public static final String CLAIM_ROUTE = "claimRoute";
+	public static final String ROUTE_CLAIMED = "routeClaimed";
+	public static final String DREW_FACEUP_TRAIN_CARD = "drewFaceUpTrainCard";
+	public static final String DREW_DECK_TRAIN_CARD = "drewDeckTrainCard";
 	public static final String NEXT_TURN = "nextTurn";
 	public static final String SKIP_TURN = "endTurn";
 	public static final String FACEUP_TRAIN_CARD_DRAWN = "faceupTrainCardDrawn";
 	public static final String DECK_TRAIN_CARD_DRAWN = "deckTrainCardDrawn";
 	public static final String DESTINATION_CARDS_CHOSEN = "destinationCardsChosen";
+	public static final String LAST_TURN = "lastTurn";
 }

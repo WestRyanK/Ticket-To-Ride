@@ -24,6 +24,7 @@ import byu.codemonkeys.tickettoride.shared.commands.DeckTrainCardDrawnCommandDat
 import byu.codemonkeys.tickettoride.shared.commands.DestinationCardsChosenCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.DrawDestinationCardsCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.FaceUpTrainCardDrawnCommandData;
+import byu.codemonkeys.tickettoride.shared.commands.RouteClaimedCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SendMessageCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SetupGameCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SkipTurnCommandData;
@@ -35,7 +36,9 @@ import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
 import byu.codemonkeys.tickettoride.shared.model.cards.Deck;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
+import byu.codemonkeys.tickettoride.shared.model.map.Route;
 import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
+import byu.codemonkeys.tickettoride.shared.results.ClaimRouteResult;
 import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
 import byu.codemonkeys.tickettoride.shared.results.DrawDeckTrainCardResult;
 import byu.codemonkeys.tickettoride.shared.results.DrawFaceUpTrainCardResult;
@@ -481,6 +484,26 @@ public class ServerFacade implements IServer {
 		}
 		
 		return new DrawDeckTrainCardResult(card);
+	}
+
+	@Override
+	public ClaimRouteResult claimRoute(String authToken, int routeID, CardType cardType) {
+		ServerSession session = rootModel.getSession(authToken);
+
+		if (session == null) {
+			return new ClaimRouteResult("Authentication Error");
+		}
+
+		String gameID = session.getGameID();
+
+		ActiveGame game = rootModel.getActiveGame(gameID);
+		if (game == null) {
+			return new ClaimRouteResult("Player is not part of an active game");
+		}
+
+		User user = session.getUser();
+
+		return game.claimRoute(routeID, user, cardType);
 	}
 	
 	@Override

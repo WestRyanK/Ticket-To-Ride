@@ -59,7 +59,7 @@ public class Route {
 		return destination;
 	}
 	
-	public UserBase getOwnerToken() {
+	public UserBase getOwner() {
 		return owner;
 	}
 	

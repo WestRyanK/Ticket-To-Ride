@@ -18,6 +18,7 @@ import java.util.List;
 import byu.codemonkeys.tickettoride.commands.BeginGameCommand;
 import byu.codemonkeys.tickettoride.commands.DeckTrainCardDrawnCommand;
 import byu.codemonkeys.tickettoride.commands.FaceUpTrainCardDrawnCommand;
+import byu.codemonkeys.tickettoride.commands.RouteClaimedCommand;
 import byu.codemonkeys.tickettoride.commands.NextTurnCommand;
 import byu.codemonkeys.tickettoride.commands.SendMessageCommand;
 import byu.codemonkeys.tickettoride.commands.SetupGameCommand;
@@ -33,7 +34,7 @@ import byu.codemonkeys.tickettoride.shared.model.Self;
 import byu.codemonkeys.tickettoride.shared.results.HistoryResult;
 
 public class HistoryDeserializer {
-    private static final RuntimeTypeAdapterFactory<CommandData> typeFactory = RuntimeTypeAdapterFactory
+    private static final RuntimeTypeAdapterFactory<CommandData> commandTypeFactory = RuntimeTypeAdapterFactory
             .of(CommandData.class, "commandType")
             .registerSubtype(SendMessageCommand.class, CommandType.SEND_MESSAGE)
             .registerSubtype(SetupGameCommand.class, CommandType.SETUP_GAME)
@@ -42,6 +43,8 @@ public class HistoryDeserializer {
             .registerSubtype(DeckTrainCardDrawnCommand.class, CommandType.DECK_TRAIN_CARD_DRAWN)
             .registerSubtype(NextTurnCommand.class, CommandType.NEXT_TURN)
             .registerSubtype(SkipTurnCommand.class, CommandType.SKIP_TURN);
+            .registerSubtype(RouteClaimedCommand.class, CommandType.ROUTE_CLAIMED)
+            .registerSubtype(NextTurnCommand.class, CommandType.NEXT_TURN);
 
     private static final RuntimeTypeAdapterFactory<Player> playerTypeFactory =
             RuntimeTypeAdapterFactory.of(Player.class, "type")
@@ -53,7 +56,7 @@ public class HistoryDeserializer {
             .registerSubtype(Deck.class, "deck");
 
     private static final Gson gson = new GsonBuilder()
-            .registerTypeAdapterFactory(typeFactory)
+            .registerTypeAdapterFactory(commandTypeFactory)
             .registerTypeAdapterFactory(playerTypeFactory)
             .registerTypeAdapterFactory(deckTypeFactory)
             .create();
