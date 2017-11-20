@@ -138,6 +138,7 @@ public class ActiveGame extends GameBase implements Observer {
 	}
 	
 	public void nextTurn() {
+		turn.reset();
 		turn = turn.getNextTurn();
 		setChanged();
 		notifyObservers(TURN_UPDATE);
