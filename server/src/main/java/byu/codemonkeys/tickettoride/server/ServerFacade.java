@@ -37,6 +37,7 @@ import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 import byu.codemonkeys.tickettoride.shared.model.map.Route;
 import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
+import byu.codemonkeys.tickettoride.shared.results.ClaimRouteResult;
 import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
 import byu.codemonkeys.tickettoride.shared.results.DrawDeckTrainCardResult;
 import byu.codemonkeys.tickettoride.shared.results.DrawFaceUpTrainCardResult;
@@ -481,41 +482,41 @@ public class ServerFacade implements IServer {
 	}
 
 	@Override
-	public Result claimRoute(String authToken, int routeID, CardType cardType) {
+	public ClaimRouteResult claimRoute(String authToken, int routeID, CardType cardType) {
 		ServerSession session = rootModel.getSession(authToken);
 
 		if (session == null) {
-			return Result.failed("Authentication Error");
+			return new ClaimRouteResult("Authentication Error");
 		}
 
 		String gameID = session.getGameID();
 
 		ActiveGame game = rootModel.getActiveGame(gameID);
 		if (game == null) {
-			return Result.failed("Player is not part of an active game");
+			return new ClaimRouteResult("Player is not part of an active game");
 		}
 
 		User user = session.getUser();
 
 		Player player = game.getPlayer(user);
 		if (player == null) {
-			return Result.failed("Could not find the user in the game. This is a server error");
+			return new ClaimRouteResult("Could not find the user in the game. This is a server error");
 		}
 
 		Self self = (Self) player;
 
 		if (!game.getPlayers().get(game.getTurn().getPlayerIndex()).equals(player)) {
-			return Result.failed("Can only claim routes during your turn");
+			return new ClaimRouteResult("Can only claim routes during your turn");
 		}
 
 		Map<CardType, Integer> hand = self.getHand();
 		Route route = game.getMap().getRoute(routeID);
 		if (route == null) {
-			return Result.failed("No such route");
+			return new ClaimRouteResult("No such route");
 		}
 
 		if (route.isClaimed()) {
-			return Result.failed("Route is already claimed!");
+			return new ClaimRouteResult("Route is already claimed!");
 		}
 
 		if (!route.getRouteType().equals(CardType.Wild)) {
@@ -534,30 +535,32 @@ public class ServerFacade implements IServer {
 			cardsNeeded -= numNormalCards;
 
 			if (hand.get(CardType.Wild) < cardsNeeded) {
-				return Result.failed("Insufficient cards to claim route");
+				return new ClaimRouteResult("Insufficient cards to claim route");
 			}
 
 			numWildCards = cardsNeeded;
 		}
 
 		if (self.getNumTrains() < route.getLength()) {
-			return Result.failed("Insufficient trains to claim route");
+			return new ClaimRouteResult("Insufficient trains to claim route");
 		}
 
 		//TODO: Check if a route is a parallel route
 
 		if (route.claim(self)) {
 			self.setNumTrains(self.getNumTrainCards() - route.getLength());
+			//TODO: Check if numTrains <= 2 and send lastTurnCommand is that is the case
 
 			hand.put(cardType, hand.get(cardType) - numNormalCards);
 			hand.put(CardType.Wild, hand.get(CardType.Wild) - numWildCards);
 
 			RouteClaimedCommandData claimedCommand = new RouteClaimedCommandData(routeID, numNormalCards + numWildCards, self);
 			game.broadcastCommandExclusive(claimedCommand, self);
-			return Result.success();
+			//TODO: Update the turn
+			return new ClaimRouteResult();
 		}
 
-		return Result.failed("Error claiming route");
+		return new ClaimRouteResult("Error claiming route");
 	}
 	
 	@Override

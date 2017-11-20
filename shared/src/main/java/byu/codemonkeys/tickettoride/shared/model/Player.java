@@ -81,6 +81,12 @@ public abstract class Player extends UserBase {
 		setChanged();
 		notifyObservers(PLAYER_TRAIN_CARDS_UPDATE);
 	}
+
+	public void removeTrainCards(int numCards) {
+		numTrainCards -= numCards;
+		setChanged();
+		notifyObservers(PLAYER_TRAIN_CARDS_UPDATE);
+	}
 	
 	public int getNumDestinationCards() {
 		return numDestinationCards;
