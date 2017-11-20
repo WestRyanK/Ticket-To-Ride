@@ -18,10 +18,12 @@ import java.util.List;
 import byu.codemonkeys.tickettoride.commands.BeginGameCommand;
 import byu.codemonkeys.tickettoride.commands.DeckTrainCardDrawnCommand;
 import byu.codemonkeys.tickettoride.commands.FaceUpTrainCardDrawnCommand;
+import byu.codemonkeys.tickettoride.commands.NextTurnCommand;
 import byu.codemonkeys.tickettoride.commands.SendMessageCommand;
 import byu.codemonkeys.tickettoride.commands.SetupGameCommand;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
 import byu.codemonkeys.tickettoride.shared.commands.CommandType;
+import byu.codemonkeys.tickettoride.shared.commands.NextTurnCommandData;
 import byu.codemonkeys.tickettoride.shared.model.cards.Deck;
 import byu.codemonkeys.tickettoride.shared.model.cards.IDeck;
 import byu.codemonkeys.tickettoride.shared.model.Opponent;
@@ -36,7 +38,8 @@ public class HistoryDeserializer {
             .registerSubtype(SetupGameCommand.class, CommandType.SETUP_GAME)
             .registerSubtype(BeginGameCommand.class, CommandType.BEGIN_GAME)
             .registerSubtype(FaceUpTrainCardDrawnCommand.class, CommandType.FACEUP_TRAIN_CARD_DRAWN)
-            .registerSubtype(DeckTrainCardDrawnCommand.class, CommandType.DECK_TRAIN_CARD_DRAWN);
+            .registerSubtype(DeckTrainCardDrawnCommand.class, CommandType.DECK_TRAIN_CARD_DRAWN)
+            .registerSubtype(NextTurnCommand.class, CommandType.NEXT_TURN);
 
     private static final RuntimeTypeAdapterFactory<Player> playerTypeFactory =
             RuntimeTypeAdapterFactory.of(Player.class, "type")
