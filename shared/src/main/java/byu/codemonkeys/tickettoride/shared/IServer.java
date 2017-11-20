@@ -4,7 +4,9 @@ package byu.codemonkeys.tickettoride.shared;
 import java.util.List;
 
 import byu.codemonkeys.tickettoride.shared.model.Message;
+import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
+import byu.codemonkeys.tickettoride.shared.results.ClaimRouteResult;
 import byu.codemonkeys.tickettoride.shared.results.DrawDeckTrainCardResult;
 import byu.codemonkeys.tickettoride.shared.results.DrawFaceUpTrainCardResult;
 import byu.codemonkeys.tickettoride.shared.results.HistoryResult;
@@ -159,4 +161,14 @@ public interface IServer {
 	 * @return a {@link DrawDeckTrainCardResult} indicating whether the operation was successful.
 	 */
 	DrawDeckTrainCardResult drawDeckTrainCard(String authToken);
+
+	/**
+	 * Claim a route on the map
+	 *
+	 * @param authToken an authorization token that indicates which player in which game is claiming a route
+	 * @param routeID the id of the route the player is claiming
+	 * @param cardType only needed for grey routes - the type of card the player will use to claim the route
+	 * @return An acknowledgement that the command was received properly, the server will broadcast the claimed route to all clients.
+	 */
+	ClaimRouteResult claimRoute(String authToken, int routeID, CardType cardType);
 }

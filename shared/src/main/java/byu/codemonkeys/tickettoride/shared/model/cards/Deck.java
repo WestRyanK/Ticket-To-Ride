@@ -2,6 +2,7 @@ package byu.codemonkeys.tickettoride.shared.model.cards;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import byu.codemonkeys.tickettoride.shared.model.ObservableExt;
@@ -61,7 +62,12 @@ public class Deck extends ObservableExt implements IDeck {
 		this.setChanged();
 		this.notifyObservers(DESTINATION_CARDS_UPDATE);
 	}
-	
+
+	@Override
+	public void discard(Map<CardType, Integer> toDiscard) {
+
+	}
+
 	@Override
 	public TrainCard drawTrainCard() {
 		return null;
