@@ -18,8 +18,7 @@ public class ModelRoot extends Observable implements Observer {
 	private Session session;
 	private ActiveGame game;
 	private HistoryManager history;
-	private List<TrainCard> trainCards;
-	private List<DestinationCard> destinationCards;
+	private GameSummary summary;
 	
 	
 	private ModelRoot() {
@@ -109,7 +108,20 @@ public class ModelRoot extends Observable implements Observer {
 		setChanged();
 		notifyObservers(ModelFacade.HISTORY_UPDATE);
 	}
-	
+
+	public GameSummary getSummary() {
+		return summary;
+	}
+
+	public void setSummary(GameSummary summary) {
+		this.summary = summary;
+		this.game.end();
+	}
+
+	public void resetHistory() {
+		history = new HistoryManager();
+	}
+
 	@Override
 	public void update(Observable observable, Object o) {
 		setChanged();

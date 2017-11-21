@@ -30,5 +30,6 @@ public class CommandType {
 	public static final String DESTINATION_CARDS_CHOSEN = "destinationCardsChosen";
 	public static final String DRAW_DESTINATION_CARDS = "DrawDestinationCards";
 	public static final String LAST_TURN = "lastTurn";
+	public static final String GAME_OVER = "gameOver";
 	public static final String FACEUP_TRAIN_CARDS_RESHUFFLED = "faceupTrainCardsReshuffled";
 }

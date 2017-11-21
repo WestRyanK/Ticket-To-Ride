@@ -18,6 +18,7 @@ import byu.codemonkeys.tickettoride.networking.GamePoller;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
 import byu.codemonkeys.tickettoride.presenters.PresenterEnum;
 import byu.codemonkeys.tickettoride.shared.model.ActiveGame;
+import byu.codemonkeys.tickettoride.shared.model.GameSummary;
 import byu.codemonkeys.tickettoride.shared.results.HistoryResult;
 
 public class GamePresenter extends PresenterBase implements GameContract.Presenter, Observer {
@@ -57,6 +58,10 @@ public class GamePresenter extends PresenterBase implements GameContract.Present
 			for (CommandHistoryEntry entry : history) {
 				messageDisplayer.displayMessage(entry.toString());
 			}
+		}
+		if (o == ActiveGame.GAME_OVER)
+		{
+			this.navigator.navigate(PresenterEnum.EndGame, false);
 		}
 	}
 }

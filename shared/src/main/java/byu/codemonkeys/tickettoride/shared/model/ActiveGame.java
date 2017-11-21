@@ -24,6 +24,7 @@ public class ActiveGame extends GameBase implements Observer {
 	public static final String TURN_UPDATE = "TurnUpdate";
 	public static final String PLAYERS_UPDATE = "PlayersUpdate";
 	public static final String DECK_UPDATE = "DeckUpdate";
+	public static final String GAME_OVER = "GameOver";
 	
 	protected GameMap map;
 	protected transient Turn turn;
@@ -213,5 +214,10 @@ public class ActiveGame extends GameBase implements Observer {
 	public void update(Observable observable, Object o) {
 		setChanged();
 		notifyObservers(o);
+	}
+
+	public void end() {
+		setChanged();
+		notifyObservers(GAME_OVER);
 	}
 }

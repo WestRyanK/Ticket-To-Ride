@@ -613,6 +613,13 @@ public class ModelFacade implements IModelFacade {
 	public List<CommandHistoryEntry> getGameHistory() {
 		return models.getGameHistory();
 	}
+
+	/**
+	 * Ends the active game.
+	 */
+	public void endGame() {
+	    
+	}
 	
 	public List<CommandHistoryEntry> getLatestGameHistory() {
 		return models.getHistoryManager().getLatestCommandHistory();
