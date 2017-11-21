@@ -386,7 +386,11 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
             return new ClaimRouteResult("Route is already claimed!");
         }
 
-        if (!route.getRouteType().equals(CardType.Wild)) {
+        if (route.getRouteType().equals(CardType.Wild)) {
+            if (cardType == null) {
+                return new ClaimRouteResult("To claim a wild route, first select a card type from your hand.");
+            }
+        } else {
             cardType = route.getRouteType();
         }
 
