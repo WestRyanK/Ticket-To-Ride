@@ -11,7 +11,8 @@ public class Route {
 	private final int length;
 	private final int routeId;
 	private final CardType routeType;
-	private boolean claimed;
+	private boolean claimed, parallel;
+	private int parallelRouteID;
 	private UserBase owner;
 	
 	public Route(int routeId, CardType routeType, City x, City y, int length) {
@@ -27,6 +28,7 @@ public class Route {
 		this.claimed = false;
 		this.routeId = routeId;
 		this.routeType = routeType;
+		this.parallel = false;
 	}
 	
 	public boolean claim(UserBase user) {
@@ -61,6 +63,24 @@ public class Route {
 	
 	public UserBase getOwner() {
 		return owner;
+	}
+
+	public void setParallelRoute(int parallelRouteID) {
+		this.parallelRouteID = parallelRouteID;
+		parallel = true;
+
+	}
+
+	public boolean isParallel() {
+		return parallel;
+	}
+
+	public int getParallelRouteID() {
+		return parallelRouteID;
+	}
+
+	public int getRouteId() {
+		return routeId;
 	}
 	
 	@Override

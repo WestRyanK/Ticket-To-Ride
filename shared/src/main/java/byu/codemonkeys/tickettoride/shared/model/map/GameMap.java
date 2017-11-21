@@ -25,6 +25,24 @@ public class GameMap extends Observable {
 	private void init(List<City> cities, List<Route> routes) {
 		this.cities = cities;
 		this.routes = routes;
+		calculateParallelRoutes();
+	}
+
+	private void calculateParallelRoutes() {
+		for (Route route1 : routes) {
+			if (route1.isParallel())
+				continue;
+
+			for (Route route2 : routes) {
+				if (route2.isParallel() || route1 == route2)
+					continue;
+
+				if (route1.containsCity(route2.getSource()) && route1.containsCity(route2.getDestination())) {
+					route1.setParallelRoute(route2.getRouteId());
+					route2.setParallelRoute(route1.getRouteId());
+				}
+			}
+		}
 	}
 	
 	public GameMap(List<City> cities, List<Route> routes) {
@@ -53,8 +71,7 @@ public class GameMap extends Observable {
 	public Route getRoute(int routeID) {
 		return routes.get(routeID);
 	}
-	
-	// TODO: Change all these authTokens to something the clients and server can both use.
+
 	public int calculateLongestPathForPlayer(UserBase user) {
 		return 0;
 	}
