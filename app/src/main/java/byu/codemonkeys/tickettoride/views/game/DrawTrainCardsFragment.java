@@ -148,6 +148,11 @@ public class DrawTrainCardsFragment extends Fragment implements DrawTrainCardsCo
 	
 	@Override
 	public void setNumHidden(final int cardCount) {
-		cardDeck.setCount(cardCount);
+		if (cardCount < 1)
+			cardDeck.setVisibility(View.INVISIBLE);
+		else {
+			cardDeck.setVisibility(View.VISIBLE);
+			cardDeck.setCount(cardCount);
+		}
 	}
 }

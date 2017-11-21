@@ -23,7 +23,6 @@ import byu.codemonkeys.tickettoride.shared.commands.DeckTrainCardDrawnCommandDat
 import byu.codemonkeys.tickettoride.shared.commands.DestinationCardsChosenCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.DestinationCardsDrawnCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.FaceUpTrainCardDrawnCommandData;
-import byu.codemonkeys.tickettoride.shared.commands.RouteClaimedCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SendMessageCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SetupGameCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SkipTurnCommandData;
@@ -35,7 +34,6 @@ import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
 import byu.codemonkeys.tickettoride.shared.model.cards.Deck;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
-import byu.codemonkeys.tickettoride.shared.model.map.Route;
 import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
 import byu.codemonkeys.tickettoride.shared.results.ClaimRouteResult;
 import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
@@ -406,9 +404,10 @@ public class ServerFacade implements IServer {
 		
 		game.broadcastCommand(new FaceUpTrainCardDrawnCommandData(player.getUsername(),
 																  card,
+																  // I return the list of all the face up cards because all of them could change if there are 3 or more wilds
 																  game.getDeck()
 																	  .getFaceUpTrainCards(),
-																  // I return the list of all the face up cards because all of them could change if there are 3 or more wilds
+																  game.getDeck().getTrainCardsDeckCount(),
 																  player.getNumTrainCards()));
 		
 		if (!turn.canDrawTrainCard()) {

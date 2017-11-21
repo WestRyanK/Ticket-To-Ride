@@ -598,7 +598,7 @@ public class ModelFacade implements IModelFacade {
 			}
 		}
 		
-		ModelRoot.getInstance().getGame().setStarted(true);
+//		ModelRoot.getInstance().getGame().setStarted(true);
 		models.getGame().getDeck().setDestinationCardsCount(destinationCardDeckCount);
 		models.getGame()
 			  .setMinAllowedDestinationCardsDrawn(ActiveGame.SUBSEQUENT_MIN_ALLOWED_DESTINATION_CARDS_DRAWN);
