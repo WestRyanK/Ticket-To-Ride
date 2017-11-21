@@ -23,7 +23,7 @@ import byu.codemonkeys.tickettoride.shared.commands.DeckTrainCardDrawnCommandDat
 import byu.codemonkeys.tickettoride.shared.commands.DestinationCardsChosenCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.DestinationCardsDrawnCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.FaceUpTrainCardDrawnCommandData;
-import byu.codemonkeys.tickettoride.shared.commands.RouteClaimedCommandData;
+import byu.codemonkeys.tickettoride.shared.commands.FaceUpTrainCardsReshuffledCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SendMessageCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SetupGameCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SkipTurnCommandData;
@@ -35,7 +35,6 @@ import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
 import byu.codemonkeys.tickettoride.shared.model.cards.Deck;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
-import byu.codemonkeys.tickettoride.shared.model.map.Route;
 import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
 import byu.codemonkeys.tickettoride.shared.results.ClaimRouteResult;
 import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
@@ -396,19 +395,21 @@ public class ServerFacade implements IServer {
 		
 		Self player = (Self) game.getPlayer(user);
 		
+		boolean wasShuffled = game.getDeck().drawFaceUpTrainCard(faceUpCardIndex);
 		player.addTrainCard(card);
 		
 		turn.drawFaceUpTrainCard(card);
-		
-		TrainCard replacement = game.getDeck().drawTrainCard();
-		
-		game.getDeck().getFaceUpTrainCards().set(faceUpCardIndex, replacement);
+		// Tell everyone that the face up train cards were shuffled
+		if (wasShuffled)
+			game.broadcastCommand(new FaceUpTrainCardsReshuffledCommandData());
 		
 		game.broadcastCommand(new FaceUpTrainCardDrawnCommandData(player.getUsername(),
 																  card,
+																  // I return the list of all the face up cards because all of them could change if there are 3 or more wilds
 																  game.getDeck()
 																	  .getFaceUpTrainCards(),
-																  // I return the list of all the face up cards because all of them could change if there are 3 or more wilds
+																  game.getDeck()
+																	  .getTrainCardsDeckCount(),
 																  player.getNumTrainCards()));
 		
 		if (!turn.canDrawTrainCard()) {
@@ -473,24 +474,24 @@ public class ServerFacade implements IServer {
 		
 		return new DrawDeckTrainCardResult(card);
 	}
-
+	
 	@Override
 	public ClaimRouteResult claimRoute(String authToken, int routeID, CardType cardType) {
 		ServerSession session = rootModel.getSession(authToken);
-
+		
 		if (session == null) {
 			return new ClaimRouteResult("Authentication Error");
 		}
-
+		
 		String gameID = session.getGameID();
-
+		
 		ActiveGame game = rootModel.getActiveGame(gameID);
 		if (game == null) {
 			return new ClaimRouteResult("Player is not part of an active game");
 		}
-
+		
 		User user = session.getUser();
-
+		
 		return game.claimRoute(routeID, user, cardType);
 	}
 	
@@ -592,6 +593,7 @@ public class ServerFacade implements IServer {
 		
 		game.begin();
 		
-		game.broadcastCommand(new BeginGameCommandData(numDestinations, game.getDeck().getDestinationCardsCount()));
+		game.broadcastCommand(new BeginGameCommandData(numDestinations,
+													   game.getDeck().getDestinationCardsCount()));
 	}
 }

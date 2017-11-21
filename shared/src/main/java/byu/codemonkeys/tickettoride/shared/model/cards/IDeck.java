@@ -10,6 +10,8 @@ import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 public interface IDeck {
 	TrainCard drawTrainCard();
 	
+	boolean drawFaceUpTrainCard(int index) ;
+	
 	Set<DestinationCard> drawDestinationCards();
 	
 	List<TrainCard> getFaceUpTrainCards();

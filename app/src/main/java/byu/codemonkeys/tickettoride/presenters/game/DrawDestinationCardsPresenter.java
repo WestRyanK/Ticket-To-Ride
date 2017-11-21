@@ -10,11 +10,13 @@ import byu.codemonkeys.tickettoride.async.ICallback;
 import byu.codemonkeys.tickettoride.models.IModelFacade;
 import byu.codemonkeys.tickettoride.models.ModelRoot;
 import byu.codemonkeys.tickettoride.mvpcontracts.IMediaPlayer;
+import byu.codemonkeys.tickettoride.mvpcontracts.game.CutScenes;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.DrawDestinationCardsContract;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
 import byu.codemonkeys.tickettoride.presenters.PresenterEnum;
+import byu.codemonkeys.tickettoride.shared.model.ActiveGame;
 import byu.codemonkeys.tickettoride.shared.model.cards.Deck;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.results.Result;
@@ -42,6 +44,10 @@ public class DrawDestinationCardsPresenter extends PresenterBase implements Draw
 			@Override
 			public void callback(Result result) {
 				if (result.isSuccessful()) {
+					if (ModelRoot.getInstance().getGame().getMinAllowedDestinationCardsDrawn() ==
+							ActiveGame.INITIAL_MIN_ALLOWED_DESTINATION_CARDS_DRAWN)
+						//							ModelRoot.getInstance().getGame().setStarted(true);
+						mediaPlayer.playCutScene(CutScenes.openingSequence);
 				} else {
 					messageDisplayer.displayMessage(result.getErrorMessage());
 				}

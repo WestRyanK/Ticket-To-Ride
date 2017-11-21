@@ -19,13 +19,14 @@ import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 
 public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck implements IDeck {
 	// The number of each non-wild type the full deck contains
-	private static int NUM_STANDARD = 12;
+	private static final int NUM_STANDARD = 12;
 	// The number of locomotives the full deck contains
-	private static int NUM_WILD = 14;
+	private static final int NUM_WILD = 14;
 	// The number of destination cards a player must typically draw
-	private static int NUM_DESTINATIONS_TO_DRAW = 3;
+	private static final int NUM_DESTINATIONS_TO_DRAW = 3;
 	// The maximum number of revealed cards
-	private static int MAX_REVEALED = 5;
+	private static final int MAX_REVEALED = 5;
+	private static final int MAX_WILD_CARDS = 2;
 	
 	private Queue<TrainCard> hidden;
 	private Set<TrainCard> discarded;
@@ -69,7 +70,42 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
 	 */
 	@Override
 	public TrainCard drawTrainCard() {
+		// reshuffle in the discarded cards
+		if (hidden.size() == 0) {
+			replayDiscardedCards();
+		}
 		return hidden.poll();
+	}
+	
+	@Override
+	public boolean drawFaceUpTrainCard(int index) {
+		TrainCard outDrawnCard = getFaceUpTrainCards().get(index);
+		TrainCard replacement = drawTrainCard();
+		getFaceUpTrainCards().set(index, replacement);
+		boolean mustShuffle = mustReshuffleFaceUpCards();
+		if (mustShuffle) {
+			this.discarded.addAll(this.revealed);
+			this.revealed.clear();
+			for (int i = 0; i < MAX_REVEALED; i++) {
+				if (this.getTrainCardsDeckCount() > 0)
+					this.revealed.add(drawTrainCard());
+			}
+		}
+		return mustShuffle;
+	}
+	
+	private boolean mustReshuffleFaceUpCards() {
+		int count = 0;
+		for (TrainCard card : this.revealed) {
+			if (card.getCardColor() == CardType.Wild)
+				count++;
+		}
+		return count > MAX_WILD_CARDS;
+	}
+	
+	private void replayDiscardedCards() {
+		hidden.addAll(this.discarded);
+		this.discarded.clear();
 	}
 	
 	// TODO: handle the destination cards pile being depleted.
@@ -122,15 +158,17 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
 	@Override
 	public int getDestinationCardsCount() {
 		return destinations.size();
-    }
-
-    @Override
-    public void discard(Map<CardType, Integer> toDiscard) {
-        for (Map.Entry<CardType, Integer> entry : toDiscard.entrySet()) {
-            for (int i = 0; i < entry.getValue(); i++) {
-                discarded.add(new TrainCard(entry.getKey()));
-            }
-        }
+	}
+	
+	@Override
+	public void discard(Map<CardType, Integer> toDiscard) {
+		for (Map.Entry<CardType, Integer> entry : toDiscard.entrySet()) {
+			for (int i = 0; i < entry.getValue(); i++) {
+				discarded.add(new TrainCard(entry.getKey()));
+			}
+		}
+		if (hidden.size() == 0)
+			replayDiscardedCards();
 	}
 	
 	private void loadFromResource() {
