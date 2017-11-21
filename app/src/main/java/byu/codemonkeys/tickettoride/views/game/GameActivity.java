@@ -241,5 +241,10 @@ public class GameActivity extends AppCompatActivity implements INavigator, IDisp
 	public void playCutScene(CutScenes cutScene) {
 		this.navigate(PresenterEnum.CutScene, true);
 	}
+	
+	@Override
+	public void onBackPressed() {
+//		super.onBackPressed();
+	}
 	// endregion
 }

@@ -57,23 +57,22 @@ public interface IModelFacade {
 	
 	// User actions
 	void sendMessageAsync(Message message, ICallback sendMessageCallback);
-
+	
 	void drawDestinationCardsAsync(ICallback drawDestinationCardsCallback);
-
-	//void chooseDestinationCards(List<DestinationCard> cards);
-	//void chooseDestinationCardsAsync(List<DestinationCard> cards, ICallback selectDestinationCardsCallback);
 	
 	void drawFaceUpTrainCardAsync(int faceUpCardIndex, ICallback drawFaceUpTrainCardCallback);
 	
 	void drawDeckTrainCardAsync(ICallback drawDeckTrainCardCallback);
 	
-	void chooseInitialDestinationCardsAsync(List<DestinationCard> cards,
-											ICallback selectDestinationCardsCallback);
+	void chooseDestinationCardsAsync(List<DestinationCard> cards,
+									 ICallback chooseDestinationCardsCallback);
 	
-	void beginGame(Map<String, Integer> numDestinationCards);
+	void beginGame(Map<String, Integer> numDestinationCards, int destinationCardDeckCount);
 	//TODO: add claimed route, waiting on map
 	
 	List<CommandHistoryEntry> getGameHistory();
 
 	void endGame();
+	
+	List<CommandHistoryEntry> getLatestGameHistory();
 }

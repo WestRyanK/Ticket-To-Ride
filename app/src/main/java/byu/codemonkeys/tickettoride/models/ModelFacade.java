@@ -1,7 +1,5 @@
 package byu.codemonkeys.tickettoride.models;
 
-import android.graphics.PorterDuff;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -28,7 +26,6 @@ import byu.codemonkeys.tickettoride.shared.results.LoginResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
 import byu.codemonkeys.tickettoride.shared.results.Result;
-import byu.codemonkeys.tickettoride.shared.results.StartGameResult;
 import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
 
 /**
@@ -546,7 +543,7 @@ public class ModelFacade implements IModelFacade {
 	 * Tells the server which destination cards of the three given were kept, run asynchronously
 	 *
 	 * @param cards                                 A list of destination cards that the user selected
-	 * @param chooseInitialDestinationCardsCallback The callback to run after telling server
+	 * @param chooseDestinationCardsCallback The callback to run after telling server
 	 *                                              {@pre selectDestinationCardsCallback != null}
 	 *                                              {@pre cards != null}
 	 *                                              {@pre cards.size() <= 3}
@@ -555,8 +552,8 @@ public class ModelFacade implements IModelFacade {
 	 *                                              {@pre models.activeGame != null, aka we're actually in a game}
 	 *                                              {@pre it's your turn}
 	 */
-	public void chooseInitialDestinationCardsAsync(final List<DestinationCard> cards,
-												   final ICallback chooseInitialDestinationCardsCallback) {
+	public void chooseDestinationCardsAsync(final List<DestinationCard> cards,
+											final ICallback chooseDestinationCardsCallback) {
 		ICommand selectDestinationCardsCommand = new ICommand() {
 			@Override
 			public Result execute() {
@@ -576,7 +573,7 @@ public class ModelFacade implements IModelFacade {
 					}
 					ModelRoot.getInstance().getGame().getSelf().getSelecting().clear();
 				}
-				chooseInitialDestinationCardsCallback.callback(result);
+				chooseDestinationCardsCallback.callback(result);
 			}
 		};
 		this.asyncTask.executeTask(selectDestinationCardsCommand, callback);
@@ -592,7 +589,7 @@ public class ModelFacade implements IModelFacade {
 	 *                            {@post the number of destination cards each player has is set to their value in the map}
 	 */
 	@Override
-	public void beginGame(Map<String, Integer> numDestinationCards) {
+	public void beginGame(Map<String, Integer> numDestinationCards, int destinationCardDeckCount) {
 		for (Map.Entry<String, Integer> entry : numDestinationCards.entrySet()) {
 			Player player = (Player) models.getGame().getPlayer(new UserBase(entry.getKey()));
 			if (player.getClass() == Opponent.class) {
@@ -601,7 +598,8 @@ public class ModelFacade implements IModelFacade {
 			}
 		}
 		
-		ModelRoot.getInstance().getGame().setStarted(true);
+//		ModelRoot.getInstance().getGame().setStarted(true);
+		models.getGame().getDeck().setDestinationCardsCount(destinationCardDeckCount);
 		models.getGame()
 			  .setMinAllowedDestinationCardsDrawn(ActiveGame.SUBSEQUENT_MIN_ALLOWED_DESTINATION_CARDS_DRAWN);
 	}
@@ -620,6 +618,10 @@ public class ModelFacade implements IModelFacade {
 	 * Ends the active game.
 	 */
 	public void endGame() {
-
+	    
+	}
+	
+	public List<CommandHistoryEntry> getLatestGameHistory() {
+		return models.getHistoryManager().getLatestCommandHistory();
 	}
 }

@@ -2,11 +2,11 @@ package byu.codemonkeys.tickettoride.server;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import byu.codemonkeys.tickettoride.server.commands.DrawDestinationCardsCommand;
 import byu.codemonkeys.tickettoride.server.exceptions.AlreadyExistsException;
 import byu.codemonkeys.tickettoride.server.exceptions.EmptyGameException;
 import byu.codemonkeys.tickettoride.server.exceptions.FullGameException;
@@ -18,13 +18,12 @@ import byu.codemonkeys.tickettoride.server.model.ServerSession;
 import byu.codemonkeys.tickettoride.server.model.User;
 import byu.codemonkeys.tickettoride.shared.IServer;
 import byu.codemonkeys.tickettoride.shared.commands.BeginGameCommandData;
-import byu.codemonkeys.tickettoride.shared.commands.ChooseDestinationCardsCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
 import byu.codemonkeys.tickettoride.shared.commands.DeckTrainCardDrawnCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.DestinationCardsChosenCommandData;
-import byu.codemonkeys.tickettoride.shared.commands.DrawDestinationCardsCommandData;
+import byu.codemonkeys.tickettoride.shared.commands.DestinationCardsDrawnCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.FaceUpTrainCardDrawnCommandData;
-import byu.codemonkeys.tickettoride.shared.commands.RouteClaimedCommandData;
+import byu.codemonkeys.tickettoride.shared.commands.FaceUpTrainCardsReshuffledCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SendMessageCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SetupGameCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SkipTurnCommandData;
@@ -36,7 +35,6 @@ import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
 import byu.codemonkeys.tickettoride.shared.model.cards.Deck;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
-import byu.codemonkeys.tickettoride.shared.model.map.Route;
 import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
 import byu.codemonkeys.tickettoride.shared.results.ClaimRouteResult;
 import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
@@ -332,23 +330,12 @@ public class ServerFacade implements IServer {
 		List<DestinationCard> cardsList = new ArrayList<>(cards);
 		DestinationCardResult result = new DestinationCardResult(cardsList);
 		
-		game.broadcastCommand(new DrawDestinationCardsCommandData(player.getUsername()));
+		game.broadcastCommand(new DestinationCardsDrawnCommandData(player.getUsername(),
+																   game.getDeck()
+																	   .getDestinationCardsCount()));
 		
 		return result;
 	}
-	
-	//	@Override
-	//	public DestinationCardResult chooseInitialDestinationCards(String authToken,
-	//															   int numSelected,
-	//															   List<DestinationCard> selected) {
-	//		Result result = chooseDestinationCards(authToken, selected);
-	//
-	//		if (result.isSuccessful()) {
-	//			return new DestinationCardResult(selected);
-	//		}
-	//
-	//		return new DestinationCardResult(result.getErrorMessage());
-	//	}
 	
 	@Override
 	public Result sendMessage(String authToken, Message message) {
@@ -408,19 +395,21 @@ public class ServerFacade implements IServer {
 		
 		Self player = (Self) game.getPlayer(user);
 		
+		boolean wasShuffled = game.getDeck().drawFaceUpTrainCard(faceUpCardIndex);
 		player.addTrainCard(card);
 		
 		turn.drawFaceUpTrainCard(card);
-		
-		TrainCard replacement = game.getDeck().drawTrainCard();
-		
-		game.getDeck().getFaceUpTrainCards().set(faceUpCardIndex, replacement);
+		// Tell everyone that the face up train cards were shuffled
+		if (wasShuffled)
+			game.broadcastCommand(new FaceUpTrainCardsReshuffledCommandData());
 		
 		game.broadcastCommand(new FaceUpTrainCardDrawnCommandData(player.getUsername(),
 																  card,
+																  // I return the list of all the face up cards because all of them could change if there are 3 or more wilds
 																  game.getDeck()
 																	  .getFaceUpTrainCards(),
-																  // I return the list of all the face up cards because all of them could change if there are 3 or more wilds
+																  game.getDeck()
+																	  .getTrainCardsDeckCount(),
 																  player.getNumTrainCards()));
 		
 		if (!turn.canDrawTrainCard()) {
@@ -485,24 +474,24 @@ public class ServerFacade implements IServer {
 		
 		return new DrawDeckTrainCardResult(card);
 	}
-
+	
 	@Override
 	public ClaimRouteResult claimRoute(String authToken, int routeID, CardType cardType) {
 		ServerSession session = rootModel.getSession(authToken);
-
+		
 		if (session == null) {
 			return new ClaimRouteResult("Authentication Error");
 		}
-
+		
 		String gameID = session.getGameID();
-
+		
 		ActiveGame game = rootModel.getActiveGame(gameID);
 		if (game == null) {
 			return new ClaimRouteResult("Player is not part of an active game");
 		}
-
+		
 		User user = session.getUser();
-
+		
 		return game.claimRoute(routeID, user, cardType);
 	}
 	
@@ -534,6 +523,7 @@ public class ServerFacade implements IServer {
 		
 		Self self = (Self) player;
 		
+		// Ensure that the user only picks cards from their hand
 		boolean containsAll = true;
 		for (DestinationCard card : cards) {
 			boolean contains = false;
@@ -544,15 +534,28 @@ public class ServerFacade implements IServer {
 			if (contains == false)
 				containsAll = false;
 		}
-		
 		if (!containsAll) {
 			return new DestinationCardResult("You tried to select a card you haven't drawn.");
 		}
 		
+		// Put cards in player's hand
 		for (DestinationCard card : cards) {
 			self.select(card);
 		}
-		
+		// Return unselected cards to deck
+		Set<DestinationCard> drawnCards = self.getSelecting();
+		Set<DestinationCard> returnedCards = new HashSet<>();
+		for (DestinationCard drawnCard : drawnCards) {
+			boolean contains = false;
+			for (DestinationCard chosenCard : cards) {
+				if (drawnCard.getId() == chosenCard.getId())
+					contains = true;
+			}
+			if (!contains)
+				returnedCards.add(drawnCard);
+		}
+		((byu.codemonkeys.tickettoride.server.model.Deck) game.getDeck()).returnDestinationCardsToDeck(
+				returnedCards);
 		self.getSelecting().clear();
 		
 		if (game.isBegun()) {
@@ -561,7 +564,6 @@ public class ServerFacade implements IServer {
 																		game.getDeck()
 																			.getDestinationCardsCount(),
 																		player.getNumDestinationCards()));
-			//TODO(compy-386): uh am I updating the turn correctly?
 			game.nextTurn();
 		}
 		
@@ -591,6 +593,7 @@ public class ServerFacade implements IServer {
 		
 		game.begin();
 		
-		game.broadcastCommand(new BeginGameCommandData(numDestinations));
+		game.broadcastCommand(new BeginGameCommandData(numDestinations,
+													   game.getDeck().getDestinationCardsCount()));
 	}
 }

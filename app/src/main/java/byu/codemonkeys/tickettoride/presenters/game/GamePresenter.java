@@ -53,10 +53,11 @@ public class GamePresenter extends PresenterBase implements GameContract.Present
 		if (o == ActiveGame.STARTED_UPDATE) {
 			this.mediaPlayer.playCutScene(CutScenes.openingSequence);
 		}
-		if (o == ModelFacade.HISTORY_UPDATE)
-		{
-			List<CommandHistoryEntry> history = modelFacade.getGameHistory();
-			messageDisplayer.displayMessage(history.get(history.size() - 1).toString());
+		if (o == ModelFacade.HISTORY_UPDATE) {
+			List<CommandHistoryEntry> history = modelFacade.getLatestGameHistory();
+			for (CommandHistoryEntry entry : history) {
+				messageDisplayer.displayMessage(entry.toString());
+			}
 		}
 		if (o == ActiveGame.GAME_OVER)
 		{

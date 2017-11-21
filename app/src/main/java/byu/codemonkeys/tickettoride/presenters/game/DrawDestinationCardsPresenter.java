@@ -10,6 +10,7 @@ import byu.codemonkeys.tickettoride.async.ICallback;
 import byu.codemonkeys.tickettoride.models.IModelFacade;
 import byu.codemonkeys.tickettoride.models.ModelRoot;
 import byu.codemonkeys.tickettoride.mvpcontracts.IMediaPlayer;
+import byu.codemonkeys.tickettoride.mvpcontracts.game.CutScenes;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.DrawDestinationCardsContract;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
@@ -43,6 +44,10 @@ public class DrawDestinationCardsPresenter extends PresenterBase implements Draw
 			@Override
 			public void callback(Result result) {
 				if (result.isSuccessful()) {
+					if (ModelRoot.getInstance().getGame().getMinAllowedDestinationCardsDrawn() ==
+							ActiveGame.INITIAL_MIN_ALLOWED_DESTINATION_CARDS_DRAWN)
+						//							ModelRoot.getInstance().getGame().setStarted(true);
+						mediaPlayer.playCutScene(CutScenes.openingSequence);
 				} else {
 					messageDisplayer.displayMessage(result.getErrorMessage());
 				}
@@ -50,8 +55,8 @@ public class DrawDestinationCardsPresenter extends PresenterBase implements Draw
 		};
 		if (canAccept()) {
 			navigator.navigateBack(PresenterEnum.Game);
-			this.modelFacade.chooseInitialDestinationCardsAsync(this.view.getSelectedCards(),
-																selectDestinationCardsCallback);
+			this.modelFacade.chooseDestinationCardsAsync(this.view.getSelectedCards(),
+														 selectDestinationCardsCallback);
 		}
 	}
 	

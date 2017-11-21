@@ -17,15 +17,17 @@ import byu.codemonkeys.tickettoride.shared.results.Result;
 
 /**
  * A set of operations that different pollers will use to update the models in real time.
- *
+ * <p>
  * {@invariant will be a static Singleton instance, so ClientFacade.getInstance() will return the ClientFacade object}
  */
 
 public class ClientFacade implements IClient {
 	private static ClientFacade instance;
-
+	
 	private static ITask mainThreadTask;
-
+	
+	private static boolean isCurrentlyUpdating = false;
+	
 	private ClientFacade() {
 	}
 	
@@ -39,7 +41,7 @@ public class ClientFacade implements IClient {
 	public static void setMainThreadTask(ITask mainThreadTask) {
 		ClientFacade.mainThreadTask = mainThreadTask;
 	}
-
+	
 	@Override
 	public void updatePendingGames() {
 		final ModelRoot modelRoot = ModelRoot.getInstance();
@@ -54,15 +56,16 @@ public class ClientFacade implements IClient {
 		};
 		this.mainThreadTask.executeTask(setPendingGamesCommand, null);
 	}
-
+	
 	/**
 	 * Gets the user's selected pending game from the server, and updates its information in the ModelRoot
-	 *
+	 * <p>
 	 * {@pre modelRoot.getSession() != null}
 	 * {@pre modelRoot.getSession().getAuthToken() is a valid auth token}
 	 * {@pre the user has selected a pending game}
 	 * {@post modelRoot will contain the updated game information for the user's selected pending game}
-	 * @exception Exception no auth token, the user has not selected a game, or other server error
+	 *
+	 * @throws Exception no auth token, the user has not selected a game, or other server error
 	 */
 	@Override
 	public void updatePendingGame() {
@@ -81,30 +84,38 @@ public class ClientFacade implements IClient {
 	
 	@Override
 	public void updateGame() {
-		final ModelRoot modelRoot = ModelRoot.getInstance();
-		String authToken = modelRoot.getSession().getAuthToken();
-		int lastReadCommandIndex = modelRoot.getLastReadCommandIndex();
-		final HistoryResult result = ServerProxy.getInstance().updateHistory(authToken, lastReadCommandIndex);
-		
-		ICommand executeHistoryCommand = new ICommand() {
-			@Override
-			public Result execute() {
-				List<CommandData> commands = result.getHistory();
-				
-				if (commands.size() > 0){
-					executeCommands(commands);
-					modelRoot.getHistoryManager().addHistory(commands);
-					modelRoot.historyUpdated();
+		if (!isCurrentlyUpdating) {
+			isCurrentlyUpdating = true;
+			final ModelRoot modelRoot = ModelRoot.getInstance();
+			String authToken = modelRoot.getSession().getAuthToken();
+			int lastReadCommandIndex = modelRoot.getLastReadCommandIndex();
+			final HistoryResult result = ServerProxy.getInstance()
+													.updateHistory(authToken, lastReadCommandIndex);
+			
+			ICommand executeHistoryCommand = new ICommand() {
+				@Override
+				public Result execute() {
+					List<CommandData> commands = result.getHistory();
+					
+					if (commands != null && commands.size() > 0) {
+						executeCommands(commands);
+						//						for (CommandData command : commands) { // This way, if we receive multiple commands in one poll, it will toast all of them
+						//							modelRoot.getHistoryManager().addHistory(command);
+						modelRoot.getHistoryManager().addHistory(commands);
+						modelRoot.historyUpdated();
+						//						}
+					}
+					isCurrentlyUpdating = false;
+					return null;
 				}
-				return null;
-			}
-		};
-		this.mainThreadTask.executeTask(executeHistoryCommand, null);
+			};
+			this.mainThreadTask.executeTask(executeHistoryCommand, null);
+		}
 	}
 	
 	private void executeCommands(List<CommandData> commands) {
-		for(CommandData command: commands){
-			if(command instanceof IClientCommand){
+		for (CommandData command : commands) {
+			if (command instanceof IClientCommand) {
 				((IClientCommand) command).execute();
 			}
 		}

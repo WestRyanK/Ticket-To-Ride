@@ -1,6 +1,7 @@
 package byu.codemonkeys.tickettoride.server.commands;
 
 import byu.codemonkeys.tickettoride.server.ServerFacade;
+import byu.codemonkeys.tickettoride.shared.commands.DestinationCardsDrawnCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.DrawDestinationCardsCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.ICommand;
 import byu.codemonkeys.tickettoride.shared.results.Result;
@@ -10,8 +11,8 @@ import byu.codemonkeys.tickettoride.shared.results.Result;
  */
 
 public class DrawDestinationCardsCommand extends DrawDestinationCardsCommandData implements ICommand{
-    public DrawDestinationCardsCommand(String userName) {
-        super(userName);
+    public DrawDestinationCardsCommand() {
+        super();
     }
 
     @Override
