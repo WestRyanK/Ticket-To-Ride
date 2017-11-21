@@ -19,7 +19,9 @@ import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
  * fields of GameBase to a shared PendingGame class.
  */
 public class ActiveGame extends GameBase implements Observer {
-	public static final int MAX_TRAINS = 45;
+	public static final int MAX_TRAINS =
+//			45;
+	20;
 	public static final String MAP_UPDATE = "MapUpdate";
 	public static final String TURN_UPDATE = "TurnUpdate";
 	public static final String PLAYERS_UPDATE = "PlayersUpdate";

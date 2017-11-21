@@ -1,6 +1,10 @@
 package byu.codemonkeys.tickettoride.shared.model.map;
 
 import org.junit.Test;
+import org.junit.Before;
+
+import byu.codemonkeys.tickettoride.shared.model.UserBase;
+import byu.codemonkeys.tickettoride.shared.model.map.longestpathsolver.LongestPathCalculator;
 
 import static org.junit.Assert.*;
 
@@ -13,6 +17,7 @@ public class GameMapTest {
 	public void LoadMapTest()
 	{
 		GameMap map = new GameMap();
+		
 //		assertEquals(103, map.getAllRoutes().size());
 	}
 	
