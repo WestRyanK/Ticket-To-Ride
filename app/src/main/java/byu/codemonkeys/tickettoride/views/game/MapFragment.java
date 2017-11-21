@@ -12,12 +12,15 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import byu.codemonkeys.tickettoride.R;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.MapContract;
 import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
-import byu.codemonkeys.tickettoride.views.viewdata.PointBubblesData;
+import byu.codemonkeys.tickettoride.shared.model.map.GameMapLoader;
 import byu.codemonkeys.tickettoride.views.widgets.MapEdgeWidget;
 import byu.codemonkeys.tickettoride.views.widgets.Viewport;
 
@@ -30,7 +33,7 @@ public class MapFragment extends Fragment implements MapContract.View {
 	private MapEdgeWidget pointBubble;
 	private ImageView imageViewMap;
 	private MapContract.Presenter presenter;
-//	private Bundle viewportState;
+	private Map<Integer, MapEdgeWidget> mapEdgeWidgets;
 	private static final String VIEWPORT_ARG_ZOOM = "VIEWPORT_ARG_ZOOM";
 	private static final String VIEWPORT_ARG_OFFSETX = "VIEWPORT_ARG_OFFSETX";
 	private static final String VIEWPORT_ARG_OFFSETY = "VIEWPORT_ARG_OFFSETY";
@@ -72,30 +75,33 @@ public class MapFragment extends Fragment implements MapContract.View {
 	}
 	
 	private void setupMap() {
-		Map<Integer, PointBubblesData.PointBubbleData> bubbleData = PointBubblesData.getInstance()
-																					.getAllBubbles();
-		int bubbleSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+//		Map<Integer, MapEdgesData.MapEdgeData> bubbleData = MapEdgesData.getInstance()
+//																		.getAllBubbles();
+		this.mapEdgeWidgets = new HashMap<>();
+		int circleSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
 														 20,
 														 getResources().getDisplayMetrics());
 		Drawable mapDrawable = getResources().getDrawable(R.drawable.avatarmap);
-		for (PointBubblesData.PointBubbleData bubble : bubbleData.values()) {
-			final MapEdgeWidget pointBubble = new MapEdgeWidget(getContext());
-			pointBubble.setPoints(bubble.getPointValue());
-			int x = (int) (bubble.getMapXRatio() * mapDrawable.getIntrinsicWidth() -
-					bubbleSize / 2.0f);
-			int y = (int) (bubble.getMapYRatio() * mapDrawable.getIntrinsicHeight() -
-					bubbleSize / 2.0f);
-			pointBubble.setLayoutParams(new Viewport.LayoutParams(bubbleSize, bubbleSize, x, y));
-			pointBubble.setClaimedColor(PlayerColor.None);
-			this.viewport.addView(pointBubble);
+		
+		for (GameMapLoader.RouteData routeData : GameMapLoader.getInstance().loadRoutesPositionsFromResource()) {
+			final MapEdgeWidget routeCircle = new MapEdgeWidget(getContext());
+			routeCircle.setLengthValue(routeData.getLength());
+			int x = (int) (routeData.getRatioX() * mapDrawable.getIntrinsicWidth() -
+					circleSize / 2.0f);
+			int y = (int) (routeData.getRatioY() * mapDrawable.getIntrinsicHeight() -
+					circleSize / 2.0f);
+			routeCircle.setLayoutParams(new Viewport.LayoutParams(circleSize, circleSize, x, y));
+			routeCircle.setClaimedColor(PlayerColor.None);
+			this.viewport.addView(routeCircle);
 			
-			pointBubble.setClickable(true);
-			pointBubble.setOnClickListener(new View.OnClickListener() {
+			routeCircle.setClickable(true);
+			routeCircle.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					presenter.claimRoute(pointBubble);
+					presenter.claimRoute(routeCircle.getId());
 				}
 			});
+			this.mapEdgeWidgets.put(routeCircle.getId(), routeCircle);
 		}
 	}
 	
@@ -134,4 +140,9 @@ public class MapFragment extends Fragment implements MapContract.View {
 		this.imageViewMap = (ImageView) view.findViewById(R.id.map_imageViewMap);
 	}
 	
+	@Override
+	public void setRouteClaimed(int routeID, PlayerColor color) {
+		MapEdgeWidget edgeWidget = this.mapEdgeWidgets.get(routeID);
+		edgeWidget.setClaimedColor(color);
+	}
 }
