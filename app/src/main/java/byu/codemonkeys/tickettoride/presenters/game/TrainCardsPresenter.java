@@ -12,6 +12,8 @@ import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.TrainCardsContract;
 import byu.codemonkeys.tickettoride.shared.model.Player;
+import byu.codemonkeys.tickettoride.shared.model.Self;
+import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
 
 public class TrainCardsPresenter extends PresenterBase implements TrainCardsContract.Presenter, Observer {
     private TrainCardsContract.View view;
@@ -32,7 +34,12 @@ public class TrainCardsPresenter extends PresenterBase implements TrainCardsCont
             this.view.setHand(ModelRoot.getInstance().getGame().getSelf().getHand());
         }
     }
-
+    
+    @Override
+    public void setActiveCardType(CardType type) {
+        ModelRoot.getInstance().getGame().getSelf().setActiveTrainCardType(type);
+    }
+    
     @Override
     public void update(Observable observable, Object o) {
         if (o == ModelFacade.GAME_UPDATE) {
@@ -40,6 +47,9 @@ public class TrainCardsPresenter extends PresenterBase implements TrainCardsCont
             loadHand();
         } else if (o == Player.PLAYER_TRAIN_CARDS_UPDATE) {
             loadHand();
+        }
+        else if (o == Self.ACTIVE_CARD_TYPE_UPDATE){
+            view.setActiveCardType(ModelRoot.getInstance().getGame().getSelf().getActiveTrainCardType());
         }
     }
 }
