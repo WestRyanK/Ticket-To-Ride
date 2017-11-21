@@ -326,7 +326,20 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
             return new ClaimRouteResult("Insufficient trains to claim route");
         }
 
-        //TODO: Check if a route is a parallel route
+        if (route.isParallel()) {
+            Route parallelRoute = map.getRoute(route.getParallelRouteID());
+
+            if (players.size() <= 3) {
+                if (parallelRoute.isClaimed()) {
+                    return new ClaimRouteResult("Parallel route already claimed.");
+                }
+            } else {
+                if (parallelRoute.isClaimed() &&
+                        self.equals(parallelRoute.getOwner())) {
+                    return new ClaimRouteResult("Cannot claim parallel routes.");
+                }
+            }
+        }
 
         if (route.claim(self)) {
             self.setNumTrains(self.getNumTrainCards() - route.getLength());
