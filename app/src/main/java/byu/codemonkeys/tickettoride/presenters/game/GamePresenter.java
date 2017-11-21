@@ -59,19 +59,16 @@ public class GamePresenter extends PresenterBase implements GameContract.Present
 				messageDisplayer.displayMessage(entry.toString());
 			}
 		}
-		if (o == ActiveGame.GAME_OVER)
-		{
+		if (o == ActiveGame.GAME_OVER) {
 			this.navigator.navigate(PresenterEnum.EndGame, false);
+			if (ModelRoot.getInstance()
+						 .getSummary()
+						 .getWinner()
+						 .equals(ModelRoot.getInstance().getGame().getSelf().getUsername())) {
+				this.mediaPlayer.playCutScene(CutScenes.cheering);
+			} else {
+				this.mediaPlayer.playCutScene(CutScenes.iLikeTrains);
+			}
 		}
-		
-		// TODO: Flesh this out when we get to the end game
-//		if (o == ActiveGame.END_GAME) {
-//			if (ModelRoot.getInstance().getUser().getUsername().equals(winner.getUsername())) {
-//				this.mediaPlayer.playCutScene(CutScenes.cheering);
-//			} else {
-//				this.mediaPlayer.playCutScene(CutScenes.iLikeTrains);
-//			}
-//			this.navigator.navigate(PresenterEnum.EndGame, false);
-//		}
 	}
 }
