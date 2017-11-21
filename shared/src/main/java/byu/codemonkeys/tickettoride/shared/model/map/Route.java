@@ -130,4 +130,11 @@ public class Route {
 	public CardType getRouteType() {
 		return routeType;
 	}
+
+	public City getOtherCity(City city) {
+		if (source.equals(city)) return destination;
+		if (destination.equals(city)) return source;
+
+		return null;
+	}
 }

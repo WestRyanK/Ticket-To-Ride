@@ -72,6 +72,10 @@ public class GameMap extends Observable {
 		return routes.get(routeID);
 	}
 
+	public City getCity(int cityID) {
+		return cities.get(cityID);
+	}
+
 	public int calculateLongestPathForPlayer(UserBase user) {
 		return 0;
 	}
