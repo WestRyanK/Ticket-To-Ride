@@ -15,7 +15,7 @@ cache:
 
 stages:
   - build+test
-  - deploy
+#  - deploy
 
 build+test:
   stage: build+test
@@ -26,29 +26,29 @@ build+test:
     paths:
     - app/build/outputs/
     
-deploy:
-  stage: deploy
-  only:
-  - master
-  script:
-  # install ssh-agent
-  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-  # run ssh-agent
-  - eval $(ssh-agent -s)
-  # add ssh key stored in SSH_PRIVATE_KEY variable to the agent store
-  - ssh-add <(echo "$SSH_PRIVATE_KEY")
-  - ./gradlew jar
-  # disable host key checking (NOTE: makes you susceptible to man-in-the-middle attacks)
-  # WARNING: use only in docker container, if you use it with shell you will overwrite your user's ssh config
-  - mkdir -p ~/.ssh
-  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-  - ssh-add -l
-  #- ssh west.ryan.k@104.155.184.125
-  # Copy files to google cloud server
-  - scp ./server/build/libs/server.jar west.ryan.k@104.155.184.125:~
-  - scp ./shared/build/libs/shared.jar west.ryan.k@104.155.184.125:~
-  # we don't need to copy this since it'll never change
-  #- scp ./shared/build/libs/gson-2.8.1.jar west.ryan.k@104.155.184.125:~
-  # restart the server
-  - ssh west.ryan.k@104.155.184.125 "screen -X -S ttrs kill" || true
-  - ssh west.ryan.k@104.155.184.125 "screen -m -d -S ttrs java -jar /home/west.ryan.k/server.jar"
+#deploy:
+#  stage: deploy
+#  only:
+#  - master
+#  script:
+#  # install ssh-agent
+#  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+#  # run ssh-agent
+#  - eval $(ssh-agent -s)
+#  # add ssh key stored in SSH_PRIVATE_KEY variable to the agent store
+#  - ssh-add <(echo "$SSH_PRIVATE_KEY")
+#  - ./gradlew jar
+#  # disable host key checking (NOTE: makes you susceptible to man-in-the-middle attacks)
+#  # WARNING: use only in docker container, if you use it with shell you will overwrite your user's ssh config
+#  - mkdir -p ~/.ssh
+#  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+#  - ssh-add -l
+#  #- ssh west.ryan.k@104.155.184.125
+#  # Copy files to google cloud server
+#  - scp ./server/build/libs/server.jar west.ryan.k@104.155.184.125:~
+#  - scp ./shared/build/libs/shared.jar west.ryan.k@104.155.184.125:~
+#  # we don't need to copy this since it'll never change
+#  #- scp ./shared/build/libs/gson-2.8.1.jar west.ryan.k@104.155.184.125:~
+#  # restart the server
+#  - ssh west.ryan.k@104.155.184.125 "screen -X -S ttrs kill" || true
+#  - ssh west.ryan.k@104.155.184.125 "screen -m -d -S ttrs java -jar /home/west.ryan.k/server.jar"
