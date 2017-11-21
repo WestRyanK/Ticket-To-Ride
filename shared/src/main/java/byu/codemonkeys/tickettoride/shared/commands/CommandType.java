@@ -29,4 +29,5 @@ public class CommandType {
 	public static final String DECK_TRAIN_CARD_DRAWN = "deckTrainCardDrawn";
 	public static final String DESTINATION_CARDS_CHOSEN = "destinationCardsChosen";
 	public static final String LAST_TURN = "lastTurn";
+	public static final String GAME_OVER = "gameOver";
 }

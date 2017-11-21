@@ -21,13 +21,8 @@ import byu.codemonkeys.tickettoride.shared.results.Result;
 import byu.codemonkeys.tickettoride.shared.results.StartGameResult;
 import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
 
-/**
- * Created by Megan on 10/3/2017.
- */
-
 public interface IModelFacade {
-	
-	
+
 	void addObserver(Observer observer);
 	
 	UserBase getUser();
@@ -79,4 +74,6 @@ public interface IModelFacade {
 	//TODO: add claimed route, waiting on map
 	
 	List<CommandHistoryEntry> getGameHistory();
+
+	void endGame();
 }

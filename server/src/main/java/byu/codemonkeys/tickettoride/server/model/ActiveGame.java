@@ -9,10 +9,13 @@ import java.util.Queue;
 
 import byu.codemonkeys.tickettoride.server.broadcast.CommandManager;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
+import byu.codemonkeys.tickettoride.shared.commands.GameOverCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.LastTurnCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.NextTurnCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.RouteClaimedCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SkipTurnCommandData;
+import byu.codemonkeys.tickettoride.shared.model.EndGamePlayerStats;
+import byu.codemonkeys.tickettoride.shared.model.GameSummary;
 import byu.codemonkeys.tickettoride.shared.model.Opponent;
 import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
@@ -30,6 +33,7 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
     private static int LAST_TURN_TRAIN_THRESHOLD = 2;
 
     private boolean begun;
+    private boolean ended;
     private Player firstSkippedPlayer;
     private boolean finalRound;
     private int finalRoundTurns;
@@ -275,7 +279,28 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
     }
 
     public void endGame() {
-        System.out.println("Game Over");
+        GameSummary gameSummary = new GameSummary();
+
+        for (Player player : players) {
+            Self self = (Self) player;
+
+            EndGamePlayerStats playerSummary = new EndGamePlayerStats(
+                    player.getUsername(),
+                    player.getColor(),
+                    0,
+                    0,
+                    0,
+                    0
+            );
+
+            gameSummary.addSummary(playerSummary);
+        }
+
+        gameSummary.calculateWinner();
+
+        broadcastCommand(new GameOverCommandData(gameSummary));
+
+        ended = true;
     }
     
     public ClaimRouteResult claimRoute(int routeID, User user, CardType cardType) {
@@ -357,5 +382,22 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
     private void initiateFinalRound() {
         finalRound = true;
         finalRoundTurns = players.size();
+    }
+
+    public boolean isEnded() {
+        return ended;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) return false;
+
+        if (this == o) return true;
+
+        if (getClass() != o.getClass()) return false;
+
+        ActiveGame other = (ActiveGame) o;
+
+        return getID().equals(other.getID());
     }
 }
