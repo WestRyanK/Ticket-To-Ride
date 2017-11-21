@@ -75,17 +75,6 @@ public class Graph<NodeType, EdgeType> {
 		return sb.toString();
 	}
 	
-	//	public Collection<Node<NodeType, EdgeType>> AddNodes(Collection<NodeType> values) {
-	//		if (values == null)
-	//			return null;
-	//
-	//		List<Node<NodeType, EdgeType>> list = new ArrayList<>();
-	//		for(NodeType value : values) {
-	//			list.add(AddNode(value));
-	//		}
-	//		return list;
-	//	}
-	
 	public interface Action<NodeType, EdgeType> {
 		void visit(NodeType nodeA, NodeType nodeB, EdgeType edgeSize);
 		
@@ -94,33 +83,14 @@ public class Graph<NodeType, EdgeType> {
 	
 	public void DFS(NodeType startNode, Action action) {
 		Map<NodeType, Boolean> visitedNodes = new HashMap<>();
-		Map<pair<NodeType>, Boolean> visitedEdges = new HashMap<>();
 		for (Node<NodeType, EdgeType> node : this.getNodes()) {
 			visitedNodes.put(node.getValue(), false);
-			
-			for (Edge<NodeType, EdgeType> edge : node.getEdges()) {
-				pair<NodeType> pairA = new pair<>(node.getValue(), edge.getHeadNode().getValue());
-				visitedEdges.put(pairA, false);
-				pair<NodeType> pairB = new pair<>(edge.getHeadNode().getValue(), node.getValue());
-				visitedEdges.put(pairB, false);
-			}
 		}
-		DFS_recurse(startNode, visitedNodes, visitedEdges, action);
+		DFS_recurse(startNode, null, visitedNodes, action);
 	}
 	
-	private static class pair<NodeType> {
-		private final NodeType itemA;
-		private final NodeType itemB;
-		
-		private pair(NodeType itemA, NodeType itemB) {
-			this.itemA = itemA;
-			this.itemB = itemB;
-		}
-	}
-	
-	private void DFS_recurse(NodeType node,
+	private void DFS_recurse(NodeType node, NodeType parent,
 							 Map<NodeType, Boolean> visitedNodes,
-							 Map<pair<NodeType>, Boolean> visitedEdges,
 							 Action action) {
 		visitedNodes.put(node, true);
 		for (Edge<NodeType, EdgeType> neighbor : this.get(node).getEdges()) {
@@ -128,12 +98,12 @@ public class Graph<NodeType, EdgeType> {
 			EdgeType distance = neighbor.getEdgeDistance();
 			if (!visitedNodes.get(head)) {
 				action.visit(node, head, distance);
-				DFS_recurse(neighbor.getHeadNode().getValue(), visitedNodes, visitedEdges, action);
+				DFS_recurse(neighbor.getHeadNode().getValue(), node, visitedNodes,  action);
 			}
-//			} else if (!visitedEdges.get(new pair<NodeType>(head, node)) && !visitedEdges.get(new pair<NodeType>(node, head))) {
-//				action.visit(node, head, distance);
-//				action.pop();
-//			}
+			else if (head != parent){
+				action.visit(node, head, distance);
+				action.pop();
+			}
 		}
 		action.pop();
 	}

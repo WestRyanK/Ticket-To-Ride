@@ -5,5 +5,5 @@ package byu.codemonkeys.tickettoride.mvpcontracts.game;
  */
 
 public enum CutScenes {
-	openingSequence
+	openingSequence, iLikeTrains, cheering
 }

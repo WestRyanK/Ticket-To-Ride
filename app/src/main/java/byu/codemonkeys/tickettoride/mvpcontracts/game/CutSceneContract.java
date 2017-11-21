@@ -13,7 +13,7 @@ public interface CutSceneContract {
 	interface Presenter {
 		void cutSceneEnd();
 		
-		void initCutScene();
+		void initCutScene(CutScenes scene);
 		
 		boolean isSkipCutScene();
 	}

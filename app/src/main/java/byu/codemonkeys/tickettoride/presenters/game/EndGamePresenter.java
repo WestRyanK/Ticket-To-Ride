@@ -11,6 +11,7 @@ import byu.codemonkeys.tickettoride.models.ModelRoot;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.IMediaPlayer;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
+import byu.codemonkeys.tickettoride.mvpcontracts.game.CutScenes;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.EndGameContract;
 import byu.codemonkeys.tickettoride.networking.GamePoller;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;

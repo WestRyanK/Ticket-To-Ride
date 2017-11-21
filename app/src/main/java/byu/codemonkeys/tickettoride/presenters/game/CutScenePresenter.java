@@ -38,10 +38,10 @@ public class CutScenePresenter extends PresenterBase implements CutSceneContract
 	}
 	
 	@Override
-	public void initCutScene() {
+	public void initCutScene(CutScenes scene) {
 		this.wasSoundPlaying = this.mediaPlayer.isSoundPlaying();
 		this.mediaPlayer.pauseSound();
-		this.view.playCutScene(CutScenes.openingSequence);
+		this.view.playCutScene(scene);
 	}
 	
 	@Override
