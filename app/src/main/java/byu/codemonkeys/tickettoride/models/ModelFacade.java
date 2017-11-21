@@ -1,6 +1,7 @@
 package byu.codemonkeys.tickettoride.models;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Observer;
@@ -16,6 +17,7 @@ import byu.codemonkeys.tickettoride.shared.IServer;
 import byu.codemonkeys.tickettoride.shared.commands.ICommand;
 import byu.codemonkeys.tickettoride.shared.model.*;
 import byu.codemonkeys.tickettoride.shared.model.Player;
+import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
@@ -25,7 +27,6 @@ import byu.codemonkeys.tickettoride.shared.results.LoginResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
 import byu.codemonkeys.tickettoride.shared.results.Result;
-import byu.codemonkeys.tickettoride.shared.results.StartGameResult;
 import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
 
 /**
@@ -126,26 +127,6 @@ public class ModelFacade implements IModelFacade {
 	}
 	
 	/**
-	 * Tries to log a user into the system.
-	 *
-	 * @param username The username of the user to log in
-	 * @param password The password of the user to log in
-	 * @return A result specifying whether the login was successful.
-	 * {@pre username != null}
-	 * {@pre password != null}
-	 * {@post if valid user, getUser() != null}
-	 */
-	@Override
-	public LoginResult login(String username, String password) {
-		LoginResult result = serverProxy.login(username, password);
-		if (result.isSuccessful()) {
-			models.setSession(result.getUserSession());
-			models.setUser(new UserBase(username));
-		}
-		return result;
-	}
-	
-	/**
 	 * Tries to log a user into the system asynchronously
 	 *
 	 * @param username      The username of the user to log in
@@ -163,32 +144,22 @@ public class ModelFacade implements IModelFacade {
 		ICommand loginCommand = new ICommand() {
 			@Override
 			public Result execute() {
-				return login(username, password);
+				LoginResult result = serverProxy.login(username, password);
+				return result;
 			}
 		};
 		
-		this.asyncTask.executeTask(loginCommand, loginCallback);
-	}
-	
-	/**
-	 * Tries to register a user for the system.
-	 *
-	 * @param username The username of the user to log in
-	 * @param password The password of the user to log in
-	 * @return A result specifying whether the registration was successful.
-	 * {@pre username != null}
-	 * {@pre password != null}
-	 * {@pre loginCallback != null}
-	 * {@post if user doesn't exist and username and password are valid, getUser() != null}
-	 */
-	@Override
-	public LoginResult register(String username, String password) {
-		LoginResult result = serverProxy.register(username, password);
-		if (result.isSuccessful()) {
-			models.setSession(result.getUserSession());
-			models.setUser(new UserBase(username));
-		}
-		return result;
+		ICallback callback = new ICallback() {
+			@Override
+			public void callback(Result result) {
+				if (result.isSuccessful()) {
+					models.setSession(((LoginResult) result).getUserSession());
+					models.setUser(new UserBase(username));
+				}
+				loginCallback.callback(result);
+			}
+		};
+		this.asyncTask.executeTask(loginCommand, callback);
 	}
 	
 	/**
@@ -206,15 +177,26 @@ public class ModelFacade implements IModelFacade {
 	@Override
 	public void registerAsync(final String username,
 							  final String password,
-							  ICallback registerCallback) {
+							  final ICallback registerCallback) {
 		ICommand registerCommand = new ICommand() {
 			@Override
 			public Result execute() {
-				return register(username, password);
+				LoginResult result = serverProxy.register(username, password);
+				return result;
 			}
 		};
 		
-		this.asyncTask.executeTask(registerCommand, registerCallback);
+		ICallback callback = new ICallback() {
+			@Override
+			public void callback(Result result) {
+				if (result.isSuccessful()) {
+					models.setSession(((LoginResult) result).getUserSession());
+					models.setUser(new UserBase(username));
+				}
+				registerCallback.callback(result);
+			}
+		};
+		this.asyncTask.executeTask(registerCommand, callback);
 	}
 	
 	/**
@@ -236,25 +218,6 @@ public class ModelFacade implements IModelFacade {
 	/**
 	 * Attempts to create a new game
 	 *
-	 * @param gameName The name of the new game to create
-	 * @return A PendingGameResult that reports whether creation was successful
-	 * {@pre gameName != null}
-	 * {@pre gameName is not empty}
-	 * {@post If successful, models.pendingGame != null}
-	 */
-	@Override
-	public PendingGameResult createGame(String gameName) {
-		PendingGameResult result = serverProxy.createGame(models.getSession().getAuthToken(),
-														  gameName);
-		if (result.isSuccessful()) {
-			models.setPendingGame(result.getGame());
-		}
-		return result;
-	}
-	
-	/**
-	 * Attempts to create a new game
-	 *
 	 * @param gameName           The name of the new game to create
 	 * @param createGameCallback The method to call after trying to create a game
 	 *                           {@pre gameName != null}
@@ -262,15 +225,27 @@ public class ModelFacade implements IModelFacade {
 	 *                           {@post If successful, models.pendingGame != null}
 	 */
 	@Override
-	public void createGameAsync(final String gameName, ICallback createGameCallback) {
+	public void createGameAsync(final String gameName, final ICallback createGameCallback) {
 		ICommand createGameCommand = new ICommand() {
 			@Override
 			public Result execute() {
-				return createGame(gameName);
+				PendingGameResult result = serverProxy.createGame(models.getSession()
+																		.getAuthToken(), gameName);
+				return result;
 			}
 		};
 		
-		this.asyncTask.executeTask(createGameCommand, createGameCallback);
+		ICallback callback = new ICallback() {
+			@Override
+			public void callback(Result result) {
+				if (result.isSuccessful()) {
+					models.setPendingGame(((PendingGameResult) result).getGame());
+				}
+				
+				createGameCallback.callback(result);
+			}
+		};
+		this.asyncTask.executeTask(createGameCommand, callback);
 	}
 	
 	/**
@@ -295,25 +270,6 @@ public class ModelFacade implements IModelFacade {
 	/**
 	 * Attempts to join a pending game
 	 *
-	 * @param game The game to join
-	 * @return A Result specifying whether joining was successful
-	 * {@pre game != null}
-	 * {@post if successful, models.pendingGame != null}
-	 */
-	@Override
-	public PendingGameResult joinPendingGame(GameBase game) {
-		PendingGameResult result = serverProxy.joinPendingGame(models.getSession().getAuthToken(),
-															   game.getID());
-		if (result.isSuccessful()) {
-			models.setPendingGame(result.getGame());
-			
-		}
-		return result;
-	}
-	
-	/**
-	 * Attempts to join a pending game
-	 *
 	 * @param game                    The game to join
 	 * @param joinPendingGameCallback The callback to run after attempting to join game
 	 *                                {@pre game != null}
@@ -321,32 +277,29 @@ public class ModelFacade implements IModelFacade {
 	 *                                {@post if successful, models.pendingGame != null}
 	 */
 	@Override
-	public void joinPendingGameAsync(final GameBase game, ICallback joinPendingGameCallback) {
+	public void joinPendingGameAsync(final GameBase game, final ICallback joinPendingGameCallback) {
 		ICommand joinPendingGameCommand = new ICommand() {
 			@Override
 			public Result execute() {
-				return joinPendingGame(game);
+				PendingGameResult result = serverProxy.joinPendingGame(models.getSession()
+																			 .getAuthToken(),
+																	   game.getID());
+				return result;
 			}
 		};
 		
-		this.asyncTask.executeTask(joinPendingGameCommand, joinPendingGameCallback);
-	}
-	
-	/**
-	 * Attempts to leave the current pending game.
-	 *
-	 * @return A result specifying whether the game was left.
-	 * {@post if successful, models.pendingGame == null}
-	 */
-	@Override
-	public PendingGamesResult leavePendingGame() {
-		PendingGamesResult result = serverProxy.leavePendingGame(models.getSession()
-																	   .getAuthToken());
-		if (result.isSuccessful()) {
-			models.setPendingGame(null);
-			
-		}
-		return result;
+		ICallback callback = new ICallback() {
+			@Override
+			public void callback(Result result) {
+				
+				if (result.isSuccessful()) {
+					models.setPendingGame(((PendingGameResult) result).getGame());
+				}
+				joinPendingGameCallback.callback(result);
+			}
+		};
+		
+		this.asyncTask.executeTask(joinPendingGameCommand, callback);
 	}
 	
 	/**
@@ -357,26 +310,28 @@ public class ModelFacade implements IModelFacade {
 	 *                                 {@post if successful, models.pendingGame == null}
 	 */
 	@Override
-	public void leavePendingGameAsync(ICallback leavePendingGameCallback) {
+	public void leavePendingGameAsync(final ICallback leavePendingGameCallback) {
 		ICommand leavePendingGameCommand = new ICommand() {
 			@Override
 			public Result execute() {
-				return leavePendingGame();
+				PendingGamesResult result = serverProxy.leavePendingGame(models.getSession()
+																			   .getAuthToken());
+				return result;
 			}
 		};
 		
-		this.asyncTask.executeTask(leavePendingGameCommand, leavePendingGameCallback);
-	}
-	
-	/**
-	 * Attempts to start current pending game
-	 *
-	 * @return A Result specifying whether the game was successfully started
-	 * {@post models.pendingGame.isStarted == true}
-	 */
-	@Override
-	public StartGameResult startGame() {
-		return serverProxy.startGame(models.getSession().getAuthToken());
+		ICallback callback = new ICallback() {
+			@Override
+			public void callback(Result result) {
+				
+				if (result.isSuccessful()) {
+					models.setPendingGame(null);
+				}
+				leavePendingGameCallback.callback(result);
+			}
+		};
+		
+		this.asyncTask.executeTask(leavePendingGameCommand, callback);
 	}
 	
 	/**
@@ -391,7 +346,7 @@ public class ModelFacade implements IModelFacade {
 		ICommand startGameCommand = new ICommand() {
 			@Override
 			public Result execute() {
-				return startGame();
+				return serverProxy.startGame(models.getSession().getAuthToken());
 			}
 		};
 		
@@ -485,19 +440,6 @@ public class ModelFacade implements IModelFacade {
 	}
 	
 	/**
-	 * Broadcasts a chat message to all the players
-	 *
-	 * @param message The message to broadcast to players
-	 * @return A result specifying whether the message was successfully sent
-	 * {@pre message != null}
-	 * {@pre message is not empty}
-	 * {@pre models.activeGame != null, aka we're actually in a game}
-	 */
-	public Result sendMessage(Message message) {
-		return serverProxy.sendMessage(models.getSession().getAuthToken(), message);
-	}
-	
-	/**
 	 * Broadcasts a chat message to all the players asynchronously
 	 *
 	 * @param message             The message to broadcast to players
@@ -511,11 +453,39 @@ public class ModelFacade implements IModelFacade {
 		ICommand sendMessageCommand = new ICommand() {
 			@Override
 			public Result execute() {
-				return sendMessage(message);
+				return serverProxy.sendMessage(models.getSession().getAuthToken(), message);
 			}
 		};
 		
 		this.asyncTask.executeTask(sendMessageCommand, sendMessageCallback);
+	}
+	
+	@Override
+	public void drawDestinationCardsAsync(final ICallback drawDestinationCardsCallback) {
+		ICommand drawDestinationCardsCommand = new ICommand() {
+			@Override
+			public Result execute() {
+				Result result = serverProxy.drawDestinationCards(models.getSession()
+																	   .getAuthToken());
+				return result;
+			}
+		};
+		
+		ICallback callback = new ICallback() {
+			@Override
+			public void callback(Result result) {
+				if (result.isSuccessful()) {
+					DestinationCardResult dcResult = (DestinationCardResult) result;
+					ModelRoot.getInstance()
+							 .getGame()
+							 .getSelf()
+							 .giveDestinationCards(new HashSet<>(dcResult.getDestinationCards()));
+				}
+				drawDestinationCardsCallback.callback(result);
+			}
+		};
+		this.asyncTask.executeTask(drawDestinationCardsCommand, callback);
+		
 	}
 	
 	@Override
@@ -536,10 +506,9 @@ public class ModelFacade implements IModelFacade {
 					DrawFaceUpTrainCardResult drawResult = (DrawFaceUpTrainCardResult) result;
 					TrainCard card = drawResult.getDrawnCard();
 					models.getGame().getSelf().addTrainCard(card);
-					if (drawFaceUpTrainCardCallback != null)
-						drawFaceUpTrainCardCallback.callback(result);
 				}
-				
+				if (drawFaceUpTrainCardCallback != null)
+					drawFaceUpTrainCardCallback.callback(result);
 			}
 		};
 		
@@ -562,10 +531,9 @@ public class ModelFacade implements IModelFacade {
 					DrawDeckTrainCardResult drawResult = (DrawDeckTrainCardResult) result;
 					TrainCard card = drawResult.getDrawnCard();
 					models.getGame().getSelf().addTrainCard(card);
-					if (drawDeckTrainCardCallback != null)
-						drawDeckTrainCardCallback.callback(result);
 				}
-				
+				if (drawDeckTrainCardCallback != null)
+					drawDeckTrainCardCallback.callback(result);
 			}
 		};
 		
@@ -573,58 +541,44 @@ public class ModelFacade implements IModelFacade {
 	}
 	
 	/**
-	 * Tells the server which destination cards of the three given were kept
-	 *
-	 * @param cards A list of destination cards that the user selected
-	 *              {@pre cards != null}
-	 *              {@pre cards.size() <= 3}
-	 *              {@pre cards.size() > 0}
-	 *              {@post player has cards added to hand}
-	 *              {@pre models.activeGame != null, aka we're actually in a game}
-	 *              {@pre it's your turn}
-	 */
-	public void chooseInitialDestinationCards(List<DestinationCard> cards) {
-		//Make server call
-		DestinationCardResult result = serverProxy.chooseInitialDestinationCards(models.getSession()
-																					   .getAuthToken(),
-																				 cards.size(),
-																				 cards);
-		//On server success, add the cards to the model
-		if (result.isSuccessful()) {
-			for (DestinationCard card : cards) {
-				ModelRoot.getInstance().getGame().getSelf().select(card);
-			}
-			ModelRoot.getInstance().getGame().setStarted(true);
-			ModelRoot.getInstance().getGame().getSelf().getSelecting().clear();
-		}
-	}
-	
-	/**
 	 * Tells the server which destination cards of the three given were kept, run asynchronously
 	 *
-	 * @param cards                          A list of destination cards that the user selected
-	 * @param chooseInitialDestinationCardsCallback The callback to run after telling server
-	 *                                       {@pre selectDestinationCardsCallback != null}
-	 *                                       {@pre cards != null}
-	 *                                       {@pre cards.size() <= 3}
-	 *                                       {@pre cards.size() > 0}
-	 *                                       {@post player has cards added to hand}
-	 *                                       {@pre models.activeGame != null, aka we're actually in a game}
-	 *                                       {@pre it's your turn}
+	 * @param cards                                 A list of destination cards that the user selected
+	 * @param chooseDestinationCardsCallback The callback to run after telling server
+	 *                                              {@pre selectDestinationCardsCallback != null}
+	 *                                              {@pre cards != null}
+	 *                                              {@pre cards.size() <= 3}
+	 *                                              {@pre cards.size() > 0}
+	 *                                              {@post player has cards added to hand}
+	 *                                              {@pre models.activeGame != null, aka we're actually in a game}
+	 *                                              {@pre it's your turn}
 	 */
-	public void chooseInitialDestinationCardsAsync(final List<DestinationCard> cards,
-											ICallback chooseInitialDestinationCardsCallback) {
+	public void chooseDestinationCardsAsync(final List<DestinationCard> cards,
+											final ICallback chooseDestinationCardsCallback) {
 		ICommand selectDestinationCardsCommand = new ICommand() {
 			@Override
 			public Result execute() {
-				chooseInitialDestinationCards(cards);
-				return new Result();
+				DestinationCardResult result = serverProxy.chooseDestinationCards(models.getSession()
+																						.getAuthToken(),
+																				  cards);
+				return result;
 			}
 		};
 		
-		this.asyncTask.executeTask(selectDestinationCardsCommand, chooseInitialDestinationCardsCallback);
+		ICallback callback = new ICallback() {
+			@Override
+			public void callback(Result result) {
+				if (result.isSuccessful()) {
+					for (DestinationCard card : cards) {
+						ModelRoot.getInstance().getGame().getSelf().select(card);
+					}
+					ModelRoot.getInstance().getGame().getSelf().getSelecting().clear();
+				}
+				chooseDestinationCardsCallback.callback(result);
+			}
+		};
+		this.asyncTask.executeTask(selectDestinationCardsCommand, callback);
 	}
-	
 	
 	/**
 	 * Sets up the game further after all players have selected destination cards
@@ -636,7 +590,7 @@ public class ModelFacade implements IModelFacade {
 	 *                            {@post the number of destination cards each player has is set to their value in the map}
 	 */
 	@Override
-	public void beginGame(Map<String, Integer> numDestinationCards) {
+	public void beginGame(Map<String, Integer> numDestinationCards, int destinationCardDeckCount) {
 		for (Map.Entry<String, Integer> entry : numDestinationCards.entrySet()) {
 			Player player = (Player) models.getGame().getPlayer(new UserBase(entry.getKey()));
 			if (player.getClass() == Opponent.class) {
@@ -644,6 +598,11 @@ public class ModelFacade implements IModelFacade {
 				opponent.setNumDestinationCards(entry.getValue());
 			}
 		}
+		
+//		ModelRoot.getInstance().getGame().setStarted(true);
+		models.getGame().getDeck().setDestinationCardsCount(destinationCardDeckCount);
+		models.getGame()
+			  .setMinAllowedDestinationCardsDrawn(ActiveGame.SUBSEQUENT_MIN_ALLOWED_DESTINATION_CARDS_DRAWN);
 	}
 	
 	/**
@@ -655,5 +614,28 @@ public class ModelFacade implements IModelFacade {
 	public List<CommandHistoryEntry> getGameHistory() {
 		return models.getGameHistory();
 	}
+
+	/**
+	 * Ends the active game.
+	 */
+	public void endGame() {
+	    
+	}
 	
+	public List<CommandHistoryEntry> getLatestGameHistory() {
+		return models.getHistoryManager().getLatestCommandHistory();
+	}
+
+	@Override
+	public void claimRouteAsync(final int routeID, ICallback callback) {
+		ICommand claimRouteCommand = new ICommand() {
+			@Override
+			public Result execute() {
+				CardType type = models.getGame().getSelf().getActiveTrainCardType();
+				return serverProxy.claimRoute(models.getSession().getAuthToken(), routeID, type);
+			}
+		};
+
+		this.asyncTask.executeTask(claimRouteCommand, callback);
+	}
 }

@@ -35,7 +35,19 @@ public class TrainCardsFragment extends Fragment implements TrainCardsContract.V
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.fragment_train_cards, container, false);
 		getViews(view);
+		setOnClickListeners(view);
 		return view;
+	}
+	
+	private void setOnClickListeners(View view) {
+		for (final Map.Entry<CardType, TrainCardWidget> entry : trainCardWidgets.entrySet()) {
+			entry.getValue().setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					presenter.setActiveCardType(entry.getKey());
+				}
+			});
+		}
 	}
 	
 	@Override
@@ -68,6 +80,16 @@ public class TrainCardsFragment extends Fragment implements TrainCardsContract.V
 	public void setHand(final Map<CardType, Integer> hand) {
 		for (Map.Entry<CardType, Integer> entry : hand.entrySet()) {
 			trainCardWidgets.get(entry.getKey()).setCount(entry.getValue());
+		}
+	}
+	
+	@Override
+	public void setActiveCardType(CardType type) {
+		for (final Map.Entry<CardType, TrainCardWidget> entry : trainCardWidgets.entrySet()) {
+			entry.getValue().setSelected(false);
+		}
+		if (type != null) {
+			this.trainCardWidgets.get(type).setSelected(true);
 		}
 	}
 }

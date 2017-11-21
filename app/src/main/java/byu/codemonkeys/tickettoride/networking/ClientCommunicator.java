@@ -1,17 +1,11 @@
 package byu.codemonkeys.tickettoride.networking;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 import byu.codemonkeys.tickettoride.shared.Serializer;
 import byu.codemonkeys.tickettoride.shared.commands.*;
@@ -25,10 +19,16 @@ public class ClientCommunicator {
 	
 	private String host;
 	private int port;
+	private static final int TIMEOUT = 10000;
+	private static final String DEFAULT_HOST =
+//			"10.24.222.148";
+			"192.168.1.105";
+//			"104.155.184.125";
+	private static final int DEFAULT_PORT = 8080;
 	
 	private ClientCommunicator() {
-		host = "192.168.1.6";
-		port = 8080;
+		host = DEFAULT_HOST;
+		port = DEFAULT_PORT;
 		serializer = new Serializer();
 	}
 	
@@ -162,8 +162,8 @@ public class ClientCommunicator {
 	
 	public DestinationCardResult sendDrawDestinationCards(DrawDestinationCardsCommandData request) {
 		try {
-			return serializer.deserialize(getString(getURL(CommandType.DRAW_DESTINATION_CARDS),
-													request), DestinationCardResult.class);
+			String string = getString(getURL(CommandType.DRAW_DESTINATION_CARDS), request);
+			return serializer.deserialize(string, DestinationCardResult.class);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return new DestinationCardResult(e.getMessage());
@@ -196,7 +196,7 @@ public class ClientCommunicator {
 		try {
 			String string = getString(getURL(CommandType.DRAW_FACEUP_TRAIN_CARD), request);
 			DrawFaceUpTrainCardResult result = serializer.deserialize(string,
-																  DrawFaceUpTrainCardResult.class);
+																	  DrawFaceUpTrainCardResult.class);
 			return result;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -208,13 +208,26 @@ public class ClientCommunicator {
 		try {
 			String string = getString(getURL(CommandType.DRAW_DECK_TRAIN_CARD), request);
 			DrawDeckTrainCardResult result = serializer.deserialize(string,
-																	  DrawDeckTrainCardResult.class);
+																	DrawDeckTrainCardResult.class);
 			return result;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return new DrawDeckTrainCardResult(e.getMessage());
 		}
 	}
+
+	public ClaimRouteResult sendClaimRoute(ClaimRouteCommandData request) {
+		try {
+			String string = getString(getURL(request.getCommandType()), request);
+			ClaimRouteResult result = serializer.deserialize(string,
+					ClaimRouteResult.class);
+			return result;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new ClaimRouteResult(e.getMessage());
+		}
+	}
+	
 	/**
 	 * Constructs a full HTTP URL String to the specified path.
 	 *
@@ -234,7 +247,8 @@ public class ClientCommunicator {
 	 * @throws IOException
 	 */
 	private String getString(String url, Object request) throws IOException {
-		return new String(getBytes(url, request));
+		byte[] bytes = getBytes(url, request);
+		return new String(bytes);
 	}
 	
 	/**
@@ -251,6 +265,7 @@ public class ClientCommunicator {
 		// TODO: Dynamically set these values.
 		connection.setDoOutput(true);
 		connection.setRequestMethod("GET");
+		connection.setConnectTimeout(TIMEOUT);
 		
 		try {
 			OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
@@ -275,11 +290,11 @@ public class ClientCommunicator {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-
+			throw e;
+			//			return serializer.serialize(Result.failed(e.getMessage())).getBytes();
 		} finally {
 			connection.disconnect();
 		}
-		return null;
 	}
 	
 	public String getHost() {

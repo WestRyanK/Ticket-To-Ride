@@ -103,6 +103,12 @@ public class DrawTrainCardsFragment extends Fragment implements DrawTrainCardsCo
 		for (int i = 0; i < cards.size(); i++) {
 			
 			int drawableID = -1;
+
+			if (i >= faceUpCards.size() || faceUpCards.get(i) == null) {
+				cards.get(i).setVisibility(View.INVISIBLE);
+				continue;
+			}
+
 			switch (faceUpCards.get(i).getCardColor()) {
 				case Red:
 					drawableID = R.drawable.card_red;
@@ -142,6 +148,11 @@ public class DrawTrainCardsFragment extends Fragment implements DrawTrainCardsCo
 	
 	@Override
 	public void setNumHidden(final int cardCount) {
-		cardDeck.setCount(cardCount);
+		if (cardCount < 1)
+			cardDeck.setVisibility(View.INVISIBLE);
+		else {
+			cardDeck.setVisibility(View.VISIBLE);
+			cardDeck.setCount(cardCount);
+		}
 	}
 }

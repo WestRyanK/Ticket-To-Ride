@@ -1,11 +1,13 @@
 package byu.codemonkeys.tickettoride.presenters.game;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import byu.codemonkeys.tickettoride.models.IModelFacade;
 import byu.codemonkeys.tickettoride.models.ModelFacade;
 import byu.codemonkeys.tickettoride.models.ModelRoot;
+import byu.codemonkeys.tickettoride.models.history.CommandHistoryEntry;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.IMediaPlayer;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
@@ -16,6 +18,8 @@ import byu.codemonkeys.tickettoride.networking.GamePoller;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
 import byu.codemonkeys.tickettoride.presenters.PresenterEnum;
 import byu.codemonkeys.tickettoride.shared.model.ActiveGame;
+import byu.codemonkeys.tickettoride.shared.model.GameSummary;
+import byu.codemonkeys.tickettoride.shared.results.HistoryResult;
 
 public class GamePresenter extends PresenterBase implements GameContract.Presenter, Observer {
 	private GameContract.View view;
@@ -48,6 +52,16 @@ public class GamePresenter extends PresenterBase implements GameContract.Present
 		}
 		if (o == ActiveGame.STARTED_UPDATE) {
 			this.mediaPlayer.playCutScene(CutScenes.openingSequence);
+		}
+		if (o == ModelFacade.HISTORY_UPDATE) {
+			List<CommandHistoryEntry> history = modelFacade.getLatestGameHistory();
+			for (CommandHistoryEntry entry : history) {
+				messageDisplayer.displayMessage(entry.toString());
+			}
+		}
+		if (o == ActiveGame.GAME_OVER)
+		{
+			this.navigator.navigate(PresenterEnum.EndGame, false);
 		}
 		
 		// TODO: Flesh this out when we get to the end game

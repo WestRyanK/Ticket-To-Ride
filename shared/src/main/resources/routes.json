@@ -1,826 +1,893 @@
 ﻿[
- {
-   "ID": 0,
-   "Color": "White",
-   "DestinationA": 1,
-   "DestinationB": 17,
-   "RatioX": 0.3806164129,
-   "RatioY": 0.1986754967
- },
- {
-   "ID": 1,
-   "Color": "Blue",
-   "DestinationA": 16,
-   "DestinationB": 17,
-   "RatioX": 0.4121797252,
-   "RatioY": 0.2292409577
- },
- {
-   "ID": 2,
-   "Color": "Black",
-   "DestinationA": 15,
-   "DestinationB": 17,
-   "RatioX": 0.4790196807,
-   "RatioY": 0.2114111055
- },
- {
-   "ID": 3,
-   "Color": "Grey",
-   "DestinationA": 18,
-   "DestinationB": 17,
-   "RatioX": 0.5180096547,
-   "RatioY": 0.1477330616
- },
- {
-   "ID": 4,
-   "Color": "Grey",
-   "DestinationA": 25,
-   "DestinationB": 18,
-   "RatioX": 0.5291496472,
-   "RatioY": 0.2114111055
- },
- {
-   "ID": 5,
-   "Color": "Grey",
-   "DestinationA": 31,
-   "DestinationB": 18,
-   "RatioX": 0.5978462681,
-   "RatioY": 0.2547121752
- },
- {
-   "ID": 6,
-   "Color": "Black",
-   "DestinationA": 19,
-   "DestinationB": 18,
-   "RatioX": 0.6312662458,
-   "RatioY": 0.1986754967
- },
- {
-   "ID": 7,
-   "Color": "Grey",
-   "DestinationA": 0,
-   "DestinationB": 1,
-   "RatioX": 0.2476791682,
-   "RatioY": 0.2801833928
- },
- {
-   "ID": 8,
-   "Color": "Grey",
-   "DestinationA": 0,
-   "DestinationB": 2,
-   "RatioX": 0.1722985518,
-   "RatioY": 0.3922567499
- },
- {
-   "ID": 9,
-   "Color": "Grey",
-   "DestinationA": 0,
-   "DestinationB": 2,
-   "RatioX": 0.1882658745,
-   "RatioY": 0.3820682629
- },
- {
-   "ID": 10,
-   "Color": "Grey",
-   "DestinationA": 2,
-   "DestinationB": 1,
-   "RatioX": 0.233568511,
-   "RatioY": 0.3540499236
- },
- {
-   "ID": 11,
-   "Color": "Yellow",
-   "DestinationA": 2,
-   "DestinationB": 16,
-   "RatioX": 0.2551058299,
-   "RatioY": 0.3948038716
- },
- {
-   "ID": 12,
-   "Color": "Grey",
-   "DestinationA": 2,
-   "DestinationB": 3,
-   "RatioX": 0.1563312291,
-   "RatioY": 0.49414162
- },
- {
-   "ID": 13,
-   "Color": "Grey",
-   "DestinationA": 2,
-   "DestinationB": 3,
-   "RatioX": 0.1704418864,
-   "RatioY": 0.5002547122
- },
- {
-   "ID": 14,
-   "Color": "Blue",
-   "DestinationA": 3,
-   "DestinationB": 15,
-   "RatioX": 0.2473078351,
-   "RatioY": 0.4533876719
- },
- {
-   "ID": 15,
-   "Color": "Green",
-   "DestinationA": 3,
-   "DestinationB": 4,
-   "RatioX": 0.1919792053,
-   "RatioY": 0.5196128375
- },
- {
-   "ID": 16,
-   "Color": "Pink",
-   "DestinationA": 3,
-   "DestinationB": 4,
-   "RatioX": 0.2027478648,
-   "RatioY": 0.5374426898
- },
- {
-   "ID": 17,
-   "Color": "Yellow",
-   "DestinationA": 4,
-   "DestinationB": 6,
-   "RatioX": 0.2606758262,
-   "RatioY": 0.6393275599
- },
- {
-   "ID": 18,
-   "Color": "Pink",
-   "DestinationA": 4,
-   "DestinationB": 6,
-   "RatioX": 0.2614184924,
-   "RatioY": 0.6164034641
- },
- {
-   "ID": 19,
-   "Color": "Orange",
-   "DestinationA": 4,
-   "DestinationB": 15,
-   "RatioX": 0.2714444857,
-   "RatioY": 0.4584819154
- },
- {
-   "ID": 20,
-   "Color": "White",
-   "DestinationA": 4,
-   "DestinationB": 15,
-   "RatioX": 0.2903824731,
-   "RatioY": 0.4533876719
- },
- {
-   "ID": 21,
-   "Color": "Yellow",
-   "DestinationA": 15,
-   "DestinationB": 27,
-   "RatioX": 0.3887857408,
-   "RatioY": 0.4075394804
- },
- {
-   "ID": 22,
-   "Color": "Red",
-   "DestinationA": 15,
-   "DestinationB": 27,
-   "RatioX": 0.4066097289,
-   "RatioY": 0.3998981151
- },
- {
-   "ID": 23,
-   "Color": "Orange",
-   "DestinationA": 5,
-   "DestinationB": 15,
-   "RatioX": 0.3286297809,
-   "RatioY": 0.4482934284
- },
- {
-   "ID": 24,
-   "Color": "Grey",
-   "DestinationA": 5,
-   "DestinationB": 6,
-   "RatioX": 0.2398811734,
-   "RatioY": 0.6036678553
- },
- {
-   "ID": 25,
-   "Color": "Black",
-   "DestinationA": 6,
-   "DestinationB": 7,
-   "RatioX": 0.3535090977,
-   "RatioY": 0.7977585329
- },
- {
-   "ID": 26,
-   "Color": "Grey",
-   "DestinationA": 6,
-   "DestinationB": 9,
-   "RatioX": 0.3535090977,
-   "RatioY": 0.7213448803
- },
- {
-   "ID": 27,
-   "Color": "Green",
-   "DestinationA": 7,
-   "DestinationB": 8,
-   "RatioX": 0.4537690308,
-   "RatioY": 0.8680590932
- },
- {
-   "ID": 28,
-   "Color": "Grey",
-   "DestinationA": 7,
-   "DestinationB": 9,
-   "RatioX": 0.4010397326,
-   "RatioY": 0.7824758023
- },
- {
-   "ID": 29,
-   "Color": "Grey",
-   "DestinationA": 7,
-   "DestinationB": 10,
-   "RatioX": 0.4300037133,
-   "RatioY": 0.7498726439
- },
- {
-   "ID": 30,
-   "Color": "Yellow",
-   "DestinationA": 7,
-   "DestinationB": 11,
-   "RatioX": 0.4715930189,
-   "RatioY": 0.7519103413
- },
- {
-   "ID": 31,
-   "Color": "Red",
-   "DestinationA": 7,
-   "DestinationB": 14,
-   "RatioX": 0.4634236911,
-   "RatioY": 0.7824758023
- },
- {
-   "ID": 32,
-   "Color": "Grey",
-   "DestinationA": 8,
-   "DestinationB": 14,
-   "RatioX": 0.5057556628,
-   "RatioY": 0.7967396842
- },
- {
-   "ID": 33,
-   "Color": "Grey",
-   "DestinationA": 8,
-   "DestinationB": 14,
-   "RatioX": 0.5198663201,
-   "RatioY": 0.7824758023
- },
- {
-   "ID": 34,
-   "Color": "Grey",
-   "DestinationA": 8,
-   "DestinationB": 34,
-   "RatioX": 0.5725956183,
-   "RatioY": 0.8140601121
- },
- {
-   "ID": 35,
-   "Color": "Grey",
-   "DestinationA": 9,
-   "DestinationB": 10,
-   "RatioX": 0.4322317118,
-   "RatioY": 0.6856851758
- },
- {
-   "ID": 36,
-   "Color": "White",
-   "DestinationA": 9,
-   "DestinationB": 27,
-   "RatioX": 0.437430375,
-   "RatioY": 0.5664798777
- },
- {
-   "ID": 37,
-   "Color": "Blue",
-   "DestinationA": 10,
-   "DestinationB": 11,
-   "RatioX": 0.4953583364,
-   "RatioY": 0.6581762608
- },
- {
-   "ID": 38,
-   "Color": "Grey",
-   "DestinationA": 10,
-   "DestinationB": 27,
-   "RatioX": 0.4611956925,
-   "RatioY": 0.555272542
- },
- {
-   "ID": 39,
-   "Color": "Grey",
-   "DestinationA": 11,
-   "DestinationB": 12,
-   "RatioX": 0.5317489788,
-   "RatioY": 0.5807437596
- },
- {
-   "ID": 40,
-   "Color": "Grey",
-   "DestinationA": 11,
-   "DestinationB": 12,
-   "RatioX": 0.5428889714,
-   "RatioY": 0.6011207336
- },
- {
-   "ID": 41,
-   "Color": "Grey",
-   "DestinationA": 11,
-   "DestinationB": 13,
-   "RatioX": 0.5673969551,
-   "RatioY": 0.6530820173
- },
- {
-   "ID": 42,
-   "Color": "Grey",
-   "DestinationA": 11,
-   "DestinationB": 14,
-   "RatioX": 0.5287783141,
-   "RatioY": 0.6795720835
- },
- {
-   "ID": 43,
-   "Color": "Grey",
-   "DestinationA": 11,
-   "DestinationB": 14,
-   "RatioX": 0.5391756405,
-   "RatioY": 0.6999490576
- },
- {
-   "ID": 44,
-   "Color": "Red",
-   "DestinationA": 11,
-   "DestinationB": 27,
-   "RatioX": 0.5035276643,
-   "RatioY": 0.5664798777
- },
- {
-   "ID": 45,
-   "Color": "Grey",
-   "DestinationA": 12,
-   "DestinationB": 26,
-   "RatioX": 0.5079836613,
-   "RatioY": 0.4493122771
- },
- {
-   "ID": 46,
-   "Color": "Orange",
-   "DestinationA": 12,
-   "DestinationB": 27,
-   "RatioX": 0.5012996658,
-   "RatioY": 0.4880285278
- },
- {
-   "ID": 47,
-   "Color": "Black",
-   "DestinationA": 12,
-   "DestinationB": 27,
-   "RatioX": 0.4968436688,
-   "RatioY": 0.4656138563
- },
- {
-   "ID": 48,
-   "Color": "Blue",
-   "DestinationA": 12,
-   "DestinationB": 29,
-   "RatioX": 0.5896769402,
-   "RatioY": 0.5196128375
- },
- {
-   "ID": 49,
-   "Color": "Pink",
-   "DestinationA": 12,
-   "DestinationB": 29,
-   "RatioX": 0.6030449313,
-   "RatioY": 0.5328578706
- },
- {
-   "ID": 50,
-   "Color": "Grey",
-   "DestinationA": 13,
-   "DestinationB": 14,
-   "RatioX": 0.5636836242,
-   "RatioY": 0.6846663271
- },
- {
-   "ID": 51,
-   "Color": "Grey",
-   "DestinationA": 13,
-   "DestinationB": 29,
-   "RatioX": 0.6342369105,
-   "RatioY": 0.5807437596
- },
- {
-   "ID": 52,
-   "Color": "White",
-   "DestinationA": 13,
-   "DestinationB": 30,
-   "RatioX": 0.6476049016,
-   "RatioY": 0.6174223128
- },
- {
-   "ID": 53,
-   "Color": "Green",
-   "DestinationA": 13,
-   "DestinationB": 34,
-   "RatioX": 0.61492759,
-   "RatioY": 0.7091186959
- },
- {
-   "ID": 54,
-   "Color": "Grey",
-   "DestinationA": 22,
-   "DestinationB": 23,
-   "RatioX": 0.7998514668,
-   "RatioY": 0.5354049924
- },
- {
-   "ID": 55,
-   "Color": "Black",
-   "DestinationA": 22,
-   "DestinationB": 28,
-   "RatioX": 0.6602302265,
-   "RatioY": 0.4645950076
- },
- {
-   "ID": 56,
-   "Color": "Orange",
-   "DestinationA": 22,
-   "DestinationB": 28,
-   "RatioX": 0.679539547,
-   "RatioY": 0.4620478859
- },
- {
-   "ID": 57,
-   "Color": "Green",
-   "DestinationA": 22,
-   "DestinationB": 29,
-   "RatioX": 0.7029335314,
-   "RatioY": 0.5084055018
- },
- {
-   "ID": 58,
-   "Color": "Yellow",
-   "DestinationA": 22,
-   "DestinationB": 30,
-   "RatioX": 0.7196435202,
-   "RatioY": 0.5404992359
- },
- {
-   "ID": 59,
-   "Color": "Grey",
-   "DestinationA": 22,
-   "DestinationB": 35,
-   "RatioX": 0.7857408095,
-   "RatioY": 0.4778400408
- },
- {
-   "ID": 60,
-   "Color": "Grey",
-   "DestinationA": 23,
-   "DestinationB": 24,
-   "RatioX": 0.8380987746,
-   "RatioY": 0.6164034641
- },
- {
-   "ID": 61,
-   "Color": "Black",
-   "DestinationA": 23,
-   "DestinationB": 30,
-   "RatioX": 0.7716301522,
-   "RatioY": 0.5771777891
- },
- {
-   "ID": 62,
-   "Color": "Grey",
-   "DestinationA": 23,
-   "DestinationB": 32,
-   "RatioX": 0.8076494616,
-   "RatioY": 0.594498217
- },
- {
-   "ID": 63,
-   "Color": "Grey",
-   "DestinationA": 23,
-   "DestinationB": 32,
-   "RatioX": 0.7861121426,
-   "RatioY": 0.5894039735
- },
- {
-   "ID": 64,
-   "Color": "Grey",
-   "DestinationA": 23,
-   "DestinationB": 35,
-   "RatioX": 0.8332714445,
-   "RatioY": 0.504330107
- },
- {
-   "ID": 65,
-   "Color": "Grey",
-   "DestinationA": 23,
-   "DestinationB": 35,
-   "RatioX": 0.8466394356,
-   "RatioY": 0.5196128375
- },
- {
-   "ID": 66,
-   "Color": "Grey",
-   "DestinationA": 24,
-   "DestinationB": 32,
-   "RatioX": 0.7812848125,
-   "RatioY": 0.6367804381
- },
- {
-   "ID": 67,
-   "Color": "Pink",
-   "DestinationA": 24,
-   "DestinationB": 33,
-   "RatioX": 0.7946528036,
-   "RatioY": 0.6785532348
- },
- {
-   "ID": 68,
-   "Color": "Grey",
-   "DestinationA": 29,
-   "DestinationB": 30,
-   "RatioX": 0.6810248793,
-   "RatioY": 0.5573102394
- },
- {
-   "ID": 69,
-   "Color": "Grey",
-   "DestinationA": 30,
-   "DestinationB": 32,
-   "RatioX": 0.7166728556,
-   "RatioY": 0.6092715232
- },
- {
-   "ID": 70,
-   "Color": "Blue",
-   "DestinationA": 32,
-   "DestinationB": 33,
-   "RatioX": 0.744522837,
-   "RatioY": 0.6597045339
- },
- {
-   "ID": 71,
-   "Color": "Orange",
-   "DestinationA": 32,
-   "DestinationB": 34,
-   "RatioX": 0.6962495358,
-   "RatioY": 0.6765155374
- },
- {
-   "ID": 72,
-   "Color": "Yellow",
-   "DestinationA": 32,
-   "DestinationB": 34,
-   "RatioX": 0.6776828815,
-   "RatioY": 0.6861946001
- },
- {
-   "ID": 73,
-   "Color": "Red",
-   "DestinationA": 33,
-   "DestinationB": 34,
-   "RatioX": 0.7051615299,
-   "RatioY": 0.7315333673
- },
- {
-   "ID": 74,
-   "Color": "Pink",
-   "DestinationA": 15,
-   "DestinationB": 16,
-   "RatioX": 0.3416264389,
-   "RatioY": 0.3515028018
- },
- {
-   "ID": 75,
-   "Color": "Orange",
-   "DestinationA": 16,
-   "DestinationB": 25,
-   "RatioX": 0.4270330486,
-   "RatioY": 0.298013245
- },
- {
-   "ID": 76,
-   "Color": "Red",
-   "DestinationA": 16,
-   "DestinationB": 26,
-   "RatioX": 0.4158930561,
-   "RatioY": 0.3413143148
- },
- {
-   "ID": 77,
-   "Color": "Pink",
-   "DestinationA": 25,
-   "DestinationB": 31,
-   "RatioX": 0.4214630524,
-   "RatioY": 0.3234844626
- },
- {
-   "ID": 78,
-   "Color": "Grey",
-   "DestinationA": 31,
-   "DestinationB": 19,
-   "RatioX": 0.6646862235,
-   "RatioY": 0.3031074885
- },
- {
-   "ID": 79,
-   "Color": "White",
-   "DestinationA": 31,
-   "DestinationB": 28,
-   "RatioX": 0.6164129224,
-   "RatioY": 0.3973509934
- },
- {
-   "ID": 80,
-   "Color": "Red",
-   "DestinationA": 25,
-   "DestinationB": 28,
-   "RatioX": 0.5458596361,
-   "RatioY": 0.3616912888
- },
- {
-   "ID": 81,
-   "Color": "Blue",
-   "DestinationA": 26,
-   "DestinationB": 28,
-   "RatioX": 0.5347196435,
-   "RatioY": 0.3973509934
- },
- {
-   "ID": 82,
-   "Color": "Grey",
-   "DestinationA": 26,
-   "DestinationB": 12,
-   "RatioX": 0.5087263275,
-   "RatioY": 0.4482934284
- },
- {
-   "ID": 83,
-   "Color": "Pink",
-   "DestinationA": 26,
-   "DestinationB": 27,
-   "RatioX": 0.4660230227,
-   "RatioY": 0.3973509934
- },
- {
-   "ID": 84,
-   "Color": "Green",
-   "DestinationA": 16,
-   "DestinationB": 27,
-   "RatioX": 0.4121797252,
-   "RatioY": 0.3769740194
- },
- {
-   "ID": 85,
-   "Color": "Grey",
-   "DestinationA": 1,
-   "DestinationB": 16,
-   "RatioX": 0.3267731155,
-   "RatioY": 0.2852776363
- },
- {
-   "ID": 86,
-   "Color": "Blue",
-   "DestinationA": 19,
-   "DestinationB": 21,
-   "RatioX": 0.6981062013,
-   "RatioY": 0.298013245
- },
- {
-   "ID": 87,
-   "Color": "Grey",
-   "DestinationA": 19,
-   "DestinationB": 20,
-   "RatioX": 0.7129595247,
-   "RatioY": 0.2750891493
- },
- {
-   "ID": 88,
-   "Color": "Grey",
-   "DestinationA": 19,
-   "DestinationB": 20,
-   "RatioX": 0.7352395098,
-   "RatioY": 0.2750891493
- },
- {
-   "ID": 89,
-   "Color": "Yellow",
-   "DestinationA": 20,
-   "DestinationB": 21,
-   "RatioX": 0.718529521,
-   "RatioY": 0.3260315843
- },
- {
-   "ID": 90,
-   "Color": "Red",
-   "DestinationA": 20,
-   "DestinationB": 21,
-   "RatioX": 0.7370961753,
-   "RatioY": 0.3260315843
- },
- {
-   "ID": 91,
-   "Color": "Grey",
-   "DestinationA": 25,
-   "DestinationB": 26,
-   "RatioX": 0.4753063498,
-   "RatioY": 0.3107488538
- },
- {
-   "ID": 92,
-   "Color": "Grey",
-   "DestinationA": 25,
-   "DestinationB": 26,
-   "RatioX": 0.4827330115,
-   "RatioY": 0.3413143148
- },
- {
-   "ID": 93,
-   "Color": "Grey",
-   "DestinationA": 8,
-   "DestinationB": 34,
-   "RatioX": 0.5737096175,
-   "RatioY": 0.8150789608
- },
- {
-   "ID": 94,
-   "Color": "Orange",
-   "DestinationA": 27,
-   "DestinationB": 12,
-   "RatioX": 0.5161529892,
-   "RatioY": 0.5068772287
- },
- {
-   "ID": 95,
-   "Color": "Black",
-   "DestinationA": 27,
-   "DestinationB": 12,
-   "RatioX": 0.5012996658,
-   "RatioY": 0.4686704024
- },
- {
-   "ID": 96,
-   "Color": "Grey",
-   "DestinationA": 31,
-   "DestinationB": 22,
-   "RatioX": 0.6869662087,
-   "RatioY": 0.4228222109
- },
- {
-   "ID": 97,
-   "Color": "White",
-   "DestinationA": 21,
-   "DestinationB": 22,
-   "RatioX": 0.7148161901,
-   "RatioY": 0.4100866021
- },
- {
-   "ID": 98,
-   "Color": "Green",
-   "DestinationA": 21,
-   "DestinationB": 22,
-   "RatioX": 0.7296695136,
-   "RatioY": 0.4381049414
- },
- {
-   "ID": 99,
-   "Color": "Orange",
-   "DestinationA": 21,
-   "DestinationB": 35,
-   "RatioX": 0.7538061641,
-   "RatioY": 0.4024452369
- },
- {
-   "ID": 100,
-   "Color": "Black",
-   "DestinationA": 21,
-   "DestinationB": 35,
-   "RatioX": 0.7909394727,
-   "RatioY": 0.4177279674
- },
- {
-   "ID": 101,
-   "Color": "Green",
-   "DestinationA": 28,
-   "DestinationB": 29,
-   "RatioX": 0.6238395841,
-   "RatioY": 0.4763117677
- },
- {
-   "ID": 102,
-   "Color": "White",
-   "DestinationA": 28,
-   "DestinationB": 29,
-   "RatioX": 0.6498329001,
-   "RatioY": 0.49414162
- }
+  {
+    "ID": 0,
+    "Color": "White",
+    "Length": 6,
+    "DestinationA": 1,
+    "DestinationB": 17,
+    "RatioX": 0.3806164129,
+    "RatioY": 0.1986754967
+  },
+  {
+    "ID": 1,
+    "Color": "Blue",
+    "Length": 4,
+    "DestinationA": 16,
+    "DestinationB": 17,
+    "RatioX": 0.4121797252,
+    "RatioY": 0.2292409577
+  },
+  {
+    "ID": 2,
+    "Color": "Black",
+    "Length": 4,
+    "DestinationA": 25,
+    "DestinationB": 17,
+    "RatioX": 0.4790196807,
+    "RatioY": 0.2114111055
+  },
+  {
+    "ID": 3,
+    "Color": "Wild",
+    "Length": 6,
+    "DestinationA": 18,
+    "DestinationB": 17,
+    "RatioX": 0.5180096547,
+    "RatioY": 0.1477330616
+  },
+  {
+    "ID": 4,
+    "Color": "Wild",
+    "Length": 3,
+    "DestinationA": 25,
+    "DestinationB": 18,
+    "RatioX": 0.5291496472,
+    "RatioY": 0.2114111055
+  },
+  {
+    "ID": 5,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 31,
+    "DestinationB": 18,
+    "RatioX": 0.5978462681,
+    "RatioY": 0.2547121752
+  },
+  {
+    "ID": 6,
+    "Color": "Black",
+    "Length": 5,
+    "DestinationA": 19,
+    "DestinationB": 18,
+    "RatioX": 0.6312662458,
+    "RatioY": 0.1986754967
+  },
+  {
+    "ID": 7,
+    "Color": "Wild",
+    "Length": 3,
+    "DestinationA": 0,
+    "DestinationB": 1,
+    "RatioX": 0.2476791682,
+    "RatioY": 0.2801833928
+  },
+  {
+    "ID": 8,
+    "Color": "Wild",
+    "Length": 1,
+    "DestinationA": 0,
+    "DestinationB": 2,
+    "RatioX": 0.1722985518,
+    "RatioY": 0.3922567499
+  },
+  {
+    "ID": 9,
+    "Color": "Wild",
+    "Length": 1,
+    "DestinationA": 0,
+    "DestinationB": 2,
+    "RatioX": 0.1912365392,
+    "RatioY": 0.3820682629
+  },
+  {
+    "ID": 10,
+    "Color": "Wild",
+    "Length": 4,
+    "DestinationA": 2,
+    "DestinationB": 1,
+    "RatioX": 0.233568511,
+    "RatioY": 0.3540499236
+  },
+  {
+    "ID": 11,
+    "Color": "Yellow",
+    "Length": 6,
+    "DestinationA": 2,
+    "DestinationB": 16,
+    "RatioX": 0.2551058299,
+    "RatioY": 0.3948038716
+  },
+  {
+    "ID": 12,
+    "Color": "Wild",
+    "Length": 1,
+    "DestinationA": 2,
+    "DestinationB": 3,
+    "RatioX": 0.1503898997,
+    "RatioY": 0.49414162
+  },
+  {
+    "ID": 13,
+    "Color": "Wild",
+    "Length": 1,
+    "DestinationA": 2,
+    "DestinationB": 3,
+    "RatioX": 0.1763832157,
+    "RatioY": 0.504330107
+  },
+  {
+    "ID": 14,
+    "Color": "Blue",
+    "Length": 6,
+    "DestinationA": 3,
+    "DestinationB": 15,
+    "RatioX": 0.2473078351,
+    "RatioY": 0.4533876719
+  },
+  {
+    "ID": 15,
+    "Color": "Green",
+    "Length": 5,
+    "DestinationA": 3,
+    "DestinationB": 4,
+    "RatioX": 0.1919792053,
+    "RatioY": 0.524707081
+  },
+  {
+    "ID": 16,
+    "Color": "Purple",
+    "Length": 5,
+    "DestinationA": 3,
+    "DestinationB": 4,
+    "RatioX": 0.2027478648,
+    "RatioY": 0.545084055
+  },
+  {
+    "ID": 17,
+    "Color": "Yellow",
+    "Length": 3,
+    "DestinationA": 4,
+    "DestinationB": 6,
+    "RatioX": 0.2580764946,
+    "RatioY": 0.6418746816
+  },
+  {
+    "ID": 18,
+    "Color": "Purple",
+    "Length": 3,
+    "DestinationA": 4,
+    "DestinationB": 6,
+    "RatioX": 0.2614184924,
+    "RatioY": 0.6164034641
+  },
+  {
+    "ID": 19,
+    "Color": "Orange",
+    "Length": 5,
+    "DestinationA": 4,
+    "DestinationB": 15,
+    "RatioX": 0.2714444857,
+    "RatioY": 0.4584819154
+  },
+  {
+    "ID": 20,
+    "Color": "White",
+    "Length": 5,
+    "DestinationA": 4,
+    "DestinationB": 15,
+    "RatioX": 0.2933531378,
+    "RatioY": 0.4584819154
+  },
+  {
+    "ID": 21,
+    "Color": "Yellow",
+    "Length": 3,
+    "DestinationA": 15,
+    "DestinationB": 27,
+    "RatioX": 0.3880430746,
+    "RatioY": 0.4126337239
+  },
+  {
+    "ID": 22,
+    "Color": "Red",
+    "Length": 3,
+    "DestinationA": 15,
+    "DestinationB": 27,
+    "RatioX": 0.4066097289,
+    "RatioY": 0.3998981151
+  },
+  {
+    "ID": 23,
+    "Color": "Orange",
+    "Length": 3,
+    "DestinationA": 5,
+    "DestinationB": 15,
+    "RatioX": 0.3286297809,
+    "RatioY": 0.4482934284
+  },
+  {
+    "ID": 24,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 5,
+    "DestinationB": 6,
+    "RatioX": 0.3141477906,
+    "RatioY": 0.6036678553
+  },
+  {
+    "ID": 25,
+    "Color": "Black",
+    "Length": 6,
+    "DestinationA": 6,
+    "DestinationB": 7,
+    "RatioX": 0.3535090977,
+    "RatioY": 0.7977585329
+  },
+  {
+    "ID": 26,
+    "Color": "Wild",
+    "Length": 3,
+    "DestinationA": 6,
+    "DestinationB": 9,
+    "RatioX": 0.3535090977,
+    "RatioY": 0.7213448803
+  },
+  {
+    "ID": 27,
+    "Color": "Green",
+    "Length": 6,
+    "DestinationA": 7,
+    "DestinationB": 8,
+    "RatioX": 0.4537690308,
+    "RatioY": 0.8680590932
+  },
+  {
+    "ID": 28,
+    "Color": "Wild",
+    "Length": 3,
+    "DestinationA": 7,
+    "DestinationB": 9,
+    "RatioX": 0.4010397326,
+    "RatioY": 0.7824758023
+  },
+  {
+    "ID": 29,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 7,
+    "DestinationB": 10,
+    "RatioX": 0.4300037133,
+    "RatioY": 0.7498726439
+  },
+  {
+    "ID": 30,
+    "Color": "Yellow",
+    "Length": 5,
+    "DestinationA": 7,
+    "DestinationB": 11,
+    "RatioX": 0.4715930189,
+    "RatioY": 0.7519103413
+  },
+  {
+    "ID": 31,
+    "Color": "Red",
+    "Length": 4,
+    "DestinationA": 7,
+    "DestinationB": 14,
+    "RatioX": 0.4678796881,
+    "RatioY": 0.7824758023
+  },
+  {
+    "ID": 32,
+    "Color": "Wild",
+    "Length": 1,
+    "DestinationA": 8,
+    "DestinationB": 14,
+    "RatioX": 0.5057556628,
+    "RatioY": 0.7967396842
+  },
+  {
+    "ID": 33,
+    "Color": "Wild",
+    "Length": 1,
+    "DestinationA": 8,
+    "DestinationB": 14,
+    "RatioX": 0.5217229855,
+    "RatioY": 0.7845134997
+  },
+  {
+    "ID": 34,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 8,
+    "DestinationB": 34,
+    "RatioX": 0.5725956183,
+    "RatioY": 0.8140601121
+  },
+  {
+    "ID": 35,
+    "Color": "Wild",
+    "Length": 3,
+    "DestinationA": 9,
+    "DestinationB": 10,
+    "RatioX": 0.4322317118,
+    "RatioY": 0.6856851758
+  },
+  {
+    "ID": 36,
+    "Color": "White",
+    "Length": 5,
+    "DestinationA": 9,
+    "DestinationB": 27,
+    "RatioX": 0.437430375,
+    "RatioY": 0.5664798777
+  },
+  {
+    "ID": 37,
+    "Color": "Blue",
+    "Length": 3,
+    "DestinationA": 10,
+    "DestinationB": 11,
+    "RatioX": 0.4953583364,
+    "RatioY": 0.6581762608
+  },
+  {
+    "ID": 38,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 10,
+    "DestinationB": 27,
+    "RatioX": 0.4611956925,
+    "RatioY": 0.555272542
+  },
+  {
+    "ID": 39,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 11,
+    "DestinationB": 12,
+    "RatioX": 0.5317489788,
+    "RatioY": 0.5807437596
+  },
+  {
+    "ID": 40,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 11,
+    "DestinationB": 12,
+    "RatioX": 0.5477163015,
+    "RatioY": 0.6011207336
+  },
+  {
+    "ID": 41,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 11,
+    "DestinationB": 13,
+    "RatioX": 0.5673969551,
+    "RatioY": 0.6530820173
+  },
+  {
+    "ID": 42,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 11,
+    "DestinationB": 14,
+    "RatioX": 0.5287783141,
+    "RatioY": 0.6795720835
+  },
+  {
+    "ID": 43,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 11,
+    "DestinationB": 14,
+    "RatioX": 0.5440029707,
+    "RatioY": 0.6999490576
+  },
+  {
+    "ID": 44,
+    "Color": "Red",
+    "Length": 4,
+    "DestinationA": 11,
+    "DestinationB": 27,
+    "RatioX": 0.5035276643,
+    "RatioY": 0.5664798777
+  },
+  {
+    "ID": 45,
+    "Color": "Blue",
+    "Length": 2,
+    "DestinationA": 12,
+    "DestinationB": 29,
+    "RatioX": 0.5896769402,
+    "RatioY": 0.5196128375
+  },
+  {
+    "ID": 46,
+    "Color": "Purple",
+    "Length": 2,
+    "DestinationA": 12,
+    "DestinationB": 29,
+    "RatioX": 0.6126995915,
+    "RatioY": 0.5374426898
+  },
+  {
+    "ID": 47,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 13,
+    "DestinationB": 14,
+    "RatioX": 0.5636836242,
+    "RatioY": 0.6846663271
+  },
+  {
+    "ID": 48,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 13,
+    "DestinationB": 29,
+    "RatioX": 0.6342369105,
+    "RatioY": 0.5807437596
+  },
+  {
+    "ID": 49,
+    "Color": "White",
+    "Length": 3,
+    "DestinationA": 13,
+    "DestinationB": 30,
+    "RatioX": 0.6476049016,
+    "RatioY": 0.6174223128
+  },
+  {
+    "ID": 50,
+    "Color": "Green",
+    "Length": 3,
+    "DestinationA": 13,
+    "DestinationB": 34,
+    "RatioX": 0.61492759,
+    "RatioY": 0.7091186959
+  },
+  {
+    "ID": 51,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 22,
+    "DestinationB": 23,
+    "RatioX": 0.7998514668,
+    "RatioY": 0.5354049924
+  },
+  {
+    "ID": 52,
+    "Color": "Black",
+    "Length": 3,
+    "DestinationA": 22,
+    "DestinationB": 28,
+    "RatioX": 0.6602302265,
+    "RatioY": 0.4686704024
+  },
+  {
+    "ID": 53,
+    "Color": "Orange",
+    "Length": 3,
+    "DestinationA": 22,
+    "DestinationB": 28,
+    "RatioX": 0.6813962124,
+    "RatioY": 0.4584819154
+  },
+  {
+    "ID": 54,
+    "Color": "Green",
+    "Length": 5,
+    "DestinationA": 22,
+    "DestinationB": 29,
+    "RatioX": 0.7029335314,
+    "RatioY": 0.5084055018
+  },
+  {
+    "ID": 55,
+    "Color": "Yellow",
+    "Length": 4,
+    "DestinationA": 22,
+    "DestinationB": 30,
+    "RatioX": 0.7196435202,
+    "RatioY": 0.5404992359
+  },
+  {
+    "ID": 56,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 22,
+    "DestinationB": 35,
+    "RatioX": 0.7857408095,
+    "RatioY": 0.4778400408
+  },
+  {
+    "ID": 57,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 23,
+    "DestinationB": 24,
+    "RatioX": 0.8380987746,
+    "RatioY": 0.6164034641
+  },
+  {
+    "ID": 58,
+    "Color": "Black",
+    "Length": 3,
+    "DestinationA": 23,
+    "DestinationB": 30,
+    "RatioX": 0.757519495,
+    "RatioY": 0.5771777891
+  },
+  {
+    "ID": 59,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 23,
+    "DestinationB": 32,
+    "RatioX": 0.8076494616,
+    "RatioY": 0.5985736118
+  },
+  {
+    "ID": 60,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 23,
+    "DestinationB": 32,
+    "RatioX": 0.7861121426,
+    "RatioY": 0.5894039735
+  },
+  {
+    "ID": 61,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 23,
+    "DestinationB": 35,
+    "RatioX": 0.8332714445,
+    "RatioY": 0.504330107
+  },
+  {
+    "ID": 62,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 23,
+    "DestinationB": 35,
+    "RatioX": 0.8503527664,
+    "RatioY": 0.5196128375
+  },
+  {
+    "ID": 63,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 24,
+    "DestinationB": 32,
+    "RatioX": 0.7812848125,
+    "RatioY": 0.6367804381
+  },
+  {
+    "ID": 64,
+    "Color": "Purple",
+    "Length": 4,
+    "DestinationA": 24,
+    "DestinationB": 33,
+    "RatioX": 0.7946528036,
+    "RatioY": 0.6785532348
+  },
+  {
+    "ID": 65,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 29,
+    "DestinationB": 30,
+    "RatioX": 0.6810248793,
+    "RatioY": 0.5573102394
+  },
+  {
+    "ID": 66,
+    "Color": "Wild",
+    "Length": 1,
+    "DestinationA": 30,
+    "DestinationB": 32,
+    "RatioX": 0.7166728556,
+    "RatioY": 0.6138563423
+  },
+  {
+    "ID": 67,
+    "Color": "Blue",
+    "Length": 5,
+    "DestinationA": 32,
+    "DestinationB": 33,
+    "RatioX": 0.744522837,
+    "RatioY": 0.6597045339
+  },
+  {
+    "ID": 68,
+    "Color": "Orange",
+    "Length": 4,
+    "DestinationA": 32,
+    "DestinationB": 34,
+    "RatioX": 0.6999628667,
+    "RatioY": 0.6765155374
+  },
+  {
+    "ID": 69,
+    "Color": "Yellow",
+    "Length": 4,
+    "DestinationA": 32,
+    "DestinationB": 34,
+    "RatioX": 0.6758262161,
+    "RatioY": 0.6861946001
+  },
+  {
+    "ID": 70,
+    "Color": "Red",
+    "Length": 6,
+    "DestinationA": 33,
+    "DestinationB": 34,
+    "RatioX": 0.7051615299,
+    "RatioY": 0.7315333673
+  },
+  {
+    "ID": 71,
+    "Color": "Purple",
+    "Length": 3,
+    "DestinationA": 15,
+    "DestinationB": 16,
+    "RatioX": 0.3416264389,
+    "RatioY": 0.3515028018
+  },
+  {
+    "ID": 72,
+    "Color": "Orange",
+    "Length": 6,
+    "DestinationA": 16,
+    "DestinationB": 25,
+    "RatioX": 0.4270330486,
+    "RatioY": 0.298013245
+  },
+  {
+    "ID": 73,
+    "Color": "Red",
+    "Length": 5,
+    "DestinationA": 16,
+    "DestinationB": 26,
+    "RatioX": 0.4158930561,
+    "RatioY": 0.3413143148
+  },
+  {
+    "ID": 74,
+    "Color": "Purple",
+    "Length": 6,
+    "DestinationA": 25,
+    "DestinationB": 31,
+    "RatioX": 0.5699962867,
+    "RatioY": 0.3234844626
+  },
+  {
+    "ID": 75,
+    "Color": "Wild",
+    "Length": 3,
+    "DestinationA": 31,
+    "DestinationB": 19,
+    "RatioX": 0.6646862235,
+    "RatioY": 0.3031074885
+  },
+  {
+    "ID": 76,
+    "Color": "White",
+    "Length": 4,
+    "DestinationA": 31,
+    "DestinationB": 28,
+    "RatioX": 0.6164129224,
+    "RatioY": 0.3973509934
+  },
+  {
+    "ID": 77,
+    "Color": "Red",
+    "Length": 3,
+    "DestinationA": 25,
+    "DestinationB": 28,
+    "RatioX": 0.5458596361,
+    "RatioY": 0.3616912888
+  },
+  {
+    "ID": 78,
+    "Color": "Blue",
+    "Length": 4,
+    "DestinationA": 26,
+    "DestinationB": 28,
+    "RatioX": 0.5347196435,
+    "RatioY": 0.3973509934
+  },
+  {
+    "ID": 79,
+    "Color": "Wild",
+    "Length": 1,
+    "DestinationA": 26,
+    "DestinationB": 12,
+    "RatioX": 0.5012996658,
+    "RatioY": 0.4279164544
+  },
+  {
+    "ID": 80,
+    "Color": "Purple",
+    "Length": 4,
+    "DestinationA": 26,
+    "DestinationB": 27,
+    "RatioX": 0.4660230227,
+    "RatioY": 0.3973509934
+  },
+  {
+    "ID": 81,
+    "Color": "Green",
+    "Length": 4,
+    "DestinationA": 16,
+    "DestinationB": 27,
+    "RatioX": 0.4121797252,
+    "RatioY": 0.3769740194
+  },
+  {
+    "ID": 82,
+    "Color": "Wild",
+    "Length": 4,
+    "DestinationA": 1,
+    "DestinationB": 16,
+    "RatioX": 0.3267731155,
+    "RatioY": 0.2852776363
+  },
+  {
+    "ID": 83,
+    "Color": "Blue",
+    "Length": 3,
+    "DestinationA": 19,
+    "DestinationB": 21,
+    "RatioX": 0.6981062013,
+    "RatioY": 0.298013245
+  },
+  {
+    "ID": 84,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 19,
+    "DestinationB": 20,
+    "RatioX": 0.7129595247,
+    "RatioY": 0.2750891493
+  },
+  {
+    "ID": 85,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 19,
+    "DestinationB": 20,
+    "RatioX": 0.7352395098,
+    "RatioY": 0.267447784
+  },
+  {
+    "ID": 86,
+    "Color": "Yellow",
+    "Length": 2,
+    "DestinationA": 20,
+    "DestinationB": 21,
+    "RatioX": 0.718529521,
+    "RatioY": 0.3183902191
+  },
+  {
+    "ID": 87,
+    "Color": "Red",
+    "Length": 2,
+    "DestinationA": 20,
+    "DestinationB": 21,
+    "RatioX": 0.7389528407,
+    "RatioY": 0.3311258278
+  },
+  {
+    "ID": 88,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 25,
+    "DestinationB": 26,
+    "RatioX": 0.4753063498,
+    "RatioY": 0.3107488538
+  },
+  {
+    "ID": 89,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 25,
+    "DestinationB": 26,
+    "RatioX": 0.4864463424,
+    "RatioY": 0.3413143148
+  },
+  {
+    "ID": 90,
+    "Color": "Orange",
+    "Length": 4,
+    "DestinationA": 27,
+    "DestinationB": 12,
+    "RatioX": 0.5161529892,
+    "RatioY": 0.5068772287
+  },
+  {
+    "ID": 91,
+    "Color": "Black",
+    "Length": 4,
+    "DestinationA": 27,
+    "DestinationB": 12,
+    "RatioX": 0.5012996658,
+    "RatioY": 0.4686704024
+  },
+  {
+    "ID": 92,
+    "Color": "Wild",
+    "Length": 2,
+    "DestinationA": 31,
+    "DestinationB": 22,
+    "RatioX": 0.6869662087,
+    "RatioY": 0.4228222109
+  },
+  {
+    "ID": 93,
+    "Color": "White",
+    "Length": 2,
+    "DestinationA": 21,
+    "DestinationB": 22,
+    "RatioX": 0.7129595247,
+    "RatioY": 0.4100866021
+  },
+  {
+    "ID": 94,
+    "Color": "Green",
+    "Length": 2,
+    "DestinationA": 21,
+    "DestinationB": 22,
+    "RatioX": 0.7352395098,
+    "RatioY": 0.4381049414
+  },
+  {
+    "ID": 95,
+    "Color": "Orange",
+    "Length": 2,
+    "DestinationA": 21,
+    "DestinationB": 35,
+    "RatioX": 0.7538061641,
+    "RatioY": 0.4024452369
+  },
+  {
+    "ID": 96,
+    "Color": "Black",
+    "Length": 2,
+    "DestinationA": 21,
+    "DestinationB": 35,
+    "RatioX": 0.7909394727,
+    "RatioY": 0.4126337239
+  },
+  {
+    "ID": 97,
+    "Color": "Green",
+    "Length": 2,
+    "DestinationA": 28,
+    "DestinationB": 29,
+    "RatioX": 0.6238395841,
+    "RatioY": 0.4763117677
+  },
+  {
+    "ID": 98,
+    "Color": "White",
+    "Length": 2,
+    "DestinationA": 28,
+    "DestinationB": 29,
+    "RatioX": 0.6554028964,
+    "RatioY": 0.49414162
+  }
 ]

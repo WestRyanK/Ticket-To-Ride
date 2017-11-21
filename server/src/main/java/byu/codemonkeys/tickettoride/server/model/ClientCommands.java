@@ -15,7 +15,7 @@ public class ClientCommands {
         commandQueue = new ArrayList<>();
     }
 
-    public void queueCommand(CommandData command) {
+    public synchronized void queueCommand(CommandData command) {
         int pos = commandQueue.size();
         command.setQueuedPosition(pos);
         commandQueue.add(command);

@@ -43,14 +43,14 @@ public class MapEdgeWidget extends View {
 	
 	// region Public Properties
 	// region Points Property
-	private int points;
+	private int lengthValue;
 	
-	public int getPoints() {
-		return points;
+	public int getLengthValue() {
+		return lengthValue;
 	}
 	
-	public void setPoints(int points) {
-		this.points = points;
+	public void setLengthValue(int lengthValue) {
+		this.lengthValue = lengthValue;
 		this.invalidate();
 	}
 	// endregion
@@ -86,7 +86,7 @@ public class MapEdgeWidget extends View {
 	}
 	
 	private void init(Context context) {
-		this.setPoints(1);
+		this.setLengthValue(1);
 		this.setClaimedColor(PlayerColor.None);
 		this.circleFillPaint = new Paint();
 		this.circleFillPaint.setStyle(Paint.Style.FILL);
@@ -109,7 +109,7 @@ public class MapEdgeWidget extends View {
 						  circleStrokePaint);
 		
 		textPaint.setTextSize(fontSizeRatio * this.getHeight());
-		String pointsText = String.valueOf(this.points);
+		String pointsText = String.valueOf(this.lengthValue);
 		canvas.drawText(pointsText, this.getWidth() / 2.0f, (this.getHeight()) * 0.7f, textPaint);
 	}
 }

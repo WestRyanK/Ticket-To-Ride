@@ -52,4 +52,9 @@ public class City {
 		
 		return this.name.equals(other.getName());
 	}
+	
+	@Override
+	public String toString() {
+		return this.name;
+	}
 }

@@ -4,16 +4,16 @@ import java.util.Map;
 
 import byu.codemonkeys.tickettoride.models.ModelFacade;
 import byu.codemonkeys.tickettoride.shared.commands.BeginGameCommandData;
-import byu.codemonkeys.tickettoride.shared.model.UserBase;
+import byu.codemonkeys.tickettoride.shared.commands.CommandData;
 
 public class BeginGameCommand extends BeginGameCommandData implements IClientCommand {
-    public BeginGameCommand(Map<String, Integer> numDestinationCards){
-        super(numDestinationCards);
+    public BeginGameCommand(Map<String, Integer> numDestinationCards, int destinationCardDeckCount){
+        super(numDestinationCards, destinationCardDeckCount);
     }
 
     @Override
     public void execute() {
-        ModelFacade.getInstance().beginGame(this.numDestinationCards);
+        ModelFacade.getInstance().beginGame(this.numDestinationCards, destinationCardDeckCount);
     }
 
     @Override

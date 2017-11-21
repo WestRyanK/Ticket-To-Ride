@@ -6,21 +6,21 @@
                 tools:context="byu.codemonkeys.tickettoride.views.game.DrawDestinationCardsFragment">
 
     <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
-        android:id="@+id/drawDestinationCards_textViewTitle"
+        android:id="@+id/drawDestinationCards_textViewDirections"
         style="@style/AvatarTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:paddingTop="10dp"
-        android:text="@string/drawDestinationCards"
         android:textSize="@dimen/title_size"/>
+    <!--android:text="@string/drawDestinationCards"-->
 
     <ImageView
         android:id="@+id/drawDestinationCards_imageViewUnderline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/drawDestinationCards_textViewTitle"
+        android:layout_below="@id/drawDestinationCards_textViewDirections"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="-15dp"

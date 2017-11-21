@@ -245,5 +245,10 @@ public class GameActivity extends AppCompatActivity implements INavigator, IDisp
 		transaction.addToBackStack(PresenterEnum.CutScene.name());
 		transaction.commit();
 	}
+	
+	@Override
+	public void onBackPressed() {
+//		super.onBackPressed();
+	}
 	// endregion
 }
