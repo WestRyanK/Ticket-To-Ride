@@ -34,15 +34,15 @@ public class Self extends Player {
 
 	public Self(String userName) {
 		super(userName, Player.Type.Self);
-		this.hand = new HashMap<>();
 		this.destinations = new HashSet<>();
+		initHand();
 	}
 
 	public Self(String userName, PlayerColor color) {
 		super(userName, Player.Type.Self, color);
-		this.hand = new HashMap<>();
 		this.destinations = new HashSet<>();
 		this.selecting = new HashSet<>();
+		initHand();
 	}
 
 	public Self(String userName, Map<CardType, Integer> hand, Set<DestinationCard> destinations) {
@@ -58,6 +58,13 @@ public class Self extends Player {
 		this.destinations = playerSelf.destinations;
 		this.selecting = ((Self) player).getSelecting();
 		this.color = player.color;
+	}
+
+	private void initHand() {
+		hand = new HashMap<>();
+		for (CardType type : CardType.values()) {
+			hand.put(type, 0);
+		}
 	}
 
 	public Map<CardType, Integer> getHand() {
@@ -91,17 +98,10 @@ public class Self extends Player {
 	}
 
 	public void setHand(Collection<TrainCard> cards) {
-    	Map<CardType, Integer> hand = new HashMap<>();
-
+    	initHand();
     	for (TrainCard card : cards) {
-    		if (!hand.containsKey(card.getCardColor())) {
-    			hand.put(card.getCardColor(), 0);
-			}
-
 			hand.put(card.getCardColor(), hand.get(card.getCardColor()) + 1);
 		}
-
-		this.hand = hand;
 
 		setChanged();
 		notifyObservers(PLAYER_TRAIN_CARDS_UPDATE);
@@ -120,6 +120,16 @@ public class Self extends Player {
 		}
 
 		return count;
+	}
+
+	public void discardTrainCards(Map<CardType, Integer> toDiscard) {
+    	if (toDiscard != null) {
+			for (Map.Entry<CardType, Integer> entry : toDiscard.entrySet()) {
+				hand.put(entry.getKey(), hand.get(entry.getKey()) - entry.getValue());
+			}
+		}
+		setChanged();
+		notifyObservers(PLAYER_TRAIN_CARDS_UPDATE);
 	}
 
 	@Override

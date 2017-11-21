@@ -201,19 +201,6 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
     }
 
     /**
-     * broadcasts a command to all players except the excludedPlayer
-     * @param command command to be broadcast
-     * @param excludedPlayer player to not send the command to
-     */
-    public void broadcastCommandExclusive(CommandData command, Player excludedPlayer) {
-        for (Player player : players) {
-            if (!player.equals(excludedPlayer)) {
-                commandManager.queueCommandSingleClient(command, player.getUsername());
-            }
-        }
-    }
-
-    /**
      * Sends a command to a specific player
      * @param command command to be executed
      * @param username username of the player to send the command to
@@ -443,17 +430,17 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
         if (route.claim(self)) {
             self.setNumTrains(self.getNumTrainCards() - route.getLength());
 
-            hand.put(cardType, hand.get(cardType) - numNormalCards);
-            hand.put(CardType.Wild, hand.get(CardType.Wild) - numWildCards);
-
             Map<CardType, Integer> cardsRemoved = new HashMap<>();
             cardsRemoved.put(cardType, numNormalCards);
             cardsRemoved.put(CardType.Wild, numWildCards);
 
+            self.discardTrainCards(cardsRemoved);
             getDeck().discard(cardsRemoved);
 
-            RouteClaimedCommandData claimedCommand = new RouteClaimedCommandData(routeID, route.getLength(), self);
-            broadcastCommandExclusive(claimedCommand, self);
+            self.setScore(self.getScore() + route.getPoints());
+
+            RouteClaimedCommandData claimedCommand = new RouteClaimedCommandData(routeID, self);
+            broadcastCommand(claimedCommand);
             nextTurn();
 
             if (self.getNumTrainCards() <= LAST_TURN_TRAIN_THRESHOLD) {

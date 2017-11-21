@@ -14,9 +14,14 @@ import byu.codemonkeys.tickettoride.presenters.PresenterBase;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.MapContract;
 import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
+import byu.codemonkeys.tickettoride.shared.model.Self;
+import byu.codemonkeys.tickettoride.shared.model.map.Route;
 import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
+import byu.codemonkeys.tickettoride.shared.results.ClaimRouteResult;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 import byu.codemonkeys.tickettoride.views.widgets.MapEdgeWidget;
+
+import static byu.codemonkeys.tickettoride.shared.model.map.GameMap.ROUTE_UPDATE;
 
 
 public class MapPresenter extends PresenterBase implements MapContract.Presenter, Observer {
@@ -42,28 +47,28 @@ public class MapPresenter extends PresenterBase implements MapContract.Presenter
 					if (!result.isSuccessful()) {
 						messageDisplayer.displayMessage(result.getErrorMessage());
 					}
+
+					if (result instanceof ClaimRouteResult) {
+						ClaimRouteResult claimRouteResult = (ClaimRouteResult) result;
+						Self self = ModelRoot.getInstance().getGame().getSelf();
+						self.setNumTrains(self.getNumTrains() - claimRouteResult.getNumTrainsToRemove());
+						self.discardTrainCards(claimRouteResult.getCardsToRemove());
+					}
 				}
 			};
 			
-//			modelFacade.claimRoute(routeID, callback);
+			modelFacade.claimRouteAsync(routeID, callback);
 		} else {
 			messageDisplayer.displayMessage("Can't claim a route right now!");
 		}
-		//        if (pointBubble.getClaimedColor().equals(PlayerColor.None)) {
-		//            Turn turn = ModelRoot.getInstance().getGame().getTurn();
-		//            Player self = ModelRoot.getInstance().getGame().getPlayers().get(turn.getPlayerIndex());
-		//            pointBubble.setClaimedColor(self.getColor());
-		//            self.setScore(self.getScore() + pointBubble.getLengthValue());
-		//            self.setNumTrains(self.getNumTrains() - pointBubble.getLengthValue());
-		//            ModelRoot.getInstance().getGame().nextTurn();
-		//            messageDisplayer.displayMessage("Claimed Route! Next Players Turn");
-		//        } else {
-		//            messageDisplayer.displayMessage("Route Already Claimed!");
-		//        }
 	}
 	
 	@Override
 	public void update(Observable observable, Object o) {
-		
+		if (o instanceof Route) {
+			Route route = (Route) o;
+			Player owner = ModelRoot.getInstance().getGame().getPlayer(route.getOwner().getUsername());
+			view.setRouteClaimed(route.getRouteId(), owner.getColor());
+		}
 	}
 }

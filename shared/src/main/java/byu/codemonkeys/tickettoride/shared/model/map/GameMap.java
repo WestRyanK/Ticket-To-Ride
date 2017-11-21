@@ -63,9 +63,13 @@ public class GameMap extends Observable {
 	}
 	
 	public boolean claimRoute(int routeId, UserBase user) {
-		setChanged();
-		notifyObservers(routes.get(routeId));
-		return routes.get(routeId).claim(user);
+		Route route = routes.get(routeId);
+		if (route.claim(user)) {
+			setChanged();
+			notifyObservers(route);
+			return true;
+		}
+		return false;
 	}
 
 	public Route getRoute(int routeID) {

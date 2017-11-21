@@ -28,7 +28,7 @@
   },
   {
     "ID": 3,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 6,
     "DestinationA": 18,
     "DestinationB": 17,
@@ -37,7 +37,7 @@
   },
   {
     "ID": 4,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 3,
     "DestinationA": 25,
     "DestinationB": 18,
@@ -46,7 +46,7 @@
   },
   {
     "ID": 5,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 31,
     "DestinationB": 18,
@@ -64,7 +64,7 @@
   },
   {
     "ID": 7,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 3,
     "DestinationA": 0,
     "DestinationB": 1,
@@ -73,7 +73,7 @@
   },
   {
     "ID": 8,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 1,
     "DestinationA": 0,
     "DestinationB": 2,
@@ -82,7 +82,7 @@
   },
   {
     "ID": 9,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 1,
     "DestinationA": 0,
     "DestinationB": 2,
@@ -91,7 +91,7 @@
   },
   {
     "ID": 10,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 4,
     "DestinationA": 2,
     "DestinationB": 1,
@@ -109,7 +109,7 @@
   },
   {
     "ID": 12,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 1,
     "DestinationA": 2,
     "DestinationB": 3,
@@ -118,7 +118,7 @@
   },
   {
     "ID": 13,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 1,
     "DestinationA": 2,
     "DestinationB": 3,
@@ -145,7 +145,7 @@
   },
   {
     "ID": 16,
-    "Color": "Pink",
+    "Color": "Purple",
     "Length": 5,
     "DestinationA": 3,
     "DestinationB": 4,
@@ -163,7 +163,7 @@
   },
   {
     "ID": 18,
-    "Color": "Pink",
+    "Color": "Purple",
     "Length": 3,
     "DestinationA": 4,
     "DestinationB": 6,
@@ -217,7 +217,7 @@
   },
   {
     "ID": 24,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 5,
     "DestinationB": 6,
@@ -235,7 +235,7 @@
   },
   {
     "ID": 26,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 3,
     "DestinationA": 6,
     "DestinationB": 9,
@@ -253,7 +253,7 @@
   },
   {
     "ID": 28,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 3,
     "DestinationA": 7,
     "DestinationB": 9,
@@ -262,7 +262,7 @@
   },
   {
     "ID": 29,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 7,
     "DestinationB": 10,
@@ -289,7 +289,7 @@
   },
   {
     "ID": 32,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 1,
     "DestinationA": 8,
     "DestinationB": 14,
@@ -298,7 +298,7 @@
   },
   {
     "ID": 33,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 1,
     "DestinationA": 8,
     "DestinationB": 14,
@@ -307,7 +307,7 @@
   },
   {
     "ID": 34,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 8,
     "DestinationB": 34,
@@ -316,7 +316,7 @@
   },
   {
     "ID": 35,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 3,
     "DestinationA": 9,
     "DestinationB": 10,
@@ -343,7 +343,7 @@
   },
   {
     "ID": 38,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 10,
     "DestinationB": 27,
@@ -352,7 +352,7 @@
   },
   {
     "ID": 39,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 11,
     "DestinationB": 12,
@@ -361,7 +361,7 @@
   },
   {
     "ID": 40,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 11,
     "DestinationB": 12,
@@ -370,7 +370,7 @@
   },
   {
     "ID": 41,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 11,
     "DestinationB": 13,
@@ -379,7 +379,7 @@
   },
   {
     "ID": 42,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 11,
     "DestinationB": 14,
@@ -388,7 +388,7 @@
   },
   {
     "ID": 43,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 11,
     "DestinationB": 14,
@@ -415,7 +415,7 @@
   },
   {
     "ID": 46,
-    "Color": "Pink",
+    "Color": "Purple",
     "Length": 2,
     "DestinationA": 12,
     "DestinationB": 29,
@@ -424,7 +424,7 @@
   },
   {
     "ID": 47,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 13,
     "DestinationB": 14,
@@ -433,7 +433,7 @@
   },
   {
     "ID": 48,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 13,
     "DestinationB": 29,
@@ -460,7 +460,7 @@
   },
   {
     "ID": 51,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 22,
     "DestinationB": 23,
@@ -505,7 +505,7 @@
   },
   {
     "ID": 56,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 22,
     "DestinationB": 35,
@@ -514,7 +514,7 @@
   },
   {
     "ID": 57,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 23,
     "DestinationB": 24,
@@ -532,7 +532,7 @@
   },
   {
     "ID": 59,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 23,
     "DestinationB": 32,
@@ -541,7 +541,7 @@
   },
   {
     "ID": 60,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 23,
     "DestinationB": 32,
@@ -550,7 +550,7 @@
   },
   {
     "ID": 61,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 23,
     "DestinationB": 35,
@@ -559,7 +559,7 @@
   },
   {
     "ID": 62,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 23,
     "DestinationB": 35,
@@ -568,7 +568,7 @@
   },
   {
     "ID": 63,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 24,
     "DestinationB": 32,
@@ -577,7 +577,7 @@
   },
   {
     "ID": 64,
-    "Color": "Pink",
+    "Color": "Purple",
     "Length": 4,
     "DestinationA": 24,
     "DestinationB": 33,
@@ -586,7 +586,7 @@
   },
   {
     "ID": 65,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 29,
     "DestinationB": 30,
@@ -595,7 +595,7 @@
   },
   {
     "ID": 66,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 1,
     "DestinationA": 30,
     "DestinationB": 32,
@@ -640,7 +640,7 @@
   },
   {
     "ID": 71,
-    "Color": "Pink",
+    "Color": "Purple",
     "Length": 3,
     "DestinationA": 15,
     "DestinationB": 16,
@@ -667,7 +667,7 @@
   },
   {
     "ID": 74,
-    "Color": "Pink",
+    "Color": "Purple",
     "Length": 6,
     "DestinationA": 25,
     "DestinationB": 31,
@@ -676,7 +676,7 @@
   },
   {
     "ID": 75,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 3,
     "DestinationA": 31,
     "DestinationB": 19,
@@ -712,7 +712,7 @@
   },
   {
     "ID": 79,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 1,
     "DestinationA": 26,
     "DestinationB": 12,
@@ -721,7 +721,7 @@
   },
   {
     "ID": 80,
-    "Color": "Pink",
+    "Color": "Purple",
     "Length": 4,
     "DestinationA": 26,
     "DestinationB": 27,
@@ -739,7 +739,7 @@
   },
   {
     "ID": 82,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 4,
     "DestinationA": 1,
     "DestinationB": 16,
@@ -757,7 +757,7 @@
   },
   {
     "ID": 84,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 19,
     "DestinationB": 20,
@@ -766,7 +766,7 @@
   },
   {
     "ID": 85,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 19,
     "DestinationB": 20,
@@ -793,7 +793,7 @@
   },
   {
     "ID": 88,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 25,
     "DestinationB": 26,
@@ -802,7 +802,7 @@
   },
   {
     "ID": 89,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 25,
     "DestinationB": 26,
@@ -829,7 +829,7 @@
   },
   {
     "ID": 92,
-    "Color": "Grey",
+    "Color": "Wild",
     "Length": 2,
     "DestinationA": 31,
     "DestinationB": 22,
