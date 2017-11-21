@@ -31,7 +31,6 @@ public class GameMapLoader extends LoaderBase {
 		
 	}
 	
-	
 	public GameMap loadGameMapFromResources() {
 		List<City> cities = loadCitiesFromResource();
 		List<Route> routes = loadRoutesFromResource(cities);
@@ -73,12 +72,19 @@ public class GameMapLoader extends LoaderBase {
 										routeData.Color,
 										cityA,
 										cityB,
-										routeData.length);
+										routeData.Length);
 				routes.add(route);
 			}
 		}
 		
 		return routes;
+	}
+	
+	public List<RouteData> loadRoutesPositionsFromResource() {
+		List<RouteData> routesData = getDataFromResource("routes.json",
+														 new TypeToken<ArrayList<RouteData>>() {
+														 }.getType());
+		return routesData;
 	}
 	
 	private City getCityWithID(List<City> cities, int id) {
@@ -94,18 +100,46 @@ public class GameMapLoader extends LoaderBase {
 		return null;
 	}
 	
-	private class CityData {
+	public class CityData {
 		public int ID;
 		public String City;
 	}
 	
-	private class RouteData {
+	public class RouteData {
+		public int getID() {
+			return ID;
+		}
+		
+		public CardType getColor() {
+			return Color;
+		}
+		
+		public int getDestinationA() {
+			return DestinationA;
+		}
+		
+		public int getDestinationB() {
+			return DestinationB;
+		}
+		
+		public double getRatioX() {
+			return RatioX;
+		}
+		
+		public double getRatioY() {
+			return RatioY;
+		}
+		
+		public int getLength() {
+			return Length;
+		}
+		
 		public int ID;
 		public CardType Color;
 		public int DestinationA;
 		public int DestinationB;
-		public double ratioX;
-		public double ratioY;
-		public int length;
+		public double RatioX;
+		public double RatioY;
+		public int Length;
 	}
 }

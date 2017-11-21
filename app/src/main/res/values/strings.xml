@@ -33,7 +33,7 @@
     <string name="updateTrainCardsOtherPlayers">Update train cards for other players</string>
     <string name="addRemoveDestinationCardsThisPlayer">Add/Remove destination cards for this player</string>
     <string name="addRemoveTrainCardsThisPlayer">Add/Remove train cards for this player</string>
-    <string name="updatePlayerPoints">Update points for this player</string>
+    <string name="updatePlayerPoints">Update lengthValue for this player</string>
     <string name="phase2TestingTitle">Phase 2 Testing</string>
     <string name="tickettoride">Ticket to Ride</string>
     <string name="avatarEdition">Avatar Edition</string>
