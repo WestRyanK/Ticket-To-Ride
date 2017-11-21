@@ -20,7 +20,8 @@ public class ClientCommunicator {
 	private String host;
 	private int port;
 	private static final String DEFAULT_HOST =
-			"10.24.222.148";
+//			"10.24.222.148";
+			"192.168.1.5";
 //			"104.155.184.125";
 	private static final int DEFAULT_PORT = 8080;
 	

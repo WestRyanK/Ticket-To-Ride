@@ -74,6 +74,11 @@ public class Deck extends ObservableExt implements IDeck {
 	}
 	
 	@Override
+	public boolean drawFaceUpTrainCard(int index) {
+		return false;
+	}
+	
+	@Override
 	public Set<DestinationCard> drawDestinationCards() {
 		return null;
 	}
