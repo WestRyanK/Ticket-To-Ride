@@ -71,10 +71,8 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
 	@Override
 	public TrainCard drawTrainCard() {
 		// reshuffle in the discarded cards
-		if (hidden.size() == 0)
-		{
-			hidden.addAll(this.discarded);
-			this.discarded.clear();
+		if (hidden.size() == 0) {
+			replayDiscardedCards();
 		}
 		return hidden.poll();
 	}
@@ -103,6 +101,11 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
 				count++;
 		}
 		return count > MAX_WILD_CARDS;
+	}
+	
+	private void replayDiscardedCards() {
+		hidden.addAll(this.discarded);
+		this.discarded.clear();
 	}
 	
 	// TODO: handle the destination cards pile being depleted.
@@ -164,6 +167,8 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
 				discarded.add(new TrainCard(entry.getKey()));
 			}
 		}
+		if (hidden.size() == 0)
+			replayDiscardedCards();
 	}
 	
 	private void loadFromResource() {
