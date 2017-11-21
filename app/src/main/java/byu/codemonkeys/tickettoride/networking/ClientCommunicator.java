@@ -19,6 +19,7 @@ public class ClientCommunicator {
 	
 	private String host;
 	private int port;
+	private static final int TIMEOUT = 10000;
 	private static final String DEFAULT_HOST =
 //			"10.24.222.148";
 			"192.168.1.105";
@@ -264,7 +265,7 @@ public class ClientCommunicator {
 		// TODO: Dynamically set these values.
 		connection.setDoOutput(true);
 		connection.setRequestMethod("GET");
-		connection.setConnectTimeout(5000);
+		connection.setConnectTimeout(TIMEOUT);
 		
 		try {
 			OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());

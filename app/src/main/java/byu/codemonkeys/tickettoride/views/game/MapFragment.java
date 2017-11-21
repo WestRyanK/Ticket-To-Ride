@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -93,6 +94,7 @@ public class MapFragment extends Fragment implements MapContract.View {
 					circleSize / 2.0f);
 			routeCircle.setLayoutParams(new Viewport.LayoutParams(circleSize, circleSize, x, y));
 			routeCircle.setClaimedColor(PlayerColor.None);
+			routeCircle.setId(routeData.ID);
 			this.viewport.addView(routeCircle);
 			
 			routeCircle.setClickable(true);
@@ -100,6 +102,7 @@ public class MapFragment extends Fragment implements MapContract.View {
 				@Override
 				public void onClick(View view) {
 					presenter.claimRoute(routeCircle.getId());
+					Toast.makeText(getContext(), String.valueOf(routeCircle.getId()), Toast.LENGTH_SHORT).show();
 				}
 			});
 			this.mapEdgeWidgets.put(routeCircle.getId(), routeCircle);

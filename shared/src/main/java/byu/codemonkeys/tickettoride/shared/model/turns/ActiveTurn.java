@@ -1,6 +1,7 @@
 package byu.codemonkeys.tickettoride.shared.model.turns;
 
 
+import byu.codemonkeys.tickettoride.shared.model.ActiveGame;
 import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
 import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 
@@ -42,7 +43,7 @@ public class ActiveTurn extends Turn {
     @Override
     public void drawFaceUpTrainCard(TrainCard card) {
         CardType color = card.getCardColor();
-
+        
         if (color == CardType.Wild) {
             finished();
             return;

@@ -19,9 +19,13 @@ import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 
 public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck implements IDeck {
 	// The number of each non-wild type the full deck contains
-	private static final int NUM_STANDARD = 12;
+	private static final int NUM_STANDARD =
+//			2;
+		 12;
 	// The number of locomotives the full deck contains
-	private static final int NUM_WILD = 14;
+	private static final int NUM_WILD =
+//			6;
+		14;
 	// The number of destination cards a player must typically draw
 	private static final int NUM_DESTINATIONS_TO_DRAW = 3;
 	// The maximum number of revealed cards
@@ -56,6 +60,9 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
 		}
 		
 		reveal(5);
+		// Make sure we don't put out > MAX_WILD_CARDS at the start of the game
+		// We'd be getting off to a bad start that way...
+		tryReshuffle();
 		
 		loadFromResource();
 		
@@ -71,10 +78,61 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
 	@Override
 	public TrainCard drawTrainCard() {
 		// reshuffle in the discarded cards
-		if (hidden.size() == 0) {
+		tryReplayDiscardedCards();
+		return hidden.poll();
+	}
+	
+	private void tryReplayDiscardedCards() {
+		if (hidden.size() <= 1) {
 			replayDiscardedCards();
 		}
-		return hidden.poll();
+	}
+	
+	/**
+	 * Check if reshuffling is necessary, and if so, perform the reshuffle
+	 * @return True if the faceup cards were reshuffled
+	 */
+	private boolean tryReshuffle() {
+		boolean mustShuffle = mustReshuffleFaceUpCards();
+		boolean shuffled = mustShuffle;
+		while (mustShuffle) {
+			reshuffle();
+			mustShuffle = mustReshuffleFaceUpCards();
+		}
+		return shuffled;
+	}
+	
+	/**
+	 * Discard face up cards and replenish it with cards from the deck.
+	 * In the case where we try to add more wilds than MAX_WILD_CARDS,
+	 * keep discarding them until we get something that isn't a wild.
+	 * If there are only wilds left and we've reached MAX_WILD_CARDS,
+	 * leave the face up cards with fewer than normal cards.
+	 */
+	private void reshuffle() {
+		// discard all our face up cards
+		this.discarded.addAll(this.revealed);
+		this.revealed.clear();
+		int wildCount = 0;
+		// Fill the Faceup cards with cards from the deck
+		for (int i = 0; i < MAX_REVEALED; i++) {
+			TrainCard drawn = drawTrainCard();
+			if (drawn != null) {
+				if (drawn.getCardColor() == CardType.Wild)
+					wildCount++;
+				// Check if there are already too many wilds in the hand...
+				if (drawn.getCardColor() != CardType.Wild || wildCount <= MAX_WILD_CARDS)
+					this.revealed.add(drawn);
+				else {
+					// stick it in the discard instead of adding to the hand
+					discarded.add(drawn);
+					tryReplayDiscardedCards();
+					//  and try again as long as there are nonWilds left
+					if (countNonWildsInDeckAndDiscard() > 0)
+						i--;
+				}
+			}
+		}
 	}
 	
 	@Override
@@ -82,28 +140,47 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
 		TrainCard outDrawnCard = getFaceUpTrainCards().get(index);
 		TrainCard replacement = drawTrainCard();
 		getFaceUpTrainCards().set(index, replacement);
-		boolean mustShuffle = mustReshuffleFaceUpCards();
-		if (mustShuffle) {
-			this.discarded.addAll(this.revealed);
-			this.revealed.clear();
-			for (int i = 0; i < MAX_REVEALED; i++) {
-				if (this.getTrainCardsDeckCount() > 0)
-					this.revealed.add(drawTrainCard());
-			}
-		}
-		return mustShuffle;
+		boolean shuffled = tryReshuffle();
+		return shuffled;
 	}
 	
+	//  Even if there are at least 3 nonWilds, they might not ever be placed together so this doen't work
+	private int countNonWildsInDeckAndDiscard() {
+		int nonWilds = 0;
+		//			for (TrainCard card : this.revealed) {
+		//				if (card.getCardColor() != CardType.Wild)
+		//					nonWilds++;
+		//			}
+		for (TrainCard card : this.hidden) {
+			if (card != null && card.getCardColor() != CardType.Wild)
+				nonWilds++;
+		}
+		for (TrainCard card : this.discarded) {
+			if (card != null && card.getCardColor() != CardType.Wild)
+				nonWilds++;
+		}
+		
+		return nonWilds;
+	}
+	
+	
 	private boolean mustReshuffleFaceUpCards() {
+		//		int nonWilds = countNonWildsInDeckFaceUpAndDiscard();
 		int count = 0;
 		for (TrainCard card : this.revealed) {
-			if (card.getCardColor() == CardType.Wild)
+			if (card != null && card.getCardColor() == CardType.Wild)
 				count++;
 		}
-		return count > MAX_WILD_CARDS;
+		boolean tooManyWilds = count > MAX_WILD_CARDS;
+		//		boolean sufficientNonWilds = nonWilds >= MAX_REVEALED - MAX_WILD_CARDS;
+		
+		//		return tooManyWilds && sufficientNonWilds;
+		return tooManyWilds;
 	}
 	
 	private void replayDiscardedCards() {
+		// Try to remove null from the set so we don't add null cards to our deck and faceup
+		this.discarded.remove(null);
 		hidden.addAll(this.discarded);
 		this.discarded.clear();
 	}
@@ -167,8 +244,7 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
 				discarded.add(new TrainCard(entry.getKey()));
 			}
 		}
-		if (hidden.size() == 0)
-			replayDiscardedCards();
+		tryReplayDiscardedCards();
 	}
 	
 	private void loadFromResource() {
