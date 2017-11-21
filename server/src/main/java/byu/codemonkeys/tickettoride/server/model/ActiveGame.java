@@ -2,10 +2,13 @@ package byu.codemonkeys.tickettoride.server.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Random;
+import java.util.Set;
 
 import byu.codemonkeys.tickettoride.server.broadcast.CommandManager;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
@@ -22,7 +25,9 @@ import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
 import byu.codemonkeys.tickettoride.shared.model.Self;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
 import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
+import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
+import byu.codemonkeys.tickettoride.shared.model.map.City;
 import byu.codemonkeys.tickettoride.shared.model.map.Route;
 import byu.codemonkeys.tickettoride.shared.model.turns.ActiveTurn;
 import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
@@ -268,16 +273,27 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
     public void endGame() {
         GameSummary gameSummary = new GameSummary();
 
+        Map<String, Integer> pointsFromRoutes = pointsFromRoutes();
+
         for (Player player : players) {
             Self self = (Self) player;
+            int completedDestinationBonus = 0;
+            int incompleteDestinationPenalty = 0;
+
+            for (DestinationCard card : ((Self) player).getDestinations()) {
+                if (destinationIsComplete(player, card))
+                    completedDestinationBonus += card.getPointValue();
+                else
+                    incompleteDestinationPenalty -= card.getPointValue();
+            }
 
             EndGamePlayerStats playerSummary = new EndGamePlayerStats(
                     player.getUsername(),
                     player.getColor(),
                     0,
-                    0,
-                    0,
-                    0
+                    pointsFromRoutes.get(player.getUsername()),
+                    completedDestinationBonus,
+                    incompleteDestinationPenalty
             );
 
             gameSummary.addSummary(playerSummary);
@@ -288,6 +304,63 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
         broadcastCommand(new GameOverCommandData(gameSummary));
 
         ended = true;
+    }
+
+    private Map<String, Integer> pointsFromRoutes() {
+        Map<String, Integer> points = new HashMap<>();
+
+        for (Player player : players) {
+            points.put(player.getUsername(), 0);
+        }
+
+        for (Route route : map.getAllRoutes()) {
+            UserBase owner = route.getOwner();
+
+            if (owner == null) continue;
+
+            String username = owner.getUsername();
+
+            try {
+                points.put(username, points.get(username) + Route.getPointValue(route.getLength()));
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException(String.format(
+                        "Length: %d, Source: %s, Destination: %s",
+                        route.getLength(),
+                        route.getSource(),
+                        route.getDestination()
+                ));
+            }
+        }
+
+        return points;
+    }
+
+    private boolean destinationIsComplete(Player player, DestinationCard destination) {
+        Queue<City> cityQueue = new LinkedList<>();
+        cityQueue.add(map.getCity(destination.getDestinationA()));
+        Set<City> visited = new HashSet<>();
+
+        while (!cityQueue.isEmpty()) {
+            City visiting = cityQueue.poll();
+
+            if (visited.contains(visiting)) continue;
+
+            visited.add(visiting);
+
+            for (Route route : map.getRoutesForCity(visiting)) {
+                if (!route.isClaimed()) continue;
+
+                if (player.getUsername().equals(route.getOwner().getUsername())) {
+                    City other = route.getOtherCity(visiting);
+
+                    if (other.getID() == destination.getDestinationB()) return true;
+
+                    cityQueue.add(other);
+                }
+            }
+        }
+
+        return false;
     }
     
     public ClaimRouteResult claimRoute(int routeID, User user, CardType cardType) {

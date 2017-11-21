@@ -29,6 +29,8 @@ public class Self extends Player {
 	
 	private Set<DestinationCard> destinations;
 	private Set<DestinationCard> selecting;
+	private CardType activeTrainCardType;
+	public static final String ACTIVE_CARD_TYPE_UPDATE = "activeCardTypeUpdate";
 
 	public Self(String userName) {
 		super(userName, Player.Type.Self);
@@ -131,5 +133,15 @@ public class Self extends Player {
 	@Override
 	public int getNumDestinationCards() {
 		return destinations.size();
+	}
+	
+	public CardType getActiveTrainCardType() {
+		return activeTrainCardType;
+	}
+	
+	public void setActiveTrainCardType(CardType activeTrainCardType) {
+		this.activeTrainCardType = activeTrainCardType;
+		setChanged();
+		notifyObservers(ACTIVE_CARD_TYPE_UPDATE);
 	}
 }

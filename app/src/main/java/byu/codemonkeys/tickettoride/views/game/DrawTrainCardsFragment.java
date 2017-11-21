@@ -104,7 +104,7 @@ public class DrawTrainCardsFragment extends Fragment implements DrawTrainCardsCo
 			
 			int drawableID = -1;
 
-			if (faceUpCards.get(i) == null) {
+			if (i >= faceUpCards.size() || faceUpCards.get(i) == null) {
 				cards.get(i).setVisibility(View.INVISIBLE);
 				continue;
 			}
