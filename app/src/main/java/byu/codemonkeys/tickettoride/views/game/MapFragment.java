@@ -102,7 +102,7 @@ public class MapFragment extends Fragment implements MapContract.View {
 				@Override
 				public void onClick(View view) {
 					presenter.claimRoute(routeCircle.getId());
-					Toast.makeText(getContext(), String.valueOf(routeCircle.getId()), Toast.LENGTH_SHORT).show();
+//					Toast.makeText(getContext(), String.valueOf(routeCircle.getId()), Toast.LENGTH_SHORT).show();
 				}
 			});
 			this.mapEdgeWidgets.put(routeCircle.getId(), routeCircle);

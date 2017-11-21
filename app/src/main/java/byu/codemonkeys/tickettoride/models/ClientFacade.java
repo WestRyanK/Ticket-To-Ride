@@ -85,31 +85,44 @@ public class ClientFacade implements IClient {
 	@Override
 	public void updateGame() {
 		if (!isCurrentlyUpdating) {
-			isCurrentlyUpdating = true;
-			final ModelRoot modelRoot = ModelRoot.getInstance();
-			String authToken = modelRoot.getSession().getAuthToken();
-			int lastReadCommandIndex = modelRoot.getLastReadCommandIndex();
-			final HistoryResult result = ServerProxy.getInstance()
-													.updateHistory(authToken, lastReadCommandIndex);
-			
-			ICommand executeHistoryCommand = new ICommand() {
-				@Override
-				public Result execute() {
-					List<CommandData> commands = result.getHistory();
-					
-					if (commands != null && commands.size() > 0) {
-						executeCommands(commands);
-						//						for (CommandData command : commands) { // This way, if we receive multiple commands in one poll, it will toast all of them
-						//							modelRoot.getHistoryManager().addHistory(command);
-						modelRoot.getHistoryManager().addHistory(commands);
-						modelRoot.historyUpdated();
-						//						}
+			try {
+				isCurrentlyUpdating = true;
+				final ModelRoot modelRoot = ModelRoot.getInstance();
+				String authToken = modelRoot.getSession().getAuthToken();
+				int lastReadCommandIndex = modelRoot.getLastReadCommandIndex();
+				final HistoryResult result = ServerProxy.getInstance()
+														.updateHistory(authToken,
+																	   lastReadCommandIndex);
+				
+				ICommand executeHistoryCommand = new ICommand() {
+					@Override
+					public Result execute() {
+						try {
+							List<CommandData> commands = result.getHistory();
+							
+							if (commands != null && commands.size() > 0) {
+								executeCommands(commands);
+								modelRoot.getHistoryManager().addHistory(commands);
+								modelRoot.historyUpdated();
+								//						}
+							}
+						} finally {
+							isCurrentlyUpdating = false;
+						}
+						return null;
 					}
-					isCurrentlyUpdating = false;
-					return null;
-				}
-			};
-			this.mainThreadTask.executeTask(executeHistoryCommand, null);
+				};
+				ICallback callback = new ICallback() {
+					@Override
+					public void callback(Result result) {
+						isCurrentlyUpdating = false;
+					}
+				};
+				this.mainThreadTask.executeTask(executeHistoryCommand, callback);
+			}
+			finally{
+				isCurrentlyUpdating = false;
+			}
 		}
 	}
 	
