@@ -91,7 +91,8 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
                 finalRoundTurns--;
             }
             else {
-                //end the game
+                endGame();
+                return;
             }
         }
 
