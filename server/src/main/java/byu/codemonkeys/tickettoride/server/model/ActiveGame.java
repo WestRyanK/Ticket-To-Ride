@@ -29,6 +29,7 @@ import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 import byu.codemonkeys.tickettoride.shared.model.map.City;
 import byu.codemonkeys.tickettoride.shared.model.map.Route;
+import byu.codemonkeys.tickettoride.shared.model.map.longestpathsolver.LongestPathCalculator;
 import byu.codemonkeys.tickettoride.shared.model.turns.ActiveTurn;
 import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
 import byu.codemonkeys.tickettoride.shared.results.ClaimRouteResult;
@@ -36,6 +37,7 @@ import byu.codemonkeys.tickettoride.shared.results.ClaimRouteResult;
 public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.ActiveGame {
     private static int STARTING_CARDS = 4;
     private static int LAST_TURN_TRAIN_THRESHOLD = 2;
+    private static int LONGEST_ROUTE_BONUS = 10;
 
     private boolean begun;
     private boolean ended;
@@ -288,6 +290,17 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
 
         Map<String, Integer> pointsFromRoutes = pointsFromRoutes();
 
+        Player longestRoutePlayer = null;
+        int longestRoute = 0;
+        for (Player player : players){
+            int playersLongestRoute = LongestPathCalculator.findLongestPath(this.map, player);
+            if (playersLongestRoute > longestRoute)
+            {
+                longestRoute = playersLongestRoute;
+                longestRoutePlayer = player;
+            }
+        }
+        
         for (Player player : players) {
             Self self = (Self) player;
             int completedDestinationBonus = 0;
@@ -299,11 +312,15 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
                 else
                     incompleteDestinationPenalty -= card.getPointValue();
             }
+            
+            int longestRouteBonus = 0;
+            if (player != null && player.getUsername().equals(longestRoutePlayer.getUsername()))
+                longestRouteBonus = LONGEST_ROUTE_BONUS;
 
             EndGamePlayerStats playerSummary = new EndGamePlayerStats(
                     player.getUsername(),
                     player.getColor(),
-                    0,
+                    longestRouteBonus,
                     pointsFromRoutes.get(player.getUsername()),
                     completedDestinationBonus,
                     incompleteDestinationPenalty
