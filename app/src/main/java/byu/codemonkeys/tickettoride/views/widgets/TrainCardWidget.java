@@ -119,6 +119,12 @@ public class TrainCardWidget extends View implements OnClickListener, OnFocusCha
 							countYRatio * this.getHeight(),
 							textFillPaint);
 		}
+		
+		if (this.isSelected()) {
+			Drawable selectedCircle = getResources().getDrawable(R.drawable.ic_selected_circle);
+			selectedCircle.setBounds(canvas.getClipBounds());
+			selectedCircle.draw(canvas);
+		}
 	}
 	
 	@Override

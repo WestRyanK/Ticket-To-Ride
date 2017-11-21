@@ -19,9 +19,13 @@ import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 
 public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck implements IDeck {
 	// The number of each non-wild type the full deck contains
-	private static final int NUM_STANDARD = 12;
+	private static final int NUM_STANDARD =
+	//5;
+	 12;
 	// The number of locomotives the full deck contains
-	private static final int NUM_WILD = 14;
+	private static final int NUM_WILD =
+//			8;
+	14;
 	// The number of destination cards a player must typically draw
 	private static final int NUM_DESTINATIONS_TO_DRAW = 3;
 	// The maximum number of revealed cards

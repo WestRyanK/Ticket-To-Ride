@@ -2,7 +2,6 @@ package byu.codemonkeys.tickettoride.mvpcontracts.game;
 
 
 import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
-import byu.codemonkeys.tickettoride.views.widgets.MapEdgeWidget;
 
 public interface MapContract {
     interface View {
