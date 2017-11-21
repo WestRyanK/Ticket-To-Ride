@@ -7,6 +7,25 @@ import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
 
 public class Route {
+	public static int getPointValue(int length) {
+		switch (length) {
+			case 1 :
+				return 1;
+			case 2:
+				return 2;
+			case 3:
+				return 4;
+			case 4:
+				return 7;
+			case 5:
+				return 10;
+			case 6:
+				return 15;
+			default:
+				throw new IllegalArgumentException(String.format("Length: %d", length));
+		}
+	}
+
 	private final City source, destination;
 	private final int length;
 	private final int routeId;

@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Random;
 
 import byu.codemonkeys.tickettoride.server.broadcast.CommandManager;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
@@ -71,6 +72,16 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
         finalRound = false;
 
         deal();
+
+        Random random = new Random();
+
+        for (Route route : map.getAllRoutes()) {
+            int rgn = random.nextInt(3);
+
+            if (rgn == 2) continue;
+
+            route.claim(players.get(rgn));
+        }
     }
 
     private CommandManager commandManager;
@@ -281,6 +292,8 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
     public void endGame() {
         GameSummary gameSummary = new GameSummary();
 
+        Map<String, Integer> pointsFromRoutes = pointsFromRoutes();
+
         for (Player player : players) {
             Self self = (Self) player;
 
@@ -288,7 +301,7 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
                     player.getUsername(),
                     player.getColor(),
                     0,
-                    0,
+                    pointsFromRoutes.get(player.getUsername()),
                     0,
                     0
             );
@@ -301,6 +314,35 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
         broadcastCommand(new GameOverCommandData(gameSummary));
 
         ended = true;
+    }
+
+    private Map<String, Integer> pointsFromRoutes() {
+        Map<String, Integer> points = new HashMap<>();
+
+        for (Player player : players) {
+            points.put(player.getUsername(), 0);
+        }
+
+        for (Route route : map.getAllRoutes()) {
+            UserBase owner = route.getOwner();
+
+            if (owner == null) continue;
+
+            String username = owner.getUsername();
+
+            try {
+                points.put(username, points.get(username) + Route.getPointValue(route.getLength()));
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException(String.format(
+                        "Length: %d, Source: %s, Destination: %s",
+                        route.getLength(),
+                        route.getSource(),
+                        route.getDestination()
+                ));
+            }
+        }
+
+        return points;
     }
     
     public ClaimRouteResult claimRoute(int routeID, User user, CardType cardType) {
