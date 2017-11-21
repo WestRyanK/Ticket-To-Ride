@@ -86,6 +86,7 @@ public class MapFragment extends Fragment implements MapContract.View {
 		for (GameMapLoader.RouteData routeData : GameMapLoader.getInstance().loadRoutesPositionsFromResource()) {
 			final MapEdgeWidget routeCircle = new MapEdgeWidget(getContext());
 			routeCircle.setLengthValue(routeData.getLength());
+			routeCircle.setId(routeData.getID());
 			int x = (int) (routeData.getRatioX() * mapDrawable.getIntrinsicWidth() -
 					circleSize / 2.0f);
 			int y = (int) (routeData.getRatioY() * mapDrawable.getIntrinsicHeight() -

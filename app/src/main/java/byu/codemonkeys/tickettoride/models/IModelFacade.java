@@ -75,4 +75,6 @@ public interface IModelFacade {
 	void endGame();
 	
 	List<CommandHistoryEntry> getLatestGameHistory();
+
+	void claimRouteAsync(int routeID, ICallback callback);
 }

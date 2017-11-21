@@ -74,17 +74,18 @@ public class ActiveGame extends GameBase implements Observer {
 		temp.setNextTurn(firstTurn);
 		turn = firstTurn;
 	}
-	
+
 	public static ActiveGame copyActiveGame(ActiveGame game) {
 		ActiveGame activeGame = new ActiveGame(game);
 		activeGame.setObservesChildren(true);
 		activeGame.setDeck(game.getDeck());
+		activeGame.setMap(game.map);
 		List<Player> players = new ArrayList<>();
 		for (Player player : game.getPlayers()) {
 			players.add(Player.copyPlayer(player));
 		}
 		activeGame.setPlayers(players);
-		
+
 		return activeGame;
 	}
 	

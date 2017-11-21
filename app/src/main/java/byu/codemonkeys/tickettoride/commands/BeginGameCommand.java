@@ -4,6 +4,7 @@ import java.util.Map;
 
 import byu.codemonkeys.tickettoride.models.ModelFacade;
 import byu.codemonkeys.tickettoride.shared.commands.BeginGameCommandData;
+import byu.codemonkeys.tickettoride.shared.commands.CommandData;
 
 public class BeginGameCommand extends BeginGameCommandData implements IClientCommand {
     public BeginGameCommand(Map<String, Integer> numDestinationCards, int destinationCardDeckCount){

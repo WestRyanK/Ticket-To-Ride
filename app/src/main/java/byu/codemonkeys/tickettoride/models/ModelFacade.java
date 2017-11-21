@@ -17,6 +17,7 @@ import byu.codemonkeys.tickettoride.shared.IServer;
 import byu.codemonkeys.tickettoride.shared.commands.ICommand;
 import byu.codemonkeys.tickettoride.shared.model.*;
 import byu.codemonkeys.tickettoride.shared.model.Player;
+import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
@@ -623,5 +624,18 @@ public class ModelFacade implements IModelFacade {
 	
 	public List<CommandHistoryEntry> getLatestGameHistory() {
 		return models.getHistoryManager().getLatestCommandHistory();
+	}
+
+	@Override
+	public void claimRouteAsync(final int routeID, ICallback callback) {
+		ICommand claimRouteCommand = new ICommand() {
+			@Override
+			public Result execute() {
+				//TODO: determine selected colorType for claiming a route
+				return serverProxy.claimRoute(models.getSession().getAuthToken(), routeID, CardType.Wild);
+			}
+		};
+
+		this.asyncTask.executeTask(claimRouteCommand, callback);
 	}
 }
