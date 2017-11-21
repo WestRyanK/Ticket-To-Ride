@@ -9,18 +9,20 @@ import byu.codemonkeys.tickettoride.shared.model.map.Route;
 
 
 public class RouteClaimedCommand extends RouteClaimedCommandData implements IClientCommand {
-    public RouteClaimedCommand(int routeID, int numCardsUsed, UserBase owner) {
-        super(routeID, numCardsUsed, owner);
+    public RouteClaimedCommand(int routeID, UserBase owner) {
+        super(routeID, owner);
     }
 
     @Override
     public void execute() {
         ModelRoot modelRoot = ModelRoot.getInstance();
         Player player = modelRoot.getGame().getPlayer(this.getOwner().getUsername());
+        Route route = modelRoot.getGame().getMap().getRoute(getRouteID());
         if (player.getClass() == Opponent.class) {
-            player.removeTrainCards(getNumCardsUsed());
-            player.setNumTrains(player.getNumTrains() - getNumCardsUsed());
+            player.removeTrainCards(route.getLength());
+            player.setNumTrains(player.getNumTrains() - route.getLength());
         }
+        player.setScore(player.getScore() + route.getPoints());
         modelRoot.getGame().getMap().claimRoute(getRouteID(), player);
     }
 

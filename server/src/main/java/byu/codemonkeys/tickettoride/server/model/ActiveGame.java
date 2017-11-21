@@ -363,7 +363,9 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
             self.discardTrainCards(cardsRemoved);
             getDeck().discard(cardsRemoved);
 
-            RouteClaimedCommandData claimedCommand = new RouteClaimedCommandData(routeID, route.getLength(), self);
+            self.setScore(self.getScore() + route.getPoints());
+
+            RouteClaimedCommandData claimedCommand = new RouteClaimedCommandData(routeID, self);
             broadcastCommand(claimedCommand);
             nextTurn();
 

@@ -126,6 +126,8 @@ public class Self extends Player {
 				hand.put(entry.getKey(), hand.get(entry.getKey()) - entry.getValue());
 			}
 		}
+		setChanged();
+		notifyObservers(PLAYER_TRAIN_CARDS_UPDATE);
 	}
 
 	@Override
