@@ -19,11 +19,13 @@ import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 
 public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck implements IDeck {
 	// The number of each non-wild type the full deck contains
-	private static final int NUM_STANDARD = 2;
-	//	 12;
+	private static final int NUM_STANDARD =
+//			2;
+		 12;
 	// The number of locomotives the full deck contains
-	private static final int NUM_WILD = 6;
-	//	14;
+	private static final int NUM_WILD =
+//			6;
+		14;
 	// The number of destination cards a player must typically draw
 	private static final int NUM_DESTINATIONS_TO_DRAW = 3;
 	// The maximum number of revealed cards
@@ -160,6 +162,7 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
 		
 		return nonWilds;
 	}
+	
 	
 	private boolean mustReshuffleFaceUpCards() {
 		//		int nonWilds = countNonWildsInDeckFaceUpAndDiscard();

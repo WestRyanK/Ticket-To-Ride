@@ -52,6 +52,22 @@ public class Deck extends ObservableExt implements IDeck {
 		this.notifyObservers(DECK_TRAIN_CARDS_UPDATE);
 	}
 	
+	/**
+	 * Determine whether there are cards the player could choose
+	 * that aren't face up wild cards. Eg if there are cards in the draw
+	 * pile or other face up non wilds
+	 * @return True if there are cards in the draw pile or other faceup nonwilds
+	 */
+	public boolean hasNonWildCardChoices(){
+		boolean hasDeck = this.getTrainCardsDeckCount() > 0;
+		boolean faceUpHasNonWild = false;
+		for (TrainCard card : this.revealed){
+			if (card != null && card.getCardColor() != CardType.Wild)
+				faceUpHasNonWild = true;
+		}
+		return hasDeck || faceUpHasNonWild;
+	}
+	
 	public int getDestinationCardsCount() {
 		return numDestinationCards;
 	}
@@ -65,7 +81,6 @@ public class Deck extends ObservableExt implements IDeck {
 
 	@Override
 	public void discard(Map<CardType, Integer> toDiscard) {
-
 	}
 
 	@Override
