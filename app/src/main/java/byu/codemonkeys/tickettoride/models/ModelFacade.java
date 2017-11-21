@@ -631,8 +631,8 @@ public class ModelFacade implements IModelFacade {
 		ICommand claimRouteCommand = new ICommand() {
 			@Override
 			public Result execute() {
-				//TODO: determine selected colorType for claiming a route
-				return serverProxy.claimRoute(models.getSession().getAuthToken(), routeID, CardType.Wild);
+				CardType type = models.getGame().getSelf().getActiveTrainCardType();
+				return serverProxy.claimRoute(models.getSession().getAuthToken(), routeID, type);
 			}
 		};
 
