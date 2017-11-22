@@ -133,10 +133,12 @@ public class MapFragment extends Fragment implements MapContract.View {
 	@Override
 	public void onPause() {
 		super.onPause();
-//		this.viewportState = new Bundle();
-//		this.viewportState.putFloat(VIEWPORT_ARG_ZOOM, this.viewport.getZoomFactor());
-//		this.viewportState.putFloat(VIEWPORT_ARG_OFFSETX, this.viewport.getOffsetX());
-//		this.viewportState.putFloat(VIEWPORT_ARG_OFFSETY, this.viewport.getOffsetY());
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		presenter.loadMap();
 	}
 	
 	private void getViews(View view) {

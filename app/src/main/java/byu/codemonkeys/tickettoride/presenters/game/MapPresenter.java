@@ -1,5 +1,6 @@
 package byu.codemonkeys.tickettoride.presenters.game;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -15,6 +16,7 @@ import byu.codemonkeys.tickettoride.mvpcontracts.game.MapContract;
 import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.PlayerColor;
 import byu.codemonkeys.tickettoride.shared.model.Self;
+import byu.codemonkeys.tickettoride.shared.model.map.GameMap;
 import byu.codemonkeys.tickettoride.shared.model.map.Route;
 import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
 import byu.codemonkeys.tickettoride.shared.results.ClaimRouteResult;
@@ -47,11 +49,12 @@ public class MapPresenter extends PresenterBase implements MapContract.Presenter
 					if (!result.isSuccessful()) {
 						messageDisplayer.displayMessage(result.getErrorMessage());
 					}
-
+					
 					if (result instanceof ClaimRouteResult) {
 						ClaimRouteResult claimRouteResult = (ClaimRouteResult) result;
 						Self self = ModelRoot.getInstance().getGame().getSelf();
-						self.setNumTrains(self.getNumTrains() - claimRouteResult.getNumTrainsToRemove());
+						self.setNumTrains(self.getNumTrains() -
+												  claimRouteResult.getNumTrainsToRemove());
 						self.discardTrainCards(claimRouteResult.getCardsToRemove());
 					}
 				}
@@ -64,10 +67,30 @@ public class MapPresenter extends PresenterBase implements MapContract.Presenter
 	}
 	
 	@Override
+	public void loadMap() {
+		if (ModelRoot.getInstance().getGame() != null) {
+			GameMap map = ModelRoot.getInstance().getGame().getMap();
+			if (map != null) {
+				List<Route> routes = map.getAllRoutes();
+				for (Route route : routes) {
+					if (route.isClaimed()) {
+						Player owner = ModelRoot.getInstance()
+												.getGame()
+												.getPlayer(route.getOwner().getUsername());
+						view.setRouteClaimed(route.getRouteId(), owner.getColor());
+					}
+				}
+			}
+		}
+	}
+	
+	@Override
 	public void update(Observable observable, Object o) {
 		if (o instanceof Route) {
 			Route route = (Route) o;
-			Player owner = ModelRoot.getInstance().getGame().getPlayer(route.getOwner().getUsername());
+			Player owner = ModelRoot.getInstance()
+									.getGame()
+									.getPlayer(route.getOwner().getUsername());
 			view.setRouteClaimed(route.getRouteId(), owner.getColor());
 		}
 	}
