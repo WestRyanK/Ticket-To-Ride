@@ -10,5 +10,7 @@ public interface MapContract {
 
     interface Presenter {
         void claimRoute(int routeID);
+        
+        void loadMap();
     }
 }
