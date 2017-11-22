@@ -88,7 +88,7 @@ public class HomeActivity extends AppCompatActivity implements INavigator, IDisp
 				fragment = lobbyFragment;
 				break;
 			case WaitingRoom:
-				WaitingRoomFragment waitingRoomFragment = WaitingRoomFragment.newInstance();
+				WaitingRoomFragment waitingRoomFragment = new WaitingRoomFragment();
 				waitingRoomFragment.setPresenter(new WaitingRoomPresenter(waitingRoomFragment,
 																		  activity,
 																		  activity,

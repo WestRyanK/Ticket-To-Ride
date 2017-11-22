@@ -44,6 +44,13 @@ public class LoginPresenter extends PresenterBase implements LoginContract.Prese
 		if (canLogin()) {
 			modelFacade.loginAsync(this.view.getUsername(), this.view.getPassword(), loginCallback);
 		}
+		else
+		{
+			if (UserBase.isValidUsername(this.view.getUsername()) )
+				messageDisplayer.displayMessage("Username must be between 6-12 characters");
+			if (UserBase.isValidPassword(this.view.getPassword()))
+				messageDisplayer.displayMessage("Password must be between 8-20 characters");
+		}
 	}
 	
 	
@@ -59,8 +66,7 @@ public class LoginPresenter extends PresenterBase implements LoginContract.Prese
 	
 	@Override
 	public boolean canLogin() {
-		return (UserBase.isValidUsername(this.view.getUsername()) &&
-				UserBase.isValidPassword(this.view.getPassword()));
+		return UserBase.isValidUsername(this.view.getUsername()) && UserBase.isValidPassword(this.view.getPassword());
 	}
 	
 	@Override

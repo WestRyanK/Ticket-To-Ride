@@ -8,6 +8,7 @@ import byu.codemonkeys.tickettoride.exceptions.NoPendingGameException;
 import byu.codemonkeys.tickettoride.exceptions.UnauthorizedException;
 import byu.codemonkeys.tickettoride.models.IModelFacade;
 import byu.codemonkeys.tickettoride.models.ModelFacade;
+import byu.codemonkeys.tickettoride.models.ModelRoot;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.IMediaPlayer;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
@@ -49,9 +50,7 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 				}
 			};
 			modelFacade.startGameAsync(startGameCallback);
-		}
-		else
-		{
+		} else {
 			messageDisplayer.displayMessage("There are not enough players to start the game");
 		}
 	}
@@ -105,6 +104,13 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 		try {
 			this.view.setWaitingUsers(modelFacade.getPendingGame().getUsers());
 			this.view.setPendingGameName(modelFacade.getPendingGame().getName());
+			this.view.setCanStartGame(canStartGame());
+			this.view.setIsStartGameVisible(modelFacade.getPendingGame()
+													   .getOwner()
+													   .getUsername()
+													   .equals(ModelRoot.getInstance()
+																		.getUser()
+																		.getUsername()));
 		} catch (UnauthorizedException e) {
 			e.printStackTrace();
 			messageDisplayer.displayMessage(e.getMessage());

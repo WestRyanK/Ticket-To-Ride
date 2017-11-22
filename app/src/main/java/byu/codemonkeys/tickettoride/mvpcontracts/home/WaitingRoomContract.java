@@ -15,6 +15,8 @@ public interface WaitingRoomContract {
 		void setWaitingUsers(List<UserBase> users);
 		
 		void setIsStartGameVisible(boolean isStartGameVisible);
+		
+		void setCanStartGame(boolean canStartGame);
 	}
 	
 	interface Presenter {

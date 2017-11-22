@@ -55,37 +55,23 @@
         android:layout_height="match_parent"
         android:layout_below="@id/waitingRoom_header"/>
 
-    <!--<Button-->
-    <!--android:id="@+id/waitingRoom_buttonLeaveGame"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentBottom="true"-->
-    <!--android:text="@string/leave"/>-->
-
-    <!--<Button-->
-    <!--android:id="@+id/waitingRoom_buttonStartGame"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_above="@id/waitingRoom_buttonLeaveGame"-->
-    <!--android:text="@string/startGame"/>-->
-
-    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedButton
         android:id="@+id/waitingRoom_buttonLeaveGame"
-        style="@style/AvatarTextStyle"
+        style="@style/AvatarButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:text="@string/leave"
-        android:textSize="@dimen/title2_size"/>
+        android:textSize="@dimen/title4_size"/>
 
-    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedButton
         android:id="@+id/waitingRoom_buttonStartGame"
-        style="@style/AvatarTextStyle"
+        style="@style/AvatarButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/waitingRoom_buttonLeaveGame"
         android:gravity="center"
         android:text="@string/startGame"
-        android:textSize="@dimen/title2_size"/>
+        android:textSize="@dimen/title4_size"/>
 </RelativeLayout>
