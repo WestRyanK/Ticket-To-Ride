@@ -8,15 +8,14 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import byu.codemonkeys.tickettoride.R;
 import byu.codemonkeys.tickettoride.mvpcontracts.home.RegisterContract;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link RegisterFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class RegisterFragment extends Fragment implements RegisterContract.View {
@@ -26,8 +25,8 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 	private RegisterContract.Presenter presenter;
 	private EditText editTextUsername;
 	private EditText editTextPassword;
-	private TextView buttonRegister;
-	private TextView textViewCancel;
+	private Button buttonRegister;
+	private Button buttonCancel;
 	
 	public RegisterFragment() {
 		// Required empty public constructor
@@ -48,12 +47,32 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 							 Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.fragment_register, container, false);
-		this.editTextUsername = (EditText) view.findViewById(R.id.register_editTextUsername);
-		this.editTextPassword = (EditText) view.findViewById(R.id.register_editTextPassword);
-		this.buttonRegister = (TextView) view.findViewById(R.id.register_buttonRegister);
-		//		this.buttonRegister = (Button) view.findViewById(R.id.register_buttonRegister);
-		this.textViewCancel = (TextView) view.findViewById(R.id.register_textViewCancel);
+		getViews(view);
+		setTextChangedListeners();
+		setOnClickListeners();
 		
+		presenter.setDefaults();
+		return view;
+	}
+	
+	private void setOnClickListeners() {
+		this.buttonRegister.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				presenter.register();
+			}
+		});
+		
+		this.buttonCancel.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				presenter.cancel();
+			}
+		});
+		
+	}
+	
+	private void setTextChangedListeners() {
 		this.editTextUsername.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -87,23 +106,13 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 				setCanRegister(presenter.canRegister());
 			}
 		});
-		
-		this.buttonRegister.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				presenter.register();
-			}
-		});
-		
-		this.textViewCancel.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				presenter.cancel();
-			}
-		});
-		
-		presenter.setDefaults();
-		return view;
+	}
+	
+	private void getViews(View view) {
+		editTextUsername = (EditText) view.findViewById(R.id.register_editTextUsername);
+		editTextPassword= (EditText) view.findViewById(R.id.register_editTextPassword);
+		buttonRegister= (Button) view.findViewById(R.id.register_buttonRegister);
+		buttonCancel = (Button) view.findViewById(R.id.register_buttonCancel);
 	}
 	
 	// region RegisterContract.View implementation

@@ -9,7 +9,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +26,8 @@ import byu.codemonkeys.tickettoride.views.widgets.HorizontalSpaceItemDecoration;
 public class DestinationCardsFragment extends Fragment implements DestinationCardsContract.View {
 	
 	DestinationCardsContract.Presenter presenter;
-	private TextView textViewBack;
-	private TextView textViewDraw;
+	private Button buttonBack;
+	private Button buttonDraw;
 	private RecyclerView recyclerDestinationCards;
 	private LinearLayoutManager layoutManagerDestinationCards;
 	private DestinationCardRecyclerAdapter destinationCardsAdapter;
@@ -97,13 +97,13 @@ public class DestinationCardsFragment extends Fragment implements DestinationCar
 	}
 	
 	private void setClickListeners() {
-		this.textViewBack.setOnClickListener(new View.OnClickListener() {
+		this.buttonBack.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				presenter.navigateBack();
 			}
 		});
-		this.textViewDraw.setOnClickListener(new View.OnClickListener() {
+		this.buttonDraw.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				presenter.navigateDrawDestinationCards();
@@ -112,8 +112,8 @@ public class DestinationCardsFragment extends Fragment implements DestinationCar
 	}
 	
 	private void getViews(View view) {
-		this.textViewBack = (TextView) view.findViewById(R.id.destinationCards_textViewBack);
-		this.textViewDraw = (TextView) view.findViewById(R.id.destinationCards_textViewDraw);
+		this.buttonBack = (Button) view.findViewById(R.id.destinationCards_buttonBack);
+		this.buttonDraw = (Button) view.findViewById(R.id.destinationCards_buttonDraw);
 		recyclerDestinationCards = (RecyclerView) view.findViewById(R.id.destinationCards_recyclerCards);
 	}
 	
@@ -131,7 +131,12 @@ public class DestinationCardsFragment extends Fragment implements DestinationCar
 	
 	@Override
 	public void setDestinationCardsInDeckCount(int cardsInDeckCount) {
-		this.textViewDraw.setText(String.format("Draw (%d)", cardsInDeckCount));
+		this.buttonDraw.setText(String.format("Draw (%d)", cardsInDeckCount));
+	}
+	
+	@Override
+	public void setCanDrawDestinationCards(boolean canDrawDestinationCards) {
+		this.buttonDraw.setEnabled(canDrawDestinationCards);
 	}
 	
 	private void scrollToMiddle() {

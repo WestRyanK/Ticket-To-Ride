@@ -14,7 +14,6 @@
         android:layout_centerHorizontal="true"
         android:paddingTop="10dp"
         android:textSize="@dimen/title_size"/>
-    <!--android:text="@string/drawDestinationCards"-->
 
     <ImageView
         android:id="@+id/drawDestinationCards_imageViewUnderline"
@@ -33,14 +32,13 @@
         android:layout_below="@id/drawDestinationCards_imageViewUnderline"
         android:layout_marginBottom="80dp"/>
 
-    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
-        android:id="@+id/drawDestinationCards_textViewContinue"
-        style="@style/AvatarTextStyle"
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedButton
+        android:id="@+id/drawDestinationCards_buttonContinue"
+        style="@style/AvatarButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:paddingTop="10dp"
         android:text="@string/continueText"
-        android:textSize="@dimen/title_size"/>
+        android:textSize="@dimen/title2_size"/>
 </RelativeLayout>

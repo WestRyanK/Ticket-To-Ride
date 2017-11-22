@@ -45,6 +45,10 @@ public class CreateGamePresenter extends PresenterBase implements CreateGameCont
 		if (canCreateGame()) {
 			modelFacade.createGameAsync(this.view.getGameName(), createGameCallback);
 		}
+		else
+		{
+			messageDisplayer.displayMessage("Game name must be between 6-12 characters");
+		}
 	}
 	
 	@Override
