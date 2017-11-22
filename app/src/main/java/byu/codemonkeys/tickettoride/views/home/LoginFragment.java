@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -22,9 +23,9 @@ public class LoginFragment extends Fragment implements LoginContract.View {
 	private LoginContract.Presenter presenter;
 	private EditText editTextUsername;
 	private EditText editTextPassword;
-	private TextView buttonLogin;
-	private TextView textViewRegister;
-	private TextView textViewConnectionSettings;
+	private Button buttonLogin;
+	private Button textViewRegister;
+	private Button textViewConnectionSettings;
 	
 	
 	public LoginFragment() {
@@ -47,14 +48,39 @@ public class LoginFragment extends Fragment implements LoginContract.View {
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.fragment_login, container, false);
 		
-		// Get references to byu.codemonkeys.tickettoride.views.widgets in the view
-		this.editTextUsername = (EditText) view.findViewById(R.id.login_editTextUsername);
-		this.editTextPassword = (EditText) view.findViewById(R.id.login_editTextPassword);
-		//		this.buttonLogin = (Button) view.findViewById(R.id.login_buttonLogin);
-		this.buttonLogin = (TextView) view.findViewById(R.id.login_buttonLogin);
-		this.textViewRegister = (TextView) view.findViewById(R.id.login_textViewRegister);
-		this.textViewConnectionSettings = (TextView) view.findViewById(R.id.login_textViewConnectionSettings);
+		getViews(view);
+		setTextChangedListeners();
+		setOnClickListeners();
 		
+		presenter.setDefaults();
+		return view;
+	}
+	
+	private void setOnClickListeners() {
+		
+		this.buttonLogin.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				presenter.login();
+			}
+		});
+		
+		this.textViewRegister.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				presenter.navigateRegisterUser();
+			}
+		});
+		
+		this.textViewConnectionSettings.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				presenter.navigateConnectionSettings();
+			}
+		});
+	}
+	
+	private void setTextChangedListeners() {
 		this.editTextUsername.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -88,30 +114,15 @@ public class LoginFragment extends Fragment implements LoginContract.View {
 				setCanLogin(presenter.canLogin());
 			}
 		});
-		
-		this.buttonLogin.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				presenter.login();
-			}
-		});
-		
-		this.textViewRegister.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				presenter.navigateRegisterUser();
-			}
-		});
-		
-		this.textViewConnectionSettings.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				presenter.navigateConnectionSettings();
-			}
-		});
-		
-		presenter.setDefaults();
-		return view;
+	}
+	
+	private void getViews(View view) {
+		// Get references to byu.codemonkeys.tickettoride.views.widgets in the view
+		this.editTextUsername = (EditText) view.findViewById(R.id.login_editTextUsername);
+		this.editTextPassword = (EditText) view.findViewById(R.id.login_editTextPassword);
+		this.buttonLogin = (Button) view.findViewById(R.id.login_buttonLogin);
+		this.textViewRegister = (Button) view.findViewById(R.id.login_textViewRegister);
+		this.textViewConnectionSettings = (Button) view.findViewById(R.id.login_textViewConnectionSettings);
 	}
 	
 	// region LoginContract.View implementation

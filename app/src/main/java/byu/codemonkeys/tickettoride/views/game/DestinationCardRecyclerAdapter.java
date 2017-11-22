@@ -22,6 +22,7 @@ public class DestinationCardRecyclerAdapter extends RecyclerView.Adapter<Destina
 	List<DestinationCard> destinationCards;
 	private OnRecyclerItemClickListener<DestinationCard> clickListener;
 	private Set<Integer> selectedCardIndices;
+	private OnChangeSelectionListener onChangeSelectionListener;
 	private boolean canSelectCards;
 	
 	public DestinationCardRecyclerAdapter(List<DestinationCard> destinationCards,
@@ -65,15 +66,23 @@ public class DestinationCardRecyclerAdapter extends RecyclerView.Adapter<Destina
 			} else {
 				selectedCardIndices.add(wrappedPosition);
 			}
+			if (this.onChangeSelectionListener != null)
+				this.onChangeSelectionListener.onChangeSelection();
 		}
 	}
+	
+	public void setOnChangeSelectionListener(OnChangeSelectionListener onChangeSelectionListener) {
+		this.onChangeSelectionListener = onChangeSelectionListener;
+	}
+	
 	
 	public List<DestinationCard> getSelectedCards() {
 		
 		List<DestinationCard> selectedCards = new ArrayList<>();
 		
 		for (int index : this.selectedCardIndices) {
-			selectedCards.add(this.destinationCards.get(index));
+			if (this.destinationCards.size() > index)
+				selectedCards.add(this.destinationCards.get(index));
 		}
 		return selectedCards;
 	}
@@ -103,6 +112,10 @@ public class DestinationCardRecyclerAdapter extends RecyclerView.Adapter<Destina
 	
 	public void setCanSelectCards(boolean canSelectCards) {
 		this.canSelectCards = canSelectCards;
+	}
+	
+	public interface OnChangeSelectionListener {
+		void onChangeSelection();
 	}
 	
 	public class DestinationCardHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

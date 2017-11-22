@@ -11,4 +11,8 @@
     <style name="AvatarTextStyle">
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
+    <style name="AvatarButtonStyle">
+        <item name="android:textColor">@color/fontified_button_color</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
 </resources>

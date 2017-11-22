@@ -29,30 +29,21 @@
         android:inputType="number"
         android:maxLines="1"/>
 
-    <!--<Button-->
-    <!--android:id="@+id/connection_buttonSave"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="20dp"-->
-    <!--android:text="@string/save"/>-->
-    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedButton
         android:id="@+id/connection_buttonSave"
-        style="@style/AvatarTextStyle"
+        style="@style/AvatarButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="@string/save"
-        android:textSize="@dimen/title2_size"/>
+        android:textSize="@dimen/title4_size"/>
 
-    <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
+    <byu.codemonkeys.tickettoride.views.widgets.FontifiedButton
         android:id="@+id/connection_textViewCancel"
-        style="@style/AvatarTextStyle"
+        style="@style/AvatarButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:clickable="true"
         android:gravity="center"
-        android:onClick="onClickCancel"
+        android:textSize="@dimen/title4_size"
         android:text="@string/cancel"/>
 </LinearLayout>

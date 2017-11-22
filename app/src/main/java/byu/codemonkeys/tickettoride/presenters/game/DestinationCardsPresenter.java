@@ -67,21 +67,23 @@ public class DestinationCardsPresenter extends PresenterBase implements Destinat
 		cardList.addAll(cards);
 		this.view.setDestinationCards(cardList);
 		
+		loadDestinationCardsDeck();
+	}
+	
+	private void loadDestinationCardsDeck() {
+		
 		int numDestinationCards = ModelRoot.getInstance()
 										   .getGame()
 										   .getDeck()
 										   .getDestinationCardsCount();
 		this.view.setDestinationCardsInDeckCount(numDestinationCards);
+		this.view.setCanDrawDestinationCards(numDestinationCards > 0);
 	}
 	
 	@Override
 	public void update(Observable observable, Object o) {
-		if (o == Deck.DESTINATION_CARDS_UPDATE){
-			int numDestinationCards = ModelRoot.getInstance()
-											   .getGame()
-											   .getDeck()
-											   .getDestinationCardsCount();
-			this.view.setDestinationCardsInDeckCount(numDestinationCards);
+		if (o == Deck.DESTINATION_CARDS_UPDATE) {
+			loadDestinationCardsDeck();
 		}
 	}
 }

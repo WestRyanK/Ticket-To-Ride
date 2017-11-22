@@ -15,6 +15,8 @@ public interface DestinationCardsContract {
 		void setDestinationCards(List<DestinationCard> cards);
 		
 		void setDestinationCardsInDeckCount(int cardsInDeckCount);
+		
+		void setCanDrawDestinationCards(boolean canDrawDestinationCards);
 	}
 	
 	interface Presenter {

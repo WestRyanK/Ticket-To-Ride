@@ -69,12 +69,21 @@ public class DrawDestinationCardsPresenter extends PresenterBase implements Draw
 		this.view.setMinCardsCount(ModelRoot.getInstance()
 											.getGame()
 											.getMinAllowedDestinationCardsDrawn());
+		this.view.setCanContinue(canAccept());
 	}
 	
 	@Override
 	public boolean canAccept() {
+		if (this.view != null && this.view.getSelectedCards() != null)
 		return this.view.getSelectedCards().size() >=
 				ModelRoot.getInstance().getGame().getMinAllowedDestinationCardsDrawn();
+		else
+			return false;
+	}
+	
+	@Override
+	public void selectionChanged() {
+		this.view.setCanContinue(this.canAccept());
 	}
 	
 	@Override

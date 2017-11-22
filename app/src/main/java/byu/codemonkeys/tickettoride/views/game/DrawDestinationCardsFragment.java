@@ -9,6 +9,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ import byu.codemonkeys.tickettoride.views.widgets.HorizontalSpaceItemDecoration;
  */
 public class DrawDestinationCardsFragment extends Fragment implements DrawDestinationCardsContract.View {
 	DrawDestinationCardsContract.Presenter presenter;
-	private TextView textViewContinue;
+	private Button buttonContinue;
 	private TextView textViewDirections;
 	private RecyclerView recyclerDestinationCards;
 	private LinearLayoutManager layoutManagerDestinationCards;
@@ -50,7 +51,7 @@ public class DrawDestinationCardsFragment extends Fragment implements DrawDestin
 	
 	private void getViews(View view) {
 		recyclerDestinationCards = (RecyclerView) view.findViewById(R.id.drawDestinationCards_recyclerCards);
-		textViewContinue = (TextView) view.findViewById(R.id.drawDestinationCards_textViewContinue);
+		buttonContinue = (Button) view.findViewById(R.id.drawDestinationCards_buttonContinue);
 		textViewDirections = (TextView) view.findViewById(R.id.drawDestinationCards_textViewDirections);
 	}
 	
@@ -72,6 +73,12 @@ public class DrawDestinationCardsFragment extends Fragment implements DrawDestin
 																		 }
 																	 });
 		destinationCardsAdapter.setCanSelectCards(true);
+		destinationCardsAdapter.setOnChangeSelectionListener(new DestinationCardRecyclerAdapter.OnChangeSelectionListener() {
+			@Override
+			public void onChangeSelection() {
+				presenter.selectionChanged();
+			}
+		});
 		recyclerDestinationCards.setAdapter(destinationCardsAdapter);
 		//		scrollToMiddle();
 	}
@@ -81,7 +88,7 @@ public class DrawDestinationCardsFragment extends Fragment implements DrawDestin
 	}
 	
 	private void setClickListeners() {
-		this.textViewContinue.setOnClickListener(new View.OnClickListener() {
+		this.buttonContinue.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				presenter.acceptSelectedCards();
@@ -103,7 +110,6 @@ public class DrawDestinationCardsFragment extends Fragment implements DrawDestin
 	@Override
 	public void setCards(List<DestinationCard> cards) {
 		this.destinationCardsAdapter.updateData(cards);
-		
 	}
 	
 	@Override
@@ -122,8 +128,7 @@ public class DrawDestinationCardsFragment extends Fragment implements DrawDestin
 	
 	@Override
 	public void setCanContinue(boolean canContinue) {
-		this.textViewContinue.setEnabled(canContinue);
-		
+		this.buttonContinue.setEnabled(canContinue);
 	}
 	
 	public void setPresenter(DrawDestinationCardsContract.Presenter presenter) {

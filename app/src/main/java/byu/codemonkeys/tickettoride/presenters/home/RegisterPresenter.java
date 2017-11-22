@@ -48,6 +48,13 @@ public class RegisterPresenter extends PresenterBase implements RegisterContract
 									  this.view.getPassword(),
 									  registerCallback);
 		}
+		else
+		{
+			if (!UserBase.isValidUsername(this.view.getUsername()))
+				messageDisplayer.displayMessage("Username must be between 6-12 characters");
+			if (!UserBase.isValidPassword(this.view.getPassword()))
+				messageDisplayer.displayMessage("Password must be between 8-20 characters");
+		}
 	}
 	
 	@Override

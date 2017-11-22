@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -22,8 +23,8 @@ public class ConnectionSettingsFragment extends Fragment implements ConnectionSe
 	private ConnectionSettingsContract.Presenter presenter;
 	private EditText editTextHost;
 	private EditText editTextPort;
-	private TextView buttonSave;
-	private TextView textViewCancel;
+	private Button buttonSave;
+	private Button textViewCancel;
 	
 	public ConnectionSettingsFragment() {
 		// Required empty public constructor
@@ -41,12 +42,15 @@ public class ConnectionSettingsFragment extends Fragment implements ConnectionSe
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.fragment_connection_settings, container, false);
 		
-		this.editTextHost = (EditText) view.findViewById(R.id.connection_editTextHost);
-		this.editTextPort = (EditText) view.findViewById(R.id.connection_editTextPort);
-		//		this.buttonSave = (Button) view.findViewById(R.id.connection_buttonSave);
-		this.buttonSave = (TextView) view.findViewById(R.id.connection_buttonSave);
-		this.textViewCancel = (TextView) view.findViewById(R.id.connection_textViewCancel);
+		getViews(view);
+		setTextChangedListeners();
+		setOnClickListeners();
 		
+		presenter.setDefaults();
+		return view;
+	}
+	
+	private void setTextChangedListeners() {
 		this.editTextHost.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -80,7 +84,9 @@ public class ConnectionSettingsFragment extends Fragment implements ConnectionSe
 				setCanSave(presenter.canSaveConnectionSettings());
 			}
 		});
-		
+	}
+	
+	private void setOnClickListeners() {
 		this.buttonSave.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -94,9 +100,13 @@ public class ConnectionSettingsFragment extends Fragment implements ConnectionSe
 				presenter.cancel();
 			}
 		});
-		
-		presenter.setDefaults();
-		return view;
+	}
+	
+	private void getViews(View view) {
+		this.editTextHost = (EditText) view.findViewById(R.id.connection_editTextHost);
+		this.editTextPort = (EditText) view.findViewById(R.id.connection_editTextPort);
+		this.buttonSave = (Button) view.findViewById(R.id.connection_buttonSave);
+		this.textViewCancel = (Button) view.findViewById(R.id.connection_textViewCancel);
 	}
 	
 	// region ConnectionSettingsContract.View

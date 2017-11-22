@@ -28,5 +28,7 @@ public interface DrawDestinationCardsContract {
 		void loadDestinationCards();
 		
 		boolean canAccept();
+		
+		void selectionChanged();
 	}
 }
