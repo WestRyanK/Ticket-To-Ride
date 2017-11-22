@@ -20,6 +20,10 @@ public class PlayerStatsWidget extends RelativeLayout {
 	private TextView textViewTrains;
 	private TextView textViewTrainCards;
 	private TextView textViewDestinationCards;
+	private ImageView imageViewScore;
+	private ImageView imageViewTrains;
+	private ImageView imageViewTrainCards;
+	private ImageView imageViewDestinationCards;
 	
 	// region Public Properties
 	// region PlayerColor Property
@@ -132,11 +136,25 @@ public class PlayerStatsWidget extends RelativeLayout {
 	
 	public void setPlayersTurn(boolean playersTurn) {
 		isPlayersTurn = playersTurn;
+		int color = -1;
 		if (this.isPlayersTurn) {
-			this.textViewName.setTextColor(getResources().getColor(R.color.colorAccent));
+			color = getResources().getColor(R.color.colorAccent);
+			imageViewScore.setImageDrawable(getResources().getDrawable(R.drawable.ic_scoreboard_accent));
+			imageViewTrains.setImageDrawable(getResources().getDrawable(R.drawable.ic_old_train_accent));
+			imageViewTrainCards.setImageDrawable(getResources().getDrawable(R.drawable.ic_cards_accent));
+			imageViewDestinationCards.setImageDrawable(getResources().getDrawable(R.drawable.ic_destination_accent));
 		} else {
-			this.textViewName.setTextColor(getResources().getColor(R.color.colorPrimary));
+			color = getResources().getColor(R.color.colorPrimary);
+			imageViewScore.setImageDrawable(getResources().getDrawable(R.drawable.ic_scoreboard_small));
+			imageViewTrains.setImageDrawable(getResources().getDrawable(R.drawable.ic_old_train_small));
+			imageViewTrainCards.setImageDrawable(getResources().getDrawable(R.drawable.ic_cards_small));
+			imageViewDestinationCards.setImageDrawable(getResources().getDrawable(R.drawable.ic_destination_small));
 		}
+		this.textViewName.setTextColor(color);
+		this.textViewScore.setTextColor(color);
+		this.textViewDestinationCards.setTextColor(color);
+		this.textViewTrainCards.setTextColor(color);
+		this.textViewTrains.setTextColor(color);
 	}
 	// endregion
 	
@@ -168,6 +186,11 @@ public class PlayerStatsWidget extends RelativeLayout {
 		textViewTrains = (TextView) findViewById(R.id.playerStats_textViewTrains);
 		textViewTrainCards = (TextView) findViewById(R.id.playerStats_textViewTrainCards);
 		textViewDestinationCards = (TextView) findViewById(R.id.playerStats_textViewDestinationCards);
+		
+		imageViewScore = (ImageView) findViewById(R.id.playerStats_imageViewScore);
+		imageViewTrains = (ImageView) findViewById(R.id.playerStats_imageViewTrains);
+		imageViewTrainCards = (ImageView) findViewById(R.id.playerStats_imageViewTrainCards);
+		imageViewDestinationCards = (ImageView) findViewById(R.id.playerStats_imageViewDestinationCards);
 	}
 	
 	private void applyAttributes(Context context, AttributeSet attrs) {
