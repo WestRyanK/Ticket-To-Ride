@@ -20,7 +20,7 @@ public class RouteClaimedCommand extends RouteClaimedCommandData implements ICli
         Route route = modelRoot.getGame().getMap().getRoute(getRouteID());
         if (player.getClass() == Opponent.class) {
             player.removeTrainCards(route.getLength());
-            player.setNumTrains(player.getNumTrains() - route.getLength());
+            player.removeTrains(route.getLength());
         }
         player.setScore(player.getScore() + route.getPoints());
         modelRoot.getGame().getMap().claimRoute(getRouteID(), player);

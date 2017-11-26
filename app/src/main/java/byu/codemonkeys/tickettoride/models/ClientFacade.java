@@ -102,9 +102,6 @@ public class ClientFacade implements IClient {
 							
 							if (commands != null && commands.size() > 0) {
 								executeCommands(commands);
-								modelRoot.getHistoryManager().addHistory(commands);
-								modelRoot.historyUpdated();
-								//						}
 							}
 						} finally {
 							isCurrentlyUpdating = false;
@@ -127,10 +124,14 @@ public class ClientFacade implements IClient {
 	}
 	
 	private void executeCommands(List<CommandData> commands) {
+		ModelRoot modelRoot = ModelRoot.getInstance();
+		int lastExecutedCommandIndex = modelRoot.getLastReadCommandIndex();
 		for (CommandData command : commands) {
-			if (command instanceof IClientCommand) {
+			if (command instanceof IClientCommand && command.getQueuedPosition() > lastExecutedCommandIndex) {
 				((IClientCommand) command).execute();
+				modelRoot.getHistoryManager().addHistory(command);
 			}
 		}
+		modelRoot.historyUpdated();
 	}
 }

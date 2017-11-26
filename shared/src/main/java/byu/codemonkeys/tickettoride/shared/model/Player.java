@@ -101,4 +101,10 @@ public abstract class Player extends UserBase {
 		setChanged();
 		notifyObservers(PLAYER_TRAINS_UPDATE);
 	}
+
+	public void removeTrains(int numTrains) {
+		this.numTrains -= numTrains;
+		setChanged();
+		notifyObservers(PLAYER_TRAINS_UPDATE);
+	}
 }
