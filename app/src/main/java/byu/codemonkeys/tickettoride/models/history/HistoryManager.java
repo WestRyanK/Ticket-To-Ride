@@ -25,9 +25,19 @@ public class HistoryManager {
 
     public void addHistory(List<CommandData> commands) {
         for (CommandData command : commands) {
+            if (command.getQueuedPosition() == (lastReadCommandIndex + 1)) {
+                commandHistory.add(new CommandHistoryEntry(command));
+                lastReadCommandIndex = command.getQueuedPosition();
+            }
+        }
+    }
+
+    public void addHistory(CommandData command) {
+        if (command.getQueuedPosition() == (lastReadCommandIndex + 1)) {
             commandHistory.add(new CommandHistoryEntry(command));
             lastReadCommandIndex = command.getQueuedPosition();
         }
+
     }
 
     public List<CommandHistoryEntry> getCommandHistory() {

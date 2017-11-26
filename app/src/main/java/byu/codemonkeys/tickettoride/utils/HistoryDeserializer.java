@@ -22,6 +22,7 @@ import byu.codemonkeys.tickettoride.commands.DestinationCardsDrawnCommand;
 import byu.codemonkeys.tickettoride.commands.FaceUpTrainCardDrawnCommand;
 import byu.codemonkeys.tickettoride.commands.GameOverCommand;
 import byu.codemonkeys.tickettoride.commands.FaceUpTrainCardsReshuffledCommand;
+import byu.codemonkeys.tickettoride.commands.LastTurnCommand;
 import byu.codemonkeys.tickettoride.commands.RouteClaimedCommand;
 import byu.codemonkeys.tickettoride.commands.NextTurnCommand;
 import byu.codemonkeys.tickettoride.commands.SendMessageCommand;
@@ -50,7 +51,8 @@ public class HistoryDeserializer {
             .registerSubtype(SkipTurnCommand.class, CommandType.SKIP_TURN)
             .registerSubtype(RouteClaimedCommand.class, CommandType.ROUTE_CLAIMED)
             .registerSubtype(NextTurnCommand.class, CommandType.NEXT_TURN)
-            .registerSubtype(GameOverCommand.class, CommandType.GAME_OVER);
+            .registerSubtype(GameOverCommand.class, CommandType.GAME_OVER)
+            .registerSubtype(LastTurnCommand.class, CommandType.LAST_TURN);
 
     private static final RuntimeTypeAdapterFactory<Player> playerTypeFactory =
             RuntimeTypeAdapterFactory.of(Player.class, "type")

@@ -89,7 +89,7 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
         turn = turn.getNextTurn();
 
         if (finalRound) {
-            if (finalRoundTurns > 0) {
+            if (finalRoundTurns > 1) {
                 finalRoundTurns--;
             }
             else {
@@ -449,7 +449,7 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
         }
 
         if (route.claim(self)) {
-            self.setNumTrains(self.getNumTrainCards() - route.getLength());
+            self.removeTrains(route.getLength());
 
             Map<CardType, Integer> cardsRemoved = new HashMap<>();
             cardsRemoved.put(cardType, numNormalCards);
@@ -464,7 +464,7 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
             broadcastCommand(claimedCommand);
             nextTurn();
 
-            if (self.getNumTrainCards() <= LAST_TURN_TRAIN_THRESHOLD) {
+            if (self.getNumTrains() <= LAST_TURN_TRAIN_THRESHOLD) {
                 broadcastCommand(new LastTurnCommandData());
                 initiateFinalRound();
             }
