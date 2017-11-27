@@ -8,6 +8,8 @@ public interface ChatHistoryContract {
 	interface View {
 		void clearMessages();
 		
+		boolean isActive();
+		
 		void addMessage(String message);
 		
 		void setCanSendMessage(boolean canSendMessage);
