@@ -13,6 +13,7 @@ import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.mvpcontracts.game.DrawTrainCardsContract;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
 import byu.codemonkeys.tickettoride.shared.model.cards.Deck;
+import byu.codemonkeys.tickettoride.shared.results.DrawDeckTrainCardResult;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 
 /**
@@ -46,6 +47,11 @@ public class DrawTrainCardsPresenter extends PresenterBase implements DrawTrainC
 				public void callback(Result result) {
 					if (!result.isSuccessful())
 						messageDisplayer.displayMessage(result.getErrorMessage());
+					else
+					{
+						DrawDeckTrainCardResult rs = (DrawDeckTrainCardResult)result;
+						messageDisplayer.displayMessage(String.format("You drew a %1$s card from the deck", rs.getDrawnCard().getCardColor()));
+					}
 				}
 			};
 			modelFacade.drawDeckTrainCardAsync(drawDeckCardCallback);
