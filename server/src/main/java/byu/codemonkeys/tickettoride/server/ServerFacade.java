@@ -302,26 +302,36 @@ public class ServerFacade implements IServer {
 	@Override
 	public DestinationCardResult drawDestinationCards(String authToken) {
 		ServerSession session = rootModel.getSession(authToken);
+
 		if (session == null) {
 			return new DestinationCardResult("Authentication Error");
 		}
-		String gameID = session.getGameID();
-		ActiveGame game = rootModel.getActiveGame(gameID);
+
+		ActiveGame game = rootModel.getActiveGame(session.getGameID());
+
 		if (game == null) {
 			return new DestinationCardResult("Player is not part of an active game");
 		}
 		
 		User user = session.getUser();
 		Player player = game.getPlayer(user);
+
 		if (player == null) {
 			return new DestinationCardResult(
 					"Could not find the user in the game. This is a server error");
 		}
 		
 		Self self = (Self) player;
+
 		if (player == null) {
 			return new DestinationCardResult(
 					"Could not find the user in the game. This is a server error");
+		}
+
+		if (!game.getTurn().canDrawDestinationCards()) {
+			return new DestinationCardResult(
+					"You may not draw destination cards now"
+			);
 		}
 		
 		Set<DestinationCard> cards = game.getDeck().drawDestinationCards();

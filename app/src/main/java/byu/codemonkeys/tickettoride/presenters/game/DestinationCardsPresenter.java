@@ -48,7 +48,13 @@ public class DestinationCardsPresenter extends PresenterBase implements Destinat
 				ICallback drawDestinationCardsCallback = new ICallback() {
 					@Override
 					public void callback(Result result) {
-						navigator.navigate(PresenterEnum.DrawDestinationCards, true);
+						if (!result.isSuccessful()) {
+							messageDisplayer.displayMessage(
+									result.getErrorMessage()
+							);
+						} else {
+							navigator.navigate(PresenterEnum.DrawDestinationCards, true);
+						}
 					}
 				};
 				modelFacade.drawDestinationCardsAsync(drawDestinationCardsCallback);
