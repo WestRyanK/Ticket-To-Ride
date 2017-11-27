@@ -131,6 +131,11 @@ public class ChatHistoryFragment extends Fragment implements ChatHistoryContract
 	}
 	
 	@Override
+	public boolean isActive() {
+		return this.isVisible();
+	}
+	
+	@Override
 	public void addMessage(final String message) {
 		if (messagesAdapter == null) {
 			List<String> messages = new ArrayList<>();

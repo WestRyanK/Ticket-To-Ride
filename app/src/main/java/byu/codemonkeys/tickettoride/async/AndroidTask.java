@@ -27,7 +27,7 @@ public class AndroidTask implements ITask {
 		@Override
 		protected void onPostExecute(Result result) {
 			super.onPostExecute(result);
-			if (callback != null)
+			if (callback != null )
 				callback.callback(result);
 		}
 	}

@@ -71,7 +71,7 @@ public class ChatHistoryPresenter extends PresenterBase implements ChatHistoryCo
 
 	@Override
 	public void update(Observable observable, Object o) {
-		if (o == ModelFacade.HISTORY_UPDATE) {
+		if (o == ModelFacade.HISTORY_UPDATE && this.view.isActive()) {
 			for (CommandHistoryEntry entry : ModelRoot.getInstance().getHistoryManager().getLatestCommandHistory()) {
 				this.view.addMessage(entry.toString());
 			}
