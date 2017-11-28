@@ -183,9 +183,25 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
 		this.discarded.remove(null);
 		hidden.addAll(this.discarded);
 		this.discarded.clear();
+
+		if (faceUpEmpty()) {
+			int numToReveal = this.hidden.size() < MAX_REVEALED ? this.hidden.size() : MAX_REVEALED;
+
+			reveal(numToReveal);
+
+			tryReshuffle();
+		}
 	}
-	
-	// TODO: handle the destination cards pile being depleted.
+
+	private boolean faceUpEmpty() {
+		for (TrainCard card : this.revealed) {
+			if (card != null) {
+				return false;
+			}
+		}
+
+		return true;
+	}
 	
 	/**
 	 * Take the top cards from the destination cards pile.

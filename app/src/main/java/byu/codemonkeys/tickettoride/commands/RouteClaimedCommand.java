@@ -1,16 +1,20 @@
 package byu.codemonkeys.tickettoride.commands;
 
+import java.util.List;
+
 import byu.codemonkeys.tickettoride.models.ModelRoot;
 import byu.codemonkeys.tickettoride.shared.commands.RouteClaimedCommandData;
 import byu.codemonkeys.tickettoride.shared.model.Opponent;
 import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.UserBase;
+import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 import byu.codemonkeys.tickettoride.shared.model.map.Route;
 
 
 public class RouteClaimedCommand extends RouteClaimedCommandData implements IClientCommand {
-    public RouteClaimedCommand(int routeID, UserBase owner) {
-        super(routeID, owner);
+    public RouteClaimedCommand(int routeID, UserBase owner, int deckCount,
+                               List<TrainCard> faceUpTrainCards) {
+        super(routeID, owner, deckCount, faceUpTrainCards);
     }
 
     @Override
@@ -24,6 +28,8 @@ public class RouteClaimedCommand extends RouteClaimedCommandData implements ICli
         }
         player.setScore(player.getScore() + route.getPoints());
         modelRoot.getGame().getMap().claimRoute(getRouteID(), player);
+        modelRoot.getGame().getDeck().setFaceUpTrainCards(getFaceUpTrainCards());
+        modelRoot.getGame().getDeck().setTrainCardsDeckCount(getDeckCount());
     }
 
     @Override

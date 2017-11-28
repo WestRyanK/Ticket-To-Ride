@@ -131,9 +131,9 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
         if (canDrawFaceUpTrainCard()) {
             return true;
         }
-//        if (canClaimRoute()) {
-//            return true;
-//        }
+        if (canClaimRoute()) {
+            return true;
+        }
 
         return false;
     }
@@ -460,7 +460,8 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
 
             self.setScore(self.getScore() + route.getPoints());
 
-            RouteClaimedCommandData claimedCommand = new RouteClaimedCommandData(routeID, self);
+            RouteClaimedCommandData claimedCommand = new RouteClaimedCommandData(routeID, self,
+                    deck.getTrainCardsDeckCount(), deck.getFaceUpTrainCards());
             broadcastCommand(claimedCommand);
             nextTurn();
 
