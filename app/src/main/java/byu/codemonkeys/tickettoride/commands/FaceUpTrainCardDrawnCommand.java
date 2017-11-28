@@ -27,7 +27,8 @@ public class FaceUpTrainCardDrawnCommand extends FaceUpTrainCardDrawnCommandData
 			Opponent opponent = (Opponent) player;
 			opponent.setNumTrainCards(this.playerTrainCardsCount);
 		}
-		
+
+		ModelRoot.getInstance().getGame().getTurn().drawFaceUpTrainCard(drawnCard);
 		ModelRoot.getInstance().getGame().getDeck().setFaceUpTrainCards(newFaceUpCards);
 		ModelRoot.getInstance().getGame().getDeck().setTrainCardsDeckCount(trainCardsDeckSize);
 	}

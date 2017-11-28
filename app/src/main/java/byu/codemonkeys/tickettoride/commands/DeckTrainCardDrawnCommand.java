@@ -5,10 +5,6 @@ import byu.codemonkeys.tickettoride.shared.commands.DeckTrainCardDrawnCommandDat
 import byu.codemonkeys.tickettoride.shared.model.Opponent;
 import byu.codemonkeys.tickettoride.shared.model.Player;
 
-/**
- * Created by Ryan on 11/14/2017.
- */
-
 public class DeckTrainCardDrawnCommand extends DeckTrainCardDrawnCommandData implements IClientCommand {
 	
 	protected DeckTrainCardDrawnCommand(String username, int trainCardsInDeckCount, int playerTrainCardsCount) {
@@ -22,7 +18,8 @@ public class DeckTrainCardDrawnCommand extends DeckTrainCardDrawnCommandData imp
 			Opponent opponent = (Opponent) player;
 			opponent.setNumTrainCards(this.playerTrainCardsCount);
 		}
-		
+
+		ModelRoot.getInstance().getGame().getTurn().drawDeckTrainCard();
 		ModelRoot.getInstance().getGame().getDeck().setTrainCardsDeckCount(trainCardsInDeckCount);
 	}
 	
