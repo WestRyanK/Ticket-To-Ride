@@ -27,8 +27,7 @@ public class ActiveGame extends GameBase implements Observer {
 	public static final String GAME_OVER = "GameOver";
 	
 	protected GameMap map;
-	protected Turn turn;
-//	protected transient Turn turn;
+	protected transient Turn turn;
 	protected List<Player> players;
 	protected IDeck deck;
 	
@@ -48,6 +47,12 @@ public class ActiveGame extends GameBase implements Observer {
 		this.gameOwner = game.getOwner();
 		this.gameUsers = game.getUsers();
 		this.started = true;
+	}
+	
+	public void setTurn(String username) {
+		while (!this.getPlayers().get(this.turn.getPlayerIndex()).getUsername().equals(username)) {
+			this.nextTurn();
+		}
 	}
 	
 	public void setUpTurns() {
@@ -75,7 +80,7 @@ public class ActiveGame extends GameBase implements Observer {
 		temp.setNextTurn(firstTurn);
 		turn = firstTurn;
 	}
-
+	
 	public static ActiveGame copyActiveGame(ActiveGame game) {
 		ActiveGame activeGame = new ActiveGame(game);
 		activeGame.setObservesChildren(true);
@@ -86,7 +91,7 @@ public class ActiveGame extends GameBase implements Observer {
 			players.add(Player.copyPlayer(player));
 		}
 		activeGame.setPlayers(players);
-
+		
 		return activeGame;
 	}
 	
@@ -125,7 +130,7 @@ public class ActiveGame extends GameBase implements Observer {
 	public boolean isPlayersTurn(String username) {
 		return players.get(turn.getPlayerIndex()).getUsername().equals(username);
 	}
-
+	
 	public Player getCurrentPlayer() {
 		return players.get(turn.getPlayerIndex());
 	}
@@ -217,7 +222,7 @@ public class ActiveGame extends GameBase implements Observer {
 		setChanged();
 		notifyObservers(o);
 	}
-
+	
 	public void end() {
 		setChanged();
 		notifyObservers(GAME_OVER);

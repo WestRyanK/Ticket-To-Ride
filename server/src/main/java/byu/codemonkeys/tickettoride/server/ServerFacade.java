@@ -525,7 +525,9 @@ public class ServerFacade implements IServer {
 		if (restoredGame == null)
 			return new JoinExistingGameResult("Could not find a game with gameID " + gameId);
 		
-		return new JoinExistingGameResult(restoredGame, restoredSession);
+		List<CommandData> restoredCommandHistory = restoredGame.getAllGameHistory(user.getUsername());
+		
+		return new JoinExistingGameResult(restoredGame, restoredSession, restoredCommandHistory);
 	}
 	
 	@Override

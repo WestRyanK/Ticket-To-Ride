@@ -321,6 +321,10 @@ public class ModelFacade implements IModelFacade {
 				if (result.isSuccessful()) {
 					JoinExistingGameResult jegr = (JoinExistingGameResult) result; // I've got the moves like jegr
 					ActiveGame restoredGame = ActiveGame.copyActiveGame(jegr.getRestoredGame());
+					restoredGame.setUpTurns();
+					restoredGame.setTurn(game.getCurrentPlayerTurn());
+					ModelRoot.getInstance().getHistoryManager().restoreHistory(jegr.getRestoredCommandHistory());
+					
 					models.setGame(restoredGame);
 					models.setSession(jegr.getRestoredSession());
 				}
