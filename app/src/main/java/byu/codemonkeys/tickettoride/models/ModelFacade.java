@@ -85,6 +85,8 @@ public class ModelFacade implements IModelFacade {
 	 */
 	public static final String HISTORY_UPDATE = "HistoryUpdate";
 	
+	public static final String EXISTING_GAMES_UPDATE = "existingGamesUpdate";
+	
 	/**
 	 * Constructs an instance of ModelFacade, this is private for singleton implementation.
 	 */
@@ -208,12 +210,8 @@ public class ModelFacade implements IModelFacade {
 	 *                               {@post The list of pending games is unchanged}
 	 */
 	@Override
-	public List<GameBase> getPendingGames() throws UnauthorizedException {
-		if (models.getSession() == null) {
-			throw new UnauthorizedException("No user logged in");
-		} else {
-			return models.getPendingGames();
-		}
+	public List<GameBase> getPendingGames() {
+		return models.getPendingGames();
 	}
 	
 	/**
@@ -304,12 +302,14 @@ public class ModelFacade implements IModelFacade {
 	}
 	
 	@Override
-	public void joinExistingGameAync(final Session session,
+	public void joinExistingGameAync(final ExistingGame game,
 									 final ICallback joinExistingGameCallback) {
 		ICommand joinExistingGameCommand = new ICommand() {
 			@Override
 			public Result execute() {
-				JoinExistingGameResult result = serverProxy.joinExistingGame(session.getAuthToken());
+				JoinExistingGameResult result = serverProxy.joinExistingGame(models.getSession()
+																				   .getAuthToken(),
+																			 game.getID());
 				return result;
 			}
 		};
@@ -320,7 +320,9 @@ public class ModelFacade implements IModelFacade {
 				
 				if (result.isSuccessful()) {
 					JoinExistingGameResult jegr = (JoinExistingGameResult) result; // I've got the moves like jegr
-					models.setGame(jegr.getRestoredGame());
+					ActiveGame restoredGame = ActiveGame.copyActiveGame(jegr.getRestoredGame());
+					models.setGame(restoredGame);
+					models.setSession(jegr.getRestoredSession());
 				}
 				joinExistingGameCallback.callback(result);
 			}

@@ -48,4 +48,6 @@
     <string name="longestRoute">Longest Route</string>
     <string name="completedDestinations">Completed Destinations</string>
     <string name="unreachedDestinations">Unreached Destinations</string>
+    <string name="newGames">New Games</string>
+    <string name="myGames">My Games</string>
 </resources>

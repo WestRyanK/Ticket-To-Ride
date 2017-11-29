@@ -125,8 +125,9 @@ public class ServerProxy implements IServer {
 	}
 	
 	@Override
-	public JoinExistingGameResult joinExistingGame(String authToken) {
-		JoinExistingGameCommandData data = new JoinExistingGameCommandData(authToken);
+	public JoinExistingGameResult joinExistingGame(String authToken, String gameId) {
+		JoinExistingGameCommandData data = new JoinExistingGameCommandData( gameId);
+		data.setAuthToken(authToken);
 		return communicator.sendJoinExistingGame(data);
 	}
 	
@@ -149,5 +150,11 @@ public class ServerProxy implements IServer {
 		GetPendingGameCommandData data = new GetPendingGameCommandData();
 		data.setAuthToken(authToken);
 		return communicator.sendGetPendingGame(data);
+	}
+	
+	public ExistingGamesResult getExistingGames(String authToken) {
+		GetExistingGamesCommandData data = new GetExistingGamesCommandData();
+		data.setAuthToken(authToken);
+		return communicator.sendGetExistingGames(data);
 	}
 }

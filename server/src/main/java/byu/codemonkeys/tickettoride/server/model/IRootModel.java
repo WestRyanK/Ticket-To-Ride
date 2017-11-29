@@ -3,6 +3,9 @@ package byu.codemonkeys.tickettoride.server.model;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import byu.codemonkeys.tickettoride.shared.model.ExistingGame;
+import byu.codemonkeys.tickettoride.shared.model.Session;
+
 public interface IRootModel {
     public boolean verifyLogin(String username, String password);
 
@@ -31,4 +34,8 @@ public interface IRootModel {
     public ActiveGame activateGame(String gameID) throws NoSuchElementException;
 
     public ActiveGame getActiveGame(String gameID);
+	
+	List<ExistingGame> getExistingGames(User user);
+    
+    Session getSessionByUsernameAndGameID(String username, String gameId);
 }

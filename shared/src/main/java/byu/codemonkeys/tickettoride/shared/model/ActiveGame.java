@@ -27,7 +27,8 @@ public class ActiveGame extends GameBase implements Observer {
 	public static final String GAME_OVER = "GameOver";
 	
 	protected GameMap map;
-	protected transient Turn turn;
+	protected Turn turn;
+//	protected transient Turn turn;
 	protected List<Player> players;
 	protected IDeck deck;
 	

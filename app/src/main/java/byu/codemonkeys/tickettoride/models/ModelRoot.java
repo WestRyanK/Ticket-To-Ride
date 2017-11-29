@@ -15,6 +15,7 @@ public class ModelRoot extends Observable implements Observer {
 	private UserBase user;
 	private GameBase pendingGame;
 	private List<GameBase> pendingGames;
+	private List<ExistingGame> existingGames;
 	private Session session;
 	private ActiveGame game;
 	private HistoryManager history;
@@ -126,5 +127,15 @@ public class ModelRoot extends Observable implements Observer {
 	public void update(Observable observable, Object o) {
 		setChanged();
 		notifyObservers(o);
+	}
+	
+	public void setExistingGames(List<ExistingGame> existingGames) {
+		this.existingGames = existingGames;
+		setChanged();
+		notifyObservers(ModelFacade.EXISTING_GAMES_UPDATE);
+	}
+	
+	public List<ExistingGame> getExistingGames() {
+		return existingGames;
 	}
 }

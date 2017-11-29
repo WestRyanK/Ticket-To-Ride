@@ -5,8 +5,15 @@ package byu.codemonkeys.tickettoride.shared.commands;
  */
 
 public class JoinExistingGameCommandData extends CommandData {
-	public JoinExistingGameCommandData(String authToken) {
+	
+	private final String gameId;
+	
+	public JoinExistingGameCommandData( String gameId) {
 		super(CommandType.JOIN_EXISTING_GAME);
-		this.setAuthToken(authToken);
+		this.gameId = gameId;
+	}
+	
+	public String getGameId() {
+		return gameId;
 	}
 }

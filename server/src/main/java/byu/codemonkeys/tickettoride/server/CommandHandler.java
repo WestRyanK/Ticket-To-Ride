@@ -12,8 +12,10 @@ import java.net.HttpURLConnection;
 import byu.codemonkeys.tickettoride.server.commands.*;
 import byu.codemonkeys.tickettoride.shared.Serializer;
 import byu.codemonkeys.tickettoride.shared.commands.CommandType;
+import byu.codemonkeys.tickettoride.shared.commands.GetExistingGamesCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.ICommand;
 import byu.codemonkeys.tickettoride.server.exceptions.InvalidCommandException;
+import byu.codemonkeys.tickettoride.shared.results.JoinExistingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 
 class CommandHandler implements HttpHandler {
@@ -93,6 +95,10 @@ class CommandHandler implements HttpHandler {
                 return serializer.deserialize(requestBody, DrawFaceUpTrainCardCommand.class);
             case CommandType.CLAIM_ROUTE:
                 return serializer.deserialize(requestBody, ClaimRouteCommand.class);
+            case CommandType.GET_EXISTING_GAMES:
+                return serializer.deserialize(requestBody, GetExistingGamesCommand.class);
+            case CommandType.JOIN_EXISTING_GAME:
+                return serializer.deserialize(requestBody, JoinExistingGameCommand.class);
             default:
                 throw new InvalidCommandException(type);
         }

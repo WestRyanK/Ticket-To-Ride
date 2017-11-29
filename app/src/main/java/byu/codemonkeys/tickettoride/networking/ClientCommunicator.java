@@ -21,9 +21,9 @@ public class ClientCommunicator {
 	private int port;
 	private static final int TIMEOUT = 10000;
 	private static final String DEFAULT_HOST =
-//			"10.24.222.148";
-//			"192.168.1.105";
-			"104.155.184.125";
+			//			"10.24.222.148";
+			"192.168.1.3";
+	//			"104.155.184.125";
 	private static final int DEFAULT_PORT = 8080;
 	
 	private ClientCommunicator() {
@@ -102,8 +102,11 @@ public class ClientCommunicator {
 	
 	public JoinExistingGameResult sendJoinExistingGame(JoinExistingGameCommandData request) {
 		try {
-			return serializer.deserialize(getString(getURL(CommandType.JOIN_EXISTING_GAME), request),
-										  JoinExistingGameResult.class);
+			return HistoryDeserializer.deserializeObject(getString(getURL(CommandType.JOIN_EXISTING_GAME),
+																   request),
+														 JoinExistingGameResult.class);
+			//			return serializer.deserialize(getString(getURL(CommandType.JOIN_EXISTING_GAME),
+			//													request), JoinExistingGameResult.class);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return new JoinExistingGameResult(e.getMessage());
@@ -137,6 +140,16 @@ public class ClientCommunicator {
 		} catch (IOException e) {
 			e.printStackTrace();
 			return new PendingGamesResult(e.getMessage());
+		}
+	}
+	
+	public ExistingGamesResult sendGetExistingGames(GetExistingGamesCommandData request) {
+		try {
+			return serializer.deserialize(getString(getURL(CommandType.GET_EXISTING_GAMES),
+													request), ExistingGamesResult.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new ExistingGamesResult(e.getMessage());
 		}
 	}
 	
@@ -225,12 +238,11 @@ public class ClientCommunicator {
 			return new DrawDeckTrainCardResult(e.getMessage());
 		}
 	}
-
+	
 	public ClaimRouteResult sendClaimRoute(ClaimRouteCommandData request) {
 		try {
 			String string = getString(getURL(request.getCommandType()), request);
-			ClaimRouteResult result = serializer.deserialize(string,
-					ClaimRouteResult.class);
+			ClaimRouteResult result = serializer.deserialize(string, ClaimRouteResult.class);
 			return result;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -334,4 +346,5 @@ public class ClientCommunicator {
 			return false;
 		}
 	}
+	
 }

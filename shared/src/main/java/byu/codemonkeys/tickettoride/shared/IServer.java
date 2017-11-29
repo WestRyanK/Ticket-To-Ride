@@ -9,6 +9,7 @@ import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.results.ClaimRouteResult;
 import byu.codemonkeys.tickettoride.shared.results.DrawDeckTrainCardResult;
 import byu.codemonkeys.tickettoride.shared.results.DrawFaceUpTrainCardResult;
+import byu.codemonkeys.tickettoride.shared.results.ExistingGamesResult;
 import byu.codemonkeys.tickettoride.shared.results.HistoryResult;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
@@ -173,5 +174,8 @@ public interface IServer {
 	 */
 	ClaimRouteResult claimRoute(String authToken, int routeID, CardType cardType);
 	
-	JoinExistingGameResult joinExistingGame(String authToken);
+	JoinExistingGameResult joinExistingGame(String username, String gameId);
+	
+	ExistingGamesResult getExistingGames(String authToken);
+	
 }

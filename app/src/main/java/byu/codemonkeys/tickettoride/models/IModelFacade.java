@@ -31,13 +31,13 @@ public interface IModelFacade {
 	
 	void registerAsync(String username, String password, ICallback registerCallback);
 	
-	List<GameBase> getPendingGames() throws UnauthorizedException;
+	List<GameBase> getPendingGames();
 	
 	void createGameAsync(String gameName, ICallback createGameCallback);
 	
 	void joinPendingGameAsync(GameBase game, ICallback joinPendingGameCallback);
 	
-	void joinExistingGameAync(Session session, ICallback joinExistingGameCallback);
+	void joinExistingGameAync(ExistingGame game, ICallback joinExistingGameCallback);
 	
 	GameBase getPendingGame() throws UnauthorizedException, NoPendingGameException;
 	

@@ -10,6 +10,7 @@ import byu.codemonkeys.tickettoride.networking.ServerProxy;
 import byu.codemonkeys.tickettoride.shared.IClient;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
 import byu.codemonkeys.tickettoride.shared.commands.ICommand;
+import byu.codemonkeys.tickettoride.shared.results.ExistingGamesResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
 import byu.codemonkeys.tickettoride.shared.results.HistoryResult;
@@ -133,5 +134,20 @@ public class ClientFacade implements IClient {
 			}
 		}
 		modelRoot.historyUpdated();
+	}
+	
+	@Override
+	public void updateExistingGames() {
+		final ModelRoot modelRoot = ModelRoot.getInstance();
+		String authToken = modelRoot.getSession().getAuthToken();
+		final ExistingGamesResult result = ServerProxy.getInstance().getExistingGames(authToken);
+		ICommand setExistingGamesCommand = new ICommand() {
+			@Override
+			public Result execute() {
+				modelRoot.setExistingGames(result.getExistingGames());
+				return null;
+			}
+		};
+		this.mainThreadTask.executeTask(setExistingGamesCommand, null);
 	}
 }
