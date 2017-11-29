@@ -12,6 +12,7 @@ import byu.codemonkeys.tickettoride.shared.model.map.Route;
 
 
 public class RouteClaimedCommand extends RouteClaimedCommandData implements IClientCommand {
+    
     public RouteClaimedCommand(int routeID, UserBase owner, int deckCount,
                                List<TrainCard> faceUpTrainCards) {
         super(routeID, owner, deckCount, faceUpTrainCards);

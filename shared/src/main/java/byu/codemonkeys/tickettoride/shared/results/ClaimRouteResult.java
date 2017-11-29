@@ -1,14 +1,18 @@
 package byu.codemonkeys.tickettoride.shared.results;
 
 
+import java.util.List;
 import java.util.Map;
 
 import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
+import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 
 public class ClaimRouteResult extends Result {
 
     Map<CardType, Integer> cardsToRemove;
     int numTrainsToRemove;
+    
+    
 
     public ClaimRouteResult(Map<CardType, Integer> cardsToRemove, int numTrainsToRemove) {
         super();

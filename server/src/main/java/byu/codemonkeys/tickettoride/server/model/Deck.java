@@ -19,13 +19,11 @@ import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 
 public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck implements IDeck {
 	// The number of each non-wild type the full deck contains
-	private static final int NUM_STANDARD =
-//			2;
-		 12;
+	private static final int NUM_STANDARD = 2;
+	//		 12;
 	// The number of locomotives the full deck contains
-	private static final int NUM_WILD =
-//			6;
-		14;
+	private static final int NUM_WILD = 6;
+	//		14;
 	// The number of destination cards a player must typically draw
 	private static final int NUM_DESTINATIONS_TO_DRAW = 3;
 	// The maximum number of revealed cards
@@ -90,6 +88,7 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
 	
 	/**
 	 * Check if reshuffling is necessary, and if so, perform the reshuffle
+	 *
 	 * @return True if the faceup cards were reshuffled
 	 */
 	private boolean tryReshuffle() {
@@ -116,7 +115,7 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
 		int wildCount = 0;
 		// Fill the Faceup cards with cards from the deck
 		for (int i = 0; i < MAX_REVEALED; i++) {
-			TrainCard drawn = drawTrainCard();
+			TrainCard drawn = hidden.poll();// drawTrainCard(); // Trying to get rid of stack overflow loop
 			if (drawn != null) {
 				if (drawn.getCardColor() == CardType.Wild)
 					wildCount++;
@@ -139,7 +138,10 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
 	public boolean drawFaceUpTrainCard(int index) {
 		TrainCard outDrawnCard = getFaceUpTrainCards().get(index);
 		TrainCard replacement = drawTrainCard();
-		getFaceUpTrainCards().set(index, replacement);
+		if (replacement != null)
+			getFaceUpTrainCards().set(index, replacement);
+		else
+			this.revealed.remove(index);
 		boolean shuffled = tryReshuffle();
 		return shuffled;
 	}
@@ -183,23 +185,29 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
 		this.discarded.remove(null);
 		hidden.addAll(this.discarded);
 		this.discarded.clear();
-
-		if (faceUpEmpty()) {
-			int numToReveal = this.hidden.size() < MAX_REVEALED ? this.hidden.size() : MAX_REVEALED;
-
+		
+		if (!isFaceUpFilled()) {
+			int numMissing = MAX_REVEALED - this.revealed.size();
+			
+			int numToReveal = Math.min(numMissing, this.hidden.size());
+			//			int numToReveal = this.hidden.size() < MAX_REVEALED ? this.hidden.size() : MAX_REVEALED;
+			
 			reveal(numToReveal);
-
+			
 			tryReshuffle();
 		}
 	}
-
-	private boolean faceUpEmpty() {
+	
+	private boolean isFaceUpFilled() {
+		if (this.revealed.size() < MAX_REVEALED)
+			return false;
+		
 		for (TrainCard card : this.revealed) {
-			if (card != null) {
+			if (card == null) {
 				return false;
 			}
 		}
-
+		
 		return true;
 	}
 	
@@ -239,7 +247,9 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
 		}
 		
 		for (int i = 0; i < number; ++i) {
-			revealed.add(drawTrainCard());
+			TrainCard drawnCard = hidden.poll(); //drawTrainCard(); // This was forming a loop that caused a stack overflow O_o
+			if (drawnCard != null)
+				revealed.add(drawnCard);
 		}
 	}
 	

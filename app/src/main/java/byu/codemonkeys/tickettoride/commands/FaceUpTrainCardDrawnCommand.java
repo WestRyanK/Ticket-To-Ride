@@ -8,8 +8,7 @@ import byu.codemonkeys.tickettoride.shared.model.Opponent;
 import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 
-/**
- * Created by Ryan on 11/14/2017.
+/**14/2017.
  */
 
 public class FaceUpTrainCardDrawnCommand extends FaceUpTrainCardDrawnCommandData implements IClientCommand {
@@ -37,3 +36,5 @@ public class FaceUpTrainCardDrawnCommand extends FaceUpTrainCardDrawnCommandData
 		return String.format("[%1$s drew a %2$s card]", this.username, this.drawnCard);
 	}
 }
+
+ * Created by Ryan on 11/
