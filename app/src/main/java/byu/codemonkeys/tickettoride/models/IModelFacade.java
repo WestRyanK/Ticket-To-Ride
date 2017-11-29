@@ -22,7 +22,7 @@ import byu.codemonkeys.tickettoride.shared.results.StartGameResult;
 import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
 
 public interface IModelFacade {
-
+	
 	void addObserver(Observer observer);
 	
 	UserBase getUser();
@@ -36,6 +36,8 @@ public interface IModelFacade {
 	void createGameAsync(String gameName, ICallback createGameCallback);
 	
 	void joinPendingGameAsync(GameBase game, ICallback joinPendingGameCallback);
+	
+	void joinExistingGameAync(Session session, ICallback joinExistingGameCallback);
 	
 	GameBase getPendingGame() throws UnauthorizedException, NoPendingGameException;
 	
@@ -71,10 +73,10 @@ public interface IModelFacade {
 	//TODO: add claimed route, waiting on map
 	
 	List<CommandHistoryEntry> getGameHistory();
-
+	
 	void endGame();
 	
 	List<CommandHistoryEntry> getLatestGameHistory();
-
+	
 	void claimRouteAsync(int routeID, ICallback callback);
 }

@@ -6,6 +6,7 @@ public class CommandType {
 	public static final String GET_PENDING_GAMES = "getPendingGames";
 	public static final String GET_PENDING_GAME = "getPendingGame";
 	public static final String JOIN_PENDING_GAME = "joinPendingGame";
+	public static final String JOIN_EXISTING_GAME = "joinExistingGame";
 	public static final String LEAVE_PENDING_GAME = "leavePendingGame";
 	public static final String LOGIN = "login";
 	public static final String LOGOUT = "logout";

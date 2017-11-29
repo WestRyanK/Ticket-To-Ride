@@ -123,7 +123,13 @@ public class ServerProxy implements IServer {
 		data.setAuthToken(authToken);
 		return communicator.sendClaimRoute(data);
 	}
-
+	
+	@Override
+	public JoinExistingGameResult joinExistingGame(String authToken) {
+		JoinExistingGameCommandData data = new JoinExistingGameCommandData(authToken);
+		return communicator.sendJoinExistingGame(data);
+	}
+	
 	@Override
 	public PendingGamesResult cancelGame(String authToken) {
 		CancelGameCommandData data = new CancelGameCommandData();

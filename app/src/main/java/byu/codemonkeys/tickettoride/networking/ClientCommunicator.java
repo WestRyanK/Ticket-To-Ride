@@ -100,6 +100,16 @@ public class ClientCommunicator {
 		}
 	}
 	
+	public JoinExistingGameResult sendJoinExistingGame(JoinExistingGameCommandData request) {
+		try {
+			return serializer.deserialize(getString(getURL(CommandType.JOIN_EXISTING_GAME), request),
+										  JoinExistingGameResult.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new JoinExistingGameResult(e.getMessage());
+		}
+	}
+	
 	public PendingGamesResult sendLeavePendingGame(LeavePendingGameCommandData request) {
 		try {
 			return serializer.deserialize(getString(getURL(CommandType.LEAVE_PENDING_GAME),
@@ -324,5 +334,4 @@ public class ClientCommunicator {
 			return false;
 		}
 	}
-	
 }
