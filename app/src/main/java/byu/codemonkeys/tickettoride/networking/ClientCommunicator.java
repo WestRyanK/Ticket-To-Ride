@@ -102,9 +102,8 @@ public class ClientCommunicator {
 	
 	public JoinExistingGameResult sendJoinExistingGame(JoinExistingGameCommandData request) {
 		try {
-			return HistoryDeserializer.deserializeObject(getString(getURL(CommandType.JOIN_EXISTING_GAME),
-																   request),
-														 JoinExistingGameResult.class);
+			String json = getString(getURL(CommandType.JOIN_EXISTING_GAME), request);
+			return HistoryDeserializer.deserializeObject(json, JoinExistingGameResult.class);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return new JoinExistingGameResult(e.getMessage());

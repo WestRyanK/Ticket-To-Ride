@@ -461,7 +461,8 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
 			}
 		}
 		
-		if (route.claim(self)) {
+//		if (route.claim(self)) {
+		if (map.claimRoute(routeID, self)){
 			self.removeTrains(route.getLength());
 			
 			Map<CardType, Integer> cardsRemoved = new HashMap<>();

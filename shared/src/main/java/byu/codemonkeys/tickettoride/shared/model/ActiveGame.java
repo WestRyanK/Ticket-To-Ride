@@ -86,6 +86,7 @@ public class ActiveGame extends GameBase implements Observer {
 		activeGame.setObservesChildren(true);
 		activeGame.setDeck(game.getDeck());
 		activeGame.setMap(game.map);
+		activeGame.getMap().updateClaimedRoutes();
 		List<Player> players = new ArrayList<>();
 		for (Player player : game.getPlayers()) {
 			players.add(Player.copyPlayer(player));

@@ -28,7 +28,8 @@ class CommandHandler implements HttpHandler {
 
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 
-            send(serializer.serialize(result), exchange);
+            String json = serializer.serialize(result);
+            send(json, exchange);
         } catch (JsonSyntaxException e) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
             exchange.getResponseBody().close();
