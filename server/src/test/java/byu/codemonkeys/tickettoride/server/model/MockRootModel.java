@@ -6,6 +6,8 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 
 import byu.codemonkeys.tickettoride.server.exceptions.AlreadyExistsException;
+import byu.codemonkeys.tickettoride.shared.model.ExistingGame;
+import byu.codemonkeys.tickettoride.shared.model.Session;
 
 public class MockRootModel implements IRootModel {
     @Override
@@ -141,5 +143,15 @@ public class MockRootModel implements IRootModel {
     @Override
     public ActiveGame getActiveGame(String gameID) {
         return activateGame(gameID);
+    }
+    
+    @Override
+    public List<ExistingGame> getExistingGames(User user) {
+        return null;
+    }
+    
+    @Override
+    public Session getSessionByUsernameAndGameID(String username, String gameId) {
+        return null;
     }
 }
