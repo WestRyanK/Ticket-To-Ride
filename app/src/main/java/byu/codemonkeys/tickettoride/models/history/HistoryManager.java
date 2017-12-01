@@ -59,5 +59,6 @@ public class HistoryManager {
 		}
 		lastReadCommandIndex = restoredCommandHistory.get(restoredCommandHistory.size() - 1)
 													 .getQueuedPosition();
+		nextCommandForHistory = lastReadCommandIndex;
 	}
 }
