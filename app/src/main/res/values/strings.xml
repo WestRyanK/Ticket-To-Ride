@@ -50,4 +50,5 @@
     <string name="unreachedDestinations">Unreached Destinations</string>
     <string name="newGames">New Games</string>
     <string name="myGames">My Games</string>
+    <string name="turn">Turn</string>
 </resources>

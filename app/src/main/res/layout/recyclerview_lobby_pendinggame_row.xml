@@ -32,9 +32,9 @@
     <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
         android:id="@+id/recyclerView_lobby_pendingGame_players"
         style="@style/AvatarTextStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="80sp"
+        android:gravity="left"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:paddingStart="@dimen/lobbyPlayersOffset"
+        android:layout_alignParentEnd="true"
         tools:text="3"/>
 </RelativeLayout>
