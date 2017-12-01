@@ -8,6 +8,8 @@ public class Opponent extends Player {
 	public Opponent(Player player) {
 		this(player.getUsername());
 		this.numTrainCards = player.getNumTrainCards();
+		this.numTrains = player.getNumTrains();
+		this.score = player.getScore();
 		this.numDestinationCards = player.getNumDestinationCards();
 		this.color = player.getColor();
 	}

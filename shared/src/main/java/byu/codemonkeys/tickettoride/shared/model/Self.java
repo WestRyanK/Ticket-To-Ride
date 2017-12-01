@@ -54,6 +54,12 @@ public class Self extends Player {
 	public Self(Player player){
 		super(player.userName, Type.Self);
 		Self playerSelf = (Self) player;
+		
+		this.numTrainCards = player.getNumTrainCards();
+		this.numTrains = player.getNumTrains();
+		this.score = player.getScore();
+		this.numDestinationCards = player.getNumDestinationCards();
+		
 		this.hand = playerSelf.hand;
 		this.destinations = playerSelf.destinations;
 		this.selecting = ((Self) player).getSelecting();

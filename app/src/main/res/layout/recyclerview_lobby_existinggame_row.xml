@@ -11,7 +11,7 @@
                 android:paddingTop="10dp">
 
     <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
-        android:id="@+id/recyclerView_lobby_pendingGame_gameName"
+        android:id="@+id/recyclerView_lobby_existingGame_gameName"
         style="@style/AvatarTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         tools:text="MyGameName"/>
 
     <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
-        android:id="@+id/recyclerView_lobby_pendingGame_ownerName"
+        android:id="@+id/recyclerView_lobby_existingGame_ownerName"
         style="@style/AvatarTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,11 +30,11 @@
 
 
     <byu.codemonkeys.tickettoride.views.widgets.FontifiedTextView
-        android:id="@+id/recyclerView_lobby_pendingGame_players"
+        android:id="@+id/recyclerView_lobby_existingGame_playerTurn"
         style="@style/AvatarTextStyle"
         android:layout_width="80sp"
-        android:gravity="left"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:gravity="left"
         tools:text="3"/>
 </RelativeLayout>

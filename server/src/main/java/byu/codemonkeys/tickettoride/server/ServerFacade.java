@@ -27,10 +27,12 @@ import byu.codemonkeys.tickettoride.shared.commands.FaceUpTrainCardsReshuffledCo
 import byu.codemonkeys.tickettoride.shared.commands.SendMessageCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SetupGameCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.SkipTurnCommandData;
+import byu.codemonkeys.tickettoride.shared.model.ExistingGame;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
 import byu.codemonkeys.tickettoride.shared.model.Message;
 import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.Self;
+import byu.codemonkeys.tickettoride.shared.model.Session;
 import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
 import byu.codemonkeys.tickettoride.shared.model.cards.Deck;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
@@ -40,7 +42,9 @@ import byu.codemonkeys.tickettoride.shared.results.ClaimRouteResult;
 import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
 import byu.codemonkeys.tickettoride.shared.results.DrawDeckTrainCardResult;
 import byu.codemonkeys.tickettoride.shared.results.DrawFaceUpTrainCardResult;
+import byu.codemonkeys.tickettoride.shared.results.ExistingGamesResult;
 import byu.codemonkeys.tickettoride.shared.results.HistoryResult;
+import byu.codemonkeys.tickettoride.shared.results.JoinExistingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
@@ -302,36 +306,34 @@ public class ServerFacade implements IServer {
 	@Override
 	public DestinationCardResult drawDestinationCards(String authToken) {
 		ServerSession session = rootModel.getSession(authToken);
-
+		
 		if (session == null) {
 			return new DestinationCardResult("Authentication Error");
 		}
-
+		
 		ActiveGame game = rootModel.getActiveGame(session.getGameID());
-
+		
 		if (game == null) {
 			return new DestinationCardResult("Player is not part of an active game");
 		}
 		
 		User user = session.getUser();
 		Player player = game.getPlayer(user);
-
+		
 		if (player == null) {
 			return new DestinationCardResult(
 					"Could not find the user in the game. This is a server error");
 		}
 		
 		Self self = (Self) player;
-
+		
 		if (player == null) {
 			return new DestinationCardResult(
 					"Could not find the user in the game. This is a server error");
 		}
-
+		
 		if (!game.getTurn().canDrawDestinationCards()) {
-			return new DestinationCardResult(
-					"You may not draw destination cards now"
-			);
+			return new DestinationCardResult("You may not draw destination cards now");
 		}
 		
 		Set<DestinationCard> cards = game.getDeck().drawDestinationCards();
@@ -503,6 +505,44 @@ public class ServerFacade implements IServer {
 		User user = session.getUser();
 		
 		return game.claimRoute(routeID, user, cardType);
+	}
+	
+	@Override
+	public JoinExistingGameResult joinExistingGame(String authToken, String gameId) {
+		ServerSession session = rootModel.getSession(authToken);
+		
+		if (session == null) {
+			return new JoinExistingGameResult("Authentication Error");
+		}
+		
+		User user = session.getUser();
+		Session restoredSession = this.rootModel.getSessionByUsernameAndGameID(user.getUsername(),
+																			   gameId);
+		if (restoredSession == null)
+			return new JoinExistingGameResult("Could not find a matching session");
+		
+		ActiveGame game = this.rootModel.getActiveGame(gameId);
+		
+		if (game == null)
+			return new JoinExistingGameResult("Could not find a game with gameID " + gameId);
+		byu.codemonkeys.tickettoride.shared.model.ActiveGame restoredGame = game.prepareForClient(
+				game.getPlayer(user));
+		
+		List<CommandData> restoredCommandHistory = game.getAllGameHistory(user.getUsername());
+		
+		return new JoinExistingGameResult(restoredGame, restoredSession, restoredCommandHistory);
+	}
+	
+	@Override
+	public ExistingGamesResult getExistingGames(String authToken) {
+		if (!rootModel.authorize(authToken))
+			return new ExistingGamesResult("Not Authorized");
+		
+		ServerSession session = rootModel.getSession(authToken);
+		User user = session.getUser();
+		List<ExistingGame> existingGames = rootModel.getExistingGames(user);
+		return new ExistingGamesResult(existingGames);
+		
 	}
 	
 	@Override

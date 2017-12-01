@@ -9,4 +9,6 @@ public interface IClient {
 	void updatePendingGame();
 	
 	void updateGame();
+	
+	void updateExistingGames();
 }

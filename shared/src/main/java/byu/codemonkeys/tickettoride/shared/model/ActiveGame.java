@@ -49,6 +49,12 @@ public class ActiveGame extends GameBase implements Observer {
 		this.started = true;
 	}
 	
+	public void setTurn(String username) {
+		while (!this.getPlayers().get(this.turn.getPlayerIndex()).getUsername().equals(username)) {
+			this.nextTurn();
+		}
+	}
+	
 	public void setUpTurns() {
 		Turn firstTurn;
 		
@@ -74,18 +80,19 @@ public class ActiveGame extends GameBase implements Observer {
 		temp.setNextTurn(firstTurn);
 		turn = firstTurn;
 	}
-
+	
 	public static ActiveGame copyActiveGame(ActiveGame game) {
 		ActiveGame activeGame = new ActiveGame(game);
 		activeGame.setObservesChildren(true);
 		activeGame.setDeck(game.getDeck());
 		activeGame.setMap(game.map);
+		activeGame.getMap().updateClaimedRoutes();
 		List<Player> players = new ArrayList<>();
 		for (Player player : game.getPlayers()) {
 			players.add(Player.copyPlayer(player));
 		}
 		activeGame.setPlayers(players);
-
+		
 		return activeGame;
 	}
 	
@@ -124,7 +131,7 @@ public class ActiveGame extends GameBase implements Observer {
 	public boolean isPlayersTurn(String username) {
 		return players.get(turn.getPlayerIndex()).getUsername().equals(username);
 	}
-
+	
 	public Player getCurrentPlayer() {
 		return players.get(turn.getPlayerIndex());
 	}
@@ -216,7 +223,7 @@ public class ActiveGame extends GameBase implements Observer {
 		setChanged();
 		notifyObservers(o);
 	}
-
+	
 	public void end() {
 		setChanged();
 		notifyObservers(GAME_OVER);

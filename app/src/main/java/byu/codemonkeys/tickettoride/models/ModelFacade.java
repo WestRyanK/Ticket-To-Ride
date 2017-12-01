@@ -26,6 +26,7 @@ import byu.codemonkeys.tickettoride.shared.results.DrawFaceUpTrainCardResult;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
+import byu.codemonkeys.tickettoride.shared.results.JoinExistingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
 
@@ -83,6 +84,8 @@ public class ModelFacade implements IModelFacade {
 	 * A tag to notify observers that the history of the game has been updated
 	 */
 	public static final String HISTORY_UPDATE = "HistoryUpdate";
+	
+	public static final String EXISTING_GAMES_UPDATE = "existingGamesUpdate";
 	
 	/**
 	 * Constructs an instance of ModelFacade, this is private for singleton implementation.
@@ -207,12 +210,8 @@ public class ModelFacade implements IModelFacade {
 	 *                               {@post The list of pending games is unchanged}
 	 */
 	@Override
-	public List<GameBase> getPendingGames() throws UnauthorizedException {
-		if (models.getSession() == null) {
-			throw new UnauthorizedException("No user logged in");
-		} else {
-			return models.getPendingGames();
-		}
+	public List<GameBase> getPendingGames() {
+		return models.getPendingGames();
 	}
 	
 	/**
@@ -300,6 +299,41 @@ public class ModelFacade implements IModelFacade {
 		};
 		
 		this.asyncTask.executeTask(joinPendingGameCommand, callback);
+	}
+	
+	@Override
+	public void joinExistingGameAync(final ExistingGame game,
+									 final ICallback joinExistingGameCallback) {
+		ICommand joinExistingGameCommand = new ICommand() {
+			@Override
+			public Result execute() {
+				JoinExistingGameResult result = serverProxy.joinExistingGame(models.getSession()
+																				   .getAuthToken(),
+																			 game.getID());
+				return result;
+			}
+		};
+		
+		ICallback callback = new ICallback() {
+			@Override
+			public void callback(Result result) {
+				
+				if (result.isSuccessful()) {
+					JoinExistingGameResult jegr = (JoinExistingGameResult) result; // I've got the moves like jegr
+					ActiveGame restoredGame = ActiveGame.copyActiveGame(jegr.getRestoredGame());
+					
+					restoredGame.setUpTurns();
+					restoredGame.setTurn(game.getCurrentPlayerTurn());
+					models.setGame(restoredGame);
+					ModelRoot.getInstance().getHistoryManager().restoreHistory(jegr.getRestoredCommandHistory());
+					
+					models.setSession(jegr.getRestoredSession());
+				}
+				joinExistingGameCallback.callback(result);
+			}
+		};
+		
+		this.asyncTask.executeTask(joinExistingGameCommand, callback);
 	}
 	
 	/**
@@ -543,15 +577,15 @@ public class ModelFacade implements IModelFacade {
 	/**
 	 * Tells the server which destination cards of the three given were kept, run asynchronously
 	 *
-	 * @param cards                                 A list of destination cards that the user selected
+	 * @param cards                          A list of destination cards that the user selected
 	 * @param chooseDestinationCardsCallback The callback to run after telling server
-	 *                                              {@pre selectDestinationCardsCallback != null}
-	 *                                              {@pre cards != null}
-	 *                                              {@pre cards.size() <= 3}
-	 *                                              {@pre cards.size() > 0}
-	 *                                              {@post player has cards added to hand}
-	 *                                              {@pre models.activeGame != null, aka we're actually in a game}
-	 *                                              {@pre it's your turn}
+	 *                                       {@pre selectDestinationCardsCallback != null}
+	 *                                       {@pre cards != null}
+	 *                                       {@pre cards.size() <= 3}
+	 *                                       {@pre cards.size() > 0}
+	 *                                       {@post player has cards added to hand}
+	 *                                       {@pre models.activeGame != null, aka we're actually in a game}
+	 *                                       {@pre it's your turn}
 	 */
 	public void chooseDestinationCardsAsync(final List<DestinationCard> cards,
 											final ICallback chooseDestinationCardsCallback) {
@@ -599,7 +633,7 @@ public class ModelFacade implements IModelFacade {
 			}
 		}
 		
-//		ModelRoot.getInstance().getGame().setStarted(true);
+		//		ModelRoot.getInstance().getGame().setStarted(true);
 		models.getGame().getDeck().setDestinationCardsCount(destinationCardDeckCount);
 		models.getGame()
 			  .setMinAllowedDestinationCardsDrawn(ActiveGame.SUBSEQUENT_MIN_ALLOWED_DESTINATION_CARDS_DRAWN);
@@ -614,18 +648,18 @@ public class ModelFacade implements IModelFacade {
 	public List<CommandHistoryEntry> getGameHistory() {
 		return models.getGameHistory();
 	}
-
+	
 	/**
 	 * Ends the active game.
 	 */
 	public void endGame() {
-	    
+		
 	}
 	
 	public List<CommandHistoryEntry> getLatestGameHistory() {
 		return models.getHistoryManager().getLatestCommandHistory();
 	}
-
+	
 	@Override
 	public void claimRouteAsync(final int routeID, ICallback callback) {
 		ICommand claimRouteCommand = new ICommand() {
@@ -635,7 +669,7 @@ public class ModelFacade implements IModelFacade {
 				return serverProxy.claimRoute(models.getSession().getAuthToken(), routeID, type);
 			}
 		};
-
+		
 		this.asyncTask.executeTask(claimRouteCommand, callback);
 	}
 }

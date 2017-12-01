@@ -9,10 +9,12 @@ import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
 import byu.codemonkeys.tickettoride.shared.results.ClaimRouteResult;
 import byu.codemonkeys.tickettoride.shared.results.DrawDeckTrainCardResult;
 import byu.codemonkeys.tickettoride.shared.results.DrawFaceUpTrainCardResult;
+import byu.codemonkeys.tickettoride.shared.results.ExistingGamesResult;
 import byu.codemonkeys.tickettoride.shared.results.HistoryResult;
 import byu.codemonkeys.tickettoride.shared.results.LoginResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.PendingGamesResult;
+import byu.codemonkeys.tickettoride.shared.results.JoinExistingGameResult;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 import byu.codemonkeys.tickettoride.shared.results.StartGameResult;
 import byu.codemonkeys.tickettoride.shared.results.DestinationCardResult;
@@ -171,4 +173,9 @@ public interface IServer {
 	 * @return An acknowledgement that the command was received properly, the server will broadcast the claimed route to all clients.
 	 */
 	ClaimRouteResult claimRoute(String authToken, int routeID, CardType cardType);
+	
+	JoinExistingGameResult joinExistingGame(String username, String gameId);
+	
+	ExistingGamesResult getExistingGames(String authToken);
+	
 }

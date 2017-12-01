@@ -9,13 +9,15 @@ import byu.codemonkeys.tickettoride.async.ICallback;
 import byu.codemonkeys.tickettoride.exceptions.UnauthorizedException;
 import byu.codemonkeys.tickettoride.models.IModelFacade;
 import byu.codemonkeys.tickettoride.models.ModelFacade;
+import byu.codemonkeys.tickettoride.models.ModelRoot;
 import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.IMediaPlayer;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.mvpcontracts.home.LobbyContract;
-import byu.codemonkeys.tickettoride.networking.PendingGamesPoller;
+import byu.codemonkeys.tickettoride.networking.LobbyPoller;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
 import byu.codemonkeys.tickettoride.presenters.PresenterEnum;
+import byu.codemonkeys.tickettoride.shared.model.ExistingGame;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 
@@ -43,7 +45,7 @@ public class LobbyPresenter extends PresenterBase implements LobbyContract.Prese
 	}
 	
 	@Override
-	public void joinGame(GameBase game) {
+	public void joinPendingGame(GameBase game) {
 		
 		ICallback joinPendingGameCallback = new ICallback() {
 			@Override
@@ -59,6 +61,21 @@ public class LobbyPresenter extends PresenterBase implements LobbyContract.Prese
 	}
 	
 	@Override
+	public void joinExistingGame(ExistingGame game) {
+		ICallback joinExistingGameCallback = new ICallback() {
+			@Override
+			public void callback(Result result) {
+				if (result.isSuccessful()) {
+					navigator.navigate(PresenterEnum.Game, true);
+				} else {
+					messageDisplayer.displayMessage(result.getErrorMessage());
+				}
+			}
+		};
+		modelFacade.joinExistingGameAync(game, joinExistingGameCallback);
+	}
+	
+	@Override
 	public void logout() {
 		this.navigator.navigate(PresenterEnum.Login, false);
 	}
@@ -66,33 +83,38 @@ public class LobbyPresenter extends PresenterBase implements LobbyContract.Prese
 	@Override
 	public void setDefaults() {
 		this.loadPendingGames();
+		this.loadExistingGames();
 	}
 	
 	@Override
 	public void startPolling() {
-		PendingGamesPoller.getInstance().startPolling();
+		LobbyPoller.getInstance().startPolling();
 	}
 	
 	@Override
 	public void stopPolling() {
-		PendingGamesPoller.getInstance().stopPolling();
+		LobbyPoller.getInstance().stopPolling();
 	}
 	
 	private void loadPendingGames() {
-		try {
-			List<GameBase> games = modelFacade.getPendingGames();
-			if (games == null)
-				games = new ArrayList<>();
-			this.view.setPendingGames(games);
-		} catch (UnauthorizedException e) {
-			e.printStackTrace();
-			messageDisplayer.displayMessage(e.getMessage());
-		}
+		List<GameBase> games = modelFacade.getPendingGames();
+		if (games == null)
+			games = new ArrayList<>();
+		this.view.setPendingGames(games);
+	}
+	
+	private void loadExistingGames() {
+		List<ExistingGame> games = ModelRoot.getInstance().getExistingGames();
+		if (games == null)
+			games = new ArrayList<>();
+		this.view.setExistingGames(games);
 	}
 	
 	@Override
 	public void update(Observable observable, Object o) {
 		if (o == ModelFacade.PENDING_GAMES_UPDATE)
 			this.loadPendingGames();
+		if (o == ModelFacade.EXISTING_GAMES_UPDATE)
+			this.loadExistingGames();
 	}
 }

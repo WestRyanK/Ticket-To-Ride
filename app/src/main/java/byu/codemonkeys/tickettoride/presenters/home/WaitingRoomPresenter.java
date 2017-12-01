@@ -13,7 +13,7 @@ import byu.codemonkeys.tickettoride.mvpcontracts.IDisplaysMessages;
 import byu.codemonkeys.tickettoride.mvpcontracts.IMediaPlayer;
 import byu.codemonkeys.tickettoride.mvpcontracts.INavigator;
 import byu.codemonkeys.tickettoride.mvpcontracts.home.WaitingRoomContract;
-import byu.codemonkeys.tickettoride.networking.PendingGamePoller;
+import byu.codemonkeys.tickettoride.networking.WaitingRoomPoller;
 import byu.codemonkeys.tickettoride.presenters.PresenterBase;
 import byu.codemonkeys.tickettoride.presenters.PresenterEnum;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
@@ -62,7 +62,7 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 			@Override
 			public void callback(Result result) {
 				if (result.isSuccessful()) {
-					PendingGamePoller.getInstance().stopPolling();
+					WaitingRoomPoller.getInstance().stopPolling();
 					navigator.navigateBack();
 				} else {
 					messageDisplayer.displayMessage(result.getErrorMessage());
@@ -92,12 +92,12 @@ public class WaitingRoomPresenter extends PresenterBase implements WaitingRoomCo
 	
 	@Override
 	public void startPolling() {
-		PendingGamePoller.getInstance().startPolling();
+		WaitingRoomPoller.getInstance().startPolling();
 	}
 	
 	@Override
 	public void stopPolling() {
-		PendingGamePoller.getInstance().stopPolling();
+		WaitingRoomPoller.getInstance().stopPolling();
 	}
 	
 	private void loadWaitingPlayers() {

@@ -15,12 +15,12 @@ import java.util.List;
 
 import byu.codemonkeys.tickettoride.R;
 import byu.codemonkeys.tickettoride.mvpcontracts.home.LobbyContract;
+import byu.codemonkeys.tickettoride.shared.model.ExistingGame;
 import byu.codemonkeys.tickettoride.shared.model.GameBase;
 import byu.codemonkeys.tickettoride.views.OnRecyclerItemClickListener;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link LobbyFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class LobbyFragment extends Fragment implements LobbyContract.View {
@@ -30,16 +30,13 @@ public class LobbyFragment extends Fragment implements LobbyContract.View {
 	private LinearLayoutManager layoutManagerPendingGames;
 	private PendingGamesRecyclerAdapter pendingGamesAdapter;
 	
+	private RecyclerView recyclerExistingGames;
+	private LinearLayoutManager layoutManagerExistingGames;
+	private ExistingGamesRecyclerAdapter existingGamesAdapter;
+	
 	
 	public LobbyFragment() {
 		// Required empty public constructor
-	}
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		if (getArguments() != null) {
-		}
 	}
 	
 	@Override
@@ -49,12 +46,19 @@ public class LobbyFragment extends Fragment implements LobbyContract.View {
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.fragment_lobby, container, false);
 		
+		getViews(view);
+		setOnClickListeners();
+		createRecyclers(view);
+		
+		presenter.setDefaults();
+		return view;
+	}
+	
+	private void getViews(View view) {
 		fabCreateGame = (FloatingActionButton) view.findViewById(R.id.lobby_fabCreateGame);
-		
-		recyclerPendingGames = (RecyclerView) view.findViewById(R.id.lobby_recyclerPendingGames);
-		layoutManagerPendingGames = new LinearLayoutManager(getActivity());
-		recyclerPendingGames.setLayoutManager(layoutManagerPendingGames);
-		
+	}
+	
+	private void setOnClickListeners() {
 		fabCreateGame.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -62,9 +66,16 @@ public class LobbyFragment extends Fragment implements LobbyContract.View {
 			}
 		});
 		
-		presenter.setDefaults();
-		Log.d("LOBBY", "Creating lobby...");
-		return view;
+	}
+	
+	private void createRecyclers(View view) {
+		recyclerPendingGames = (RecyclerView) view.findViewById(R.id.lobby_recyclerNewGames);
+		layoutManagerPendingGames = new LinearLayoutManager(getActivity());
+		recyclerPendingGames.setLayoutManager(layoutManagerPendingGames);
+		
+		recyclerExistingGames = (RecyclerView) view.findViewById(R.id.lobby_recyclerMyGames);
+		layoutManagerExistingGames = new LinearLayoutManager(getActivity());
+		recyclerExistingGames.setLayoutManager(layoutManagerExistingGames);
 	}
 	
 	@Override
@@ -72,14 +83,12 @@ public class LobbyFragment extends Fragment implements LobbyContract.View {
 		super.onResume();
 		
 		presenter.startPolling();
-		Log.d("LOBBY", "Resuming lobby...");
 	}
 	
 	@Override
 	public void onPause() {
 		super.onPause();
 		presenter.stopPolling();
-		Log.d("LOBBY", "Pausing lobby...");
 	}
 	
 	
@@ -93,7 +102,8 @@ public class LobbyFragment extends Fragment implements LobbyContract.View {
 																	  @Override
 																	  public void onItemClick(
 																			  GameBase game) {
-																		  presenter.joinGame(game);
+																		  presenter.joinPendingGame(
+																				  game);
 																	  }
 																  });
 			recyclerPendingGames.setAdapter(pendingGamesAdapter);
@@ -101,6 +111,26 @@ public class LobbyFragment extends Fragment implements LobbyContract.View {
 			recyclerPendingGames.setAdapter(pendingGamesAdapter);
 			pendingGamesAdapter.updateData(pendingGames);
 		}
+	}
+	
+	@Override
+	public void setExistingGames(List<ExistingGame> existingGames) {
+		if (existingGamesAdapter == null) {
+			existingGamesAdapter = new ExistingGamesRecyclerAdapter(existingGames,
+																  new OnRecyclerItemClickListener<ExistingGame>() {
+																	  @Override
+																	  public void onItemClick(
+																			  ExistingGame game) {
+																		  presenter.joinExistingGame(
+																				  game);
+																	  }
+																  });
+			recyclerExistingGames.setAdapter(existingGamesAdapter);
+		} else {
+			recyclerExistingGames.setAdapter(existingGamesAdapter);
+			existingGamesAdapter.updateData(existingGames);
+		}
+		
 	}
 	
 	public void setPresenter(LobbyContract.Presenter presenter) {
