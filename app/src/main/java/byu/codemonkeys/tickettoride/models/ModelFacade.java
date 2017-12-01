@@ -323,9 +323,9 @@ public class ModelFacade implements IModelFacade {
 					ActiveGame restoredGame = ActiveGame.copyActiveGame(jegr.getRestoredGame());
 					restoredGame.setUpTurns();
 					restoredGame.setTurn(game.getCurrentPlayerTurn());
+					models.setGame(restoredGame);
 					ModelRoot.getInstance().getHistoryManager().restoreHistory(jegr.getRestoredCommandHistory());
 					
-					models.setGame(restoredGame);
 					models.setSession(jegr.getRestoredSession());
 				}
 				joinExistingGameCallback.callback(result);

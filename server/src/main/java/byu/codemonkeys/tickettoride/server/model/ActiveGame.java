@@ -395,7 +395,96 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
 	}
 	
 	public ClaimRouteResult claimRoute(int routeID, User user, CardType cardType) {
-		return null;
+		Player player = getPlayer(user);
+		if (player == null) {
+			return new ClaimRouteResult("Could not find the user in the game. This is a server error");
+		}
+		
+		Self self = (Self) player;
+		
+		if (!isPlayersTurn(self.getUsername())) {
+			return new ClaimRouteResult("Can only claim routes during your turn");
+		}
+		
+		Map<CardType, Integer> hand = self.getHand();
+		Route route = getMap().getRoute(routeID);
+		if (route == null) {
+			return new ClaimRouteResult("No such route");
+		}
+		
+		if (route.isClaimed()) {
+			return new ClaimRouteResult("Route is already claimed!");
+		}
+		
+		if (route.getRouteType().equals(CardType.Wild)) {
+			if (cardType == null) {
+				return new ClaimRouteResult("To claim a wild route, first select a card type from your hand.");
+			}
+		} else {
+			cardType = route.getRouteType();
+		}
+		
+		int cardsNeeded = route.getLength();
+		int numNormalCards;
+		int numWildCards = 0;
+		
+		if (hand.get(cardType) >= cardsNeeded) {
+			numNormalCards = cardsNeeded;
+		}
+		else {
+			numNormalCards = hand.get(cardType);
+			cardsNeeded -= numNormalCards;
+			
+			if (hand.get(CardType.Wild) < cardsNeeded) {
+				return new ClaimRouteResult("Insufficient cards to claim route");
+			}
+			
+			numWildCards = cardsNeeded;
+		}
+		
+		if (self.getNumTrains() < route.getLength()) {
+			return new ClaimRouteResult("Insufficient trains to claim route");
+		}
+		
+		if (route.isParallel()) {
+			Route parallelRoute = map.getRoute(route.getParallelRouteID());
+			
+			if (players.size() <= 3) {
+				if (parallelRoute.isClaimed()) {
+					return new ClaimRouteResult("Parallel route already claimed.");
+				}
+			} else {
+				if (parallelRoute.isClaimed() &&
+						self.equals(parallelRoute.getOwner())) {
+					return new ClaimRouteResult("Cannot claim parallel routes.");
+				}
+			}
+		}
+		
+		if (route.claim(self)) {
+			self.removeTrains(route.getLength());
+			
+			Map<CardType, Integer> cardsRemoved = new HashMap<>();
+			cardsRemoved.put(cardType, numNormalCards);
+			cardsRemoved.put(CardType.Wild, numWildCards);
+			
+			self.discardTrainCards(cardsRemoved);
+			getDeck().discard(cardsRemoved);
+			
+			self.setScore(self.getScore() + route.getPoints());
+			
+			RouteClaimedCommandData claimedCommand = new RouteClaimedCommandData(routeID, self);
+			broadcastCommand(claimedCommand);
+			nextTurn();
+			
+			if (self.getNumTrains() <= LAST_TURN_TRAIN_THRESHOLD) {
+				broadcastCommand(new LastTurnCommandData());
+				initiateFinalRound();
+			}
+			return new ClaimRouteResult(cardsRemoved, route.getLength());
+		}
+		
+		return new ClaimRouteResult("Error claiming route");
 	}
 	
 	private void initiateFinalRound() {

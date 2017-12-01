@@ -521,11 +521,14 @@ public class ServerFacade implements IServer {
 		if (restoredSession == null)
 			return new JoinExistingGameResult("Could not find a matching session");
 		
-		ActiveGame restoredGame = this.rootModel.getActiveGame(gameId);
-		if (restoredGame == null)
-			return new JoinExistingGameResult("Could not find a game with gameID " + gameId);
+		ActiveGame game = this.rootModel.getActiveGame(gameId);
 		
-		List<CommandData> restoredCommandHistory = restoredGame.getAllGameHistory(user.getUsername());
+		if (game == null)
+			return new JoinExistingGameResult("Could not find a game with gameID " + gameId);
+		byu.codemonkeys.tickettoride.shared.model.ActiveGame restoredGame = game.prepareForClient(
+				game.getPlayer(user));
+		
+		List<CommandData> restoredCommandHistory = game.getAllGameHistory(user.getUsername());
 		
 		return new JoinExistingGameResult(restoredGame, restoredSession, restoredCommandHistory);
 	}

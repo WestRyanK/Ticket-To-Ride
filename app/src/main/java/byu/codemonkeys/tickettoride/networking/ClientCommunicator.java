@@ -21,8 +21,8 @@ public class ClientCommunicator {
 	private int port;
 	private static final int TIMEOUT = 10000;
 	private static final String DEFAULT_HOST =
-			//			"10.24.222.148";
-			"192.168.1.3";
+						"10.24.221.215";
+//			"192.168.1.3";
 	//			"104.155.184.125";
 	private static final int DEFAULT_PORT = 8080;
 	
@@ -105,8 +105,6 @@ public class ClientCommunicator {
 			return HistoryDeserializer.deserializeObject(getString(getURL(CommandType.JOIN_EXISTING_GAME),
 																   request),
 														 JoinExistingGameResult.class);
-			//			return serializer.deserialize(getString(getURL(CommandType.JOIN_EXISTING_GAME),
-			//													request), JoinExistingGameResult.class);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return new JoinExistingGameResult(e.getMessage());
