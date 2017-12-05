@@ -3,6 +3,7 @@ package byu.codemonkeys.tickettoride.shared.commands;
 public abstract class CommandData {
 	private String commandType;
 	private String authToken;
+	protected String gameID;
 	private int queuedPosition; // only gets set if command gets queued up
 	
 	protected CommandData(String commandType) {
@@ -28,5 +29,13 @@ public abstract class CommandData {
 
 	public int getQueuedPosition() {
 		return queuedPosition;
+	}
+
+	public void setGameID(String gameID) {
+		this.gameID = gameID;
+	}
+
+	public String getGameID() {
+		return gameID;
 	}
 }

@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 
 import byu.codemonkeys.tickettoride.server.commands.*;
 import byu.codemonkeys.tickettoride.shared.Serializer;
+import byu.codemonkeys.tickettoride.shared.commands.CommandData;
 import byu.codemonkeys.tickettoride.shared.commands.CommandType;
 import byu.codemonkeys.tickettoride.shared.commands.GetExistingGamesCommandData;
 import byu.codemonkeys.tickettoride.shared.commands.ICommand;
@@ -24,12 +25,17 @@ class CommandHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         try {
-            Result result = getCommand(exchange).execute();
+            ICommand command = getCommand(exchange);
+            Result result = command.execute();
 
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 
             String json = serializer.serialize(result);
             send(json, exchange);
+
+            if (result.isSuccessful() && command instanceof CommandData) {
+                //Save command
+            }
         } catch (JsonSyntaxException e) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
             exchange.getResponseBody().close();

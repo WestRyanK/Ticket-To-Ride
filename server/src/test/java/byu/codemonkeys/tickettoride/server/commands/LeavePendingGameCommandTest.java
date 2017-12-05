@@ -8,13 +8,9 @@ import byu.codemonkeys.tickettoride.shared.results.Result;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Ryan on 9/29/2017.
- */
 public class LeavePendingGameCommandTest {
 	
 	private LeavePendingGameCommand command;
-	private static final String gameID = "AAAAA";
 	
 	@Before
 	public void Init() {
