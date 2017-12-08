@@ -6,26 +6,30 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 
 public class ServerCommunicator {
-    private static final int MIN_ARGUMENTS = 1;
+    private static final int MIN_ARGUMENTS = 3;
     private static final int MAX_WAITING_CONNECTIONS = 12;
 
     private HttpServer server;
 
     public static void main(String[] args) {
         if (args.length < MIN_ARGUMENTS) {
-//            System.out.println("USAGE: java ServerCommunicator <port>");
-//            return;
-			args = new String[] { "8080"};
+           System.out.println("USAGE: java ServerCommunicator <port> <db plugin path> <N - max persistence deltas>");
+            return;
         }
 
-        int port;
+        int port, numCommands;
+        String pluginPath = args[1];
 
         try {
             port = Integer.parseInt(args[0]);
+            numCommands = Integer.parseInt(args[2]);
         } catch (NumberFormatException e) {
             e.printStackTrace();
             return;
         }
+
+        PersistenceFacade.initPersistanceFacade(numCommands, pluginPath);
+        PersistenceFacade.getInstance().restoreServer();
 
         new ServerCommunicator().runServer(port);
     }

@@ -228,7 +228,7 @@ public class RootModel implements IRootModel {
 	}
 	
 	@Override
-	public Session getSessionByUsernameAndGameID(String username, String gameId) {
+	public ServerSession getSessionByUsernameAndGameID(String username, String gameId) {
 		ServerSession matchingSession = null;
 		for (ServerSession session : this.currentSessions.values()) {
 			if (session.getUser().getUsername().equals(username) &&

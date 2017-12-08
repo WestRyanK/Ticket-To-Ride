@@ -18,7 +18,6 @@ import byu.codemonkeys.tickettoride.server.model.User;
 import byu.codemonkeys.tickettoride.server.util.CommandUtils;
 import byu.codemonkeys.tickettoride.server.util.GameDeserializer;
 import byu.codemonkeys.tickettoride.shared.Serializer;
-import byu.codemonkeys.tickettoride.shared.commands.CommandData;
 import byu.codemonkeys.tickettoride.shared.commands.ICommand;
 import byu.codemonkeys.tickettoride.shared.results.Result;
 
@@ -46,7 +45,8 @@ public class PersistenceFacade {
 
     public static PersistenceFacade getInstance() {
         if (instance == null) {
-            throw new RuntimeException("PersistenceFacade is uninitialized");
+            initPersistanceFacade(5, "mock");
+            //throw new RuntimeException("PersistenceFacade is uninitialized");
         }
         return instance;
     }
@@ -66,11 +66,13 @@ public class PersistenceFacade {
     }
 
     public void trackGame(ActiveGame game) {
-        trackedGames.put(game.getID(), new TrackedGame(game));
+        if (game != null) {
+            trackedGames.put(game.getID(), new TrackedGame(game));
 
-        //Record initial game snapshot
-        String json = serializer.serialize(trackedGames.get(game.getID()));
-        gameDAO.saveGameData(game.getID(), json);
+            //Record initial game snapshot
+            String json = serializer.serialize(trackedGames.get(game.getID()));
+            gameDAO.saveGameData(game.getID(), json);
+        }
     }
 
     public void removeGame(String gameID) {
@@ -79,8 +81,10 @@ public class PersistenceFacade {
     }
 
     public void saveSession(ServerSession session) {
-        String json = serializer.serialize(session);
-        sessionDAO.saveSessionData(session.getAuthToken(), json);
+        if (session != null) {
+            String json = serializer.serialize(session);
+            sessionDAO.saveSessionData(session.getAuthToken(), json);
+        }
     }
 
     public void removeSession(String authToken) {
@@ -88,12 +92,14 @@ public class PersistenceFacade {
     }
 
     public void saveUser(User user) {
-        String json = serializer.serialize(user);
-        userDAO.saveUserData(user.getUsername(), json);
+        if (user != null) {
+            String json = serializer.serialize(user);
+            userDAO.saveUserData(user.getUsername(), json);
+        }
     }
 
     public void saveCommand(String gameID, ICommand command) {
-        if (trackedGames.containsKey(gameID)) {
+        if (trackedGames.containsKey(gameID) && command != null) {
             String json = serializer.serialize(command);
             gameDAO.saveCommandData(gameID, json);
 

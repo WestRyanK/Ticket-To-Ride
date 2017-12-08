@@ -37,5 +37,5 @@ public interface IRootModel {
 	
 	List<ExistingGame> getExistingGames(User user);
     
-    Session getSessionByUsernameAndGameID(String username, String gameId);
+    ServerSession getSessionByUsernameAndGameID(String username, String gameId);
 }

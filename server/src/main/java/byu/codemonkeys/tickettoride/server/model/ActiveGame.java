@@ -10,6 +10,7 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
 
+import byu.codemonkeys.tickettoride.server.PersistenceFacade;
 import byu.codemonkeys.tickettoride.server.broadcast.CommandManager;
 import byu.codemonkeys.tickettoride.shared.commands.CommandData;
 import byu.codemonkeys.tickettoride.shared.commands.GameOverCommandData;
@@ -314,7 +315,7 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
 			}
 			
 			int longestRouteBonus = 0;
-			if (player != null && player.getUsername().equals(longestRoutePlayer.getUsername()))
+			if (player.getUsername().equals(longestRoutePlayer.getUsername()))
 				longestRouteBonus = LONGEST_ROUTE_BONUS;
 			
 			EndGamePlayerStats playerSummary = new EndGamePlayerStats(player.getUsername(),
@@ -330,6 +331,13 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
 		gameSummary.calculateWinner();
 		
 		broadcastCommand(new GameOverCommandData(gameSummary));
+
+		for (Player player : getPlayers()) {
+			ServerSession s = RootModel.getInstance().getSessionByUsernameAndGameID(player.getUsername(), getID());
+			PersistenceFacade.getInstance().removeSession(s.getAuthToken());
+		}
+
+		PersistenceFacade.getInstance().removeGame(getID());
 		
 		ended = true;
 	}

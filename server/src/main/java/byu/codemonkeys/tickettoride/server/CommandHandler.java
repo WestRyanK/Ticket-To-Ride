@@ -34,7 +34,8 @@ class CommandHandler implements HttpHandler {
             send(json, exchange);
 
             if (result.isSuccessful() && command instanceof CommandData) {
-                //Save command
+                String gameID = ((CommandData) command).getGameID();
+                PersistenceFacade.getInstance().saveCommand(gameID, command);
             }
         } catch (JsonSyntaxException e) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
