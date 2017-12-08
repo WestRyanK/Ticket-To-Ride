@@ -6,8 +6,6 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import byu.codemonkeys.tickettoride.shared.commands.CommandData;
-
 public class Serializer {
     private Gson gson;
 

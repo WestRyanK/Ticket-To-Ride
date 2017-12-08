@@ -17,6 +17,16 @@ public class User extends UserBase {
 
     @Override
     public boolean equals(Object o) {
-        return super.equals(o);
+        if (this == o)
+            return true;
+
+        if (o instanceof User) {
+            User that = (User) o;
+
+            if (this.password.equals(that.password)) {
+                return super.equals(o);
+            }
+        }
+        return false;
     }
 }
