@@ -151,7 +151,7 @@ public class MockRootModel implements IRootModel {
     }
     
     @Override
-    public Session getSessionByUsernameAndGameID(String username, String gameId) {
+    public ServerSession getSessionByUsernameAndGameID(String username, String gameId) {
         return null;
     }
 }

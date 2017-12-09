@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package byu.codemonkeys.tickettoride.utils;
+package byu.codemonkeys.tickettoride.shared;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;

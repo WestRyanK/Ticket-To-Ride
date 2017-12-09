@@ -2,6 +2,7 @@ package byu.codemonkeys.tickettoride.networking;
 
 import java.util.List;
 
+import byu.codemonkeys.tickettoride.models.ModelRoot;
 import byu.codemonkeys.tickettoride.shared.IServer;
 import byu.codemonkeys.tickettoride.shared.model.cards.CardType;
 import byu.codemonkeys.tickettoride.shared.model.cards.DestinationCard;
@@ -84,6 +85,7 @@ public class ServerProxy implements IServer {
 	public DestinationCardResult drawDestinationCards(String authToken) {
 		DrawDestinationCardsCommandData data = new DrawDestinationCardsCommandData();
 		data.setAuthToken(authToken);
+		data.setGameID(ModelRoot.getInstance().getGame().getID());
 		return communicator.sendDrawDestinationCards(data);
 	}
 	
@@ -92,6 +94,7 @@ public class ServerProxy implements IServer {
 														List<DestinationCard> selected) {
 		ChooseDestinationCardsCommandData data = new ChooseDestinationCardsCommandData(selected);
 		data.setAuthToken(authToken);
+		data.setGameID(ModelRoot.getInstance().getGame().getID());
 		return communicator.sendChooseInitialDestinationCards(data);
 	}
 	
@@ -99,6 +102,7 @@ public class ServerProxy implements IServer {
 	public Result sendMessage(String authToken, Message message) {
 		SendMessageCommandData data = new SendMessageCommandData(message);
 		data.setAuthToken(authToken);
+		data.setGameID(ModelRoot.getInstance().getGame().getID());
 		return communicator.sendSendMessage(data);
 	}
 	
@@ -107,6 +111,7 @@ public class ServerProxy implements IServer {
 		DrawFaceUpTrainCardCommandData data = new DrawFaceUpTrainCardCommandData(faceUpCardIndex);
 		
 		data.setAuthToken(authToken);
+		data.setGameID(ModelRoot.getInstance().getGame().getID());
 		return communicator.sendDrawFaceUpTrainCard(data);
 	}
 	
@@ -114,6 +119,7 @@ public class ServerProxy implements IServer {
 	public DrawDeckTrainCardResult drawDeckTrainCard(String authToken) {
 		DrawDeckTrainCardCommandData data = new DrawDeckTrainCardCommandData();
 		data.setAuthToken(authToken);
+		data.setGameID(ModelRoot.getInstance().getGame().getID());
 		return communicator.sendDrawDeckTrainCard(data);
 	}
 
@@ -121,6 +127,7 @@ public class ServerProxy implements IServer {
 	public ClaimRouteResult claimRoute(String authToken, int routeID, CardType cardType) {
 		ClaimRouteCommandData data = new ClaimRouteCommandData(routeID, cardType);
 		data.setAuthToken(authToken);
+		data.setGameID(ModelRoot.getInstance().getGame().getID());
 		return communicator.sendClaimRoute(data);
 	}
 	
