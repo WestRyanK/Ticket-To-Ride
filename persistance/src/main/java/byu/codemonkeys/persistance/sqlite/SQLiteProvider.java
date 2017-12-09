@@ -26,9 +26,9 @@ public class SQLiteProvider implements IPersistanceProvider {
         try {
             Connection connection = openConnection();
 
-            new SQLiteActiveGameDAO(connection).clear();
-            new SQLiteSessionDAO(connection).clear();
-            new SQLiteUserDAO(connection).clear();
+            new SQLiteActiveGameDAO().clear(connection);
+            new SQLiteSessionDAO().clear(connection);
+            new SQLiteUserDAO().clear(connection);
 
             closeConnection(connection);
         } catch (SQLException e) {
@@ -64,47 +64,38 @@ public class SQLiteProvider implements IPersistanceProvider {
 
     private void createTables() throws SQLException {
         Connection connection = openConnection();
+        Statement statement = null;
 
         try {
-            Statement statement = null;
+            statement = connection.createStatement();
 
-            try {
-                statement = connection.createStatement();
+            StringBuilder sb = new StringBuilder();
 
-                StringBuilder sb = new StringBuilder();
-
-                sb.append("create table if not exists games (" +
+            sb.append("create table if not exists games (" +
                         "id varchar(255) PRIMARY KEY," +
                         "data blob" +
                         ");\n");
-                sb.append("create table if not exists sessions (" +
+            sb.append("create table if not exists sessions (" +
                         "token varchar(255) PRIMARY KEY," +
                         "data blob" +
                         ");\n");
-                sb.append("create table if not exists users (" +
+            sb.append("create table if not exists users (" +
                         "username varchar(255) PRIMARY KEY," +
                         "data blob" +
                         ");\n");
-                sb.append("create table if not exists commands (" +
-                        "index integer PRIMARY KEY AUTO INCREMENT," +
+            sb.append("create table if not exists commands (" +
+                        "idx integer PRIMARY KEY AUTOINCREMENT," +
                         "game varchar(255)," +
                         "data blob" +
                         ");");
 
-                statement.executeUpdate(sb.toString());
-            } finally {
-                if (statement != null) {
-                    statement.close();
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            statement.executeUpdate(sb.toString());
         } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if (statement != null) {
+                statement.close();
             }
+
+            closeConnection(connection);
         }
     }
 }

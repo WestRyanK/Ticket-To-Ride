@@ -1,6 +1,8 @@
 package byu.codemonkeys.tickettoride.server;
 
 
+import com.google.gson.Gson;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +12,7 @@ import byu.codemonkeys.persistance.IPersistanceProvider;
 import byu.codemonkeys.persistance.ISessionDAO;
 import byu.codemonkeys.persistance.IUserDAO;
 import byu.codemonkeys.persistance.mock.MockProvider;
+import byu.codemonkeys.persistance.sqlite.SQLiteProvider;
 import byu.codemonkeys.tickettoride.server.model.ActiveGame;
 import byu.codemonkeys.tickettoride.server.model.RootModel;
 import byu.codemonkeys.tickettoride.server.model.ServerSession;
@@ -38,7 +41,17 @@ public class PersistenceFacade {
         System.out.println("--Loading DataBase Plugin");
         if (instance == null) {
             // TODO: Load provider dynamically from pluginPath
-            instance = new PersistenceFacade(maxCommands, new MockProvider());
+            IPersistanceProvider provider;
+
+            switch (pluginPath) {
+                case "sqlite":
+                    provider = new SQLiteProvider();
+                    break;
+                default:
+                    provider = new MockProvider();
+            }
+
+            instance = new PersistenceFacade(maxCommands, provider);
             System.out.println("--No database plugin found, server state will not be saved");
         }
     }

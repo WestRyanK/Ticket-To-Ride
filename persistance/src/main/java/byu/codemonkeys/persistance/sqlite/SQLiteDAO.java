@@ -6,9 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
 abstract class SQLiteDAO {
-    protected Connection connection;
     protected String table;
     protected String id;
 
@@ -17,78 +18,116 @@ abstract class SQLiteDAO {
         this.id = id;
     }
 
-    protected SQLiteDAO(String table, String id, Connection connection) {
-        this(table, id);
-        this.connection = connection;
-    }
-
-    protected void openConnection() throws SQLException {
-        connection = DriverManager.getConnection("jdbc:sqlite:tickettoride.sqlite");
+    protected Connection openConnection() throws SQLException {
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:tickettoride.sqlite");
         connection.setAutoCommit(false);
+        return connection;
     }
 
-    protected void closeConnection() throws SQLException {
-        connection.commit();
+    protected void closeConnection(Connection connection, boolean commit) throws SQLException {
+        if (commit) {
+            connection.commit();
+        } else {
+            connection.rollback();
+        }
+
         connection.close();
     }
 
-    protected ResultSet select() throws SQLException {
-        PreparedStatement statement = null;
-        ResultSet results = null;
+    protected void closeConnection(Connection connection) throws SQLException {
+        closeConnection(connection, true);
+    }
 
+    protected Map<String, String> all() {
         try {
-            statement = connection.prepareStatement("select * from " + table);
-            return statement.executeQuery();
-        } finally {
-            if (results != null) {
-                results.close();
+            ResultSet results = select();
+            Map<String, String> records = new HashMap<>();
+
+            while (results.next()) {
+                String id = results.getString(this.id);
+                String object = results.getString("data");
+                records.put(id, object);
             }
 
-            if (statement != null) {
-                statement.close();
-            }
+            return records;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    protected ResultSet select(String value) throws SQLException {
-        PreparedStatement statement = null;
-        ResultSet results = null;
-
+    protected String get(String id) {
         try {
-            statement = connection.prepareStatement(
-                    "select * from " + table + " where " + id + "=?"
-            );
-            statement.setString(1, value);
-            return statement.executeQuery();
-        } finally {
-            if (results != null) {
-                results.close();
+            ResultSet results = select(id);
+
+            if (!results.isBeforeFirst()) {
+                return null;
             }
 
-            if (statement != null) {
-                statement.close();
-            }
+            return results.getString("data");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+    }
+
+    protected ResultSet select() throws SQLException {
+        return query("select * from " + table);
+    }
+
+    protected ResultSet select(String id) throws SQLException {
+        return query("select * from " + table + " where " + this.id + " = ?", id);
     }
 
     protected int insert(String id, String value) throws SQLException {
+        Connection connection = null;
         PreparedStatement statement = null;
+        boolean failed = false;
 
         try {
+            connection = openConnection();
             statement = connection.prepareStatement(
-                    "insert into " + table + " values (?, ?)"
+                    "insert into " +  table + " (" + this.id + ", data" + ") values (?, ?)"
             );
             statement.setString(1, id);
             statement.setString(2, value);
+
+            return statement.executeUpdate();
+        } catch (SQLException e) {
+            failed = true;
+            throw e;
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+
+            if (connection != null) {
+                closeConnection(connection, !failed);
+            }
+        }
+    }
+
+    protected int delete(String id) throws SQLException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = openConnection();
+            statement = connection.prepareStatement(
+                    "delete from " + table + " where " + this.id + " = ?"
+            );
+            statement.setString(1, id);
             return statement.executeUpdate();
         } finally {
+            if (connection != null) {
+                closeConnection(connection);
+            }
+
             if (statement != null) {
                 statement.close();
             }
         }
     }
 
-    protected void clear() throws SQLException {
+    protected void clear(Connection connection) throws SQLException {
         Statement statement = null;
 
         try {
@@ -97,6 +136,51 @@ abstract class SQLiteDAO {
         } finally {
             if (statement != null) {
                 statement.close();
+            }
+        }
+    }
+
+    protected void clear() {
+        Connection connection = null;
+
+        try {
+            connection = openConnection();
+            clear(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (connection != null) {
+                try {
+                    closeConnection(connection);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+    protected ResultSet query(String sql, String... args) throws SQLException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = openConnection();
+            statement = connection.prepareStatement(sql);
+
+            int i = 1;
+            while (i <= args.length) {
+                statement.setString(i, args[i - 1]);
+                ++i;
+            }
+
+            return statement.executeQuery();
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+
+            if (connection != null) {
+                closeConnection(connection);
             }
         }
     }
