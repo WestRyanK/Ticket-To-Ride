@@ -11,11 +11,11 @@ import byu.codemonkeys.persistance.IActiveGameDAO;
 
 public class SQLiteActiveGameDAO extends SQLiteDAO implements IActiveGameDAO {
     public SQLiteActiveGameDAO() {
-        super();
+        super("games", "id");
     }
 
     public SQLiteActiveGameDAO(Connection connection) {
-        super(connection);
+        super("games", "id", connection);
     }
 
     @Override
@@ -30,13 +30,17 @@ public class SQLiteActiveGameDAO extends SQLiteDAO implements IActiveGameDAO {
 
     @Override
     public void saveGameData(String gameID, String gameJson) {
-
+        try {
+            insert(gameID, gameJson);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public String getGameData(String gameID) {
         try {
-            ResultSet rs = select("games", "id", gameID);
+            ResultSet rs = select(gameID);
 
             if (rs.isBeforeFirst()) {
                 return rs.getBlob("data").toString();
@@ -44,31 +48,34 @@ public class SQLiteActiveGameDAO extends SQLiteDAO implements IActiveGameDAO {
 
             return null;
         } catch (SQLException e) {
-            return null;
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     public Map<String, String> getAllGameData() {
         try {
-            ResultSet rs = select("games", null, null);
+            ResultSet results = select();
             Map<String, String> games = new HashMap<>();
 
-            while (rs.next()) {
-                String id = rs.getString("id");
-                String data = rs.getString("data");
+            while (results.next()) {
+                String id = results.getString("id");
+                String data = results.getBlob("data").toString();
                 games.put(id, data);
             }
 
             return games;
         } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     public void clear() {
-        super.clear("games");
+        try {
+            super.clear();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

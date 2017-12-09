@@ -15,23 +15,25 @@ public class SQLiteProvider implements IPersistanceProvider {
     public void init() {
         try {
             Class.forName("org.sqlite.JDBC");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return;
+            createTables();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-
-        createTables();
     }
 
     @Override
     public void clear() {
-        Connection connection = openConnection();
+        try {
+            Connection connection = openConnection();
 
-        new SQLiteActiveGameDAO(connection).clear();
-        new SQLiteSessionDAO(connection).clear();
-        new SQLiteUserDAO(connection).clear();
+            new SQLiteActiveGameDAO(connection).clear();
+            new SQLiteSessionDAO(connection).clear();
+            new SQLiteUserDAO(connection).clear();
 
-        closeConnection(connection);
+            closeConnection(connection);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -49,56 +51,50 @@ public class SQLiteProvider implements IPersistanceProvider {
         return new SQLiteUserDAO();
     }
 
-    private Connection openConnection() {
-        Connection connection;
-
-        try {
-            connection = DriverManager.getConnection("jdbc:sqlite:tickettoride.sqlite");
-            connection.setAutoCommit(false);
-            return connection;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
+    private Connection openConnection() throws SQLException {
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:tickettoride.sqlite");
+        connection.setAutoCommit(false);
+        return connection;
     }
 
-    private void closeConnection(Connection connection) {
-        try {
-            connection.commit();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    private void closeConnection(Connection connection) throws SQLException {
+        connection.commit();
+        connection.close();
     }
 
-    private void createTables() {
+    private void createTables() throws SQLException {
         Connection connection = openConnection();
 
         try {
-            Statement stmt = null;
+            Statement statement = null;
 
             try {
-                stmt = connection.createStatement();
+                statement = connection.createStatement();
 
                 StringBuilder sb = new StringBuilder();
 
                 sb.append("create table if not exists games (" +
                         "id varchar(255) PRIMARY KEY," +
                         "data blob" +
-                        ")\n");
+                        ");\n");
                 sb.append("create table if not exists sessions (" +
                         "token varchar(255) PRIMARY KEY," +
                         "data blob" +
-                        ")\n");
+                        ");\n");
                 sb.append("create table if not exists users (" +
                         "username varchar(255) PRIMARY KEY," +
                         "data blob" +
-                        ")");
+                        ");\n");
+                sb.append("create table if not exists commands (" +
+                        "index integer PRIMARY KEY AUTO INCREMENT," +
+                        "game varchar(255)," +
+                        "data blob" +
+                        ");");
 
-                stmt.executeUpdate(sb.toString());
+                statement.executeUpdate(sb.toString());
             } finally {
-                if (stmt != null) {
-                    stmt.close();
+                if (statement != null) {
+                    statement.close();
                 }
             }
         } catch (SQLException e) {
