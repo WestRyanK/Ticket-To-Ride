@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 abstract class SQLiteDAO {
@@ -40,13 +42,11 @@ abstract class SQLiteDAO {
 
     protected Map<String, String> all() {
         try {
-            ResultSet results = select();
+            List<Result> results = select();
             Map<String, String> records = new HashMap<>();
 
-            while (results.next()) {
-                String id = results.getString(this.id);
-                String object = results.getString("data");
-                records.put(id, object);
+            for (Result result : results) {
+                records.put(result.id(), result.data());
             }
 
             return records;
@@ -57,23 +57,23 @@ abstract class SQLiteDAO {
 
     protected String get(String id) {
         try {
-            ResultSet results = select(id);
+            List<Result> results = select(id);
 
-            if (!results.isBeforeFirst()) {
+            if (results.isEmpty()) {
                 return null;
             }
 
-            return results.getString("data");
+            return results.get(0).data();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    protected ResultSet select() throws SQLException {
+    protected List<Result> select() throws SQLException {
         return query("select * from " + table);
     }
 
-    protected ResultSet select(String id) throws SQLException {
+    protected List<Result> select(String id) throws SQLException {
         return query("select * from " + table + " where " + this.id + " = ?", id);
     }
 
@@ -159,12 +159,14 @@ abstract class SQLiteDAO {
         }
     }
 
-    protected ResultSet query(String sql, String... args) throws SQLException {
+    protected List<Result> query(String sql, String... args) throws SQLException {
         Connection connection = null;
         PreparedStatement statement = null;
+        List<Result> results = new ArrayList<>();
 
         try {
             connection = openConnection();
+            System.out.println(sql);
             statement = connection.prepareStatement(sql);
 
             int i = 1;
@@ -173,7 +175,15 @@ abstract class SQLiteDAO {
                 ++i;
             }
 
-            return statement.executeQuery();
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                String id = rs.getString(this.id);
+                String data = rs.getString("data");
+                results.add(new Result(id, data));
+            }
+
+            return results;
         } finally {
             if (statement != null) {
                 statement.close();

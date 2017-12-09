@@ -31,7 +31,7 @@ public class SQLiteProviderTest {
         String username = UUID.randomUUID().toString();
         String expectedData = "{\"username\":\"" + username + "\"}";
         dao.saveUserData(username, expectedData);
-        String actualData = dao.getUserData("username");
+        String actualData = dao.getUserData(username);
         assertEquals(expectedData, actualData);
     }
 }

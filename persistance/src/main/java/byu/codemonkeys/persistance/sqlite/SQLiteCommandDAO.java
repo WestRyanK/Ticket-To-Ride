@@ -22,13 +22,13 @@ class SQLiteCommandDAO extends SQLiteDAO {
         List<String> commands = new ArrayList<>();
 
         try {
-            ResultSet results = query(
-                    "select * from " +  table + " where " + id + " = ? order by index asc",
+            List<Result> results = query(
+                    "select * from " +  table + " where " + id + " = ? order by idx asc",
                     game
             );
 
-            while (results.next()) {
-                commands.add(results.getString("data"));
+            for (Result result : results) {
+                commands.add(result.data());
             }
 
             return commands;
