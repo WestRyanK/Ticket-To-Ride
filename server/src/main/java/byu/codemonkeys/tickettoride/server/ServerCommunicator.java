@@ -8,12 +8,13 @@ import java.net.InetSocketAddress;
 public class ServerCommunicator {
     private static final int MIN_ARGUMENTS = 3;
     private static final int MAX_WAITING_CONNECTIONS = 12;
+    private static final String CLEAR_FLAG = "-clear";
 
     private HttpServer server;
 
     public static void main(String[] args) {
         if (args.length < MIN_ARGUMENTS) {
-           System.out.println("USAGE: java ServerCommunicator <port> <db plugin path> <N - max persistence deltas>");
+           System.out.println("USAGE: java ServerCommunicator <port> <db plugin path> <N - max persistence deltas> [-clear]");
             return;
         }
 
@@ -29,7 +30,11 @@ public class ServerCommunicator {
         }
 
         PersistenceFacade.initPersistanceFacade(numCommands, pluginPath);
-        PersistenceFacade.getInstance().restoreServer();
+
+        if (args.length > MIN_ARGUMENTS && CLEAR_FLAG.equals(args[MIN_ARGUMENTS]))
+            PersistenceFacade.getInstance().clear();
+        else
+            PersistenceFacade.getInstance().restoreServer();
 
         new ServerCommunicator().runServer(port);
     }
