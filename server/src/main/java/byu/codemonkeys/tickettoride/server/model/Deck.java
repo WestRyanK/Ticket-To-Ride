@@ -1,6 +1,7 @@
 package byu.codemonkeys.tickettoride.server.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -256,5 +257,33 @@ public class Deck extends byu.codemonkeys.tickettoride.shared.model.cards.Deck i
 		for (DestinationCard destination : destinations) {
 			this.destinations.add(destination);
 		}
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+
+		if (!(o instanceof Deck)) {
+			return false;
+		}
+
+		Deck other = (Deck) o;
+
+		Object thisHiddenArray[] = this.hidden.toArray();
+		Object otherHiddenArray[] = other.hidden.toArray();
+
+		Arrays.sort(thisHiddenArray);
+		Arrays.sort(otherHiddenArray);
+
+		if (this.discarded.equals(other.discarded) &&
+				Arrays.equals(thisHiddenArray, otherHiddenArray) &&
+				this.destinations.containsAll(other.destinations) &&
+				other.destinations.containsAll(this.destinations) &&
+				this.revealed.equals(other.revealed)) {
+			return true;
+		}
+
+		return false;
 	}
 }

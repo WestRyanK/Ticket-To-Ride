@@ -11,6 +11,7 @@ public interface IActiveGameDAO {
     void saveGameData(String gameID, String gameJson);
     String getGameData(String gameID);
     Map<String, String> getAllGameData();
+    void deleteGameData(String gameID);
 
     void clear();
 }

@@ -94,7 +94,8 @@ public class ServerFacade implements IServer {
 		} catch (IllegalArgumentException e) {
 			return new LoginResult("username may not be null");
 		}
-		
+
+		PersistenceFacade.getInstance().saveUser(rootModel.getUser(username));
 		return executeLogin(username);
 	}
 	
@@ -281,6 +282,13 @@ public class ServerFacade implements IServer {
 		}
 		
 		ActiveGame activeGame = rootModel.activateGame(gameID);
+
+		PersistenceFacade.getInstance().trackGame(activeGame);
+
+		for (Player player : activeGame.getPlayers()) {
+			ServerSession s = rootModel.getSessionByUsernameAndGameID(player.getUsername(), activeGame.getID());
+			PersistenceFacade.getInstance().saveSession(s);
+		}
 		
 		for (Player player : activeGame.getPlayers()) {
 			byu.codemonkeys.tickettoride.shared.model.ActiveGame preparedGame = activeGame.prepareForClient(
