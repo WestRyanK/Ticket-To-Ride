@@ -21,7 +21,7 @@ public class PersistenceProviderTest {
 
     @BeforeClass
     public static void init() {
-        PersistenceFacade.initPersistanceFacade(maxCommands, "mock");
+        PersistenceFacade.initPersistanceFacade(maxCommands, "sqlite");
     }
 
     @Before

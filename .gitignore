@@ -34,3 +34,6 @@ obj/
 
 # Merge conflict backups
 .orig
+
+# Database
+tickettoride.sqlite
