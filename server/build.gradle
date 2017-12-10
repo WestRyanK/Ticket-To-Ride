@@ -11,9 +11,8 @@ compileJava.dependsOn("copyResources")
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':shared')
-    compile project(':persistance')
     compile 'junit:junit:4.12'
-    compile project(path: ':Persistance')
+    compile project(':Persistance')
 }
 
 jar{
