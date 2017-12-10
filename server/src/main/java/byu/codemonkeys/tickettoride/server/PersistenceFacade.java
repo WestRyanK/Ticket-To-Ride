@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashMap;
@@ -48,11 +49,17 @@ public class PersistenceFacade {
             // TODO: Load provider dynamically from pluginPath
 			File loc = new File(pluginPath);
 	
-			File[] flist = loc.listFiles(new FileFilter() {
-				public boolean accept(File file) {return file.getPath().toLowerCase().endsWith(".jar");}
-			});
-			System.out.print("File count!" + String.valueOf(flist.length));
-			URL[] urls = new URL[flist.length];
+//			File[] flist = loc.listFiles(new FileFilter() {
+//				public boolean accept(File file) {return file.getPath().toLowerCase().endsWith(".jar");}
+//			});
+//			System.out.print("File count!" + String.valueOf(flist.length));
+//			URL[] urls = new URL[flist.length];
+			URL[] urls = new URL[1];
+			try {
+				urls[0] = new URL(pluginPath);
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
 			URLClassLoader ucl = new URLClassLoader(urls);
 			ServiceLoader<IPersistanceProvider> loader = ServiceLoader.load(IPersistanceProvider.class, ucl);
 	
