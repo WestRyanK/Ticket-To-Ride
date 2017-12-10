@@ -3,9 +3,14 @@ package byu.codemonkeys.tickettoride.server;
 
 import com.google.gson.Gson;
 
+import java.io.File;
+import java.io.FileFilter;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ServiceLoader;
 
 import byu.codemonkeys.persistance.IActiveGameDAO;
 import byu.codemonkeys.persistance.IPersistanceProvider;
@@ -41,8 +46,17 @@ public class PersistenceFacade {
         System.out.println("--Loading DataBase Plugin");
         if (instance == null) {
             // TODO: Load provider dynamically from pluginPath
-            IPersistanceProvider provider;
-
+			File loc = new File(pluginPath);
+	
+			File[] flist = loc.listFiles(new FileFilter() {
+				public boolean accept(File file) {return file.getPath().toLowerCase().endsWith(".jar");}
+			});
+			System.out.print("File count!" + String.valueOf(flist.length));
+			URL[] urls = new URL[flist.length];
+			URLClassLoader ucl = new URLClassLoader(urls);
+			ServiceLoader<IPersistanceProvider> loader = ServiceLoader.load(IPersistanceProvider.class, ucl);
+	
+			IPersistanceProvider provider;
             switch (pluginPath) {
                 case "sqlite":
                     provider = new SQLiteProvider();

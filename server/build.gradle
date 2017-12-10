@@ -13,12 +13,13 @@ dependencies {
     compile project(':shared')
     compile project(':persistance')
     compile 'junit:junit:4.12'
+    compile project(path: ':Persistance')
 }
 
 jar{
     manifest{
         attributes "Main-Class" : "byu.codemonkeys.tickettoride.server.ServerCommunicator"
-        attributes "Class-Path" : "gson-2.8.1.jar shared.jar"
+        attributes "Class-Path" : "gson-2.8.1.jar shared.jar persistance.jar"
     }
 }
 //task deleteJar(type: Delete){
