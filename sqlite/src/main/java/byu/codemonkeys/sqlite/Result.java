@@ -1,4 +1,4 @@
-package byu.codemonkeys.persistance.sqlite;
+package byu.codemonkeys.sqlite;
 
 class Result {
     private String id;

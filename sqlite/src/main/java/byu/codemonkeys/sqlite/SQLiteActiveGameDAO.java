@@ -1,4 +1,4 @@
-package byu.codemonkeys.persistance.sqlite;
+package byu.codemonkeys.sqlite;
 
 import java.sql.SQLException;
 import java.util.List;

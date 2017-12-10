@@ -1,6 +1,5 @@
-package byu.codemonkeys.persistance.sqlite;
+package byu.codemonkeys.sqlite;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

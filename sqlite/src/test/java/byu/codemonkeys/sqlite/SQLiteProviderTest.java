@@ -1,4 +1,4 @@
-package byu.codemonkeys.persistance.sqlite;
+package byu.codemonkeys.sqlite;
 
 import org.junit.After;
 import org.junit.Before;
@@ -9,6 +9,7 @@ import java.util.UUID;
 import byu.codemonkeys.persistance.IUserDAO;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class SQLiteProviderTest {
     private SQLiteProvider provider;
