@@ -1,8 +1,6 @@
 package byu.codemonkeys.tickettoride.server;
 
 
-import com.google.gson.Gson;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.net.MalformedURLException;
@@ -48,8 +46,10 @@ public class PersistenceFacade {
 		if (instance == null) {
 			IPersistanceProvider persistenceProvider = getPersistenceProviders(pluginName);
 			
-			if (persistenceProvider == null)
+			if (persistenceProvider == null) {
 				System.out.println("--No database plugin found, server state will not be saved");
+				instance = new PersistenceFacade(maxCommands, new MockProvider());
+			}
 			else
 				instance = new PersistenceFacade(maxCommands, persistenceProvider);
 		}
@@ -78,7 +78,7 @@ public class PersistenceFacade {
 			loader = ServiceLoader.load(IPersistanceProvider.class, ucl);
 		}
 		
-		if (loader.iterator().hasNext())
+		if (loader != null && loader.iterator().hasNext())
 			return loader.iterator().next();
 		else
 			return null;
@@ -202,6 +202,7 @@ public class PersistenceFacade {
 	}
 	
 	public void clear() {
+		System.out.println("--Clearing Existing Data");
 		gameDAO.clear();
 		userDAO.clear();
 		sessionDAO.clear();
