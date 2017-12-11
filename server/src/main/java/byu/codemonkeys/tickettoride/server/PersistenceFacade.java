@@ -16,6 +16,7 @@ import byu.codemonkeys.persistance.IActiveGameDAO;
 import byu.codemonkeys.persistance.IPersistanceProvider;
 import byu.codemonkeys.persistance.ISessionDAO;
 import byu.codemonkeys.persistance.IUserDAO;
+import byu.codemonkeys.persistance.mock.MockProvider;
 import byu.codemonkeys.tickettoride.server.model.ActiveGame;
 import byu.codemonkeys.tickettoride.server.model.RootModel;
 import byu.codemonkeys.tickettoride.server.model.ServerSession;
@@ -45,8 +46,10 @@ public class PersistenceFacade {
 		if (instance == null) {
 			IPersistanceProvider persistenceProvider = getPersistenceProviders(pluginName);
 			
-			if (persistenceProvider == null)
+			if (persistenceProvider == null) {
 				System.out.println("--No database plugin found, server state will not be saved");
+				instance = new PersistenceFacade(maxCommands, new MockProvider());
+			}
 			else
 				instance = new PersistenceFacade(maxCommands, persistenceProvider);
 		}
@@ -75,7 +78,7 @@ public class PersistenceFacade {
 			loader = ServiceLoader.load(IPersistanceProvider.class, ucl);
 		}
 		
-		if (loader.iterator().hasNext())
+		if (loader != null && loader.iterator().hasNext())
 			return loader.iterator().next();
 		else
 			return null;
