@@ -37,6 +37,13 @@ public class RootModel implements IRootModel {
 	public static RootModel getInstance() {
 		return ourInstance;
 	}
+
+	public static void restoreModel(Map<String, User> users, Map<String, ServerSession> currentSessions, Map<String, ActiveGame> activeGames) {
+			ourInstance.users = users;
+			ourInstance.currentSessions = currentSessions;
+			ourInstance.activeGames = activeGames;
+			ourInstance.pendingGames = new HashMap<>();
+	}
 	
 	private RootModel() {
 		users = new HashMap<>();
@@ -221,7 +228,7 @@ public class RootModel implements IRootModel {
 	}
 	
 	@Override
-	public Session getSessionByUsernameAndGameID(String username, String gameId) {
+	public ServerSession getSessionByUsernameAndGameID(String username, String gameId) {
 		ServerSession matchingSession = null;
 		for (ServerSession session : this.currentSessions.values()) {
 			if (session.getUser().getUsername().equals(username) &&
