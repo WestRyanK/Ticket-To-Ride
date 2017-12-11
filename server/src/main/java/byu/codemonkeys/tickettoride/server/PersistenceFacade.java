@@ -1,8 +1,6 @@
 package byu.codemonkeys.tickettoride.server;
 
 
-import com.google.gson.Gson;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.net.MalformedURLException;
@@ -18,7 +16,6 @@ import byu.codemonkeys.persistance.IActiveGameDAO;
 import byu.codemonkeys.persistance.IPersistanceProvider;
 import byu.codemonkeys.persistance.ISessionDAO;
 import byu.codemonkeys.persistance.IUserDAO;
-import byu.codemonkeys.persistance.mock.MockProvider;
 import byu.codemonkeys.tickettoride.server.model.ActiveGame;
 import byu.codemonkeys.tickettoride.server.model.RootModel;
 import byu.codemonkeys.tickettoride.server.model.ServerSession;
@@ -202,6 +199,7 @@ public class PersistenceFacade {
 	}
 	
 	public void clear() {
+		System.out.println("--Clearing Existing Data");
 		gameDAO.clear();
 		userDAO.clear();
 		sessionDAO.clear();

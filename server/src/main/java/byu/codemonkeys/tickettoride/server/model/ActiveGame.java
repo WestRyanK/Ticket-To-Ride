@@ -269,8 +269,8 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
 				clientPlayers.add(new Opponent(player));
 				continue;
 			}
-			
-			clientPlayers.add(player);
+
+			clientPlayers.add(new Self(player));
 		}
 		
 		clientGame.setPlayers(clientPlayers);
@@ -303,7 +303,6 @@ public class ActiveGame extends byu.codemonkeys.tickettoride.shared.model.Active
 		}
 		
 		for (Player player : players) {
-			Self self = (Self) player;
 			int completedDestinationBonus = 0;
 			int incompleteDestinationPenalty = 0;
 			
