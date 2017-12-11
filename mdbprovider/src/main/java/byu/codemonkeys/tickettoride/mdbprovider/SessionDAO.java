@@ -63,6 +63,11 @@ public class SessionDAO implements ISessionDAO {
     }
 
     @Override
+    public void deleteSessionData(String authToken){
+        collection.deleteOne(eq("authToken", authToken));
+    };
+
+    @Override
     public void clear() {
         collection.deleteMany(new Document());
     }

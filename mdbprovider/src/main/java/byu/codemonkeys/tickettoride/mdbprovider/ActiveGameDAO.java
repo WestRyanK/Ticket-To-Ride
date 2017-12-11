@@ -83,6 +83,12 @@ public class ActiveGameDAO implements IActiveGameDAO {
     }
 
     @Override
+    public void deleteGameData(String gameID){
+        gameCollection.deleteOne(eq("gameID", gameID));
+        commandCollection.deleteMany(eq("gameID", gameID));
+    }
+
+    @Override
     public void clear() {
         gameCollection.deleteMany(new Document());
         commandCollection.deleteMany(new Document());
