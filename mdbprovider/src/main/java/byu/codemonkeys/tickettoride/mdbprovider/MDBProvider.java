@@ -12,11 +12,11 @@ public class MDBProvider implements IPersistanceProvider{
 
     @Override
     public void init(){
-        database.createCollection("User");
-        database.createCollection("Game");
-        database.createCollection("Command");
-        database.createCollection("Session");
-    };
+//        database.createCollection("User");
+//        database.createCollection("Game");
+//        database.createCollection("Command");
+//        database.createCollection("Session");
+    }
 
     @Override
     public void clear(){
