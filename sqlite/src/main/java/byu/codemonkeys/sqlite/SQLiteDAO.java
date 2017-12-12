@@ -105,6 +105,29 @@ abstract class SQLiteDAO {
         }
     }
 
+    protected void update(String id, String value) throws SQLException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = openConnection();
+            statement = connection.prepareStatement(
+                    "update " + table + " set data = ? where " + this.id + " = ?"
+            );
+            statement.setString(1, value);
+            statement.setString(2, id);
+            statement.executeUpdate();
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+
+            if (connection != null) {
+                closeConnection(connection);
+            }
+        }
+    }
+
     protected int delete(String id) throws SQLException {
         Connection connection = null;
         PreparedStatement statement = null;

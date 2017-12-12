@@ -27,7 +27,13 @@ public class SQLiteActiveGameDAO extends SQLiteDAO implements IActiveGameDAO {
     @Override
     public void saveGameData(String gameID, String gameJson) {
         try {
-            insert(gameID, gameJson);
+            String data = get(gameID);
+
+            if (data == null) {
+                insert(gameID, gameJson);
+            } else {
+                update(gameID, gameJson);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
