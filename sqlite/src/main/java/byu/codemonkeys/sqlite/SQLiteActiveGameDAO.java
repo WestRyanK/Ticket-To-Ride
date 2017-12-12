@@ -27,7 +27,14 @@ public class SQLiteActiveGameDAO extends SQLiteDAO implements IActiveGameDAO {
     @Override
     public void saveGameData(String gameID, String gameJson) {
         try {
-            insert(gameID, gameJson);
+            String data = get(gameID);
+
+            if (data == null) {
+                insert(gameID, gameJson);
+            } else {
+                update(gameID, gameJson);
+                commandDAO.delete(gameID);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -47,6 +54,7 @@ public class SQLiteActiveGameDAO extends SQLiteDAO implements IActiveGameDAO {
     public void deleteGameData(String gameID) {
         try {
             delete(gameID);
+            commandDAO.delete(gameID);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
