@@ -7,5 +7,10 @@ dependencies {
     compile 'junit:junit:4.12'
 }
 
+jar {
+    manifest {
+        attributes "Class-Path": "mongodb-driver-core-3.6.0.jar mongodb-driver-3.6.0.jar bson-3.6.0.jar"
+    }
+}
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
