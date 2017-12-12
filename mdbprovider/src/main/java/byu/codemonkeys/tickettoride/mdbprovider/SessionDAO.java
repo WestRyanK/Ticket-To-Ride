@@ -14,10 +14,6 @@ import byu.codemonkeys.persistance.ISessionDAO;
 
 import static com.mongodb.client.model.Filters.eq;
 
-/**
- * Created by meganrich on 12/9/17.
- */
-
 public class SessionDAO implements ISessionDAO {
 
     private MongoCollection<Document> collection;
@@ -29,7 +25,7 @@ public class SessionDAO implements ISessionDAO {
     @Override
     public void saveSessionData(String authToken, String sessionJson) {
         Document doc = collection.find(eq("authToken", authToken)).first();
-        Document data = Document.parse(sessionJson);
+        String data = sessionJson;
         if(doc != null){
             Document newPair = new Document("data", data);
             collection.updateOne(eq("authToken", authToken), new Document("$set", newPair));
@@ -45,7 +41,7 @@ public class SessionDAO implements ISessionDAO {
     @Override
     public String getSessionData(String authToken) {
         Document doc = collection.find(eq("authToken", authToken)).projection(Projections.exclude("_id")).first();
-        return doc.toJson();
+        return doc.getString("data");
     }
 
     @Override
@@ -56,8 +52,8 @@ public class SessionDAO implements ISessionDAO {
         while(iter.hasNext()){
             Document doc = iter.next();
             String authToken = (String) doc.get("authToken");
-            Document data = (Document) doc.get("data");
-            docs.put(authToken, data.toJson());
+            String data = doc.getString("data");
+            docs.put(authToken, data);
         }
         return docs;
     }

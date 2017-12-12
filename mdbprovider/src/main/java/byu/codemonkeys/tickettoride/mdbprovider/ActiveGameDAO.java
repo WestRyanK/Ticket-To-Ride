@@ -30,7 +30,7 @@ public class ActiveGameDAO implements IActiveGameDAO {
     @Override
     public void saveCommandData(String gameID, String commandJson) {
             Document doc = new Document("gameID", gameID)
-                    .append("data", Document.parse(commandJson));
+                    .append("data", commandJson);
             commandCollection.insertOne(doc);
     }
 
@@ -41,8 +41,8 @@ public class ActiveGameDAO implements IActiveGameDAO {
 
         while(iter.hasNext()){
             Document doc = iter.next();
-            Document data = (Document) doc.get("data");
-            commands.add(data.toJson());
+            String data = doc.getString("data");
+            commands.add(data);
         }
         return commands;
     }
@@ -50,14 +50,13 @@ public class ActiveGameDAO implements IActiveGameDAO {
     @Override
     public void saveGameData(String gameID, String gameJson) {
         Document doc = gameCollection.find(eq("gameID", gameID)).first();
-        Document data = Document.parse(gameJson);
         if(doc != null){
-            Document newPair = new Document("data", data);
+            Document newPair = new Document("data", gameJson);
             gameCollection.updateOne(eq("gameID", gameID), new Document("$set", newPair));
-
+            commandCollection.deleteMany(eq("gameID", gameID));
         } else {
             doc = new Document("gameID", gameID)
-                    .append("data", data);
+                    .append("data", gameJson);
             gameCollection.insertOne(doc);
         }
     }
@@ -65,7 +64,7 @@ public class ActiveGameDAO implements IActiveGameDAO {
     @Override
     public String getGameData(String gameID) {
         Document doc = gameCollection.find(eq("gameID", gameID)).projection(Projections.exclude("_id")).first();
-        return doc.toJson();
+        return doc.getString("data");
     }
 
     @Override
@@ -75,9 +74,9 @@ public class ActiveGameDAO implements IActiveGameDAO {
 
         while(iter.hasNext()){
             Document doc = iter.next();
-            String gameID = (String) doc.get("gameID");
-            Document data = (Document) doc.get("data");
-            docs.put(gameID, data.toJson());
+            String gameID = doc.getString("gameID");
+            String data = doc.getString("data");
+            docs.put(gameID, data);
         }
         return docs;
     }

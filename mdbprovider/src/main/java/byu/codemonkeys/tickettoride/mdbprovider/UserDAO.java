@@ -28,7 +28,7 @@ public class UserDAO implements IUserDAO {
     @Override
     public void saveUserData(String username, String userJson) {
         Document doc = collection.find(eq("username", username)).first();
-        Document data = Document.parse(userJson);
+        String data = doc.getString("data");
         if(doc != null){
             //If the user already exists, update their data
             Document newPair = new Document("data", data);
@@ -44,7 +44,7 @@ public class UserDAO implements IUserDAO {
     @Override
     public String getUserData(String username) {
         Document doc = collection.find(eq("username", username)).projection(Projections.exclude("_id")).first();
-        return doc.toJson();
+        return doc.getString("data");
     }
 
     @Override
@@ -54,9 +54,9 @@ public class UserDAO implements IUserDAO {
 
         while(iter.hasNext()){
             Document doc = iter.next();
-            String username = (String) doc.get("username");
-            Document data = (Document) doc.get("data");
-            docs.put(username, data.toJson());
+            String username = doc.getString("username");
+            String data = doc.getString("data");
+            docs.put(username, data);
         }
         return docs;
     }
