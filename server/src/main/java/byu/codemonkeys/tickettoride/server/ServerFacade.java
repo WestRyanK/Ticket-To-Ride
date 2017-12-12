@@ -283,8 +283,6 @@ public class ServerFacade implements IServer {
 		
 		ActiveGame activeGame = rootModel.activateGame(gameID);
 
-		PersistenceFacade.getInstance().trackGame(activeGame);
-
 		for (Player player : activeGame.getPlayers()) {
 			ServerSession s = rootModel.getSessionByUsernameAndGameID(player.getUsername(), activeGame.getID());
 			PersistenceFacade.getInstance().saveSession(s);
@@ -295,6 +293,8 @@ public class ServerFacade implements IServer {
 					player);
 			activeGame.sendCommand(new SetupGameCommandData(preparedGame), player.getUsername());
 		}
+
+		PersistenceFacade.getInstance().trackGame(activeGame);
 		
 		return new StartGameResult(activeGame);
 	}
