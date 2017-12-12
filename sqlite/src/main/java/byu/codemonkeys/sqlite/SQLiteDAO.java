@@ -140,12 +140,12 @@ abstract class SQLiteDAO {
             statement.setString(1, id);
             return statement.executeUpdate();
         } finally {
-            if (connection != null) {
-                closeConnection(connection);
-            }
-
             if (statement != null) {
                 statement.close();
+            }
+
+            if (connection != null) {
+                closeConnection(connection);
             }
         }
     }
@@ -189,7 +189,6 @@ abstract class SQLiteDAO {
 
         try {
             connection = openConnection();
-            System.out.println(sql);
             statement = connection.prepareStatement(sql);
 
             int i = 1;

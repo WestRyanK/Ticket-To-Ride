@@ -57,5 +57,18 @@ public class SQLiteProviderTest {
         List<String> retrievedCommandData = dao.getAllCommandData(gameID);
         assertEquals(1, retrievedCommandData.size());
         assertEquals(commandData, retrievedCommandData.get(0));
+
+        String gameID2 = UUID.randomUUID().toString();
+        dao.saveGameData(gameID2, gameData);
+        dao.saveCommandData(gameID2, commandData);
+        dao.saveGameData(gameID, gameData);
+        assertEquals(0, dao.getAllCommandData(gameID).size());
+        assertEquals(1, dao.getAllCommandData(gameID2).size());
+
+        dao.saveCommandData(gameID, commandData);
+        dao.deleteGameData(gameID);
+
+        assertNull(dao.getGameData(gameID));
+        assertEquals(0, dao.getAllCommandData(gameID).size());
     }
 }
