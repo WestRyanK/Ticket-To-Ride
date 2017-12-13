@@ -11,12 +11,14 @@ public class ActiveTurn extends Turn {
     private boolean isLimited;
     private boolean isFinished;
 
+    public static String ACTIVE_TURN = "active";
+
     public ActiveTurn() {
         // Empty Default constructor necessary for deserialization
     }
 
     public ActiveTurn(int playerIndex) {
-        super(playerIndex);
+        super(ACTIVE_TURN, playerIndex);
         isLimited = false;
     }
 

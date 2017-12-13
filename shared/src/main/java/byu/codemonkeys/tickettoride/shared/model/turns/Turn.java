@@ -6,6 +6,7 @@ import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 public abstract class Turn {
     protected int playerIndex;
     protected transient Turn next;
+    private String type;
 
     public abstract boolean canDrawTrainCard();
     public abstract boolean canDrawDestinationCards();
@@ -21,8 +22,9 @@ public abstract class Turn {
         // Empty Default constructor necessary for deserialization
     }
 
-    public Turn(int playerIndex) {
+    public Turn(String type, int playerIndex) {
         this.playerIndex = playerIndex;
+        this.type = type;
     }
 
     public Turn getNextTurn() {

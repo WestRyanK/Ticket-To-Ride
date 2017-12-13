@@ -5,12 +5,14 @@ import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 
 public class OtherTurn extends Turn {
 
+    public static String OTHER_TURN = "other";
+
     public OtherTurn() {
         // Empty Default constructor necessary for deserialization
     }
 
     public OtherTurn(int playerIndex) {
-        super(playerIndex);
+        super(OTHER_TURN, playerIndex);
     }
 
     @Override

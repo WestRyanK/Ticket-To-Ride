@@ -76,7 +76,29 @@ public class ActiveGame extends GameBase implements Observer {
 
 			temp.setNextTurn(turn);
 		} else {
-			
+			Turn firstTurn;
+
+			if (players.get(0) instanceof Self) {
+				firstTurn = new ActiveTurn(0);
+			} else {
+				firstTurn = new OtherTurn(0);
+			}
+
+			Turn temp = firstTurn;
+			Turn nextTurn;
+
+			for (int i = 1; i < players.size(); i++) {
+				if (players.get(i) instanceof Self) {
+					nextTurn = new ActiveTurn(i);
+				} else {
+					nextTurn = new OtherTurn(i);
+				}
+				temp.setNextTurn(nextTurn);
+				temp = temp.getNextTurn();
+			}
+
+			temp.setNextTurn(firstTurn);
+			turn = firstTurn;
 		}
 	}
 	
