@@ -28,7 +28,7 @@ public class UserDAO implements IUserDAO {
     @Override
     public void saveUserData(String username, String userJson) {
         Document doc = collection.find(eq("username", username)).first();
-        String data = doc.getString("data");
+        String data = userJson;
         if(doc != null){
             //If the user already exists, update their data
             Document newPair = new Document("data", data);

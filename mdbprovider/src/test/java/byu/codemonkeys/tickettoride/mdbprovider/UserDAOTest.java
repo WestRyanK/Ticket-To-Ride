@@ -8,10 +8,6 @@ import static org.junit.Assert.*;
 import java.util.Map;
 import java.util.HashMap;
 
-/**
- * Created by meganrich on 12/11/17.
- */
-
 public class UserDAOTest {
     @Test
     public void save_user_data_test_simple_success(){
@@ -20,7 +16,7 @@ public class UserDAOTest {
         IUserDAO dao = new MDBProvider().newUserDAO();
         dao.saveUserData("megameg", "{'hello':'blahblahblahblah'}");
         assertEquals(dao.getUserData("megameg"),
-                "{ \"username\" : \"megameg\", \"data\" : { \"hello\" : \"blahblahblahblah\" } }");
+                "{'hello':'blahblahblahblah'}");
         provider.clear();
     }
 
@@ -32,7 +28,7 @@ public class UserDAOTest {
         dao.saveUserData("megameg", "{'hello':'blahblahblahblah'}");
         dao.saveUserData("megameg", "{'hello':'newvalue'}");
         assertEquals(dao.getUserData("megameg"),
-                "{ \"username\" : \"megameg\", \"data\" : { \"hello\" : \"newvalue\" } }");
+                "{'hello':'newvalue'}");
         provider.clear();
     }
 
@@ -45,8 +41,8 @@ public class UserDAOTest {
         dao.saveUserData("megameg2", "{'hello':'newvalue'}");
 
         Map<String, String> compare = new HashMap();
-        compare.put("megameg", "{ \"hello\" : \"blahblahblahblah\" }");
-        compare.put("megameg2", "{ \"hello\" : \"newvalue\" }");
+        compare.put("megameg", "{'hello':'blahblahblahblah'}");
+        compare.put("megameg2", "{'hello':'newvalue'}");
         assertEquals(compare, dao.getAllUserData());
         provider.clear();
     }
