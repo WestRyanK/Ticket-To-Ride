@@ -36,6 +36,9 @@ import byu.codemonkeys.tickettoride.shared.model.cards.IDeck;
 import byu.codemonkeys.tickettoride.shared.model.Opponent;
 import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.Self;
+import byu.codemonkeys.tickettoride.shared.model.turns.ActiveTurn;
+import byu.codemonkeys.tickettoride.shared.model.turns.OtherTurn;
+import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
 import byu.codemonkeys.tickettoride.shared.results.HistoryResult;
 
 public class HistoryDeserializer {
@@ -66,10 +69,16 @@ public class HistoryDeserializer {
 	private static final RuntimeTypeAdapterFactory<IDeck> deckTypeFactory = RuntimeTypeAdapterFactory
 			.of(IDeck.class, "type")
 			.registerSubtype(Deck.class, "deck");
+
+	private static final RuntimeTypeAdapterFactory<Turn> turnTypeFactory = RuntimeTypeAdapterFactory
+			.of(Turn.class, "type")
+			.registerSubtype(ActiveTurn.class, ActiveTurn.ACTIVE_TURN)
+			.registerSubtype(OtherTurn.class, OtherTurn.OTHER_TURN);
 	
 	private static final Gson gson = new GsonBuilder().registerTypeAdapterFactory(commandTypeFactory)
 													  .registerTypeAdapterFactory(playerTypeFactory)
 													  .registerTypeAdapterFactory(deckTypeFactory)
+													  .registerTypeAdapterFactory(turnTypeFactory)
 													  .create();
 	
 	public static List<CommandData> deserialize(String json) {

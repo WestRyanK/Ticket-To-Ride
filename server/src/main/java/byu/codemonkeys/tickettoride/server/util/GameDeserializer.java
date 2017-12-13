@@ -26,6 +26,9 @@ import byu.codemonkeys.tickettoride.shared.model.Opponent;
 import byu.codemonkeys.tickettoride.shared.model.Player;
 import byu.codemonkeys.tickettoride.shared.model.Self;
 import byu.codemonkeys.tickettoride.shared.model.cards.IDeck;
+import byu.codemonkeys.tickettoride.shared.model.turns.ActiveTurn;
+import byu.codemonkeys.tickettoride.shared.model.turns.OtherTurn;
+import byu.codemonkeys.tickettoride.shared.model.turns.Turn;
 
 public class GameDeserializer {
     private static final RuntimeTypeAdapterFactory<CommandData> commandTypeFactory = RuntimeTypeAdapterFactory
@@ -56,10 +59,16 @@ public class GameDeserializer {
             .of(IDeck.class, "type")
             .registerSubtype(Deck.class, "deck");
 
+    private static final RuntimeTypeAdapterFactory<Turn> turnTypeFactory = RuntimeTypeAdapterFactory
+            .of(Turn.class, "type")
+            .registerSubtype(ActiveTurn.class, ActiveTurn.ACTIVE_TURN)
+            .registerSubtype(OtherTurn.class, OtherTurn.OTHER_TURN);
+
     private static Gson gson = new GsonBuilder()
             .registerTypeAdapterFactory(commandTypeFactory)
             .registerTypeAdapterFactory(playerTypeFactory)
             .registerTypeAdapterFactory(deckTypeFactory)
+            .registerTypeAdapterFactory(turnTypeFactory)
             .create();
 
     public static TrackedGame deserialize(String json) {

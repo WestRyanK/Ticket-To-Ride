@@ -168,7 +168,6 @@ public class PersistenceFacade {
 		for (String json : gameData.values()) {
 			TrackedGame game = GameDeserializer.deserialize(json);
 			game.getGame().setUpTurns();
-			game.getGame().setTurn(game.getCurrentPlayersTurn());
 			games.put(game.getGame().getID(), game.getGame());
 			trackedGames.put(game.getGame().getID(), game);
 		}
