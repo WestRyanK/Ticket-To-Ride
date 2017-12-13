@@ -1,1 +1,1 @@
-include ':app', ':server', ':shared', ':Persistance', ':persistance', ':sqlite'
+include ':app', ':server', ':shared', ':Persistance', ':persistance', ':sqlite', ':mdbprovider'
