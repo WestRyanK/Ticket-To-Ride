@@ -27,7 +27,7 @@ public class ActiveGame extends GameBase implements Observer {
 	public static final String GAME_OVER = "GameOver";
 	
 	protected GameMap map;
-	protected transient Turn turn;
+	protected Turn turn;
 	protected List<Player> players;
 	protected IDeck deck;
 	
@@ -56,29 +56,28 @@ public class ActiveGame extends GameBase implements Observer {
 	}
 	
 	public void setUpTurns() {
-		Turn firstTurn;
-		
-		if (players.get(0) instanceof Self) {
-			firstTurn = new ActiveTurn(0);
-		} else {
-			firstTurn = new OtherTurn(0);
-		}
-		
-		Turn temp = firstTurn;
-		Turn nextTurn;
-		
-		for (int i = 1; i < players.size(); i++) {
-			if (players.get(i) instanceof Self) {
-				nextTurn = new ActiveTurn(i);
-			} else {
-				nextTurn = new OtherTurn(i);
+
+		if (turn != null) {
+			Turn temp = turn;
+			Turn nextTurn;
+
+			int index = (turn.getPlayerIndex() + 1) % players.size();
+
+			for (int i = 1; i < players.size(); i++) {
+				if (players.get(index) instanceof Self) {
+					nextTurn = new ActiveTurn(index);
+				} else {
+					nextTurn = new OtherTurn(index);
+				}
+				temp.setNextTurn(nextTurn);
+				temp = temp.getNextTurn();
+				index++;
 			}
-			temp.setNextTurn(nextTurn);
-			temp = temp.getNextTurn();
+
+			temp.setNextTurn(turn);
+		} else {
+			
 		}
-		
-		temp.setNextTurn(firstTurn);
-		turn = firstTurn;
 	}
 	
 	public static ActiveGame copyActiveGame(ActiveGame game) {

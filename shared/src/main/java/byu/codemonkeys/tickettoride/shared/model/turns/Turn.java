@@ -5,7 +5,7 @@ import byu.codemonkeys.tickettoride.shared.model.cards.TrainCard;
 
 public abstract class Turn {
     protected int playerIndex;
-    protected Turn next;
+    protected transient Turn next;
 
     public abstract boolean canDrawTrainCard();
     public abstract boolean canDrawDestinationCards();
