@@ -170,6 +170,7 @@ public class PersistenceFacade {
 			game.getGame().setUpTurns();
 			game.getGame().setTurn(game.getCurrentPlayersTurn());
 			games.put(game.getGame().getID(), game.getGame());
+			trackedGames.put(game.getGame().getID(), game);
 		}
 		
 		for (String json : userData.values()) {
@@ -194,6 +195,7 @@ public class PersistenceFacade {
 						throw new RuntimeException(
 								"Error Restoring Server, command could not be applied: " + json);
 					}
+					trackedGames.get(game.getID()).incrementCommands();
 				}
 			}
 		}
